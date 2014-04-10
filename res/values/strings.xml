@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">BabySitter</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="app_name">保母通</string>
+    <string name="search_babysitter">搜尋保母</string>
+    <string name="rating_babysitter">評分保母</string>
+    <string name="social_babysitter">社群保母</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="action_example">Example action</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_example">搜尋</string>
+    <string name="action_settings">設定</string>
 
 </resources>
