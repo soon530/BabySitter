@@ -130,12 +130,20 @@ public class MainActivity extends ActionBarActivity implements
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_main, container,
-					false);
-			TextView textView = (TextView) rootView
-					.findViewById(R.id.section_label);
-			textView.setText(Integer.toString(getArguments().getInt(
-					ARG_SECTION_NUMBER)));
+			int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
+
+			View rootView = null;
+			// we need to show search babysitter map
+			if (sectionNumber == 1) {
+				rootView = inflater.inflate(R.layout.fragment_search_babysitter_map, container,
+						false);
+			} else {
+				rootView = inflater.inflate(R.layout.fragment_main, container,
+						false);
+				TextView textView = (TextView) rootView
+						.findViewById(R.id.section_label);
+				textView.setText(Integer.toString(sectionNumber));
+			}
 			return rootView;
 		}
 
