@@ -1,25 +1,25 @@
 package tw.tasker.babysitter;
 
 import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.content.Context;
-import android.os.Build;
-import android.os.Bundle;
-import android.view.Gravity;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.google.android.gms.maps.SupportMapFragment;
 
 public class MainActivity extends ActionBarActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
+
+	private static final int SEARCH_BABYSITTER_POSITION = 0;
 
 	/**
 	 * Fragment managing the behaviors, interactions and presentation of the
@@ -49,12 +49,23 @@ public class MainActivity extends ActionBarActivity implements
 
 	@Override
 	public void onNavigationDrawerItemSelected(int position) {
+
 		// update the main content by replacing fragments
 		FragmentManager fragmentManager = getSupportFragmentManager();
-		fragmentManager
-				.beginTransaction()
-				.replace(R.id.container,
-						PlaceholderFragment.newInstance(position + 1)).commit();
+		fragmentManager.beginTransaction()
+				.replace(R.id.container, getMyFragment(position)).commit();
+
+	}
+
+	private Fragment getMyFragment(int position) {
+		Fragment currentFragment = null;
+		if (position == SEARCH_BABYSITTER_POSITION) {
+			currentFragment = SupportMapFragment.newInstance();
+			
+		} else {
+			currentFragment = PlaceholderFragment.newInstance(position + 1);
+		}
+		return currentFragment;
 	}
 
 	public void onSectionAttached(int number) {
@@ -130,20 +141,12 @@ public class MainActivity extends ActionBarActivity implements
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
-
-			View rootView = null;
-			// we need to show search babysitter map
-			if (sectionNumber == 1) {
-				rootView = inflater.inflate(R.layout.fragment_search_babysitter_map, container,
-						false);
-			} else {
-				rootView = inflater.inflate(R.layout.fragment_main, container,
-						false);
-				TextView textView = (TextView) rootView
-						.findViewById(R.id.section_label);
-				textView.setText(Integer.toString(sectionNumber));
-			}
+			View rootView = inflater.inflate(R.layout.fragment_main, container,
+					false);
+			TextView textView = (TextView) rootView
+					.findViewById(R.id.section_label);
+			textView.setText(Integer.toString(getArguments().getInt(
+					ARG_SECTION_NUMBER)));
 			return rootView;
 		}
 
