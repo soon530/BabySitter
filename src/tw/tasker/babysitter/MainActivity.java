@@ -1,6 +1,7 @@
 package tw.tasker.babysitter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,8 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.google.android.gms.maps.SupportMapFragment;
 
 public class MainActivity extends ActionBarActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -50,21 +49,23 @@ public class MainActivity extends ActionBarActivity implements
 	@Override
 	public void onNavigationDrawerItemSelected(int position) {
 
-		// update the main content by replacing fragments
-		FragmentManager fragmentManager = getSupportFragmentManager();
-		fragmentManager.beginTransaction()
-				.replace(R.id.container, getMyFragment(position)).commit();
+		if (position == SEARCH_BABYSITTER_POSITION) {
+			Intent toMap = new Intent();
+			toMap.setClass(this, MapActivity.class);
+			startActivity(toMap);
+		} else {
+
+			// update the main content by replacing fragments
+			FragmentManager fragmentManager = getSupportFragmentManager();
+			fragmentManager.beginTransaction()
+					.replace(R.id.container, getMyFragment(position)).commit();
+		}
 
 	}
 
 	private Fragment getMyFragment(int position) {
 		Fragment currentFragment = null;
-		if (position == SEARCH_BABYSITTER_POSITION) {
-			currentFragment = SupportMapFragment.newInstance();
-			
-		} else {
-			currentFragment = PlaceholderFragment.newInstance(position + 1);
-		}
+		currentFragment = PlaceholderFragment.newInstance(position + 1);
 		return currentFragment;
 	}
 
