@@ -19,21 +19,18 @@ import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 
-public class MapActivity extends ActionBarActivity implements
-		ConnectionCallbacks, OnConnectionFailedListener {
+public class MapActivity extends ActionBarActivity {
 
 	private GoogleMap mMap;
-	private LocationClient mLocationClient;
-	private Location mCurrentLocation;
-	private final static String MAP_ACTIVITY_TAG = "MapActivity";
+	private MyLocation mMyLocation;
+	final static String MAP_ACTIVITY_TAG = "MapActivity";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_search_babysitter_map);
 
-		mLocationClient = new LocationClient(this, this, this);
-
+		mMyLocation = new MyLocation(this);
 		/*
 		 * if (savedInstanceState == null) {
 		 * getSupportFragmentManager().beginTransaction() .add(R.id.container,
@@ -64,7 +61,7 @@ public class MapActivity extends ActionBarActivity implements
 	protected void onStart() {
 		super.onStart();
 
-		mLocationClient.connect();
+		mMyLocation.connect();
 	}
 
 	@Override
@@ -77,7 +74,7 @@ public class MapActivity extends ActionBarActivity implements
 	@Override
 	protected void onStop() {
 
-		mLocationClient.disconnect();
+		mMyLocation.disconnect();
 
 		super.onStop();
 	}
@@ -114,61 +111,4 @@ public class MapActivity extends ActionBarActivity implements
 		}
 	}
 
-	// for location
-	@Override
-	public void onConnected(Bundle connectionHint) {
-		// TODO Auto-generated method stub
-		mCurrentLocation = getLocation();
-
-	}
-
-	private Location getLocation() {
-		// If Google Play Services is available
-		if (servicesConnected()) {
-			// Get the current location
-			return mLocationClient.getLastLocation();
-		} else {
-			return null;
-		}
-	}
-
-	private boolean servicesConnected() {
-		// Check that Google Play services is available
-		int resultCode = GooglePlayServicesUtil
-				.isGooglePlayServicesAvailable(this);
-
-		// If Google Play services is available
-		if (ConnectionResult.SUCCESS == resultCode) {
-			// if (Application.APPDEBUG) {
-				// In debug mode, log the status
-				Log.d(MAP_ACTIVITY_TAG, "Google play services available");
-			// }
-			// Continue
-			return true;
-			// Google Play services was not available for some reason
-		} else {
-			// Display an error dialog
-/*			Dialog dialog = GooglePlayServicesUtil.getErrorDialog(resultCode,
-					this, 0);
-			if (dialog != null) {
-				ErrorDialogFragment errorFragment = new ErrorDialogFragment();
-				errorFragment.setDialog(dialog);
-				errorFragment.show(getSupportFragmentManager(),
-						Application.APPTAG);
-			}*/
-			return false;
-		}
-	}
-
-	@Override
-	public void onDisconnected() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onConnectionFailed(ConnectionResult result) {
-		// TODO Auto-generated method stub
-
-	}
 }
