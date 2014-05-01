@@ -1,41 +1,44 @@
 package tw.tasker.babysitter;
 
-import android.location.Location;
 import android.os.Bundle;
+import android.os.Debug;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMapLoadedCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 
 public class MapActivity extends ActionBarActivity {
 
 	private GoogleMap mMap;
 	private MyLocation mMyLocation;
-	final static String MAP_ACTIVITY_TAG = "MapActivity";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_search_babysitter_map);
-
+		setUpMapIfNeeded();
 		mMyLocation = new MyLocation(this);
-		/*
-		 * if (savedInstanceState == null) {
-		 * getSupportFragmentManager().beginTransaction() .add(R.id.container,
-		 * new PlaceholderFragment()).commit(); }
-		 */}
+
+		if (mMap != null) {
+			mMap.setOnMapLoadedCallback(new OnMapLoadedCallback() {
+				@Override
+				public void onMapLoaded() {
+					if (mMap != null) {
+						mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(
+								mMyLocation.getmBounds(), 5));
+					}
+				}
+			});
+		}
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -60,23 +63,22 @@ public class MapActivity extends ActionBarActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-
-		mMyLocation.connect();
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		setUpMapIfNeeded();
-
 	}
 
 	@Override
 	protected void onStop() {
-
 		mMyLocation.disconnect();
-
 		super.onStop();
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
 	}
 
 	private void setUpMapIfNeeded() {
