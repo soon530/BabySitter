@@ -1,11 +1,14 @@
 package tw.tasker.babysitter;
 
+import static tw.tasker.babysitter.LogUtils.LOGD;
+import static tw.tasker.babysitter.LogUtils.makeLogTag;
+import android.app.Dialog;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.Debug;
 import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.ErrorDialogFragment;
 import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
@@ -15,6 +18,8 @@ import com.google.android.gms.maps.model.LatLngBounds;
 
 public class MyLocation implements ConnectionCallbacks,
 		OnConnectionFailedListener {
+	private static final String TAG = makeLogTag(MyLocation.class);
+
 	// Initial offset for calculating the map bounds
 	private static final double OFFSET_CALCULATION_INIT_DIFF = 1.0;
 
@@ -106,22 +111,21 @@ public class MyLocation implements ConnectionCallbacks,
 
 		// If Google Play services is available
 		if (ConnectionResult.SUCCESS == resultCode) {
-			// if (Application.APPDEBUG) {
-			// In debug mode, log the status
-			Log.d("vic", "Google play services available");
-			// }
-			// Continue
+			LOGD(TAG, "Google play services available");
 			return true;
 			// Google Play services was not available for some reason
 		} else {
 			// Display an error dialog
-			/*
-			 * Dialog dialog = GooglePlayServicesUtil.getErrorDialog(resultCode,
-			 * this, 0); if (dialog != null) { ErrorDialogFragment errorFragment
-			 * = new ErrorDialogFragment(); errorFragment.setDialog(dialog);
-			 * errorFragment.show(getSupportFragmentManager(),
-			 * Application.APPTAG); }
-			 */
+
+			// Dialog dialog = GooglePlayServicesUtil.getErrorDialog(resultCode,
+			// mMapAcivity, 0);
+			// if (dialog != null) {
+			// ErrorDialogFragment errorFragment = new ErrorDialogFragment();
+			// errorFragment.setDialog(dialog);
+			// errorFragment.show(mMapAcivity.getSupportFragmentManager(),
+			// "tasker");
+			// }
+
 			return false;
 		}
 	}
