@@ -1,13 +1,13 @@
 package tw.tasker.babysitter;
 
+import tw.tasker.babysitter.dummy.DummyContent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
-import tw.tasker.babysitter.dummy.DummyContent;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 /**
  * A fragment representing a single Item detail screen. This fragment is either
@@ -25,7 +25,8 @@ public class ItemDetailFragment extends Fragment {
 	 * The dummy content this fragment is presenting.
 	 */
 	private DummyContent.DummyItem mItem;
-
+	private ListView mListView;
+	private static final String[] mStrings = new String[] {"一","二","三","四","五","六","七","八","九"};
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
 	 * fragment (e.g. upon screen orientation changes).
@@ -52,11 +53,14 @@ public class ItemDetailFragment extends Fragment {
 		View rootView = inflater.inflate(R.layout.fragment_item_detail,
 				container, false);
 
+		
+		mListView = (ListView) rootView.findViewById(R.id.listView1);
+		mListView.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, mStrings ));
 		// Show the dummy content as text in a TextView.
-		if (mItem != null) {
-			((TextView) rootView.findViewById(R.id.item_detail))
-					.setText(mItem.content);
-		}
+//		if (mItem != null) {
+//			((TextView) rootView.findViewById(R.id.item_detail))
+//					.setText(mItem.content);
+//		}
 
 		return rootView;
 	}
