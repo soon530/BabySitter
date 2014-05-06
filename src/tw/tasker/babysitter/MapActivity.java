@@ -57,7 +57,7 @@ public class MapActivity extends ActionBarActivity {
 		int id = item.getItemId();
 		if (id == R.id.action_master) {
 			Intent intent = new Intent();
-			intent.setClass(this, ItemListActivity.class);
+			intent.setClass(this, BabysitterListActivity.class);
 			startActivity(intent);
 		}
 		

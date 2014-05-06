@@ -49,13 +49,13 @@
             android:label="@string/title_activity_map" >
         </activity>
         <activity
-            android:name="tw.tasker.babysitter.ItemListActivity"
+            android:name="tw.tasker.babysitter.BabysitterListActivity"
             android:label="@string/title_item_list" >
         </activity>
         <activity
-            android:name="tw.tasker.babysitter.ItemDetailActivity"
+            android:name="tw.tasker.babysitter.BabysitterDetailActivity"
             android:label="@string/title_item_detail"
-            android:parentActivityName="tw.tasker.babysitter.ItemListActivity" >
+            android:parentActivityName="tw.tasker.babysitter.BabysitterListActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="tw.tasker.babysitter.ItemListActivity" />

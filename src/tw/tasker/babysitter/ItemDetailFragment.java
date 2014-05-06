@@ -11,8 +11,8 @@ import tw.tasker.babysitter.dummy.DummyContent;
 
 /**
  * A fragment representing a single Item detail screen. This fragment is either
- * contained in a {@link ItemListActivity} in two-pane mode (on tablets) or a
- * {@link ItemDetailActivity} on handsets.
+ * contained in a {@link BabysitterListActivity} in two-pane mode (on tablets) or a
+ * {@link BabysitterDetailActivity} on handsets.
  */
 public class ItemDetailFragment extends Fragment {
 	/**

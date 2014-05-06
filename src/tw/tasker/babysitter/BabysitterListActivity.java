@@ -11,7 +11,7 @@ import android.view.MenuItem;
  * An activity representing a list of Items. This activity has different
  * presentations for handset and tablet-size devices. On handsets, the activity
  * presents a list of items, which when touched, lead to a
- * {@link ItemDetailActivity} representing item details. On tablets, the
+ * {@link BabysitterDetailActivity} representing item details. On tablets, the
  * activity presents the list of items and item details side-by-side using two
  * vertical panes.
  * <p>
@@ -22,7 +22,7 @@ import android.view.MenuItem;
  * This activity also implements the required {@link ItemListFragment.Callbacks}
  * interface to listen for item selections.
  */
-public class ItemListActivity extends FragmentActivity implements
+public class BabysitterListActivity extends FragmentActivity implements
 		ItemListFragment.Callbacks {
 
 	/**
@@ -72,7 +72,7 @@ public class ItemListActivity extends FragmentActivity implements
 		} else {
 			// In single-pane mode, simply start the detail activity
 			// for the selected item ID.
-			Intent detailIntent = new Intent(this, ItemDetailActivity.class);
+			Intent detailIntent = new Intent(this, BabysitterDetailActivity.class);
 			detailIntent.putExtra(ItemDetailFragment.ARG_ITEM_ID, id);
 			startActivity(detailIntent);
 		}
