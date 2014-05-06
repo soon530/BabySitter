@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="11"
         android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -14,7 +14,7 @@
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <!--
      The following two permissions are not required to use
-     Google Maps Android API v2, but are recommended.
+     Google Maps Android API v2, but are recommended.
     -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -47,6 +47,18 @@
         <activity
             android:name="tw.tasker.babysitter.MapActivity"
             android:label="@string/title_activity_map" >
+        </activity>
+        <activity
+            android:name="tw.tasker.babysitter.ItemListActivity"
+            android:label="@string/title_item_list" >
+        </activity>
+        <activity
+            android:name="tw.tasker.babysitter.ItemDetailActivity"
+            android:label="@string/title_item_detail"
+            android:parentActivityName="tw.tasker.babysitter.ItemListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="tw.tasker.babysitter.ItemListActivity" />
         </activity>
     </application>
 
