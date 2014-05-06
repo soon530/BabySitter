@@ -1,7 +1,8 @@
 package tw.tasker.babysitter;
 
+//import android.R;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Debug;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
@@ -54,9 +55,15 @@ public class MapActivity extends ActionBarActivity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
+		if (id == R.id.action_master) {
+			Intent intent = new Intent();
+			intent.setClass(this, ItemListActivity.class);
+			startActivity(intent);
 		}
+		
+//		if (id == R.id.action_settings) {
+//			return true;
+//		}
 		return super.onOptionsItemSelected(item);
 	}
 

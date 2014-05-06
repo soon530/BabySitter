@@ -1,8 +1,11 @@
 package tw.tasker.babysitter;
 
+//import android.R;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 
 /**
  * An activity representing a list of Items. This activity has different
@@ -73,5 +76,26 @@ public class ItemListActivity extends FragmentActivity implements
 			detailIntent.putExtra(ItemDetailFragment.ARG_ITEM_ID, id);
 			startActivity(detailIntent);
 		}
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		getMenuInflater().inflate(R.menu.babysitter_list, menu);
+		//return true;
+		return super.onCreateOptionsMenu(menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		int id = item.getItemId();
+		if (id == R.id.action_map) {
+			Intent intent = new Intent();
+			intent.setClass(this, MapActivity.class);
+			startActivity(intent);
+		}
+		
+		return super.onOptionsItemSelected(item);
 	}
 }

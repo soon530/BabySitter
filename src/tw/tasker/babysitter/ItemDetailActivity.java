@@ -1,9 +1,11 @@
 package tw.tasker.babysitter;
 
+//import android.R;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
+import android.view.Menu;
 import android.view.MenuItem;
 
 /**
@@ -45,6 +47,14 @@ public class ItemDetailActivity extends FragmentActivity {
 					.add(R.id.item_detail_container, fragment).commit();
 		}
 	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		getMenuInflater().inflate(R.menu.babysitter_detail, menu);
+		//return true;
+		return super.onCreateOptionsMenu(menu);
+	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -63,4 +73,10 @@ public class ItemDetailActivity extends FragmentActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+
+	
+
+
+	
 }

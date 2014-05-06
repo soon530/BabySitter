@@ -4,12 +4,7 @@
     tools:context="tw.tasker.babysitter.MapActivity" >
 
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never"/>
-    <item
-        android:id="@+id/action_master"
+        android:id="@+id/action_map"
         android:orderInCategory="100"
         android:title="@string/goto_babysitterlist_activity"
         app:showAsAction="always"/>

@@ -69,6 +69,7 @@ public class ItemListFragment extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		//setHasOptionsMenu(true);
 
 		// TODO: replace with a real list adapter.
 		setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
