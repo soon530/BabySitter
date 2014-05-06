@@ -47,12 +47,12 @@ public class BabysitterDetailActivity extends FragmentActivity {
 					.add(R.id.item_detail_container, fragment).commit();
 		}
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		getMenuInflater().inflate(R.menu.babysitter_detail, menu);
-		//return true;
+		// return true;
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -67,16 +67,18 @@ public class BabysitterDetailActivity extends FragmentActivity {
 			//
 			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
 			//
-			NavUtils.navigateUpTo(this,
-					new Intent(this, BabysitterListActivity.class));
+			NavUtils.navigateUpTo(this, new Intent(this,
+					BabysitterListActivity.class));
 			return true;
 		}
+
+		if (id == R.id.action_comment) {
+			Intent intent = new Intent();
+			intent.setClass(this, BabysitterCommentActivity.class);
+			startActivity(intent);
+		}
+
 		return super.onOptionsItemSelected(item);
 	}
-	
 
-	
-
-
-	
 }

@@ -12,19 +12,20 @@
     <string name="action_settings">設定</string>
 
     <!-- BabySitterMapActivity -->
-    <string name="title_activity_map">搜尋保母</string>
+    <string name="title_activity_map">保母地圖</string>
     <string name="goto_babysitterlist_activity">列表</string>
 
     <!-- BabySitterListActivity -->
-    <string name="title_item_list">搜尋保母</string>
+    <string name="title_item_list">保母列表</string>
     <string name="goto_babysittermap_activity">地圖</string>
 
-    
-    
-    <string name="hello_world">Hello world!</string>
-    <string name="title_item_detail">Item Detail</string>
-    <string name="title_activity_babysitter_comment">BabysitterCommentActivity</string>
+    <!-- BabySitterDetailActivity -->
+    <string name="title_item_detail">保母明細</string>
     <string name="title_activity_baby_detail">BabyDetailActivity</string>
+
+    <!-- BabySitterCommentActivity -->
+    <string name="title_activity_babysitter_comment">BabysitterCommentActivity</string>
     <string name="goto_babysittercomment_activity">評分</string>
 
+    <string name="hello_world">Hello world!</string>
 </resources>
