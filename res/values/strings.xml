@@ -24,8 +24,11 @@
     <string name="title_activity_baby_detail">BabyDetailActivity</string>
 
     <!-- BabySitterCommentActivity -->
-    <string name="title_activity_babysitter_comment">BabysitterCommentActivity</string>
+    <string name="title_activity_babysitter_comment">保母評分</string>
     <string name="goto_babysittercomment_activity">評分</string>
 
     <string name="hello_world">Hello world!</string>
+
+    <string name="sendto_server">送出</string>
+
 </resources>
