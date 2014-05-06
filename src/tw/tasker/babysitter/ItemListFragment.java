@@ -1,13 +1,11 @@
 package tw.tasker.babysitter;
 
+import tw.tasker.babysitter.dummy.DummyContent;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
-import tw.tasker.babysitter.dummy.DummyContent;
 
 /**
  * A list fragment representing a list of Items. This fragment also supports
@@ -19,6 +17,8 @@ import tw.tasker.babysitter.dummy.DummyContent;
  * interface.
  */
 public class ItemListFragment extends ListFragment {
+	private String[] mtitle = new String[] { "台北-大安區", "台中-西屯區", "高雄-鳳山區", "高雄-三民區", "高雄-岡山區", "高雄-前鎮區" };
+	private String[] minfo = new String[] { "張媽媽", "吳媽媽", "陳媽媽", "李媽媽", "郭媽媽", "錢媽媽" };
 
 	/**
 	 * The serialization (saved instance state) Bundle key representing the
@@ -69,12 +69,21 @@ public class ItemListFragment extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//setHasOptionsMenu(true);
+		// setHasOptionsMenu(true);
+
+		// 標題資料
+		CharSequence[] Mtitle = mtitle;
+		// 內容
+		CharSequence[] Minfo = minfo;
+		// 載入列表中，new出MyAdapter時帶入所需"標題"."內容"資料
+		setListAdapter(new MyAdapter(getLayoutInflater(savedInstanceState),
+				Mtitle, Minfo));
 
 		// TODO: replace with a real list adapter.
-		setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-				android.R.layout.simple_list_item_activated_1,
-				android.R.id.text1, DummyContent.ITEMS));
+		// setListAdapter(new
+		// ArrayAdapter<DummyContent.DummyItem>(getActivity(),
+		// android.R.layout.simple_list_item_activated_1,
+		// android.R.id.text1, DummyContent.ITEMS));
 	}
 
 	@Override
