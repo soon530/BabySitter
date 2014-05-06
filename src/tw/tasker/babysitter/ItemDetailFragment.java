@@ -1,12 +1,15 @@
 package tw.tasker.babysitter;
 
 import tw.tasker.babysitter.dummy.DummyContent;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 /**
@@ -26,6 +29,8 @@ public class ItemDetailFragment extends Fragment {
 	 */
 	private DummyContent.DummyItem mItem;
 	private ListView mListView;
+
+	private ImageView mBabyIcon;
 	private static final String[] mStrings = new String[] {"一","二","三","四","五","六","七","八","九"};
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
@@ -56,6 +61,22 @@ public class ItemDetailFragment extends Fragment {
 		
 		mListView = (ListView) rootView.findViewById(R.id.listView1);
 		mListView.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, mStrings ));
+		
+		mBabyIcon = (ImageView) rootView.findViewById(R.id.baby_icon);
+		mBabyIcon.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent();
+				intent.setClass(getActivity().getApplicationContext(), BabyDetailActivity.class);
+				startActivity(intent);
+
+			}
+		});
+		
+		
+		
 		// Show the dummy content as text in a TextView.
 //		if (mItem != null) {
 //			((TextView) rootView.findViewById(R.id.item_detail))

@@ -1,15 +1,16 @@
 package tw.tasker.babysitter;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
+import android.widget.Button;
+import android.widget.Toast;
 
 public class BabysitterCommentActivity extends ActionBarActivity {
 
@@ -49,6 +50,8 @@ public class BabysitterCommentActivity extends ActionBarActivity {
 	 */
 	public static class PlaceholderFragment extends Fragment {
 
+		private Button mButton;
+
 		public PlaceholderFragment() {
 		}
 
@@ -57,6 +60,20 @@ public class BabysitterCommentActivity extends ActionBarActivity {
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(
 					R.layout.fragment_babysitter_comment, container, false);
+			
+			mButton = (Button) rootView.findViewById(R.id.button1);
+			mButton.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Toast.makeText(v.getContext(), "已送出..", Toast.LENGTH_LONG).show();
+					Intent intent = new Intent();
+					intent.setClass(getActivity().getApplicationContext(), BabysitterDetailActivity.class);
+					startActivity(intent);
+				}
+			});
+			
+			
 			return rootView;
 		}
 	}

@@ -1,17 +1,21 @@
 package tw.tasker.babysitter;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.os.Build;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
 
 public class BabyDetailActivity extends ActionBarActivity {
+	private static final String[] mStrings = new String[] {"一","二","三","四","五","六","七","八","九"};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,9 @@ public class BabyDetailActivity extends ActionBarActivity {
 	 */
 	public static class PlaceholderFragment extends Fragment {
 
+		private ListView mListView;
+		private ImageView mBabyIcon;
+
 		public PlaceholderFragment() {
 		}
 
@@ -57,6 +64,22 @@ public class BabyDetailActivity extends ActionBarActivity {
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_baby_detail,
 					container, false);
+			mListView = (ListView) rootView.findViewById(R.id.listView1);
+			mListView.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, mStrings ));
+			
+			mBabyIcon = (ImageView) rootView.findViewById(R.id.baby_icon);
+			mBabyIcon.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent();
+					intent.setClass(getActivity().getApplicationContext(), BabysitterDetailActivity.class);
+					startActivity(intent);
+
+				}
+			});
+
+			
 			return rootView;
 		}
 	}
