@@ -8,9 +8,64 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="tw.tasker.babysitter.BabysitterCommentActivity$PlaceholderFragment" >
 
+    <ImageView
+        android:id="@+id/MyAdapter_ImageView_icon"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="2dp"
+        android:contentDescription="TODO" 
+        android:src="@drawable/ic_launcher"/>
+
     <TextView
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_alignBottom="@+id/MyAdapter_ImageView_icon"
+        android:layout_marginBottom="26dp"
+        android:layout_marginLeft="33dp"
+        android:layout_toRightOf="@+id/MyAdapter_ImageView_icon"
+        android:text="評論者：Vic"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <RatingBar
+        android:id="@+id/ratingBar1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/MyAdapter_ImageView_icon"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp" />
+
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/ratingBar1"
+        android:layout_centerVertical="true"
+        android:ems="10"
+        android:hint="標題" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editText1"
+        android:layout_below="@+id/editText1"
+        android:layout_marginTop="48dp"
+        android:ems="10"
+        android:hint="說明"
+        android:inputType="textMultiLine" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editText2"
+        android:layout_alignRight="@+id/editText2"
+        android:layout_below="@+id/editText2"
+        android:layout_marginTop="38dp"
+        android:text="送出" />
 
 </RelativeLayout>
