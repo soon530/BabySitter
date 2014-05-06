@@ -92,7 +92,7 @@ public class BabysitterListActivity extends FragmentActivity implements
 		int id = item.getItemId();
 		if (id == R.id.action_map) {
 			Intent intent = new Intent();
-			intent.setClass(this, MapActivity.class);
+			intent.setClass(this, BabysitterMapActivity.class);
 			startActivity(intent);
 		}
 		

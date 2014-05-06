@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- MainActivity -->
     <string name="app_name">保母通</string>
     <string name="search_babysitter">搜尋保母</string>
     <string name="rating_babysitter">評分保母</string>
@@ -13,10 +14,9 @@
     <!-- BabySitterMapActivity -->
     <string name="title_activity_map">搜尋保母</string>
     <string name="goto_babysitterlist_activity">列表</string>
-    
-    <!-- BabySitterMasterActivity -->
+
+    <!-- BabySitterListActivity -->
     <string name="goto_babysittermap_activity">地圖</string>
-    
     
     
     <string name="hello_world">Hello world!</string>

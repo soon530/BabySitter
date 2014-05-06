@@ -45,7 +45,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="tw.tasker.babysitter.MapActivity"
+            android:name="tw.tasker.babysitter.BabysitterMapActivity"
             android:label="@string/title_activity_map" >
         </activity>
         <activity
