@@ -32,14 +32,14 @@ public class MyLocation implements ConnectionCallbacks,
 
 	private LocationClient mLocationClient;
 	private Location mCurrentLocation;
-	private MapActivity mMapAcivity;
+	private BabysitterMapActivity mMapAcivity;
 	private LatLngBounds mBounds;
 
 	public LatLngBounds getmBounds() {
 		return mBounds;
 	}
 
-	public MyLocation(MapActivity mapActivity) {
+	public MyLocation(BabysitterMapActivity mapActivity) {
 		mMapAcivity = mapActivity;
 		mLocationClient = new LocationClient(mapActivity, this, this);
 		connect();

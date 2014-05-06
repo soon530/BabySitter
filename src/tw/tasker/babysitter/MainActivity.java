@@ -51,7 +51,7 @@ public class MainActivity extends ActionBarActivity implements
 
 		if (position == SEARCH_BABYSITTER_POSITION) {
 			Intent toMap = new Intent();
-			toMap.setClass(this, MapActivity.class);
+			toMap.setClass(this, BabysitterMapActivity.class);
 			startActivity(toMap);
 		} else {
 
