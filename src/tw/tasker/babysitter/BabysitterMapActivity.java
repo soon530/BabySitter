@@ -64,14 +64,17 @@ public class BabysitterMapActivity extends ActionBarActivity {
 					}
 				}
 			});
-			
+
 			final Intent intent = new Intent();
 			intent.setClass(this, BabysitterDetailActivity.class);
-			
+
 			mMap.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
-				
+
 				@Override
 				public void onInfoWindowClick(Marker marker) {
+					Bundle bundle = new Bundle();
+					bundle.putString("objectId", marker.getTitle());
+					intent.putExtras(bundle);
 					startActivity(intent);
 				}
 			});
@@ -92,7 +95,7 @@ public class BabysitterMapActivity extends ActionBarActivity {
 		// Set up additional query filters
 		mapQuery.whereWithinKilometers("location", myPoint,
 				MAX_POST_SEARCH_DISTANCE);
-		//mapQuery.include("user");
+		// mapQuery.include("user");
 		mapQuery.orderByDescending("createdAt");
 		mapQuery.setLimit(MAX_POST_SEARCH_RESULTS);
 
@@ -106,20 +109,22 @@ public class BabysitterMapActivity extends ActionBarActivity {
 
 					double lat = outline.getLocation().getLatitude();
 					double lng = outline.getLocation().getLongitude();
-					LOGD(TAG, "outline" + outline.getText() + ",lat" + lat + ",lng" + lng);
-					
-					
+					LOGD(TAG, "outline" + outline.getText() + ",lat" + lat
+							+ ",lng" + lng);
+
 					LatLng latLng = new LatLng(lat, lng);
 
 					MarkerOptions markerOpts = new MarkerOptions();
 					markerOpts.position(latLng);
-					markerOpts.title("保母：" + outline.getText() + "\n已托育：" + outline.getBabycareCount());
+					markerOpts.title(outline.getObjectId());
+					markerOpts.snippet("保母：" + outline.getText() + "\n已托育："
+							+ outline.getBabycareCount());
 					BitmapDescriptor icon = BitmapDescriptorFactory
 							.defaultMarker(BitmapDescriptorFactory.HUE_RED);
 					markerOpts.icon(icon);
 
 					mMap.addMarker(markerOpts);
-					
+
 				}
 			}
 		});
