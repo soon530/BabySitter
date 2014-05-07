@@ -9,15 +9,24 @@ import com.parse.ParseUser;
 @ParseClassName("babysitter")
 public class BabysitterOutline extends ParseObject {
 
+	public int getBabycareCount() {
+		int value = getInt("babycare_count");
+		return value;
+	}
+	
+	public void setBabycareCount(int value) {
+		put("babycare_count", value);
+	}
+
 	public String getText() {
 		String value = getString("name");
 		return value;
 	}
-	
+
 	public void setText(String value) {
 		put("text", value);
 	}
-	
+
 	public ParseUser getUser() {
 		return getParseUser("user");
 	}

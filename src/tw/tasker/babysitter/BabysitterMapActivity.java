@@ -1,5 +1,8 @@
 package tw.tasker.babysitter;
 
+import static tw.tasker.babysitter.LogUtils.LOGD;
+import static tw.tasker.babysitter.LogUtils.makeLogTag;
+
 import java.util.List;
 
 import android.content.Intent;
@@ -11,11 +14,13 @@ import android.view.MenuItem;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMapLoadedCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.FindCallback;
 import com.parse.Parse;
@@ -24,9 +29,6 @@ import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
-
-import static tw.tasker.babysitter.LogUtils.LOGD;
-import static tw.tasker.babysitter.LogUtils.makeLogTag;
 
 public class BabysitterMapActivity extends ActionBarActivity {
 	private static final String TAG = makeLogTag(BabysitterMapActivity.class);
@@ -60,6 +62,17 @@ public class BabysitterMapActivity extends ActionBarActivity {
 								mMyLocation.getmBounds(), 5));
 						doMapQuery();
 					}
+				}
+			});
+			
+			final Intent intent = new Intent();
+			intent.setClass(this, BabysitterDetailActivity.class);
+			
+			mMap.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
+				
+				@Override
+				public void onInfoWindowClick(Marker marker) {
+					startActivity(intent);
 				}
 			});
 		}
@@ -100,7 +113,7 @@ public class BabysitterMapActivity extends ActionBarActivity {
 
 					MarkerOptions markerOpts = new MarkerOptions();
 					markerOpts.position(latLng);
-					markerOpts.title("test");
+					markerOpts.title("保母：" + outline.getText() + "\n已托育：" + outline.getBabycareCount());
 					BitmapDescriptor icon = BitmapDescriptorFactory
 							.defaultMarker(BitmapDescriptorFactory.HUE_RED);
 					markerOpts.icon(icon);
