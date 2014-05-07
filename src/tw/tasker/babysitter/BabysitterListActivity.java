@@ -3,7 +3,7 @@ package tw.tasker.babysitter;
 //import android.R;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -22,7 +22,7 @@ import android.view.MenuItem;
  * This activity also implements the required {@link ItemListFragment.Callbacks}
  * interface to listen for item selections.
  */
-public class BabysitterListActivity extends FragmentActivity implements
+public class BabysitterListActivity extends ActionBarActivity implements
 		ItemListFragment.Callbacks {
 
 	/**

@@ -4,9 +4,9 @@
     tools:context="tw.tasker.babysitter.BabyDetailActivity" >
 
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/post_words"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never"/>
+        android:title="@string/post_words"
+        app:showAsAction="always"/>
 
 </menu>

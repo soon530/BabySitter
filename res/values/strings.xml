@@ -29,6 +29,9 @@
 
     <!-- BabyDetailActivity -->
     <string name="title_activity_baby_detail">寶寶明細</string>
+    <string name="post_words">打卡</string>
     
     <string name="hello_world">Hello world!</string>
+    
+    
 </resources>
