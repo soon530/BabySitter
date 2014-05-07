@@ -1,6 +1,5 @@
 package tw.tasker.babysitter;
 
-//import android.R;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -31,6 +30,7 @@ public class BabysitterListActivity extends ActionBarActivity implements
 	 */
 	private boolean mTwoPane;
 
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

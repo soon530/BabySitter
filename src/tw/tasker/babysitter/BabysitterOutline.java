@@ -43,6 +43,15 @@ public class BabysitterOutline extends ParseObject {
 		put("location", value);
 	}
 
+	public String getAddress() {
+		String value = getString("address");
+		return value;
+	}
+
+	public void setAddress(String value) {
+		put("text", value);
+	}
+	
 	public static ParseQuery<BabysitterOutline> getQuery() {
 		return ParseQuery.getQuery(BabysitterOutline.class);
 	}

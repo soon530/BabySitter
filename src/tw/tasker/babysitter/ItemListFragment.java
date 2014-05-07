@@ -2,10 +2,17 @@ package tw.tasker.babysitter;
 
 import tw.tasker.babysitter.dummy.DummyContent;
 import android.app.Activity;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import com.parse.ParseQuery;
+import com.parse.ParseQueryAdapter;
 
 /**
  * A list fragment representing a list of Items. This fragment also supports
@@ -17,8 +24,14 @@ import android.widget.ListView;
  * interface.
  */
 public class ItemListFragment extends ListFragment {
-	private String[] mtitle = new String[] { "台北-大安區", "台中-西屯區", "高雄-鳳山區", "高雄-三民區", "高雄-岡山區", "高雄-前鎮區" };
-	private String[] minfo = new String[] { "張媽媽", "吳媽媽", "陳媽媽", "李媽媽", "郭媽媽", "錢媽媽" };
+	private String[] mtitle = new String[] { "台北-大安區", "台中-西屯區", "高雄-鳳山區",
+			"高雄-三民區", "高雄-岡山區", "高雄-前鎮區" };
+	private String[] minfo = new String[] { "張媽媽", "吳媽媽", "陳媽媽", "李媽媽", "郭媽媽",
+			"錢媽媽" };
+
+	private ParseQueryAdapter<BabysitterOutline> mOutlines;
+	// Maximum results returned from a Parse query
+	private static final int MAX_POST_SEARCH_RESULTS = 20;
 
 	/**
 	 * The serialization (saved instance state) Bundle key representing the
@@ -71,13 +84,62 @@ public class ItemListFragment extends ListFragment {
 		super.onCreate(savedInstanceState);
 		// setHasOptionsMenu(true);
 
+		// Set up a customized query
+		ParseQueryAdapter.QueryFactory<BabysitterOutline> factory = new ParseQueryAdapter.QueryFactory<BabysitterOutline>() {
+			public ParseQuery<BabysitterOutline> create() {
+				//Location myLoc = (currentLocation == null) ? lastLocation : currentLocation;
+				ParseQuery<BabysitterOutline> query = BabysitterOutline
+						.getQuery();
+				// query.include("user");
+				query.orderByDescending("createdAt");
+				// query.whereWithinKilometers("location",
+				// geoPointFromLocation(myLoc), radius * METERS_PER_FEET /
+				// METERS_PER_KILOMETER);
+				query.setLimit(MAX_POST_SEARCH_RESULTS);
+				return query;
+			}
+		};
+
+		// Set up the query adapter
+		mOutlines = new ParseQueryAdapter<BabysitterOutline>(getActivity().getApplicationContext(), factory) {
+			@Override
+			public View getItemView(BabysitterOutline post, View view, ViewGroup parent) {
+				if (view == null) {
+					view = View.inflate(getContext(), R.layout.adapter, null);
+				}
+				TextView contentView = (TextView) view
+						.findViewById(R.id.MyAdapter_TextView_title);
+				TextView usernameView = (TextView) view
+						.findViewById(R.id.MyAdapter_TextView_info);
+				
+				ImageView babysitterImage = (ImageView) view
+				.findViewById(R.id.MyAdapter_ImageView_icon);
+				
+				contentView.setText(post.getAddress());
+				usernameView.setText(post.getText());
+				babysitterImage.setBackgroundResource(R.drawable.ic_launcher);
+				
+				return view;
+			}
+		};
+
+	    // Disable automatic loading when the adapter is attached to a view.
+		mOutlines.setAutoload(false);
+
+	    // Disable pagination, we'll manage the query limit ourselves
+		mOutlines.setPaginationEnabled(false);
+
+		
 		// 標題資料
 		CharSequence[] Mtitle = mtitle;
 		// 內容
 		CharSequence[] Minfo = minfo;
 		// 載入列表中，new出MyAdapter時帶入所需"標題"."內容"資料
-		setListAdapter(new MyAdapter(getLayoutInflater(savedInstanceState),
-				Mtitle, Minfo));
+
+		setListAdapter(mOutlines);
+		
+		//		setListAdapter(new MyAdapter(getLayoutInflater(savedInstanceState),
+//				Mtitle, Minfo));
 
 		// TODO: replace with a real list adapter.
 		// setListAdapter(new
@@ -86,6 +148,26 @@ public class ItemListFragment extends ListFragment {
 		// android.R.id.text1, DummyContent.ITEMS));
 	}
 
+	  /*
+	   * Set up a query to update the list view
+	   */
+	  private void doListQuery() {
+	    //Location myLoc = (currentLocation == null) ? lastLocation : currentLocation;
+	    // If location info is available, load the data
+	    //if (myLoc != null) {
+	      // Refreshes the list view with new data based
+	      // usually on updated location data.
+	      mOutlines.loadObjects();
+	    //}
+	  }
+	  
+	  @Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		doListQuery();
+	}
+	  
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
