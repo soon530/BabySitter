@@ -26,9 +26,9 @@ public class MyLocation implements ConnectionCallbacks,
 	// Accuracy for calculating the map bounds
 	private static final float OFFSET_CALCULATION_ACCURACY = 0.01f;
 
-	private static final float METERS_PER_FEET = 0.3048f;
-
-	private static final int RADIUS = 250;
+	static final float METERS_PER_FEET = 0.3048f;
+	static final int METERS_PER_KILOMETER = 1000;
+	static final int RADIUS = 250;
 
 	private LocationClient mLocationClient;
 	private Location mCurrentLocation;
@@ -37,6 +37,10 @@ public class MyLocation implements ConnectionCallbacks,
 
 	public LatLngBounds getmBounds() {
 		return mBounds;
+	}
+	
+	public Location getCurLocation() {
+		return mCurrentLocation;
 	}
 
 	public MyLocation(BabysitterMapActivity mapActivity) {
