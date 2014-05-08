@@ -47,9 +47,14 @@ public class ItemDetailFragment extends Fragment {
 	private TextView tname;
 
 	private TextView taddress;
+	private RatingBar mRatingBar;
 
 	private String objectId;
 	
+	
+	public int mTotalRating;
+	public int mTotalComment;
+
 	
 	private ParseQueryAdapter<BabysitterComment> mOutlines;
 	// Maximum results returned from a Parse query
@@ -137,6 +142,7 @@ public class ItemDetailFragment extends Fragment {
 		ParseQuery<BabysitterOutline> detailQuery = BabysitterOutline.getQuery();
 		detailQuery.getInBackground(objectId, new GetCallback<BabysitterOutline>() {
 
+
 			@Override
 			public void done(BabysitterOutline outline, ParseException e) {
 				if(e != null) {
@@ -147,6 +153,18 @@ public class ItemDetailFragment extends Fragment {
 					LOGD("vic", "address" + mAddress + "name" + mName);
 					tname.setText(mName);
 					taddress.setText(mAddress);
+					
+					
+					mTotalRating = outline.getTotalRating();
+					mTotalComment = outline.getTotalComment();
+					
+					int rating = 0;  
+					try {
+						rating =  mTotalRating/mTotalComment ;
+					} catch (Exception e2) {
+						// TODO: handle exception
+					}
+					mRatingBar.setRating(rating);
 				}
 			}
 		});
@@ -185,6 +203,8 @@ public class ItemDetailFragment extends Fragment {
 
 		 taddress = (TextView) rootView.findViewById(R.id.MyAdapter_TextView_info);
 		//taddress.setText(mAddress);
+		 
+		 mRatingBar = (RatingBar) rootView.findViewById(R.id.ratingBar1);
 
 		
 		mListView = (ListView) rootView.findViewById(R.id.listView1);

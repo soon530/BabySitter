@@ -52,6 +52,23 @@ public class BabysitterOutline extends ParseObject {
 		put("text", value);
 	}
 	
+	public int getTotalRating() {
+		int value = getInt("totalRating");
+		return value;
+	}
+	
+	public void setTotalRating(int value) {
+		put("totalRating", value);
+	}
+	
+	public int getTotalComment() {
+		int value = getInt("totalComment");
+		return value;
+	}
+	
+	public void setTotalComment(int value) {
+		put("totalComment", value);
+	}
 	public static ParseQuery<BabysitterOutline> getQuery() {
 		return ParseQuery.getQuery(BabysitterOutline.class);
 	}

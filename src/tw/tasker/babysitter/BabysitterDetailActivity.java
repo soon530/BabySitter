@@ -19,6 +19,7 @@ import android.view.MenuItem;
 public class BabysitterDetailActivity extends ActionBarActivity {
 
 	private String objectId;
+	private ItemDetailFragment fragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,7 @@ public class BabysitterDetailActivity extends ActionBarActivity {
 			Bundle arguments = new Bundle();
 			arguments.putString(ItemDetailFragment.ARG_ITEM_ID, getIntent()
 					.getStringExtra(ItemDetailFragment.ARG_ITEM_ID));
-			ItemDetailFragment fragment = new ItemDetailFragment();
+			 fragment = new ItemDetailFragment();
 			fragment.setArguments(arguments);
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.item_detail_container, fragment).commit();
@@ -83,6 +84,8 @@ public class BabysitterDetailActivity extends ActionBarActivity {
 			
 			Bundle bundle = new Bundle();
 			bundle.putString("objectId", objectId);
+			bundle.putInt("totalRating", fragment.mTotalRating);
+			bundle.putInt("totalComment", fragment.mTotalComment);
 			intent.putExtras(bundle);
 			
 			intent.setClass(this, BabysitterCommentActivity.class);

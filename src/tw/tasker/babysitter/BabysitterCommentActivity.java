@@ -1,5 +1,6 @@
 package tw.tasker.babysitter;
 
+import static tw.tasker.babysitter.LogUtils.LOGD;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,11 +15,11 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.SaveCallback;
-
-import static tw.tasker.babysitter.LogUtils.LOGD;
 
 public class BabysitterCommentActivity extends ActionBarActivity {
 
@@ -31,10 +32,12 @@ public class BabysitterCommentActivity extends ActionBarActivity {
 
 		Bundle bundle = getIntent().getExtras();
 		String objectId = bundle.getString("objectId");
+		int totalRating = bundle.getInt("totalRating");
+		int totalComment = bundle.getInt("totalComment");
 		
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment(objectId)).commit();
+					.add(R.id.container, new PlaceholderFragment(objectId, totalRating, totalComment)).commit();
 		}
 		
 
@@ -69,10 +72,16 @@ public class BabysitterCommentActivity extends ActionBarActivity {
 		private EditText mTitle;
 		private EditText mComment;
 		private RatingBar mRating;
-		private Object mObjectId;
+		
+		private String mObjectId;
+		private int mTotalRating;
+		private int mTotalComment;
 
-		public PlaceholderFragment(String objectId) {
+
+		public PlaceholderFragment(String objectId, int totalRating, int totalComment) {
 			mObjectId = objectId;
+			mTotalComment = totalRating;
+			mTotalRating = totalComment;
 		}
 
 		@Override
@@ -96,11 +105,31 @@ public class BabysitterCommentActivity extends ActionBarActivity {
 							.show();
 
 					saveComment();
+					updateBabysitter();
 
 					Intent intent = new Intent();
 					intent.setClass(getActivity().getApplicationContext(),
 							BabysitterDetailActivity.class);
 					//startActivity(intent);
+				}
+
+				private void updateBabysitter() {
+					ParseQuery<ParseObject> query = ParseQuery.getQuery("babysitter");
+					 
+					// Retrieve the object by id
+					query.getInBackground(mObjectId, new GetCallback<ParseObject>() {
+
+					public void done(ParseObject babysitter, ParseException e) {
+					    if (e == null) {
+					      // Now let's update it with some new data. In this case, only cheatMode and score
+					      // will get sent to the Parse Cloud. playerName hasn't changed.
+					    	int r = (int) mRating.getRating();
+					    	babysitter.put("totalRating", mTotalRating + r);
+					    	babysitter.put("totalComment", mTotalComment + 1);
+					    	babysitter.saveInBackground();
+					    }
+					  }
+					});					
 				}
 
 				private void saveComment() {
