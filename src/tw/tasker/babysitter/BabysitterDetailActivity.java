@@ -18,6 +18,8 @@ import android.view.MenuItem;
  */
 public class BabysitterDetailActivity extends ActionBarActivity {
 
+	private String objectId;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -46,6 +48,10 @@ public class BabysitterDetailActivity extends ActionBarActivity {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.item_detail_container, fragment).commit();
 		}
+		
+		Bundle bundle = getIntent().getExtras();
+		objectId = bundle.getString("objectId");	
+
 	}
 
 	@Override
@@ -74,6 +80,11 @@ public class BabysitterDetailActivity extends ActionBarActivity {
 
 		if (id == R.id.action_comment) {
 			Intent intent = new Intent();
+			
+			Bundle bundle = new Bundle();
+			bundle.putString("objectId", objectId);
+			intent.putExtras(bundle);
+			
 			intent.setClass(this, BabysitterCommentActivity.class);
 			startActivity(intent);
 		}
