@@ -104,7 +104,8 @@ public class BabysitterCommentActivity extends ActionBarActivity {
 				}
 
 				private void saveComment() {
-					ParseObject post = new ParseObject("Comment");
+					// ParseObject post = new ParseObject("Comment");
+					BabysitterComment post = new BabysitterComment();
 					post.put("babysitterId", mObjectId);
 					int r = (int) mRating.getRating();
 					post.put("rating", r);

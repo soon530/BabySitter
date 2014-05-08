@@ -1,9 +1,6 @@
 package tw.tasker.babysitter;
 
-import com.parse.GetCallback;
-import com.parse.ParseException;
-import com.parse.ParseQuery;
-
+import static tw.tasker.babysitter.LogUtils.LOGD;
 import tw.tasker.babysitter.dummy.DummyContent;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,8 +12,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
-import static tw.tasker.babysitter.LogUtils.LOGD;
+
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseQueryAdapter;
 
 /**
  * A fragment representing a single Item detail screen. This fragment is either
@@ -48,6 +50,12 @@ public class ItemDetailFragment extends Fragment {
 
 	private String objectId;
 	
+	
+	private ParseQueryAdapter<BabysitterComment> mOutlines;
+	// Maximum results returned from a Parse query
+	private static final int MAX_POST_SEARCH_RESULTS = 20;
+
+	
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
 	 * fragment (e.g. upon screen orientation changes).
@@ -69,6 +77,57 @@ public class ItemDetailFragment extends Fragment {
 		
 		Bundle bundle = getActivity().getIntent().getExtras();
 		objectId = bundle.getString("objectId");
+		
+		
+		
+		// Set up a customized query
+		ParseQueryAdapter.QueryFactory<BabysitterComment> factory = new ParseQueryAdapter.QueryFactory<BabysitterComment>() {
+			public ParseQuery<BabysitterComment> create() {
+				//Location myLoc = (currentLocation == null) ? lastLocation : currentLocation;
+				ParseQuery<BabysitterComment> query = BabysitterComment
+						.getQuery();
+				// query.include("user");
+				query.orderByDescending("createdAt");
+				query.whereEqualTo("babysitterId", objectId);
+				// query.whereWithinKilometers("location",
+				// geoPointFromLocation(myLoc), radius * METERS_PER_FEET /
+				// METERS_PER_KILOMETER);
+				query.setLimit(MAX_POST_SEARCH_RESULTS);
+				return query;
+			}
+		};
+
+		// Set up the query adapter
+		mOutlines = new ParseQueryAdapter<BabysitterComment>(getActivity().getApplicationContext(), factory) {
+			@Override
+			public View getItemView(BabysitterComment post, View view, ViewGroup parent) {
+				if (view == null) {
+					view = View.inflate(getContext(), R.layout.adapter, null);
+				}
+				TextView contentView = (TextView) view
+						.findViewById(R.id.MyAdapter_TextView_title);
+				TextView usernameView = (TextView) view
+						.findViewById(R.id.MyAdapter_TextView_info);
+				RatingBar ratingBar = (RatingBar) view.findViewById(R.id.ratingBar1);
+				
+				ImageView babysitterImage = (ImageView) view
+				.findViewById(R.id.MyAdapter_ImageView_icon);
+				
+				contentView.setText(post.getTitle());
+				usernameView.setText(post.getComment());
+				ratingBar.setRating(post.getRating());
+				
+				babysitterImage.setBackgroundResource(R.drawable.ic_launcher);
+				
+				return view;
+			}
+		};
+
+	    // Disable automatic loading when the adapter is attached to a view.
+		mOutlines.setAutoload(false);
+
+	    // Disable pagination, we'll manage the query limit ourselves
+		mOutlines.setPaginationEnabled(false);
 		
 
 	}
@@ -94,11 +153,25 @@ public class ItemDetailFragment extends Fragment {
 	
 	}
 
+	  /*
+	   * Set up a query to update the list view
+	   */
+	  private void doListQuery() {
+	    //Location myLoc = (currentLocation == null) ? lastLocation : currentLocation;
+	    // If location info is available, load the data
+	    //if (myLoc != null) {
+	      // Refreshes the list view with new data based
+	      // usually on updated location data.
+	      mOutlines.loadObjects();
+	    //}
+	  }
+	  
 	@Override
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
 		doDetailQuery(objectId);
+		doListQuery();
 	}
 	
 	@Override
@@ -115,14 +188,15 @@ public class ItemDetailFragment extends Fragment {
 
 		
 		mListView = (ListView) rootView.findViewById(R.id.listView1);
-		mListView.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, mStrings ));
+		mListView.setAdapter(mOutlines);
+		
+		//mListView.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, mStrings ));
 		
 		mBabyIcon = (ImageView) rootView.findViewById(R.id.baby_icon);
 		mBabyIcon.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				Intent intent = new Intent();
 				intent.setClass(getActivity().getApplicationContext(), BabyDetailActivity.class);
 				startActivity(intent);

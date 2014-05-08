@@ -48,6 +48,8 @@ public class BabysitterMapActivity extends ActionBarActivity {
 		setContentView(R.layout.fragment_search_babysitter_map);
 
 		ParseObject.registerSubclass(BabysitterOutline.class);
+		ParseObject.registerSubclass(BabysitterComment.class);
+
 		Parse.initialize(this, YOUR_APPLICATION_ID, YOUR_CLIENT_KEY);
 
 		setUpMapIfNeeded();
