@@ -1,7 +1,9 @@
 package tw.tasker.babysitter.presenter;
 
-public interface BabysitterMapPresenter {
-	void onOptionsItemSelected();
+import com.google.android.gms.maps.model.Marker;
 
-	void onInfoWindowClick();
+public interface BabysitterMapPresenter {
+	void onOptionsItemSelected(int id);
+
+	void onInfoWindowClick(Marker marker);
 }

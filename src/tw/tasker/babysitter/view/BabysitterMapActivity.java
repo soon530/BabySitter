@@ -6,11 +6,10 @@ import static tw.tasker.babysitter.utils.LogUtils.makeLogTag;
 import java.util.List;
 
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.R.id;
-import tw.tasker.babysitter.R.layout;
-import tw.tasker.babysitter.R.menu;
 import tw.tasker.babysitter.model.BabysitterComment;
 import tw.tasker.babysitter.model.BabysitterOutline;
+import tw.tasker.babysitter.presenter.BabysitterMapPresenter;
+import tw.tasker.babysitter.presenter.BabysitterMapPresenterImpl;
 import tw.tasker.babysitter.utils.MyLocation;
 import android.content.Intent;
 import android.location.Location;
@@ -37,13 +36,15 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
-public class BabysitterMapActivity extends ActionBarActivity {
+public class BabysitterMapActivity extends ActionBarActivity implements
+		OnInfoWindowClickListener, BabysitterMapView, OnMapLoadedCallback {
 	private static final String TAG = makeLogTag(BabysitterMapActivity.class);
 
 	private static final int MAX_POST_SEARCH_RESULTS = 20;
 
 	private GoogleMap mMap;
 	private MyLocation mMyLocation;
+	private BabysitterMapPresenter mPresneter;
 	// Maximum post search radius for map in kilometers
 	private static final int MAX_POST_SEARCH_DISTANCE = 100;
 	private static final String YOUR_APPLICATION_ID = "NJFvH3uzP9EHAKydw7iSIICBBU4AfAHvhJzuTawu";
@@ -59,42 +60,15 @@ public class BabysitterMapActivity extends ActionBarActivity {
 
 		Parse.initialize(this, YOUR_APPLICATION_ID, YOUR_CLIENT_KEY);
 
+		mPresneter = new BabysitterMapPresenterImpl(this);
+
 		setUpMapIfNeeded();
 		mMyLocation = new MyLocation(this);
 
 		if (mMap != null) {
-			mMap.setOnMapLoadedCallback(new OnMapLoadedCallback() {
-				@Override
-				public void onMapLoaded() {
-					if (mMap != null) {
-						mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(
-								mMyLocation.getmBounds(), 5));
-						doMapQuery();
-					}
-				}
-			});
-
-			final Intent intent = new Intent();
-			intent.setClass(this, BabysitterDetailActivity.class);
-
-			mMap.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
-
-				@Override
-				public void onInfoWindowClick(Marker marker) {
-					Bundle bundle = new Bundle();
-					bundle.putString("objectId", marker.getTitle());
-					intent.putExtras(bundle);
-					startActivity(intent);
-				}
-			});
+			mMap.setOnMapLoadedCallback(this);
+			mMap.setOnInfoWindowClickListener(this);
 		}
-
-		ParseQueryAdapter.QueryFactory<BabysitterOutline> factor = new ParseQueryAdapter.QueryFactory<BabysitterOutline>() {
-			public ParseQuery<BabysitterOutline> create() {
-				return null;
-			}
-		};
-
 	}
 
 	private void doMapQuery() {
@@ -154,15 +128,8 @@ public class BabysitterMapActivity extends ActionBarActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_list) {
-			Intent intent = new Intent();
-			intent.setClass(this, BabysitterListActivity.class);
-			startActivity(intent);
-		}
+		mPresneter.onOptionsItemSelected(id);
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -200,5 +167,30 @@ public class BabysitterMapActivity extends ActionBarActivity {
 				// mMap.setOnMyLocationButtonClickListener(this);
 			}
 		}
+	}
+
+	@Override
+	public void onInfoWindowClick(Marker marker) {
+		mPresneter.onInfoWindowClick(marker);
+	}
+
+	@Override
+	public void showMyLocation() {
+
+	}
+
+	@Override
+	public void setMarkers(List<MarkerOptions> markerOptions) {
+
+	}
+
+	@Override
+	public void onMapLoaded() {
+		if (mMap != null) {
+			mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(
+					mMyLocation.getmBounds(), 5));
+			doMapQuery();
+		}
+
 	}
 }
