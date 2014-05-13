@@ -23,12 +23,12 @@ import com.parse.ParseQueryAdapter;
  * A list fragment representing a list of Items. This fragment also supports
  * tablet devices by allowing list items to be given an 'activated' state upon
  * selection. This helps indicate which item is currently being viewed in a
- * {@link ItemDetailFragment}.
+ * {@link BabysitterDetailFragment}.
  * <p>
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class ItemListFragment extends ListFragment {
+public class BabysitterListFragment extends ListFragment {
 	private String[] mtitle = new String[] { "台北-大安區", "台中-西屯區", "高雄-鳳山區",
 			"高雄-三民區", "高雄-岡山區", "高雄-前鎮區" };
 	private String[] minfo = new String[] { "張媽媽", "吳媽媽", "陳媽媽", "李媽媽", "郭媽媽",
@@ -81,7 +81,7 @@ public class ItemListFragment extends ListFragment {
 	 * Mandatory empty constructor for the fragment manager to instantiate the
 	 * fragment (e.g. upon screen orientation changes).
 	 */
-	public ItemListFragment() {
+	public BabysitterListFragment() {
 	}
 
 	@Override

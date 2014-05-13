@@ -4,7 +4,7 @@ import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.R.id;
 import tw.tasker.babysitter.R.layout;
 import tw.tasker.babysitter.R.menu;
-import tw.tasker.babysitter.view.ItemListFragment.Callbacks;
+import tw.tasker.babysitter.view.BabysitterListFragment.Callbacks;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -20,14 +20,14 @@ import android.view.MenuItem;
  * vertical panes.
  * <p>
  * The activity makes heavy use of fragments. The list of items is a
- * {@link ItemListFragment} and the item details (if present) is a
- * {@link ItemDetailFragment}.
+ * {@link BabysitterListFragment} and the item details (if present) is a
+ * {@link BabysitterDetailFragment}.
  * <p>
- * This activity also implements the required {@link ItemListFragment.Callbacks}
+ * This activity also implements the required {@link BabysitterListFragment.Callbacks}
  * interface to listen for item selections.
  */
 public class BabysitterListActivity extends ActionBarActivity implements
-		ItemListFragment.Callbacks {
+		BabysitterListFragment.Callbacks {
 
 	/**
 	 * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -50,7 +50,7 @@ public class BabysitterListActivity extends ActionBarActivity implements
 
 			// In two-pane mode, list items should be given the
 			// 'activated' state when touched.
-			((ItemListFragment) getSupportFragmentManager().findFragmentById(
+			((BabysitterListFragment) getSupportFragmentManager().findFragmentById(
 					R.id.item_list)).setActivateOnItemClick(true);
 		}
 
@@ -58,7 +58,7 @@ public class BabysitterListActivity extends ActionBarActivity implements
 	}
 
 	/**
-	 * Callback method from {@link ItemListFragment.Callbacks} indicating that
+	 * Callback method from {@link BabysitterListFragment.Callbacks} indicating that
 	 * the item with the given ID was selected.
 	 */
 	@Override
@@ -68,8 +68,8 @@ public class BabysitterListActivity extends ActionBarActivity implements
 			// adding or replacing the detail fragment using a
 			// fragment transaction.
 			Bundle arguments = new Bundle();
-			arguments.putString(ItemDetailFragment.ARG_ITEM_ID, id);
-			ItemDetailFragment fragment = new ItemDetailFragment();
+			arguments.putString(BabysitterDetailFragment.ARG_ITEM_ID, id);
+			BabysitterDetailFragment fragment = new BabysitterDetailFragment();
 			fragment.setArguments(arguments);
 			getSupportFragmentManager().beginTransaction()
 					.replace(R.id.item_detail_container, fragment).commit();
@@ -78,7 +78,7 @@ public class BabysitterListActivity extends ActionBarActivity implements
 			// In single-pane mode, simply start the detail activity
 			// for the selected item ID.
 			Intent detailIntent = new Intent(this, BabysitterDetailActivity.class);
-			detailIntent.putExtra(ItemDetailFragment.ARG_ITEM_ID, id);
+			detailIntent.putExtra(BabysitterDetailFragment.ARG_ITEM_ID, id);
 			startActivity(detailIntent);
 		}
 	}

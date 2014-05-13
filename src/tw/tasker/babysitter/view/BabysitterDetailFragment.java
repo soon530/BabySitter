@@ -31,7 +31,7 @@ import com.parse.ParseQueryAdapter;
  * contained in a {@link BabysitterListActivity} in two-pane mode (on tablets) or a
  * {@link BabysitterDetailActivity} on handsets.
  */
-public class ItemDetailFragment extends Fragment {
+public class BabysitterDetailFragment extends Fragment {
 	/**
 	 * The fragment argument representing the item ID that this fragment
 	 * represents.
@@ -71,7 +71,7 @@ public class ItemDetailFragment extends Fragment {
 	 * Mandatory empty constructor for the fragment manager to instantiate the
 	 * fragment (e.g. upon screen orientation changes).
 	 */
-	public ItemDetailFragment() {
+	public BabysitterDetailFragment() {
 	}
 
 	@Override

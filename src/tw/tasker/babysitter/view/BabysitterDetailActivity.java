@@ -18,12 +18,12 @@ import android.view.MenuItem;
  * side-by-side with a list of items in a {@link BabysitterListActivity}.
  * <p>
  * This activity is mostly just a 'shell' activity containing nothing more than
- * a {@link ItemDetailFragment}.
+ * a {@link BabysitterDetailFragment}.
  */
 public class BabysitterDetailActivity extends ActionBarActivity {
 
 	private String objectId;
-	private ItemDetailFragment fragment;
+	private BabysitterDetailFragment fragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +46,9 @@ public class BabysitterDetailActivity extends ActionBarActivity {
 			// Create the detail fragment and add it to the activity
 			// using a fragment transaction.
 			Bundle arguments = new Bundle();
-			arguments.putString(ItemDetailFragment.ARG_ITEM_ID, getIntent()
-					.getStringExtra(ItemDetailFragment.ARG_ITEM_ID));
-			 fragment = new ItemDetailFragment();
+			arguments.putString(BabysitterDetailFragment.ARG_ITEM_ID, getIntent()
+					.getStringExtra(BabysitterDetailFragment.ARG_ITEM_ID));
+			 fragment = new BabysitterDetailFragment();
 			fragment.setArguments(arguments);
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.item_detail_container, fragment).commit();
