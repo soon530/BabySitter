@@ -24,7 +24,7 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/MyAdapter_TextView_title"
+                android:id="@+id/babysitter_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -33,7 +33,7 @@
                 android:textColor="#FF0000" />
 
             <TextView
-                android:id="@+id/MyAdapter_TextView_info"
+                android:id="@+id/babysitter_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -50,7 +50,7 @@
         android:src="@drawable/ic_launcher" />
 
     <ListView
-        android:id="@+id/listView1"
+        android:id="@+id/babysitter_comment_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1" >

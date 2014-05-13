@@ -113,9 +113,9 @@ public class BabysitterListFragment extends ListFragment {
 					view = View.inflate(getContext(), R.layout.adapter, null);
 				}
 				TextView contentView = (TextView) view
-						.findViewById(R.id.MyAdapter_TextView_title);
+						.findViewById(R.id.babysitter_name);
 				TextView usernameView = (TextView) view
-						.findViewById(R.id.MyAdapter_TextView_info);
+						.findViewById(R.id.babysitter_address);
 				
 				ImageView babysitterImage = (ImageView) view
 				.findViewById(R.id.MyAdapter_ImageView_icon);

@@ -28,7 +28,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <RatingBar
-        android:id="@+id/ratingBar1"
+        android:id="@+id/babysitter_rating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/MyAdapter_ImageView_icon"
@@ -36,10 +36,10 @@
         android:layout_marginTop="26dp" />
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/babysitter_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/ratingBar1"
+        android:layout_alignLeft="@+id/babysitter_rating"
         android:layout_centerVertical="true"
         android:ems="10"
         android:hint="標題" >
@@ -48,23 +48,23 @@
     </EditText>
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/babysitter_comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText1"
-        android:layout_below="@+id/editText1"
+        android:layout_alignLeft="@+id/babysitter_title"
+        android:layout_below="@+id/babysitter_title"
         android:layout_marginTop="48dp"
         android:ems="10"
         android:hint="說明"
         android:inputType="textMultiLine" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/post_comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText2"
-        android:layout_alignRight="@+id/editText2"
-        android:layout_below="@+id/editText2"
+        android:layout_alignLeft="@+id/babysitter_comment"
+        android:layout_alignRight="@+id/babysitter_comment"
+        android:layout_below="@+id/babysitter_comment"
         android:layout_marginTop="38dp"
         android:text="送出" />
 

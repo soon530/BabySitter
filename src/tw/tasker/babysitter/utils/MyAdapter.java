@@ -52,9 +52,9 @@ public class MyAdapter extends BaseAdapter {
 					(ImageView) convertView
 							.findViewById(R.id.MyAdapter_ImageView_icon),
 					(TextView) convertView
-							.findViewById(R.id.MyAdapter_TextView_title),
+							.findViewById(R.id.babysitter_name),
 					(TextView) convertView
-							.findViewById(R.id.MyAdapter_TextView_info));
+							.findViewById(R.id.babysitter_address));
 
 			// 設置容器內容
 			convertView.setTag(viewTag);

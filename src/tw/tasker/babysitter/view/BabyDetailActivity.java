@@ -68,7 +68,7 @@ public class BabyDetailActivity extends ActionBarActivity {
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_baby_detail,
 					container, false);
-			mListView = (ListView) rootView.findViewById(R.id.listView1);
+			mListView = (ListView) rootView.findViewById(R.id.babysitter_comment_list);
 			mListView.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, mStrings ));
 			
 			mBabyIcon = (ImageView) rootView.findViewById(R.id.baby_icon);

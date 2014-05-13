@@ -42,7 +42,7 @@ public class BabysitterDetailFragment extends Fragment {
 	 * The dummy content this fragment is presenting.
 	 */
 	private DummyContent.DummyItem mItem;
-	private ListView mListView;
+	private ListView mBabysitterCommentList;
 
 	private ImageView mBabyIcon;
 	private static final String[] mStrings = new String[] {"一","二","三","四","五","六","七","八","九"};
@@ -50,10 +50,10 @@ public class BabysitterDetailFragment extends Fragment {
 	private String mAddress;
 	private String mName;
 
-	private TextView tname;
+	private TextView mBabysitterName;
 
-	private TextView taddress;
-	private RatingBar mRatingBar;
+	private TextView mBabysitterAddress;
+	private RatingBar mBabysitterRating;
 
 	private String objectId;
 	
@@ -116,10 +116,10 @@ public class BabysitterDetailFragment extends Fragment {
 					view = View.inflate(getContext(), R.layout.adapter, null);
 				}
 				TextView contentView = (TextView) view
-						.findViewById(R.id.MyAdapter_TextView_title);
+						.findViewById(R.id.babysitter_name);
 				TextView usernameView = (TextView) view
-						.findViewById(R.id.MyAdapter_TextView_info);
-				RatingBar ratingBar = (RatingBar) view.findViewById(R.id.ratingBar1);
+						.findViewById(R.id.babysitter_address);
+				RatingBar ratingBar = (RatingBar) view.findViewById(R.id.babysitter_rating);
 				
 				ImageView babysitterImage = (ImageView) view
 				.findViewById(R.id.MyAdapter_ImageView_icon);
@@ -157,8 +157,8 @@ public class BabysitterDetailFragment extends Fragment {
 					mAddress = outline.getAddress();
 					mName = outline.getText();
 					LOGD("vic", "address" + mAddress + "name" + mName);
-					tname.setText(mName);
-					taddress.setText(mAddress);
+					mBabysitterName.setText(mName);
+					mBabysitterAddress.setText(mAddress);
 					
 					
 					mTotalRating = outline.getTotalRating();
@@ -170,7 +170,7 @@ public class BabysitterDetailFragment extends Fragment {
 					} catch (Exception e2) {
 						// TODO: handle exception
 					}
-					mRatingBar.setRating(rating);
+					mBabysitterRating.setRating(rating);
 				}
 			}
 		});
@@ -201,22 +201,22 @@ public class BabysitterDetailFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_item_detail,
+		View rootView = inflater.inflate(R.layout.fragment_detail_babysitter,
 				container, false);
 
-		 tname = (TextView) rootView.findViewById(R.id.MyAdapter_TextView_title);
-		//tname.setText(mName);
+		 mBabysitterName = (TextView) rootView.findViewById(R.id.babysitter_name);
+		//mBabysitterName.setText(mName);
 
-		 taddress = (TextView) rootView.findViewById(R.id.MyAdapter_TextView_info);
-		//taddress.setText(mAddress);
+		 mBabysitterAddress = (TextView) rootView.findViewById(R.id.babysitter_address);
+		//mBabysitterAddress.setText(mAddress);
 		 
-		 mRatingBar = (RatingBar) rootView.findViewById(R.id.ratingBar1);
+		 mBabysitterRating = (RatingBar) rootView.findViewById(R.id.babysitter_rating);
 
 		
-		mListView = (ListView) rootView.findViewById(R.id.listView1);
-		mListView.setAdapter(mOutlines);
+		mBabysitterCommentList = (ListView) rootView.findViewById(R.id.babysitter_comment_list);
+		mBabysitterCommentList.setAdapter(mOutlines);
 		
-		//mListView.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, mStrings ));
+		//mBabysitterCommentList.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, mStrings ));
 		
 		mBabyIcon = (ImageView) rootView.findViewById(R.id.baby_icon);
 		mBabyIcon.setOnClickListener(new OnClickListener() {

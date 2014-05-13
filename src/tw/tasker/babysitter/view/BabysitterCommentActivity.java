@@ -73,10 +73,10 @@ public class BabysitterCommentActivity extends ActionBarActivity {
 	 */
 	public static class PlaceholderFragment extends Fragment {
 
-		private Button mButton;
-		private EditText mTitle;
-		private EditText mComment;
-		private RatingBar mRating;
+		private Button mPostCommnet;
+		private EditText mBabysitterTitle;
+		private EditText mBabysitterComment;
+		private RatingBar mBabysitterRating;
 		
 		private String mObjectId;
 		private int mTotalRating;
@@ -93,15 +93,15 @@ public class BabysitterCommentActivity extends ActionBarActivity {
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(
-					R.layout.fragment_babysitter_comment, container, false);
+					R.layout.fragment_comment_babysitter, container, false);
 			
 			
-			mTitle = (EditText) rootView.findViewById(R.id.editText1);
-			mComment = (EditText) rootView.findViewById(R.id.editText2);
-			mRating = (RatingBar) rootView.findViewById(R.id.ratingBar1);
+			mBabysitterTitle = (EditText) rootView.findViewById(R.id.babysitter_title);
+			mBabysitterComment = (EditText) rootView.findViewById(R.id.babysitter_comment);
+			mBabysitterRating = (RatingBar) rootView.findViewById(R.id.babysitter_rating);
 			
-			mButton = (Button) rootView.findViewById(R.id.button1);
-			mButton.setOnClickListener(new View.OnClickListener() {
+			mPostCommnet = (Button) rootView.findViewById(R.id.post_comment);
+			mPostCommnet.setOnClickListener(new View.OnClickListener() {
 
 
 				@Override
@@ -128,7 +128,7 @@ public class BabysitterCommentActivity extends ActionBarActivity {
 					    if (e == null) {
 					      // Now let's update it with some new data. In this case, only cheatMode and score
 					      // will get sent to the Parse Cloud. playerName hasn't changed.
-					    	int r = (int) mRating.getRating();
+					    	int r = (int) mBabysitterRating.getRating();
 					    	babysitter.put("totalRating", mTotalRating + r);
 					    	babysitter.put("totalComment", mTotalComment + 1);
 					    	babysitter.saveInBackground();
@@ -141,10 +141,10 @@ public class BabysitterCommentActivity extends ActionBarActivity {
 					// ParseObject post = new ParseObject("Comment");
 					BabysitterComment post = new BabysitterComment();
 					post.put("babysitterId", mObjectId);
-					int r = (int) mRating.getRating();
+					int r = (int) mBabysitterRating.getRating();
 					post.put("rating", r);
-					post.put("title", mTitle.getText().toString());
-					post.put("comment", mComment.getText().toString());
+					post.put("title", mBabysitterTitle.getText().toString());
+					post.put("comment", mBabysitterComment.getText().toString());
 
 					// Save the post and return
 					post.saveInBackground(new SaveCallback() {
