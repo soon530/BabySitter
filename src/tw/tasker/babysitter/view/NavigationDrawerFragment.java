@@ -1,5 +1,11 @@
-package tw.tasker.babysitter;
+package tw.tasker.babysitter.view;
 
+import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.R.drawable;
+import tw.tasker.babysitter.R.id;
+import tw.tasker.babysitter.R.layout;
+import tw.tasker.babysitter.R.menu;
+import tw.tasker.babysitter.R.string;
 import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
 import android.support.v7.app.ActionBar;

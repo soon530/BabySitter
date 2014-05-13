@@ -36,7 +36,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name="tw.tasker.babysitter.MainActivity"
+            android:name="tw.tasker.babysitter.view.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,27 +45,27 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="tw.tasker.babysitter.BabysitterMapActivity"
+            android:name="tw.tasker.babysitter.view.BabysitterMapActivity"
             android:label="@string/title_activity_map" >
         </activity>
         <activity
-            android:name="tw.tasker.babysitter.BabysitterListActivity"
+            android:name="tw.tasker.babysitter.view.BabysitterListActivity"
             android:label="@string/title_item_list" >
         </activity>
         <activity
-            android:name="tw.tasker.babysitter.BabysitterDetailActivity"
+            android:name="tw.tasker.babysitter.view.BabysitterDetailActivity"
             android:label="@string/title_item_detail"
-            android:parentActivityName="tw.tasker.babysitter.BabysitterListActivity" >
+            android:parentActivityName="tw.tasker.babysitter.view.BabysitterListActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="tw.tasker.babysitter.ItemListActivity" />
         </activity>
         <activity
-            android:name="tw.tasker.babysitter.BabysitterCommentActivity"
+            android:name="tw.tasker.babysitter.view.BabysitterCommentActivity"
             android:label="@string/title_activity_babysitter_comment" >
         </activity>
         <activity
-            android:name="tw.tasker.babysitter.BabyDetailActivity"
+            android:name="tw.tasker.babysitter.view.BabyDetailActivity"
             android:label="@string/title_activity_baby_detail" >
         </activity>
     </application>

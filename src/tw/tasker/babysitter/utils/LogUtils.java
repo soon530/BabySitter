@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package tw.tasker.babysitter;
+package tw.tasker.babysitter.utils;
 
+import tw.tasker.babysitter.BuildConfig;
 import android.util.Log;
 
 public class LogUtils {

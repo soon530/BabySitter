@@ -1,7 +1,8 @@
-package tw.tasker.babysitter;
+package tw.tasker.babysitter.utils;
 
-import static tw.tasker.babysitter.LogUtils.LOGD;
-import static tw.tasker.babysitter.LogUtils.makeLogTag;
+import static tw.tasker.babysitter.utils.LogUtils.LOGD;
+import static tw.tasker.babysitter.utils.LogUtils.makeLogTag;
+import tw.tasker.babysitter.view.BabysitterMapActivity;
 import android.app.Dialog;
 import android.location.Location;
 import android.os.Bundle;

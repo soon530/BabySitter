@@ -1,4 +1,4 @@
-package tw.tasker.babysitter;
+package tw.tasker.babysitter.model;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;

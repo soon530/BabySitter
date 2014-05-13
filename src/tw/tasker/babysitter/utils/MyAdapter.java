@@ -1,5 +1,9 @@
-package tw.tasker.babysitter;
+package tw.tasker.babysitter.utils;
 
+import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.R.drawable;
+import tw.tasker.babysitter.R.id;
+import tw.tasker.babysitter.R.layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

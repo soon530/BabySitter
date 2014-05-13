@@ -1,6 +1,11 @@
-package tw.tasker.babysitter;
+package tw.tasker.babysitter.view;
 
-import static tw.tasker.babysitter.LogUtils.LOGD;
+import static tw.tasker.babysitter.utils.LogUtils.LOGD;
+import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.R.id;
+import tw.tasker.babysitter.R.layout;
+import tw.tasker.babysitter.R.menu;
+import tw.tasker.babysitter.model.BabysitterComment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

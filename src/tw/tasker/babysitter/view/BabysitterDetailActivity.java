@@ -1,6 +1,10 @@
-package tw.tasker.babysitter;
+package tw.tasker.babysitter.view;
 
 //import android.R;
+import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.R.id;
+import tw.tasker.babysitter.R.layout;
+import tw.tasker.babysitter.R.menu;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;

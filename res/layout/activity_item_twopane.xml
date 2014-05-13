@@ -8,7 +8,7 @@
     android:divider="?android:attr/dividerHorizontal"
     android:orientation="horizontal"
     android:showDividers="middle"
-    tools:context="tw.tasker.babysitter.BabysitterListActivity" >
+    tools:context="tw.tasker.babysitter.view.BabysitterListActivity" >
 
     <!--
     This layout is a two-pane layout for the Items
@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/item_list"
-        android:name="tw.tasker.babysitter.ItemListFragment"
+        android:name="tw.tasker.babysitter.view.ItemListFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"

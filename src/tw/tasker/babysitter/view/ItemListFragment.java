@@ -1,6 +1,11 @@
-package tw.tasker.babysitter;
+package tw.tasker.babysitter.view;
 
+import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.R.drawable;
+import tw.tasker.babysitter.R.id;
+import tw.tasker.babysitter.R.layout;
 import tw.tasker.babysitter.dummy.DummyContent;
+import tw.tasker.babysitter.model.BabysitterOutline;
 import android.app.Activity;
 import android.location.Location;
 import android.os.Bundle;

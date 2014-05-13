@@ -1,10 +1,17 @@
-package tw.tasker.babysitter;
+package tw.tasker.babysitter.view;
 
-import static tw.tasker.babysitter.LogUtils.LOGD;
-import static tw.tasker.babysitter.LogUtils.makeLogTag;
+import static tw.tasker.babysitter.utils.LogUtils.LOGD;
+import static tw.tasker.babysitter.utils.LogUtils.makeLogTag;
 
 import java.util.List;
 
+import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.R.id;
+import tw.tasker.babysitter.R.layout;
+import tw.tasker.babysitter.R.menu;
+import tw.tasker.babysitter.model.BabysitterComment;
+import tw.tasker.babysitter.model.BabysitterOutline;
+import tw.tasker.babysitter.utils.MyLocation;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
