@@ -6,4 +6,6 @@ public interface BabysitterMapPresenter {
 	void onOptionsItemSelected(int id);
 
 	void onInfoWindowClick(Marker marker);
+
+	void onMapLoaded();
 }

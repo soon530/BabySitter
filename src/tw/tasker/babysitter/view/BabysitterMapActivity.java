@@ -1,6 +1,5 @@
 package tw.tasker.babysitter.view;
 
-import static tw.tasker.babysitter.utils.LogUtils.LOGD;
 import static tw.tasker.babysitter.utils.LogUtils.makeLogTag;
 
 import java.util.List;
@@ -10,43 +9,29 @@ import tw.tasker.babysitter.model.BabysitterComment;
 import tw.tasker.babysitter.model.BabysitterOutline;
 import tw.tasker.babysitter.presenter.BabysitterMapPresenter;
 import tw.tasker.babysitter.presenter.BabysitterMapPresenterImpl;
-import tw.tasker.babysitter.utils.MyLocation;
-import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMapLoadedCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.parse.FindCallback;
 import com.parse.Parse;
-import com.parse.ParseException;
-import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
-import com.parse.ParseQuery;
-import com.parse.ParseQueryAdapter;
 
 public class BabysitterMapActivity extends ActionBarActivity implements
 		OnInfoWindowClickListener, BabysitterMapView, OnMapLoadedCallback {
 	private static final String TAG = makeLogTag(BabysitterMapActivity.class);
 
-	private static final int MAX_POST_SEARCH_RESULTS = 20;
-
 	private GoogleMap mMap;
-	private MyLocation mMyLocation;
 	private BabysitterMapPresenter mPresneter;
-	// Maximum post search radius for map in kilometers
-	private static final int MAX_POST_SEARCH_DISTANCE = 100;
 	private static final String YOUR_APPLICATION_ID = "NJFvH3uzP9EHAKydw7iSIICBBU4AfAHvhJzuTawu";
 	private static final String YOUR_CLIENT_KEY = "FOwFRZ8hqGZ4NdZflfeLINvBQehNXOlihdEKnwTU";
 
@@ -61,63 +46,41 @@ public class BabysitterMapActivity extends ActionBarActivity implements
 		Parse.initialize(this, YOUR_APPLICATION_ID, YOUR_CLIENT_KEY);
 
 		mPresneter = new BabysitterMapPresenterImpl(this);
-
 		setUpMapIfNeeded();
-		mMyLocation = new MyLocation(this);
-
 		if (mMap != null) {
 			mMap.setOnMapLoadedCallback(this);
 			mMap.setOnInfoWindowClickListener(this);
 		}
 	}
 
-	private void doMapQuery() {
-		Location myLoc = mMyLocation.getCurLocation();
-		final ParseGeoPoint myPoint = geoPointFromLocation(myLoc);
-		ParseQuery<BabysitterOutline> mapQuery = BabysitterOutline.getQuery();
-		// Set up additional query filters
-		mapQuery.whereWithinKilometers("location", myPoint,
-				MAX_POST_SEARCH_DISTANCE);
-		// mapQuery.include("user");
-		mapQuery.orderByDescending("createdAt");
-		mapQuery.setLimit(MAX_POST_SEARCH_RESULTS);
-
-		// Kick off the query in the background
-		mapQuery.findInBackground(new FindCallback<BabysitterOutline>() {
-			@Override
-			public void done(List<BabysitterOutline> objects, ParseException e) {
-				LOGD(TAG, "findInBackground done()");
-
-				for (BabysitterOutline outline : objects) {
-
-					double lat = outline.getLocation().getLatitude();
-					double lng = outline.getLocation().getLongitude();
-					LOGD(TAG, "outline" + outline.getText() + ",lat" + lat
-							+ ",lng" + lng);
-
-					LatLng latLng = new LatLng(lat, lng);
-
-					MarkerOptions markerOpts = new MarkerOptions();
-					markerOpts.position(latLng);
-					markerOpts.title(outline.getObjectId());
-					markerOpts.snippet("保母：" + outline.getText() + "\n已托育："
-							+ outline.getBabycareCount());
-					BitmapDescriptor icon = BitmapDescriptorFactory
-							.defaultMarker(BitmapDescriptorFactory.HUE_RED);
-					markerOpts.icon(icon);
-
-					mMap.addMarker(markerOpts);
-
-				}
-			}
-		});
+	private void setUpMapIfNeeded() {
+		// Do a null check to confirm that we have not already instantiated the
+		// map.
+		if (mMap == null) {
+			// Try to obtain the map from the SupportMapFragment.
+			mMap = ((SupportMapFragment) getSupportFragmentManager()
+					.findFragmentById(R.id.map)).getMap();
+		}
 	}
 
-	/*
-	 * Helper method to get the Parse GEO point representation of a location
-	 */
-	private ParseGeoPoint geoPointFromLocation(Location loc) {
-		return new ParseGeoPoint(loc.getLatitude(), loc.getLongitude());
+	@Override
+	public void onMapLoaded() {
+		mPresneter.onMapLoaded();
+	}
+
+	@Override
+	public void showMyLocation(LatLngBounds latLngBounds) {
+		CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(
+				latLngBounds, 5);
+		mMap.animateCamera(cameraUpdate);
+		mMap.setMyLocationEnabled(true);
+	}
+
+	@Override
+	public void showMarkers(List<MarkerOptions> markerOptions) {
+		for (MarkerOptions maker : markerOptions) {
+			mMap.addMarker(maker);
+		}
 	}
 
 	@Override
@@ -134,6 +97,11 @@ public class BabysitterMapActivity extends ActionBarActivity implements
 	}
 
 	@Override
+	public void onInfoWindowClick(Marker marker) {
+		mPresneter.onInfoWindowClick(marker);
+	}
+
+	@Override
 	protected void onStart() {
 		super.onStart();
 	}
@@ -145,52 +113,12 @@ public class BabysitterMapActivity extends ActionBarActivity implements
 
 	@Override
 	protected void onStop() {
-		mMyLocation.disconnect();
+		// mMyLocation.disconnect();
 		super.onStop();
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-	}
-
-	private void setUpMapIfNeeded() {
-		// Do a null check to confirm that we have not already instantiated the
-		// map.
-		if (mMap == null) {
-			// Try to obtain the map from the SupportMapFragment.
-			mMap = ((SupportMapFragment) getSupportFragmentManager()
-					.findFragmentById(R.id.map)).getMap();
-			// Check if we were successful in obtaining the map.
-			if (mMap != null) {
-				mMap.setMyLocationEnabled(true);
-				// mMap.setOnMyLocationButtonClickListener(this);
-			}
-		}
-	}
-
-	@Override
-	public void onInfoWindowClick(Marker marker) {
-		mPresneter.onInfoWindowClick(marker);
-	}
-
-	@Override
-	public void showMyLocation() {
-
-	}
-
-	@Override
-	public void setMarkers(List<MarkerOptions> markerOptions) {
-
-	}
-
-	@Override
-	public void onMapLoaded() {
-		if (mMap != null) {
-			mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(
-					mMyLocation.getmBounds(), 5));
-			doMapQuery();
-		}
-
 	}
 }

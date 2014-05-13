@@ -2,10 +2,11 @@ package tw.tasker.babysitter.view;
 
 import java.util.List;
 
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public interface BabysitterMapView {
-	void showMyLocation();
+	void showMyLocation(LatLngBounds latlngBounds);
 
-	void setMarkers(List<MarkerOptions> markerOptions);
+	void showMarkers(List<MarkerOptions> markerOptions);
 }
