@@ -18,7 +18,6 @@ import android.os.Bundle;
 
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.parse.ParseGeoPoint;
 
 public class BabysitterMapPresenterImpl implements BabysitterMapPresenter, OnFinishedListener {
 	private static final String TAG = makeLogTag(BabysitterMapPresenterImpl.class);
@@ -41,18 +40,10 @@ public class BabysitterMapPresenterImpl implements BabysitterMapPresenter, OnFin
 		doMapQuery();
 	}
 
-	public void doMapQuery() {
+	private void doMapQuery() {
 		Location myLoc = mMyLocation.getCurLocation();
-		final ParseGeoPoint myPoint = geoPointFromLocation(myLoc);
 
-		mMapModel.doMapQuery(myPoint);
-	}
-
-	/*
-	 * Helper method to get the Parse GEO point representation of a location
-	 */
-	private ParseGeoPoint geoPointFromLocation(Location loc) {
-		return new ParseGeoPoint(loc.getLatitude(), loc.getLongitude());
+		mMapModel.doMapQuery(myLoc);
 	}
 
 	@Override

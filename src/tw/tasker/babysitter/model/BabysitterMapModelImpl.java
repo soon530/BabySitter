@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tw.tasker.babysitter.presenter.BabysitterMapPresenterImpl;
+import android.location.Location;
 
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -17,7 +18,8 @@ import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
 
-public class BabysitterMapModelImpl extends FindCallback<BabysitterOutline> implements BabysitterMapModel{
+public class BabysitterMapModelImpl extends FindCallback<BabysitterOutline>
+		implements BabysitterMapModel {
 	private static final String TAG = makeLogTag(BabysitterMapModelImpl.class);
 
 	private static final int MAX_POST_SEARCH_RESULTS = 20;
@@ -26,19 +28,18 @@ public class BabysitterMapModelImpl extends FindCallback<BabysitterOutline> impl
 
 	private OnFinishedListener mFinishedListener;
 
-	public BabysitterMapModelImpl(
-			OnFinishedListener finishedListener) {
-	
+	public BabysitterMapModelImpl(OnFinishedListener finishedListener) {
+
 		mFinishedListener = finishedListener;
 	}
-	
-	
 
 	@Override
-	public void doMapQuery(ParseGeoPoint parseGeoPoint) {
+	public void doMapQuery(Location myLoc) {
+		final ParseGeoPoint myPoint = geoPointFromLocation(myLoc);
+
 		ParseQuery<BabysitterOutline> mapQuery = BabysitterOutline.getQuery();
 		// Set up additional query filters
-		mapQuery.whereWithinKilometers("location", parseGeoPoint,
+		mapQuery.whereWithinKilometers("location", myPoint,
 				MAX_POST_SEARCH_DISTANCE);
 		// mapQuery.include("user");
 		mapQuery.orderByDescending("createdAt");
@@ -46,9 +47,15 @@ public class BabysitterMapModelImpl extends FindCallback<BabysitterOutline> impl
 
 		// Kick off the query in the background
 		mapQuery.findInBackground(this);
-
 	}
-	
+
+	/*
+	 * Helper method to get the Parse GEO point representation of a location
+	 */
+	private ParseGeoPoint geoPointFromLocation(Location loc) {
+		return new ParseGeoPoint(loc.getLatitude(), loc.getLongitude());
+	}
+
 	@Override
 	public void done(List<BabysitterOutline> objects, ParseException e) {
 		LOGD(TAG, "findInBackground done()");

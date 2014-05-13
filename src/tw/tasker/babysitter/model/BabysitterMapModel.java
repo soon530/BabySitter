@@ -1,9 +1,9 @@
 package tw.tasker.babysitter.model;
 
-import com.parse.ParseGeoPoint;
+import android.location.Location;
 
 public interface BabysitterMapModel {
 	//void setOnFinishedListener(OnFinishedListener finishedListener);
 	
-	void doMapQuery(ParseGeoPoint parseGeoPoint);
+	void doMapQuery(Location location);
 }
