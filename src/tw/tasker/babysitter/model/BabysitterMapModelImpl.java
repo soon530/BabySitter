@@ -1,0 +1,83 @@
+package tw.tasker.babysitter.model;
+
+import static tw.tasker.babysitter.utils.LogUtils.LOGD;
+import static tw.tasker.babysitter.utils.LogUtils.makeLogTag;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import tw.tasker.babysitter.presenter.BabysitterMapPresenterImpl;
+
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseQuery;
+
+public class BabysitterMapModelImpl extends FindCallback<BabysitterOutline> implements BabysitterMapModel{
+	private static final String TAG = makeLogTag(BabysitterMapModelImpl.class);
+
+	private static final int MAX_POST_SEARCH_RESULTS = 20;
+	// Maximum post search radius for map in kilometers
+	private static final int MAX_POST_SEARCH_DISTANCE = 100;
+
+	private OnFinishedListener mFinishedListener;
+
+	public BabysitterMapModelImpl(
+			OnFinishedListener finishedListener) {
+	
+		mFinishedListener = finishedListener;
+	}
+	
+	
+
+	@Override
+	public void doMapQuery(ParseGeoPoint parseGeoPoint) {
+		ParseQuery<BabysitterOutline> mapQuery = BabysitterOutline.getQuery();
+		// Set up additional query filters
+		mapQuery.whereWithinKilometers("location", parseGeoPoint,
+				MAX_POST_SEARCH_DISTANCE);
+		// mapQuery.include("user");
+		mapQuery.orderByDescending("createdAt");
+		mapQuery.setLimit(MAX_POST_SEARCH_RESULTS);
+
+		// Kick off the query in the background
+		mapQuery.findInBackground(this);
+
+	}
+	
+	@Override
+	public void done(List<BabysitterOutline> objects, ParseException e) {
+		LOGD(TAG, "findInBackground done()");
+		List<MarkerOptions> babysitterMarkerOptions = new ArrayList<MarkerOptions>();
+
+		for (BabysitterOutline outline : objects) {
+
+			MarkerOptions markerOpts = getOutlineMarkerOptions(outline);
+			babysitterMarkerOptions.add(markerOpts);
+
+		}
+		mFinishedListener.onFinished(babysitterMarkerOptions);
+	}
+
+	private MarkerOptions getOutlineMarkerOptions(BabysitterOutline outline) {
+		double lat = outline.getLocation().getLatitude();
+		double lng = outline.getLocation().getLongitude();
+		LOGD(TAG, "outline" + outline.getText() + ",lat" + lat + ",lng" + lng);
+
+		LatLng latLng = new LatLng(lat, lng);
+
+		MarkerOptions markerOpts = new MarkerOptions();
+		markerOpts.position(latLng);
+		markerOpts.title(outline.getObjectId());
+		markerOpts.snippet("保母：" + outline.getText() + "\n已托育："
+				+ outline.getBabycareCount());
+		BitmapDescriptor icon = BitmapDescriptorFactory
+				.defaultMarker(BitmapDescriptorFactory.HUE_RED);
+		markerOpts.icon(icon);
+		return markerOpts;
+	}
+}
