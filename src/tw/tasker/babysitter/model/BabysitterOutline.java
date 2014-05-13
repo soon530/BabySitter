@@ -69,6 +69,16 @@ public class BabysitterOutline extends ParseObject {
 	public void setTotalComment(int value) {
 		put("totalComment", value);
 	}
+	
+	public String getTel() {
+		String value = getString("tel");
+		return value;
+	}
+	
+	public void setTel(String value) {
+		put("tel", value);
+	}
+	
 	public static ParseQuery<BabysitterOutline> getQuery() {
 		return ParseQuery.getQuery(BabysitterOutline.class);
 	}

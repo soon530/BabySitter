@@ -9,6 +9,7 @@ import tw.tasker.babysitter.dummy.DummyContent;
 import tw.tasker.babysitter.model.BabysitterComment;
 import tw.tasker.babysitter.model.BabysitterOutline;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -63,6 +64,10 @@ public class BabysitterDetailFragment extends Fragment {
 
 	
 	private ParseQueryAdapter<BabysitterComment> mOutlines;
+
+	private ImageView mCallIcon;
+
+	private TextView mPhone;
 	// Maximum results returned from a Parse query
 	private static final int MAX_POST_SEARCH_RESULTS = 20;
 
@@ -171,6 +176,18 @@ public class BabysitterDetailFragment extends Fragment {
 						// TODO: handle exception
 					}
 					mBabysitterRating.setRating(rating);
+					
+					mPhone.setText(outline.getTel());
+					
+					mCallIcon.setOnClickListener(new OnClickListener() {
+						
+						@Override
+						public void onClick(View v) {
+								Intent phoneIntent = new Intent(Intent.ACTION_DIAL);
+								phoneIntent.setData(Uri.parse("tel:" + mPhone.getText()));
+								startActivity(phoneIntent);
+						}
+					});
 				}
 			}
 		});
@@ -229,6 +246,12 @@ public class BabysitterDetailFragment extends Fragment {
 
 			}
 		});
+		
+		mCallIcon = (ImageView) rootView.findViewById(R.id.call_icon);
+		mPhone = (TextView) rootView.findViewById(R.id.babysitter_phone);
+		
+
+		
 		
 		
 		
