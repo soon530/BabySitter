@@ -20,6 +20,9 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -78,8 +81,14 @@ public class BabysitterDetailFragment extends Fragment {
 	private String mDlng;
 
 	private TextView mDistance;
+
+	private ImageView mBabysitterImage;
 	// Maximum results returned from a Parse query
 	private static final int MAX_POST_SEARCH_RESULTS = 20;
+
+	
+	DisplayImageOptions options;
+	private ImageLoader imageLoader = ImageLoader.getInstance();
 
 	
 	/**
@@ -160,6 +169,16 @@ public class BabysitterDetailFragment extends Fragment {
 		mOutlines.setPaginationEnabled(false);
 		
 
+		
+		options = new DisplayImageOptions.Builder()
+		.showImageOnLoading(R.drawable.ic_launcher)
+		.showImageForEmptyUri(R.drawable.ic_launcher)
+		.showImageOnFail(R.drawable.ic_launcher)
+		.cacheInMemory(true)
+		.cacheOnDisc(true)
+		.considerExifParams(true)
+		.displayer(new RoundedBitmapDisplayer(20))
+		.build();
 	}
 
 	private void doDetailQuery(String objectId) {
@@ -235,6 +254,10 @@ public class BabysitterDetailFragment extends Fragment {
 		View rootView = inflater.inflate(R.layout.fragment_detail_babysitter,
 				container, false);
 
+		mBabysitterImage = (ImageView) rootView.findViewById(R.id.MyAdapter_ImageView_icon);
+		
+		imageLoader.displayImage("http://cwisweb.sfaa.gov.tw/babysitterFiles/20140315134959_0822R167.jpg", mBabysitterImage, options, null);
+		
 		 mBabysitterName = (TextView) rootView.findViewById(R.id.babysitter_name);
 		//mBabysitterName.setText(mName);
 
