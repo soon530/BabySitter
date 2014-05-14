@@ -188,4 +188,13 @@ public class MyLocation implements ConnectionCallbacks,
 		} while (Math.abs(distance[0] - desiredOffsetInMeters) > OFFSET_CALCULATION_ACCURACY);
 		return latLngOffset;
 	}
+	
+	public double getLat() {
+		return mCurrentLocation.getLatitude();
+	}
+	
+	public double getLng() {
+		return mCurrentLocation.getLongitude();
+	}
+	
 }

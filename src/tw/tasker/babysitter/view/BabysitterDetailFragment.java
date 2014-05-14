@@ -2,9 +2,6 @@ package tw.tasker.babysitter.view;
 
 import static tw.tasker.babysitter.utils.LogUtils.LOGD;
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.R.drawable;
-import tw.tasker.babysitter.R.id;
-import tw.tasker.babysitter.R.layout;
 import tw.tasker.babysitter.dummy.DummyContent;
 import tw.tasker.babysitter.model.BabysitterComment;
 import tw.tasker.babysitter.model.BabysitterOutline;
@@ -16,7 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
@@ -68,6 +65,16 @@ public class BabysitterDetailFragment extends Fragment {
 	private ImageView mCallIcon;
 
 	private TextView mPhone;
+
+	private Button mDirection;
+
+	private String mSlat;
+
+	private String mSlng;
+
+	private String mDlat;
+
+	private String mDlng;
 	// Maximum results returned from a Parse query
 	private static final int MAX_POST_SEARCH_RESULTS = 20;
 
@@ -94,6 +101,10 @@ public class BabysitterDetailFragment extends Fragment {
 		Bundle bundle = getActivity().getIntent().getExtras();
 		objectId = bundle.getString("objectId");
 		
+		mSlat = bundle.getString("slat");
+		mSlng= bundle.getString("slng");
+		mDlat= bundle.getString("dlat");
+		mDlng= bundle.getString("dlng");
 		
 		
 		// Set up a customized query
@@ -250,8 +261,26 @@ public class BabysitterDetailFragment extends Fragment {
 		mCallIcon = (ImageView) rootView.findViewById(R.id.call_icon);
 		mPhone = (TextView) rootView.findViewById(R.id.babysitter_phone);
 		
+		mDirection = (Button) rootView.findViewById(R.id.direction);
 
-		
+		mDirection.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				 
+//				String currentLattitude = "22.635725";
+//				String currentLongitude = "120.377175";
+//				String targetLat = "22.634599";
+//				String targetLang = "120.350349";
+//				String url = "http://maps.google.com/maps?saddr="+currentLattitude+","+currentLongitude+"&daddr="+targetLat+","+targetLang;
+				//String url = "http://maps.google.com/maps?saddr="+mSlat+","+mSlng+"&daddr="+mDlat+","+mDlng;
+				String url = "geo:0,0?q="+mSlat+","+mSlng;
+				
+				Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(url));
+				intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+				startActivity(intent);
+			}
+		});
 		
 		
 		

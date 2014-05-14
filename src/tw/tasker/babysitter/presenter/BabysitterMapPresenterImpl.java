@@ -66,6 +66,12 @@ public class BabysitterMapPresenterImpl implements BabysitterMapPresenter, OnFin
 		intent.setClass(mBabysitterMap, BabysitterDetailActivity.class);
 		Bundle bundle = new Bundle();
 		bundle.putString("objectId", marker.getTitle());
+		bundle.putString("slat", String.valueOf(marker.getPosition().latitude));
+		bundle.putString("slng", String.valueOf(marker.getPosition().longitude));
+
+		bundle.putString("dlat", String.valueOf(mMyLocation.getLat()));
+		bundle.putString("dlng", String.valueOf(mMyLocation.getLng()));
+		
 		intent.putExtras(bundle);
 		mBabysitterMap.startActivity(intent);
 	}

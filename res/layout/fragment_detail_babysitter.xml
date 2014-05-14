@@ -72,6 +72,12 @@
         android:layout_height="wrap_content"
         android:src="@drawable/common_signin_btn_icon_dark" />
 
+    <Button
+        android:id="@+id/direction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="路徑規畫" />
+
     <ListView
         android:id="@+id/babysitter_comment_list"
         android:layout_width="match_parent"
