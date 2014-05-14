@@ -6,6 +6,7 @@ import tw.tasker.babysitter.dummy.DummyContent;
 import tw.tasker.babysitter.model.BabysitterComment;
 import tw.tasker.babysitter.model.BabysitterOutline;
 import android.content.Intent;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -75,6 +76,8 @@ public class BabysitterDetailFragment extends Fragment {
 	private String mDlat;
 
 	private String mDlng;
+
+	private TextView mDistance;
 	// Maximum results returned from a Parse query
 	private static final int MAX_POST_SEARCH_RESULTS = 20;
 
@@ -281,6 +284,19 @@ public class BabysitterDetailFragment extends Fragment {
 				startActivity(intent);
 			}
 		});
+		
+		mDistance = (TextView) rootView.findViewById(R.id.distance);
+		
+		double distance = 0;
+	    Location locationA = new Location("A");
+	    locationA.setLatitude(Double.valueOf(mSlat).doubleValue());
+	    locationA.setLongitude(Double.valueOf(mSlng).doubleValue());
+	    Location locationB = new Location("B");
+	    locationB.setLatitude(Double.valueOf(mDlat).doubleValue());
+	    locationB.setLongitude(Double.valueOf(mDlng).doubleValue());
+	    distance = locationA.distanceTo(locationB);
+		
+	    mDistance.setText(Double.toString(distance));
 		
 		
 		

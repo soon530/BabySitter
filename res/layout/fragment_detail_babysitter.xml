@@ -56,6 +56,15 @@
                 android:text="電話"
                 android:textColor="#000000" />
 
+            <TextView
+                android:id="@+id/distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:text="距離"
+                android:textColor="#000000" />
+
             <RatingBar
                 android:id="@+id/babysitter_rating"
                 style="?android:attr/ratingBarStyleIndicator"
