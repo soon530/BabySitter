@@ -32,18 +32,11 @@ public class BabysitterMapActivity extends ActionBarActivity implements
 
 	private GoogleMap mMap;
 	private BabysitterMapPresenter mPresneter;
-	private static final String YOUR_APPLICATION_ID = "NJFvH3uzP9EHAKydw7iSIICBBU4AfAHvhJzuTawu";
-	private static final String YOUR_CLIENT_KEY = "FOwFRZ8hqGZ4NdZflfeLINvBQehNXOlihdEKnwTU";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_search_babysitter_map);
-
-		ParseObject.registerSubclass(BabysitterOutline.class);
-		ParseObject.registerSubclass(BabysitterComment.class);
-
-		Parse.initialize(this, YOUR_APPLICATION_ID, YOUR_CLIENT_KEY);
 
 		mPresneter = new BabysitterMapPresenterImpl(this);
 		setUpMapIfNeeded();

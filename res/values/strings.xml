@@ -2,7 +2,7 @@
 <resources>
 
     <!-- MainActivity -->
-    <string name="app_name">保母通</string>
+    <string name="app_name">Search保母</string>
     <string name="search_babysitter">搜尋保母</string>
     <string name="rating_babysitter">評分保母</string>
     <string name="social_babysitter">社群保母</string>
@@ -30,8 +30,7 @@
     <!-- BabyDetailActivity -->
     <string name="title_activity_baby_detail">寶寶明細</string>
     <string name="post_words">打卡</string>
-    
     <string name="hello_world">Hello world!</string>
-    
-    
+    <string name="title_activity_home">保母搜尋</string>
+
 </resources>
