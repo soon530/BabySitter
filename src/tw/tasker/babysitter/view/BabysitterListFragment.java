@@ -1,22 +1,14 @@
 package tw.tasker.babysitter.view;
 
-import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.dummy.DummyContent;
-import tw.tasker.babysitter.model.BabysitterOutline;
 import tw.tasker.babysitter.presenter.BabysitterListPresenter;
 import tw.tasker.babysitter.presenter.BabysitterListPresenterImpl;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
-
-import com.parse.ParseQueryAdapter;
-import com.parse.ParseQueryAdapter.QueryFactory;
 
 /**
  * A list fragment representing a list of Items. This fragment also supports
@@ -29,12 +21,6 @@ import com.parse.ParseQueryAdapter.QueryFactory;
  */
 public class BabysitterListFragment extends ListFragment implements
 		BabysitterListView {
-	private String[] mtitle = new String[] { "台北-大安區", "台中-西屯區", "高雄-鳳山區",
-			"高雄-三民區", "高雄-岡山區", "高雄-前鎮區" };
-	private String[] minfo = new String[] { "張媽媽", "吳媽媽", "陳媽媽", "李媽媽", "郭媽媽",
-			"錢媽媽" };
-
-	private ParseQueryAdapter<BabysitterOutline> mOutlines;
 
 	/**
 	 * The serialization (saved instance state) Bundle key representing the
@@ -86,30 +72,9 @@ public class BabysitterListFragment extends ListFragment implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		//setEmptyText("沒有任何保母資料");
-		
 		mPresenter = new BabysitterListPresenterImpl(this);
-
 		mPresenter.onCreate();
-		
-		// 標題資料
-		CharSequence[] Mtitle = mtitle;
-		// 內容
-		CharSequence[] Minfo = minfo;
-		// 載入列表中，new出MyAdapter時帶入所需"標題"."內容"資料
-
-		// setListAdapter(new MyAdapter(getLayoutInflater(savedInstanceState),
-		// Mtitle, Minfo));
-
-		// TODO: replace with a real list list_item_babysitter_comment.
-		// setListAdapter(new
-		// ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-		// android.R.layout.simple_list_item_activated_1,
-		// android.R.id.text1, DummyContent.ITEMS));
 	}
-
-
 
 	@Override
 	public void onResume() {
