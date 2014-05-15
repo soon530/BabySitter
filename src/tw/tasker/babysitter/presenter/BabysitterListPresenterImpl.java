@@ -2,7 +2,10 @@ package tw.tasker.babysitter.presenter;
 
 import tw.tasker.babysitter.model.BabysitterListModel;
 import tw.tasker.babysitter.model.BabysitterListModelImpl;
+import tw.tasker.babysitter.model.BabysitterOutline;
+import tw.tasker.babysitter.view.BabysitterDetailActivity;
 import tw.tasker.babysitter.view.BabysitterListFragment;
+import android.content.Intent;
 import android.widget.BaseAdapter;
 
 public class BabysitterListPresenterImpl implements BabysitterListPresenter {
@@ -18,21 +21,26 @@ public class BabysitterListPresenterImpl implements BabysitterListPresenter {
 
 	@Override
 	public void onCreate() {
-		// TODO Auto-generated method stub
 		mBabysitterListFragment.showProgress();
 		mBabysitterListModel.doListQuery();
 	}
 
-	@Override
-	public void onResume() {
-		// TODO Auto-generated method stub
-
-	}
-	
 
 	public void setAdapter(BaseAdapter adapter) {
 		mBabysitterListFragment.setAdapter(adapter);
 		mBabysitterListFragment.hideProgress();
+	}
+
+	@Override
+	public void onListItemClick(int position) {
+		BabysitterOutline outline = getOutline(position);
+		Intent detailIntent = new Intent(mBabysitterListFragment.getActivity(), BabysitterDetailActivity.class);
+		detailIntent.putExtra("objectId", outline.getObjectId());
+		mBabysitterListFragment.getActivity().startActivity(detailIntent);
+	}
+
+	private BabysitterOutline getOutline(int position) {
+		return mBabysitterListModel.getOutline(position);
 	}
 
 }

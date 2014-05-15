@@ -322,14 +322,14 @@ public class BabysitterDetailFragment extends Fragment {
 		mDistance = (TextView) rootView.findViewById(R.id.distance);
 
 		double distance = 0;
-		Location locationA = new Location("A");
+/*		Location locationA = new Location("A");
 		locationA.setLatitude(Double.valueOf(mSlat).doubleValue());
 		locationA.setLongitude(Double.valueOf(mSlng).doubleValue());
 		Location locationB = new Location("B");
 		locationB.setLatitude(Double.valueOf(mDlat).doubleValue());
 		locationB.setLongitude(Double.valueOf(mDlng).doubleValue());
 		distance = locationA.distanceTo(locationB);
-
+*/
 		mDistance.setText(Double.toString(distance));
 
 		// Show the dummy content as text in a TextView.

@@ -1,6 +1,10 @@
 package tw.tasker.babysitter.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.dummy.DummyContent.DummyItem;
 import tw.tasker.babysitter.presenter.BabysitterListPresenterImpl;
 import tw.tasker.babysitter.view.BabysitterDetailFragment;
 import android.content.Context;
@@ -19,7 +23,8 @@ public class BabysitterListModelImpl implements BabysitterListModel {
 	private static final int MAX_POST_SEARCH_RESULTS = 20;
 	private BabysitterListPresenterImpl mBabysitterListPresenterImpl;
 	private Context mContext;
-
+	private ParseQueryAdapter<BabysitterOutline> mAdapter;
+		
 	public BabysitterListModelImpl(
 			BabysitterListPresenterImpl babysitterListPresenterImpl,
 			Context applicationContext) {
@@ -31,18 +36,18 @@ public class BabysitterListModelImpl implements BabysitterListModel {
 	public void doListQuery() {
 		ParseQueryAdapter.QueryFactory<BabysitterOutline> factory = getQueryFactory();
 
-		ParseQueryAdapter<BabysitterOutline> adapter = getParseQueryAdapter(factory);
+		mAdapter = getParseQueryAdapter(factory);
 
 		// Disable automatic loading when the list_item_babysitter_comment is
 		// attached to a view.
-		adapter.setAutoload(false);
+		mAdapter.setAutoload(false);
 
 		// Disable pagination, we'll manage the query limit ourselves
-		adapter.setPaginationEnabled(false);
+		mAdapter.setPaginationEnabled(false);
 		
-		mBabysitterListPresenterImpl.setAdapter(adapter);
+		mBabysitterListPresenterImpl.setAdapter(mAdapter);
 		
-		adapter.loadObjects();
+		mAdapter.loadObjects();
 	}
 	
 	private ParseQueryAdapter.QueryFactory<BabysitterOutline> getQueryFactory() {
@@ -94,5 +99,13 @@ public class BabysitterListModelImpl implements BabysitterListModel {
 		};
 		return adapter;
 	}
+
+	@Override
+	public BabysitterOutline getOutline(int position) {
+		return mAdapter.getItem(position);
+	}
+	
+	
+	
 
 }
