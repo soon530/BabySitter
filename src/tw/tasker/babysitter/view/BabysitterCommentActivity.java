@@ -96,7 +96,7 @@ public class BabysitterCommentActivity extends ActionBarActivity {
 					R.layout.fragment_babysitter_comment, container, false);
 			
 			
-			mBabysitterTitle = (EditText) rootView.findViewById(R.id.babysitter_title);
+			mBabysitterTitle = (EditText) rootView.findViewById(R.id.babysitter_comment_title);
 			mBabysitterComment = (EditText) rootView.findViewById(R.id.babysitter_comment);
 			mBabysitterRating = (RatingBar) rootView.findViewById(R.id.babysitter_rating);
 			

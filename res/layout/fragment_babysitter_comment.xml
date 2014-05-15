@@ -37,9 +37,9 @@
 
     <EditText
         android:id="@+id/babysitter_comment_title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/babysitter_rating"
+        android:layout_alignLeft="@+id/user_avator"
         android:layout_centerVertical="true"
         android:ems="10"
         android:hint="標題" >
@@ -47,25 +47,25 @@
         <requestFocus />
     </EditText>
 
+    <Button
+        android:id="@+id/post_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/babysitter_comment_title"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/babysitter_comment_title"
+        android:layout_marginBottom="17dp"
+        android:text="送出" />
+
     <EditText
         android:id="@+id/babysitter_comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/babysitter_title"
-        android:layout_below="@+id/babysitter_title"
-        android:layout_marginTop="48dp"
+        android:layout_above="@+id/post_comment"
+        android:layout_alignLeft="@+id/post_comment"
+        android:layout_alignRight="@+id/post_comment"
         android:ems="10"
         android:hint="說明"
         android:inputType="textMultiLine" />
-
-    <Button
-        android:id="@+id/post_comment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/babysitter_comment"
-        android:layout_alignRight="@+id/babysitter_comment"
-        android:layout_below="@+id/babysitter_comment"
-        android:layout_marginTop="38dp"
-        android:text="送出" />
 
 </RelativeLayout>
