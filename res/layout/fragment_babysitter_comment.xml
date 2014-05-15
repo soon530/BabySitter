@@ -9,7 +9,7 @@
     tools:context="tw.tasker.babysitter.BabysitterCommentActivity$PlaceholderFragment" >
 
     <ImageView
-        android:id="@+id/MyAdapter_ImageView_icon"
+        android:id="@+id/user_avator"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginLeft="2dp"
@@ -17,13 +17,13 @@
         android:src="@drawable/ic_launcher"/>
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/MyAdapter_ImageView_icon"
+        android:layout_alignBottom="@+id/user_avator"
         android:layout_marginBottom="26dp"
         android:layout_marginLeft="33dp"
-        android:layout_toRightOf="@+id/MyAdapter_ImageView_icon"
+        android:layout_toRightOf="@+id/user_avator"
         android:text="評論者：Vic"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -31,12 +31,12 @@
         android:id="@+id/babysitter_rating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/MyAdapter_ImageView_icon"
+        android:layout_below="@+id/user_avator"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="26dp" />
 
     <EditText
-        android:id="@+id/babysitter_title"
+        android:id="@+id/babysitter_comment_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/babysitter_rating"

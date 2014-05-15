@@ -39,9 +39,9 @@ public class BabysitterListActivity extends ActionBarActivity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_list_babysitter);
+		setContentView(R.layout.activity_babysitter_list);
 
-		if (findViewById(R.id.item_detail_container) != null) {
+		if (findViewById(R.id.babysitter_detail_container) != null) {
 			// The detail container view will be present only in the
 			// large-screen layouts (res/values-large and
 			// res/values-sw600dp). If this view is present, then the
@@ -72,7 +72,7 @@ public class BabysitterListActivity extends ActionBarActivity implements
 			BabysitterDetailFragment fragment = new BabysitterDetailFragment();
 			fragment.setArguments(arguments);
 			getSupportFragmentManager().beginTransaction()
-					.replace(R.id.item_detail_container, fragment).commit();
+					.replace(R.id.babysitter_detail_container, fragment).commit();
 
 		} else {
 			// In single-pane mode, simply start the detail activity

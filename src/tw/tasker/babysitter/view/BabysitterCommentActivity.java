@@ -62,7 +62,7 @@ public class BabysitterCommentActivity extends ActionBarActivity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
+		if (id == R.id.action_send) {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -93,7 +93,7 @@ public class BabysitterCommentActivity extends ActionBarActivity {
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(
-					R.layout.fragment_comment_babysitter, container, false);
+					R.layout.fragment_babysitter_comment, container, false);
 			
 			
 			mBabysitterTitle = (EditText) rootView.findViewById(R.id.babysitter_title);

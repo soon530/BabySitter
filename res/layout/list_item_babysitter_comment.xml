@@ -5,7 +5,7 @@
     android:orientation="horizontal" >
 
     <ImageView
-        android:id="@+id/MyAdapter_ImageView_icon"
+        android:id="@+id/user_avator"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_centerVertical="true"
@@ -18,7 +18,7 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/babysitter_name"
+            android:id="@+id/babysitter_comment_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -27,7 +27,7 @@
             android:textColor="#FF0000" />
 
         <TextView
-            android:id="@+id/babysitter_address"
+            android:id="@+id/babysitter_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"

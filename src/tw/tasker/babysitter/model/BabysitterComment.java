@@ -18,12 +18,12 @@ public class BabysitterComment extends ParseObject {
 	}
 
 	public String getTitle() {
-		String value = getString("comment");
+		String value = getString("title");
 		return value;
 	}
 
 	public void setTitle(String value) {
-		put("comment", value);
+		put("title", value);
 	}
 	public String getComment() {
 		String value = getString("comment");

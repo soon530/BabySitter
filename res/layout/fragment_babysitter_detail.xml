@@ -10,7 +10,7 @@
         android:orientation="horizontal" >
 
         <ImageView
-            android:id="@+id/MyAdapter_ImageView_icon"
+            android:id="@+id/babysitter_avator"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_centerVertical="true"
@@ -76,7 +76,7 @@
     </LinearLayout>
 
     <ImageButton
-        android:id="@+id/baby_icon"
+        android:id="@+id/baby_avator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/common_signin_btn_icon_dark" />

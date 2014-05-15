@@ -45,12 +45,12 @@ public class MyAdapter extends BaseAdapter {
 
 		if (convertView == null) {
 			// 取得listItem容器 view
-			convertView = myInflater.inflate(R.layout.adapter, null);
+			convertView = myInflater.inflate(R.layout.list_item_babysitter_comment, null);
 
 			// 建構listItem內容view
 			viewTag = new ViewTag(
 					(ImageView) convertView
-							.findViewById(R.id.MyAdapter_ImageView_icon),
+							.findViewById(R.id.babysitter_avator),
 					(TextView) convertView
 							.findViewById(R.id.babysitter_name),
 					(TextView) convertView

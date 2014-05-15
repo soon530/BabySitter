@@ -28,7 +28,7 @@ public class BabysitterDetailActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_detail_babysitter);
+		setContentView(R.layout.activity_babysitter_detail);
 
 		// Show the Up button in the action bar.
 		getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -46,16 +46,18 @@ public class BabysitterDetailActivity extends ActionBarActivity {
 			// Create the detail fragment and add it to the activity
 			// using a fragment transaction.
 			Bundle arguments = new Bundle();
-			arguments.putString(BabysitterDetailFragment.ARG_ITEM_ID, getIntent()
-					.getStringExtra(BabysitterDetailFragment.ARG_ITEM_ID));
-			 fragment = new BabysitterDetailFragment();
+			arguments.putString(
+					BabysitterDetailFragment.ARG_ITEM_ID,
+					getIntent().getStringExtra(
+							BabysitterDetailFragment.ARG_ITEM_ID));
+			fragment = new BabysitterDetailFragment();
 			fragment.setArguments(arguments);
 			getSupportFragmentManager().beginTransaction()
-					.add(R.id.item_detail_container, fragment).commit();
+					.add(R.id.babysitter_detail_container, fragment).commit();
 		}
-		
+
 		Bundle bundle = getIntent().getExtras();
-		objectId = bundle.getString("objectId");	
+		objectId = bundle.getString("objectId");
 
 	}
 
@@ -85,13 +87,13 @@ public class BabysitterDetailActivity extends ActionBarActivity {
 
 		if (id == R.id.action_comment) {
 			Intent intent = new Intent();
-			
+
 			Bundle bundle = new Bundle();
 			bundle.putString("objectId", objectId);
 			bundle.putInt("totalRating", fragment.mTotalRating);
 			bundle.putInt("totalComment", fragment.mTotalComment);
 			intent.putExtras(bundle);
-			
+
 			intent.setClass(this, BabysitterCommentActivity.class);
 			startActivity(intent);
 		}

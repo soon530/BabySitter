@@ -105,30 +105,30 @@ public class BabysitterListFragment extends ListFragment {
 			}
 		};
 
-		// Set up the query adapter
+		// Set up the query list_item_babysitter_comment
 		mOutlines = new ParseQueryAdapter<BabysitterOutline>(getActivity().getApplicationContext(), factory) {
 			@Override
 			public View getItemView(BabysitterOutline post, View view, ViewGroup parent) {
 				if (view == null) {
-					view = View.inflate(getContext(), R.layout.adapter, null);
+					view = View.inflate(getContext(), R.layout.list_item_babysitter_list, null);
 				}
-				TextView contentView = (TextView) view
+				TextView babysitterName = (TextView) view
 						.findViewById(R.id.babysitter_name);
-				TextView usernameView = (TextView) view
+				TextView babysitterAddress = (TextView) view
 						.findViewById(R.id.babysitter_address);
 				
 				ImageView babysitterImage = (ImageView) view
-				.findViewById(R.id.MyAdapter_ImageView_icon);
+				.findViewById(R.id.babysitter_avator);
 				
-				contentView.setText(post.getAddress());
-				usernameView.setText(post.getText());
+				babysitterName.setText(post.getText());
+				babysitterAddress.setText(post.getAddress());
 				babysitterImage.setBackgroundResource(R.drawable.ic_launcher);
 				
 				return view;
 			}
 		};
 
-	    // Disable automatic loading when the adapter is attached to a view.
+	    // Disable automatic loading when the list_item_babysitter_comment is attached to a view.
 		mOutlines.setAutoload(false);
 
 	    // Disable pagination, we'll manage the query limit ourselves
@@ -146,7 +146,7 @@ public class BabysitterListFragment extends ListFragment {
 		//		setListAdapter(new MyAdapter(getLayoutInflater(savedInstanceState),
 //				Mtitle, Minfo));
 
-		// TODO: replace with a real list adapter.
+		// TODO: replace with a real list list_item_babysitter_comment.
 		// setListAdapter(new
 		// ArrayAdapter<DummyContent.DummyItem>(getActivity(),
 		// android.R.layout.simple_list_item_activated_1,

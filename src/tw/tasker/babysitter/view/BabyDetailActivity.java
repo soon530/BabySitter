@@ -46,7 +46,7 @@ public class BabyDetailActivity extends ActionBarActivity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
+		if (id == R.id.post_words) {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -68,10 +68,10 @@ public class BabyDetailActivity extends ActionBarActivity {
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_baby_detail,
 					container, false);
-			mListView = (ListView) rootView.findViewById(R.id.babysitter_comment_list);
+			mListView = (ListView) rootView.findViewById(R.id.baby_comment_list);
 			mListView.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, mStrings ));
 			
-			mBabyIcon = (ImageView) rootView.findViewById(R.id.baby_icon);
+			mBabyIcon = (ImageView) rootView.findViewById(R.id.baby_avator);
 			mBabyIcon.setOnClickListener(new OnClickListener() {
 				
 				@Override
