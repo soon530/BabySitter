@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:columnCount="4"
+    android:rowCount="8"
+    android:orientation="horizontal"
+    tools:targetApi="14" >
+
+    <Button
+        android:layout_columnSpan="4"
+        android:layout_rowSpan="4"
+        android:layout_gravity="fill"
+        android:text="1,1" />
+
+    <Button
+        android:layout_gravity="fill|fill_vertical"
+        android:text="1,2" />
+
+    <Button
+        android:layout_columnSpan="3"
+        android:layout_gravity="fill"
+        android:text="1,3" />
+
+
+</GridLayout>

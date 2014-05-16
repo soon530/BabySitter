@@ -1,12 +1,14 @@
 package tw.tasker.babysitter.view;
 
-import tw.tasker.babysitter.dummy.DummyContent;
+import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.presenter.BabysitterListPresenter;
 import tw.tasker.babysitter.presenter.BabysitterListPresenterImpl;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 
@@ -39,6 +41,8 @@ public class BabysitterListFragment extends ListFragment implements
 	 */
 	private int mActivatedPosition = ListView.INVALID_POSITION;
 	private BabysitterListPresenter mPresenter;
+
+	private View mHeaderView;
 
 	/**
 	 * A callback interface that all activities containing this fragment must
@@ -81,6 +85,8 @@ public class BabysitterListFragment extends ListFragment implements
 		super.onResume();
 	}
 
+	
+	
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);

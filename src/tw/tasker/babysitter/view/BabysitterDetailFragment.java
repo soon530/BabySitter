@@ -5,6 +5,8 @@ import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.dummy.DummyContent;
 import tw.tasker.babysitter.model.BabysitterComment;
 import tw.tasker.babysitter.model.BabysitterOutline;
+import tw.tasker.babysitter.presenter.BabysitterDetailPresenter;
+import tw.tasker.babysitter.presenter.BabysitterDetailPresenterImpl;
 import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
@@ -33,7 +35,8 @@ import com.parse.ParseQueryAdapter;
  * contained in a {@link BabysitterListActivity} in two-pane mode (on tablets)
  * or a {@link BabysitterDetailActivity} on handsets.
  */
-public class BabysitterDetailFragment extends Fragment {
+public class BabysitterDetailFragment extends Fragment implements
+		BabysitterDetailView, OnClickListener {
 	/**
 	 * The fragment argument representing the item ID that this fragment
 	 * represents.
@@ -63,8 +66,6 @@ public class BabysitterDetailFragment extends Fragment {
 	public int mTotalRating;
 	public int mTotalComment;
 
-	private ParseQueryAdapter<BabysitterComment> mOutlines;
-
 	private ImageView mCallIcon;
 
 	private TextView mPhone;
@@ -82,11 +83,19 @@ public class BabysitterDetailFragment extends Fragment {
 	private TextView mDistance;
 
 	private ImageView mBabysitterImage;
-	// Maximum results returned from a Parse query
-	private static final int MAX_POST_SEARCH_RESULTS = 20;
 
 	DisplayImageOptions options;
 	private ImageLoader imageLoader = ImageLoader.getInstance();
+
+	private View mHeaderView;
+
+	private BabysitterDetailPresenter mPresenter;
+
+	private String mDistanceValue;
+
+	private String mTargetLat;
+
+	private String mTargetLng;
 
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
@@ -107,65 +116,12 @@ public class BabysitterDetailFragment extends Fragment {
 					ARG_ITEM_ID));
 		}
 
+		mPresenter = new BabysitterDetailPresenterImpl(this);
+
 		Bundle bundle = getActivity().getIntent().getExtras();
 		objectId = bundle.getString("objectId");
 
-		mSlat = bundle.getString("slat");
-		mSlng = bundle.getString("slng");
-		mDlat = bundle.getString("dlat");
-		mDlng = bundle.getString("dlng");
-
-		// Set up a customized query
-		ParseQueryAdapter.QueryFactory<BabysitterComment> factory = new ParseQueryAdapter.QueryFactory<BabysitterComment>() {
-			public ParseQuery<BabysitterComment> create() {
-				// Location myLoc = (currentLocation == null) ? lastLocation :
-				// currentLocation;
-				ParseQuery<BabysitterComment> query = BabysitterComment
-						.getQuery();
-				// query.include("user");
-				query.orderByDescending("createdAt");
-				query.whereEqualTo("babysitterId", objectId);
-				// query.whereWithinKilometers("location",
-				// geoPointFromLocation(myLoc), radius * METERS_PER_FEET /
-				// METERS_PER_KILOMETER);
-				query.setLimit(MAX_POST_SEARCH_RESULTS);
-				return query;
-			}
-		};
-
-		mOutlines = new ParseQueryAdapter<BabysitterComment>(getActivity()
-				.getApplicationContext(), factory) {
-			@Override
-			public View getItemView(BabysitterComment post, View view,
-					ViewGroup parent) {
-				if (view == null) {
-					view = View.inflate(getContext(), R.layout.list_item_babysitter_comment, null);
-				}
-				TextView babysitterCommentTitle = (TextView) view
-						.findViewById(R.id.babysitter_comment_title);
-				TextView babysitterComment = (TextView) view
-						.findViewById(R.id.babysitter_comment);
-				RatingBar babysitterRating = (RatingBar) view
-						.findViewById(R.id.babysitter_rating);
-
-				ImageView babysitterImage = (ImageView) view
-						.findViewById(R.id.user_avator);
-
-				babysitterCommentTitle.setText(post.getTitle());
-				babysitterComment.setText(post.getComment());
-				babysitterRating.setRating(post.getRating());
-
-				babysitterImage.setBackgroundResource(R.drawable.ic_launcher);
-
-				return view;
-			}
-		};
-
-		// Disable automatic loading when the list_item_babysitter_comment is attached to a view.
-		mOutlines.setAutoload(false);
-
-		// Disable pagination, we'll manage the query limit ourselves
-		mOutlines.setPaginationEnabled(false);
+		mDistanceValue = getDistance(bundle);
 
 		options = new DisplayImageOptions.Builder()
 				.showImageOnLoading(R.drawable.ic_launcher)
@@ -175,74 +131,54 @@ public class BabysitterDetailFragment extends Fragment {
 				.displayer(new RoundedBitmapDisplayer(20)).build();
 	}
 
-	private void doDetailQuery(String objectId) {
-		LOGD("vic", "objectId" + objectId);
-		ParseQuery<BabysitterOutline> detailQuery = BabysitterOutline
-				.getQuery();
-		detailQuery.getInBackground(objectId,
-				new GetCallback<BabysitterOutline>() {
+	private String getDistance(Bundle bundle) {
 
-					@Override
-					public void done(BabysitterOutline outline, ParseException e) {
-						if (e != null) {
-							LOGD("vic", "done", e);
-						} else {
-							mAddress = outline.getAddress();
-							mName = outline.getText();
-							LOGD("vic", "address" + mAddress + "name" + mName);
-							mBabysitterName.setText(mName);
-							mBabysitterAddress.setText(mAddress);
+		mSlat = bundle.getString("slat");
+		mSlng = bundle.getString("slng");
+		mDlat = bundle.getString("dlat");
+		mDlng = bundle.getString("dlng");
 
-							mTotalRating = outline.getTotalRating();
-							mTotalComment = outline.getTotalComment();
+		mTargetLat = mSlat;
+		mTargetLng = mSlng;
 
-							int rating = 0;
-							try {
-								rating = mTotalRating / mTotalComment;
-							} catch (Exception e2) {
-								// TODO: handle exception
-							}
-							mBabysitterRating.setRating(rating);
+		double distance = 0;
+		Location locationA = new Location("A");
+		locationA.setLatitude(Double.valueOf(mSlat).doubleValue());
+		locationA.setLongitude(Double.valueOf(mSlng).doubleValue());
+		Location locationB = new Location("B");
+		locationB.setLatitude(Double.valueOf(mDlat).doubleValue());
+		locationB.setLongitude(Double.valueOf(mDlng).doubleValue());
+		distance = locationA.distanceTo(locationB);
 
-							mPhone.setText(outline.getTel());
-
-							mCallIcon.setOnClickListener(new OnClickListener() {
-
-								@Override
-								public void onClick(View v) {
-									Intent phoneIntent = new Intent(
-											Intent.ACTION_DIAL);
-									phoneIntent.setData(Uri.parse("tel:"
-											+ mPhone.getText()));
-									startActivity(phoneIntent);
-								}
-							});
-						}
-					}
-				});
-
+		return Double.toString(distance);
 	}
 
-	/*
-	 * Set up a query to update the list view
-	 */
-	private void doListQuery() {
-		// Location myLoc = (currentLocation == null) ? lastLocation :
-		// currentLocation;
-		// If location info is available, load the data
-		// if (myLoc != null) {
-		// Refreshes the list view with new data based
-		// usually on updated location data.
-		mOutlines.loadObjects();
-		// }
+	public void fillHeaderUI(BabysitterOutline outline) {
+		mAddress = outline.getAddress();
+		mName = outline.getText();
+		LOGD("vic", "address" + mAddress + "name" + mName);
+		mBabysitterName.setText(mName);
+		mBabysitterAddress.setText(mAddress);
+
+		mTotalRating = outline.getTotalRating();
+		mTotalComment = outline.getTotalComment();
+
+		int rating = 0;
+		try {
+			rating = mTotalRating / mTotalComment;
+		} catch (Exception e2) {
+			// TODO: handle exception
+		}
+		mBabysitterRating.setRating(rating);
+
+		mPhone.setText(outline.getTel());
+
+		mCallIcon.setOnClickListener(this);
 	}
 
 	@Override
 	public void onResume() {
-		// TODO Auto-generated method stub
 		super.onResume();
-		doDetailQuery(objectId);
-		doListQuery();
 	}
 
 	@Override
@@ -251,93 +187,80 @@ public class BabysitterDetailFragment extends Fragment {
 		View rootView = inflater.inflate(R.layout.fragment_babysitter_detail,
 				container, false);
 
+		
+		
 		mBabysitterImage = (ImageView) rootView
 				.findViewById(R.id.babysitter_avator);
 
-		imageLoader
-				.displayImage(
-						"http://cwisweb.sfaa.gov.tw/babysitterFiles/20140315134959_0822R167.jpg",
-						mBabysitterImage, options, null);
 
 		mBabysitterName = (TextView) rootView
 				.findViewById(R.id.babysitter_name);
-		// mBabysitterName.setText(mName);
 
 		mBabysitterAddress = (TextView) rootView
 				.findViewById(R.id.babysitter_address);
-		// mBabysitterAddress.setText(mAddress);
 
 		mBabysitterRating = (RatingBar) rootView
 				.findViewById(R.id.babysitter_rating);
 
 		mBabysitterCommentList = (ListView) rootView
 				.findViewById(R.id.babysitter_comment_list);
-		mBabysitterCommentList.setAdapter(mOutlines);
 
-		// mBabysitterCommentList.setAdapter(new
-		// ArrayAdapter<String>(getActivity().getApplicationContext(),
-		// android.R.layout.simple_list_item_1, mStrings ));
+		View view = inflater.inflate(
+				R.layout.fragment_babysitter_detail_header, null);
+		mHeaderView = view;
 
 		mBabyIcon = (ImageView) rootView.findViewById(R.id.baby_avator);
-		mBabyIcon.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent();
-				intent.setClass(getActivity().getApplicationContext(),
-						BabyDetailActivity.class);
-				startActivity(intent);
-
-			}
-		});
+		mBabyIcon.setOnClickListener(this);
 
 		mCallIcon = (ImageView) rootView.findViewById(R.id.call_icon);
 		mPhone = (TextView) rootView.findViewById(R.id.babysitter_phone);
 
 		mDirection = (Button) rootView.findViewById(R.id.direction);
 
-		mDirection.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-
-				// String currentLattitude = "22.635725";
-				// String currentLongitude = "120.377175";
-				// String targetLat = "22.634599";
-				// String targetLang = "120.350349";
-				// String url =
-				// "http://maps.google.com/maps?saddr="+currentLattitude+","+currentLongitude+"&daddr="+targetLat+","+targetLang;
-				// String url =
-				// "http://maps.google.com/maps?saddr="+mSlat+","+mSlng+"&daddr="+mDlat+","+mDlng;
-				String url = "geo:0,0?q=" + mSlat + "," + mSlng;
-
-				Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-						Uri.parse(url));
-				intent.setClassName("com.google.android.apps.maps",
-						"com.google.android.maps.MapsActivity");
-				startActivity(intent);
-			}
-		});
+		mDirection.setOnClickListener(this);
 
 		mDistance = (TextView) rootView.findViewById(R.id.distance);
+		mDistance.setText(mDistanceValue);
 
-		double distance = 0;
-/*		Location locationA = new Location("A");
-		locationA.setLatitude(Double.valueOf(mSlat).doubleValue());
-		locationA.setLongitude(Double.valueOf(mSlng).doubleValue());
-		Location locationB = new Location("B");
-		locationB.setLatitude(Double.valueOf(mDlat).doubleValue());
-		locationB.setLongitude(Double.valueOf(mDlng).doubleValue());
-		distance = locationA.distanceTo(locationB);
-*/
-		mDistance.setText(Double.toString(distance));
+		
+		imageLoader
+		.displayImage(
+				"http://cwisweb.sfaa.gov.tw/babysitterFiles/20140315134959_0822R167.jpg",
+				mBabysitterImage, options, null);
 
-		// Show the dummy content as text in a TextView.
-		// if (mItem != null) {
-		// ((TextView) rootView.findViewById(R.id.item_detail))
-		// .setText(mItem.content);
-		// }
-
+		
 		return rootView;
 	}
+
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+
+		mBabysitterCommentList.addHeaderView(mHeaderView);
+		mPresenter.doDetailQuery(objectId);
+		mPresenter.doCommentQuery(objectId);
+
+	}
+
+	public void setCommentData(ParseQueryAdapter<BabysitterComment> adapter) {
+		mBabysitterCommentList.setAdapter(adapter);
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.direction:
+			mPresenter.doDirections(mTargetLat, mTargetLng);
+			break;
+		case R.id.baby_avator:
+			mPresenter.seeBabyDetail();
+			break;
+		case R.id.call_icon:
+			mPresenter.makePhoneCall(mPhone.getText().toString());
+			break;
+		default:
+			break;
+		}
+	}
+
 }
