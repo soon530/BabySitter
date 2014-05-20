@@ -1,5 +1,9 @@
 package tw.tasker.babysitter.view;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.R.id;
 import tw.tasker.babysitter.R.layout;
@@ -19,7 +23,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 public class BabyDetailActivity extends ActionBarActivity {
-	private static final String[] mStrings = new String[] {"一","二","三","四","五","六","七","八","九"};
+	private static final String[] mStrings = new String[] { "一", "二", "三", "四",
+			"五", "六", "七", "八", "九" };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +35,7 @@ public class BabyDetailActivity extends ActionBarActivity {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
+
 	}
 
 	@Override
@@ -59,8 +65,19 @@ public class BabyDetailActivity extends ActionBarActivity {
 
 		private ListView mListView;
 		private ImageView mBabyIcon;
+		DisplayImageOptions options;
+		private ImageLoader imageLoader = ImageLoader.getInstance();
 
 		public PlaceholderFragment() {
+
+			options = new DisplayImageOptions.Builder()
+					.showImageOnLoading(R.drawable.ic_launcher)
+					.showImageForEmptyUri(R.drawable.ic_launcher)
+					.showImageOnFail(R.drawable.ic_launcher)
+					.cacheInMemory(true).cacheOnDisc(true)
+					.considerExifParams(true)
+					.displayer(new RoundedBitmapDisplayer(20)).build();
+
 		}
 
 		@Override
@@ -68,22 +85,31 @@ public class BabyDetailActivity extends ActionBarActivity {
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_baby_detail,
 					container, false);
-			mListView = (ListView) rootView.findViewById(R.id.baby_comment_list);
-			mListView.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, mStrings ));
-			
+			mListView = (ListView) rootView
+					.findViewById(R.id.baby_comment_list);
+			mListView.setAdapter(new ArrayAdapter<String>(getActivity()
+					.getApplicationContext(),
+					android.R.layout.simple_list_item_1, mStrings));
+
 			mBabyIcon = (ImageView) rootView.findViewById(R.id.baby_avator);
+
+			imageLoader
+					.displayImage(
+							"https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-ash3/t1.0-9/q77/s720x720/1966891_782022338479354_124097698_n.jpg",
+							mBabyIcon, options, null);
+
 			mBabyIcon.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
 					Intent intent = new Intent();
-					intent.setClass(getActivity().getApplicationContext(), BabysitterDetailActivity.class);
+					intent.setClass(getActivity().getApplicationContext(),
+							BabysitterDetailActivity.class);
 					startActivity(intent);
 
 				}
 			});
 
-			
 			return rootView;
 		}
 	}
