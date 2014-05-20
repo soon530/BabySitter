@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
@@ -49,7 +50,7 @@ public class BabysitterDetailFragment extends Fragment implements
 	private DummyContent.DummyItem mItem;
 	private ListView mBabysitterCommentList;
 
-	private ImageView mBabyIcon;
+	private Button mBabyIcon;
 	private static final String[] mStrings = new String[] { "一", "二", "三", "四",
 			"五", "六", "七", "八", "九" };
 
@@ -70,7 +71,7 @@ public class BabysitterDetailFragment extends Fragment implements
 
 	private TextView mPhone;
 
-	private Button mDirection;
+	private ImageButton mDirection;
 
 	private String mSlat;
 
@@ -121,7 +122,7 @@ public class BabysitterDetailFragment extends Fragment implements
 		Bundle bundle = getActivity().getIntent().getExtras();
 		objectId = bundle.getString("objectId");
 
-		mDistanceValue = getDistance(bundle);
+		mDistanceValue = "10公尺"; //getDistance(bundle);
 
 		options = new DisplayImageOptions.Builder()
 				.showImageOnLoading(R.drawable.ic_launcher)
@@ -184,52 +185,50 @@ public class BabysitterDetailFragment extends Fragment implements
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+
+		mHeaderView = inflater.inflate(
+				R.layout.fragment_babysitter_detail_header, null);
+
+		initHeadUI();
+
 		View rootView = inflater.inflate(R.layout.fragment_babysitter_detail,
 				container, false);
-
-		
-		
-		mBabysitterImage = (ImageView) rootView
-				.findViewById(R.id.babysitter_avator);
-
-
-		mBabysitterName = (TextView) rootView
-				.findViewById(R.id.babysitter_name);
-
-		mBabysitterAddress = (TextView) rootView
-				.findViewById(R.id.babysitter_address);
-
-		mBabysitterRating = (RatingBar) rootView
-				.findViewById(R.id.babysitter_rating);
 
 		mBabysitterCommentList = (ListView) rootView
 				.findViewById(R.id.babysitter_comment_list);
 
-		View view = inflater.inflate(
-				R.layout.fragment_babysitter_detail_header, null);
-		mHeaderView = view;
+		return rootView;
+	}
 
-		mBabyIcon = (ImageView) rootView.findViewById(R.id.baby_avator);
-		mBabyIcon.setOnClickListener(this);
+	private void initHeadUI() {
+		mBabysitterImage = (ImageView) mHeaderView
+				.findViewById(R.id.babysitter_avator);
 
-		mCallIcon = (ImageView) rootView.findViewById(R.id.call_icon);
-		mPhone = (TextView) rootView.findViewById(R.id.babysitter_phone);
+		mBabysitterName = (TextView) mHeaderView
+				.findViewById(R.id.babysitter_name);
 
-		mDirection = (Button) rootView.findViewById(R.id.direction);
+		mBabysitterRating = (RatingBar) mHeaderView
+				.findViewById(R.id.babysitter_rating);
+
+		mCallIcon = (ImageView) mHeaderView.findViewById(R.id.call_icon);
+		mPhone = (TextView) mHeaderView.findViewById(R.id.babysitter_phone);
+
+		mDirection = (ImageButton) mHeaderView.findViewById(R.id.direction);
+		mBabysitterAddress = (TextView) mHeaderView
+				.findViewById(R.id.babysitter_address);
+
+		mDistance = (TextView) mHeaderView.findViewById(R.id.distance);
+
+		mBabyIcon = (Button) mHeaderView.findViewById(R.id.baby_avator);
+
+		imageLoader
+				.displayImage(
+						"http://cwisweb.sfaa.gov.tw/babysitterFiles/20140315134959_0822R167.jpg",
+						mBabysitterImage, options, null);
 
 		mDirection.setOnClickListener(this);
-
-		mDistance = (TextView) rootView.findViewById(R.id.distance);
 		mDistance.setText(mDistanceValue);
-
-		
-		imageLoader
-		.displayImage(
-				"http://cwisweb.sfaa.gov.tw/babysitterFiles/20140315134959_0822R167.jpg",
-				mBabysitterImage, options, null);
-
-		
-		return rootView;
+		mBabyIcon.setOnClickListener(this);
 	}
 
 	@Override
