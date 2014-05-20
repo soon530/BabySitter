@@ -1,5 +1,8 @@
 package tw.tasker.babysitter.model;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import tw.tasker.babysitter.R;
 import android.content.Context;
 import android.view.View;
@@ -23,17 +26,18 @@ public class CommentParseQueryAdapter extends
 
 	DisplayImageOptions options;
 	private ImageLoader imageLoader = ImageLoader.getInstance();
+	private TextView createDate;
 
 	public CommentParseQueryAdapter(Context context,
 			ParseQueryAdapter.QueryFactory<BabysitterComment> factory) {
 		super(context, factory);
-		
+
 		options = new DisplayImageOptions.Builder()
-		.showImageOnLoading(R.drawable.ic_launcher)
-		.showImageForEmptyUri(R.drawable.ic_launcher)
-		.showImageOnFail(R.drawable.ic_launcher).cacheInMemory(true)
-		.cacheOnDisc(true).considerExifParams(true)
-		.displayer(new RoundedBitmapDisplayer(20)).build();
+				.showImageOnLoading(R.drawable.ic_launcher)
+				.showImageForEmptyUri(R.drawable.ic_launcher)
+				.showImageOnFail(R.drawable.ic_launcher).cacheInMemory(true)
+				.cacheOnDisc(true).considerExifParams(true)
+				.displayer(new RoundedBitmapDisplayer(20)).build();
 
 	}
 
@@ -55,6 +59,8 @@ public class CommentParseQueryAdapter extends
 	private void initUI(View view) {
 		babysitterImage = (ImageView) view.findViewById(R.id.user_avator);
 
+		createDate = (TextView) view.findViewById(R.id.create_date);
+
 		babysitterCommentTitle = (TextView) view
 				.findViewById(R.id.babysitter_comment_title);
 
@@ -66,15 +72,21 @@ public class CommentParseQueryAdapter extends
 	}
 
 	private void fillDataToUI(BabysitterComment comment) {
-		//babysitterImage.setBackgroundResource(R.drawable.ic_launcher);
+		// babysitterImage.setBackgroundResource(R.drawable.ic_launcher);
 		babysitterCommentTitle.setText(comment.getTitle());
 		babysitterComment.setText(comment.getComment());
 		babysitterRating.setRating(comment.getRating());
-		
+
+		SimpleDateFormat formatter = new SimpleDateFormat(
+				"yyyy-MM-dd hh:mm:ss a");
+		String now = formatter.format(comment.getCreatedAt());
+
+		createDate.setText(now);
+
 		imageLoader
-		.displayImage(
-				"https://lh3.googleusercontent.com/-3ett5vaAVZc/AAAAAAAAAAI/AAAAAAAACSQ/BUns79OwRrI/s120-c/photo.jpg",
-				babysitterImage, options, null);
+				.displayImage(
+						"https://lh3.googleusercontent.com/-3ett5vaAVZc/AAAAAAAAAAI/AAAAAAAACSQ/BUns79OwRrI/s120-c/photo.jpg",
+						babysitterImage, options, null);
 
 	}
 

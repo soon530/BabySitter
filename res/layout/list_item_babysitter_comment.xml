@@ -22,9 +22,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:text="地點"
+            android:layout_marginTop="5dp"
+            android:text="標題"
             android:textColor="#FF0000" />
+
+        <RatingBar
+            android:id="@+id/babysitter_rating"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp" />
+
+        <TextView
+            android:id="@+id/create_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="日期"
+             android:textColor="#000000"
+             />
 
         <TextView
             android:id="@+id/babysitter_comment"
@@ -32,16 +49,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
-            android:text="名稱"
+            android:text="評論"
             android:textColor="#000000" />
 
-        <RatingBar
-            android:id="@+id/babysitter_rating"
-            style="?android:attr/ratingBarStyleIndicator"  
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp" />
     </LinearLayout>
 
 </LinearLayout>
