@@ -8,6 +8,9 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.parse.ParseQueryAdapter;
 
 public class CommentParseQueryAdapter extends
@@ -18,9 +21,20 @@ public class CommentParseQueryAdapter extends
 	TextView babysitterComment;
 	RatingBar babysitterRating;
 
+	DisplayImageOptions options;
+	private ImageLoader imageLoader = ImageLoader.getInstance();
+
 	public CommentParseQueryAdapter(Context context,
 			ParseQueryAdapter.QueryFactory<BabysitterComment> factory) {
 		super(context, factory);
+		
+		options = new DisplayImageOptions.Builder()
+		.showImageOnLoading(R.drawable.ic_launcher)
+		.showImageForEmptyUri(R.drawable.ic_launcher)
+		.showImageOnFail(R.drawable.ic_launcher).cacheInMemory(true)
+		.cacheOnDisc(true).considerExifParams(true)
+		.displayer(new RoundedBitmapDisplayer(20)).build();
+
 	}
 
 	@Override
@@ -52,10 +66,16 @@ public class CommentParseQueryAdapter extends
 	}
 
 	private void fillDataToUI(BabysitterComment comment) {
-		babysitterImage.setBackgroundResource(R.drawable.ic_launcher);
+		//babysitterImage.setBackgroundResource(R.drawable.ic_launcher);
 		babysitterCommentTitle.setText(comment.getTitle());
 		babysitterComment.setText(comment.getComment());
 		babysitterRating.setRating(comment.getRating());
+		
+		imageLoader
+		.displayImage(
+				"https://lh3.googleusercontent.com/-3ett5vaAVZc/AAAAAAAAAAI/AAAAAAAACSQ/BUns79OwRrI/s120-c/photo.jpg",
+				babysitterImage, options, null);
+
 	}
 
 }
