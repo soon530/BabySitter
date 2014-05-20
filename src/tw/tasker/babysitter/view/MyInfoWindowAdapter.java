@@ -1,6 +1,9 @@
 package tw.tasker.babysitter.view;
 
+import java.util.HashMap;
+
 import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.model.BabysitterOutline;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,8 +21,9 @@ public class MyInfoWindowAdapter implements InfoWindowAdapter {
 	private final View myContentsView;
 	DisplayImageOptions options;
 	private ImageLoader imageLoader = ImageLoader.getInstance();
+	HashMap<String, BabysitterOutline> mMapModel;
 
-	MyInfoWindowAdapter(LayoutInflater layoutinflater) {
+	MyInfoWindowAdapter(LayoutInflater layoutinflater, HashMap<String, BabysitterOutline> map_model) {
 		myContentsView = layoutinflater
 				.inflate(R.layout.map_info_content, null);
 		options = new DisplayImageOptions.Builder()
@@ -29,7 +33,7 @@ public class MyInfoWindowAdapter implements InfoWindowAdapter {
 		.cacheOnDisc(true).considerExifParams(true)
 		.displayer(new RoundedBitmapDisplayer(20)).build();
 
-	
+		mMapModel = map_model;
 	}
 
 	@Override
@@ -40,10 +44,11 @@ public class MyInfoWindowAdapter implements InfoWindowAdapter {
 		RatingBar rating = (RatingBar) myContentsView.findViewById(R.id.babysitter_rating);
 		TextView totalComemnt = (TextView) myContentsView.findViewById(R.id.babysitter_totalComment);
 		
-		name.setText(marker.getTitle());
-		rating.setRating((float) 4.5);
-		totalComemnt.setText("共有10則評論");
+		name.setText(mMapModel.get(marker.getId()).getText());
+		rating.setRating(getRatingValue( mMapModel.get(marker.getId()).getTotalRating(), mMapModel.get(marker.getId()).getTotalComment()));
 		
+		int comment = mMapModel.get(marker.getId()).getTotalComment();
+		totalComemnt.setText("共有"+ String.valueOf(comment)+"則評論");
 		
 		imageLoader
 		.displayImage(
@@ -57,6 +62,15 @@ public class MyInfoWindowAdapter implements InfoWindowAdapter {
 	@Override
 	public View getInfoWindow(Marker marker) {
 		return null;
+	}
+	
+	private float getRatingValue(int totalRating, int totalComment) {
+		float avgRating = 0.0f; 
+		
+		if (totalComment != 0) {
+			avgRating = totalRating / totalComment;
+		}
+		return avgRating;
 	}
 
 }

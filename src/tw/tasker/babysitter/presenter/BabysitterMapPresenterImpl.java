@@ -7,6 +7,7 @@ import java.util.List;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.BabysitterMapModel;
 import tw.tasker.babysitter.model.BabysitterMapModelImpl;
+import tw.tasker.babysitter.model.BabysitterOutline;
 import tw.tasker.babysitter.model.OnFinishedListener;
 import tw.tasker.babysitter.utils.MyLocation;
 import tw.tasker.babysitter.view.BabysitterDetailActivity;
@@ -52,6 +53,12 @@ public class BabysitterMapPresenterImpl implements BabysitterMapPresenter, OnFin
 	}
 	
 	@Override
+	public void onDataFinished(List<BabysitterOutline> outlines) {
+		mBabysitterMap.AddMarkers(outlines);
+	}
+	
+	
+	@Override
 	public void onOptionsItemSelected(int id) {
 		if (id == R.id.action_list) {
 			Intent intent = new Intent();
@@ -75,4 +82,6 @@ public class BabysitterMapPresenterImpl implements BabysitterMapPresenter, OnFin
 		intent.putExtras(bundle);
 		mBabysitterMap.startActivity(intent);
 	}
+
+
 }

@@ -1,11 +1,12 @@
 package tw.tasker.babysitter.view;
 
+import static tw.tasker.babysitter.utils.LogUtils.LOGD;
 import static tw.tasker.babysitter.utils.LogUtils.makeLogTag;
 
+import java.util.HashMap;
 import java.util.List;
 
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.model.BabysitterComment;
 import tw.tasker.babysitter.model.BabysitterOutline;
 import tw.tasker.babysitter.presenter.BabysitterMapPresenter;
 import tw.tasker.babysitter.presenter.BabysitterMapPresenterImpl;
@@ -20,11 +21,12 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMapLoadedCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.parse.Parse;
-import com.parse.ParseObject;
 
 public class BabysitterMapActivity extends ActionBarActivity implements
 		OnInfoWindowClickListener, BabysitterMapView, OnMapLoadedCallback {
@@ -32,7 +34,8 @@ public class BabysitterMapActivity extends ActionBarActivity implements
 
 	private GoogleMap mMap;
 	private BabysitterMapPresenter mPresneter;
-
+	private HashMap<String, BabysitterOutline> map_model= new HashMap<String, BabysitterOutline>();
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -43,7 +46,7 @@ public class BabysitterMapActivity extends ActionBarActivity implements
 		if (mMap != null) {
 			mMap.setOnMapLoadedCallback(this);
 			mMap.setOnInfoWindowClickListener(this);
-			mMap.setInfoWindowAdapter(new MyInfoWindowAdapter(getLayoutInflater()));
+			mMap.setInfoWindowAdapter(new MyInfoWindowAdapter(getLayoutInflater(), map_model));
 		}
 	}
 
@@ -75,6 +78,34 @@ public class BabysitterMapActivity extends ActionBarActivity implements
 		for (MarkerOptions maker : markerOptions) {
 			mMap.addMarker(maker);
 		}
+	}
+	
+	public void AddMarkers(List<BabysitterOutline> outlines) {
+		for (BabysitterOutline outline : outlines) {
+
+			MarkerOptions markerOpts = getOutlineMarkerOptions(outline);
+			Marker mark = mMap.addMarker(markerOpts);
+			map_model.put(mark.getId(), outline);
+		}
+		
+	}
+	
+	private MarkerOptions getOutlineMarkerOptions(BabysitterOutline outline) {
+		double lat = outline.getLocation().getLatitude();
+		double lng = outline.getLocation().getLongitude();
+		LOGD(TAG, "outline" + outline.getText() + ",lat" + lat + ",lng" + lng);
+
+		LatLng latLng = new LatLng(lat, lng);
+
+		MarkerOptions markerOpts = new MarkerOptions();
+		markerOpts.position(latLng);
+		markerOpts.title(outline.getObjectId());
+		markerOpts.snippet("保母：" + outline.getText() + "\n已托育："
+				+ outline.getBabycareCount());
+		BitmapDescriptor icon = BitmapDescriptorFactory
+				.defaultMarker(BitmapDescriptorFactory.HUE_RED);
+		markerOpts.icon(icon);
+		return markerOpts;
 	}
 
 	@Override
@@ -115,4 +146,6 @@ public class BabysitterMapActivity extends ActionBarActivity implements
 	protected void onPause() {
 		super.onPause();
 	}
+
+
 }

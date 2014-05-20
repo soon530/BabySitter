@@ -59,7 +59,7 @@ public class BabysitterMapModelImpl extends FindCallback<BabysitterOutline>
 	@Override
 	public void done(List<BabysitterOutline> objects, ParseException e) {
 		LOGD(TAG, "findInBackground done()");
-		List<MarkerOptions> babysitterMarkerOptions = new ArrayList<MarkerOptions>();
+/*		List<MarkerOptions> babysitterMarkerOptions = new ArrayList<MarkerOptions>();
 
 		for (BabysitterOutline outline : objects) {
 
@@ -67,7 +67,9 @@ public class BabysitterMapModelImpl extends FindCallback<BabysitterOutline>
 			babysitterMarkerOptions.add(markerOpts);
 
 		}
-		mFinishedListener.onFinished(babysitterMarkerOptions);
+		mFinishedListener.onFinished(babysitterMarkerOptions);*/
+		
+		mFinishedListener.onDataFinished(objects);
 	}
 
 	private MarkerOptions getOutlineMarkerOptions(BabysitterOutline outline) {
