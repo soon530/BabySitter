@@ -43,6 +43,7 @@ public class BabysitterMapActivity extends ActionBarActivity implements
 		if (mMap != null) {
 			mMap.setOnMapLoadedCallback(this);
 			mMap.setOnInfoWindowClickListener(this);
+			mMap.setInfoWindowAdapter(new MyInfoWindowAdapter(getLayoutInflater()));
 		}
 	}
 
