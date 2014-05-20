@@ -37,11 +37,19 @@
 
         <RatingBar
             android:id="@+id/babysitter_rating"
-            style="?android:attr/ratingBarStyleIndicator"  
+            style="?android:attr/ratingBarStyleIndicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp" />
+
+        <TextView
+            android:id="@+id/totalComment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="評論數"
+            android:textColor="#008000" />
     </LinearLayout>
 
 </LinearLayout>

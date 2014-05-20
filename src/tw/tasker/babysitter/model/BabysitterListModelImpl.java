@@ -1,16 +1,12 @@
 package tw.tasker.babysitter.model;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.dummy.DummyContent.DummyItem;
 import tw.tasker.babysitter.presenter.BabysitterListPresenterImpl;
-import tw.tasker.babysitter.view.BabysitterDetailFragment;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.parse.ParseQuery;
@@ -24,12 +20,12 @@ public class BabysitterListModelImpl implements BabysitterListModel {
 	private BabysitterListPresenterImpl mBabysitterListPresenterImpl;
 	private Context mContext;
 	private ParseQueryAdapter<BabysitterOutline> mAdapter;
-		
+
 	public BabysitterListModelImpl(
 			BabysitterListPresenterImpl babysitterListPresenterImpl,
 			Context applicationContext) {
 		mBabysitterListPresenterImpl = babysitterListPresenterImpl;
-		mContext =applicationContext;
+		mContext = applicationContext;
 	}
 
 	@Override
@@ -44,12 +40,12 @@ public class BabysitterListModelImpl implements BabysitterListModel {
 
 		// Disable pagination, we'll manage the query limit ourselves
 		mAdapter.setPaginationEnabled(false);
-		
+
 		mBabysitterListPresenterImpl.setAdapter(mAdapter);
-		
+
 		mAdapter.loadObjects();
 	}
-	
+
 	private ParseQueryAdapter.QueryFactory<BabysitterOutline> getQueryFactory() {
 		// Set up a customized query
 		ParseQueryAdapter.QueryFactory<BabysitterOutline> factory = new ParseQueryAdapter.QueryFactory<BabysitterOutline>() {
@@ -69,7 +65,7 @@ public class BabysitterListModelImpl implements BabysitterListModel {
 		};
 		return factory;
 	}
-	
+
 	private ParseQueryAdapter<BabysitterOutline> getParseQueryAdapter(
 			QueryFactory<BabysitterOutline> factory) {
 		ParseQueryAdapter<BabysitterOutline> adapter;
@@ -90,12 +86,34 @@ public class BabysitterListModelImpl implements BabysitterListModel {
 				ImageView babysitterImage = (ImageView) view
 						.findViewById(R.id.babysitter_avator);
 
+				RatingBar babysitterRating = (RatingBar) view
+						.findViewById(R.id.babysitter_rating);
+				
+				TextView totalComment = (TextView) view.findViewById(R.id.totalComment);
+
 				babysitterName.setText(post.getText());
 				babysitterAddress.setText(post.getAddress());
 				babysitterImage.setBackgroundResource(R.drawable.ic_launcher);
-
+				
+				int totalRatingValue = post.getTotalRating();
+				int totalComementValue = post.getTotalComment(); 
+				
+				totalComment.setText("共有：" + String.valueOf(totalComementValue) + "筆評論");
+				float rating = getRatingValue(totalRatingValue, totalComementValue);
+				babysitterRating.setRating(rating);
+				
 				return view;
 			}
+
+			private float getRatingValue(int totalRating, int totalComment) {
+				float avgRating = 0.0f; 
+				
+				if (totalComment != 0) {
+					avgRating = totalRating / totalComment;
+				}
+				return avgRating;
+			}
+
 		};
 		return adapter;
 	}
@@ -104,8 +122,5 @@ public class BabysitterListModelImpl implements BabysitterListModel {
 	public BabysitterOutline getOutline(int position) {
 		return mAdapter.getItem(position);
 	}
-	
-	
-	
 
 }
