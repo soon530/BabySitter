@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseQueryAdapter.QueryFactory;
@@ -21,6 +24,9 @@ public class BabysitterListModelImpl implements BabysitterListModel {
 	private Context mContext;
 	private ParseQueryAdapter<BabysitterOutline> mAdapter;
 
+	DisplayImageOptions options;
+	private ImageLoader imageLoader = ImageLoader.getInstance();
+
 	public BabysitterListModelImpl(
 			BabysitterListPresenterImpl babysitterListPresenterImpl,
 			Context applicationContext) {
@@ -30,6 +36,15 @@ public class BabysitterListModelImpl implements BabysitterListModel {
 
 	@Override
 	public void doListQuery() {
+		
+		options = new DisplayImageOptions.Builder()
+		.showImageOnLoading(R.drawable.ic_launcher)
+		.showImageForEmptyUri(R.drawable.ic_launcher)
+		.showImageOnFail(R.drawable.ic_launcher).cacheInMemory(true)
+		.cacheOnDisc(true).considerExifParams(true)
+		.displayer(new RoundedBitmapDisplayer(20)).build();
+
+		
 		ParseQueryAdapter.QueryFactory<BabysitterOutline> factory = getQueryFactory();
 
 		mAdapter = getParseQueryAdapter(factory);
@@ -93,7 +108,13 @@ public class BabysitterListModelImpl implements BabysitterListModel {
 
 				babysitterName.setText(post.getText());
 				babysitterAddress.setText(post.getAddress());
-				babysitterImage.setBackgroundResource(R.drawable.ic_launcher);
+				//babysitterImage.setBackgroundResource(R.drawable.ic_launcher);
+				
+				imageLoader
+				.displayImage(
+						"http://cwisweb.sfaa.gov.tw/babysitterFiles/20140315134959_0822R167.jpg",
+						babysitterImage, options, null);
+
 				
 				int totalRatingValue = post.getTotalRating();
 				int totalComementValue = post.getTotalComment(); 
