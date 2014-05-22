@@ -19,6 +19,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -135,6 +137,19 @@ public class BabyDetailActivity extends ActionBarActivity implements BabysitterD
 			mListView = (ListView) rootView
 					.findViewById(R.id.baby_comment_list);
 
+			mListView.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					 //Intent refresh =new Intent(getActivity(), BabyDetailActivity.class);
+
+					    //startActivity(refresh);
+
+					    //getActivity().finish();
+					
+				}
+			});
 
 
 			return rootView;
