@@ -1,26 +1,26 @@
 package tw.tasker.babysitter.view;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
-
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.R.id;
-import tw.tasker.babysitter.R.layout;
-import tw.tasker.babysitter.R.menu;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 public class BabyDetailActivity extends ActionBarActivity {
 	private static final String[] mStrings = new String[] { "一", "二", "三", "四",
@@ -38,26 +38,44 @@ public class BabyDetailActivity extends ActionBarActivity {
 
 	}
 
-	@Override
+/*	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.baby_detail, menu);
 		return true;
-	}
+	}*/
 
-	@Override
+/*	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.post_words) {
+
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
-	}
+	}*/
 
+/*	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// 拍照後顯示圖片
+		//ImageView iv = (ImageView) findViewById(R.id.imagecaptured);
+		if (resultCode == RESULT_OK) {
+			// 取出拍照後回傳資料
+			Bundle extras = data.getExtras();
+			// 將資料轉換為圖像格式
+			//Bitmap bmp = (Bitmap) extras.get("data");
+			// 載入ImageView
+			//iv.setImageBitmap(bmp);
+		}
+
+		// 覆蓋原來的Activity
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+*/
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
@@ -67,6 +85,7 @@ public class BabyDetailActivity extends ActionBarActivity {
 		private ImageView mBabyIcon;
 		DisplayImageOptions options;
 		private ImageLoader imageLoader = ImageLoader.getInstance();
+		private ImageButton mBabysitterIcon;
 
 		public PlaceholderFragment() {
 
@@ -78,6 +97,12 @@ public class BabyDetailActivity extends ActionBarActivity {
 					.considerExifParams(true)
 					.displayer(new RoundedBitmapDisplayer(20)).build();
 
+		}
+		
+		@Override
+		public void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+			setHasOptionsMenu(true);
 		}
 
 		@Override
@@ -109,9 +134,48 @@ public class BabyDetailActivity extends ActionBarActivity {
 
 				}
 			});
+			
+			
+			mBabysitterIcon = (ImageButton) rootView.findViewById(R.id.babysitter_icon);
 
 			return rootView;
 		}
+		
+
+		@Override
+		public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+			inflater.inflate(R.menu.baby_detail, menu);
+			super.onCreateOptionsMenu(menu, inflater);
+		}
+	
+		@Override
+		public boolean onOptionsItemSelected(MenuItem item) {
+
+			Intent intent_camera = new Intent(
+					android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+			startActivityForResult(intent_camera, 0);
+
+			return false;
+		}
+	
+		@Override
+		public void onActivityResult(int requestCode, int resultCode,
+				Intent data) {
+			// 拍照後顯示圖片
+			//ImageView iv = (ImageView) findViewById(R.id.imagecaptured);
+			if (resultCode == RESULT_OK) {
+				// 取出拍照後回傳資料
+				Bundle extras = data.getExtras();
+				// 將資料轉換為圖像格式
+				Bitmap bmp = (Bitmap) extras.get("data");
+				// 載入ImageView
+				mBabysitterIcon.setImageBitmap(bmp);
+			}
+
+			// 覆蓋原來的Activity
+			super.onActivityResult(requestCode, resultCode, data);
+		}
 	}
+	
 
 }
