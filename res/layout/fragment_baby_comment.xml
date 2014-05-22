@@ -1,16 +1,62 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="tw.tasker.babysitter.BabyCommentActivity$PlaceholderFragment" >
+    android:layout_height="match_parent" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
 
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/user_avator"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="2dp"
+            android:contentDescription="TODO"
+            android:src="@drawable/ic_launcher" />
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/user_avator"
+            android:layout_marginBottom="26dp"
+            android:layout_marginLeft="33dp"
+            android:layout_toRightOf="@+id/user_avator"
+            android:text="評論者：Vic"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <EditText
+            android:id="@+id/babysitter_comment_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/user_avator"
+            android:layout_centerVertical="true"
+            android:ems="10"
+            android:hint="標題" >
+
+            <requestFocus />
+        </EditText>
+
+        <EditText
+            android:id="@+id/babysitter_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/post_comment"
+            android:layout_alignLeft="@+id/post_comment"
+            android:layout_alignRight="@+id/post_comment"
+            android:ems="10"
+            android:hint="說明"
+            android:inputType="textMultiLine"
+            android:lines="4" />
+
+        <Button
+            android:id="@+id/post_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="17dp"
+            android:text="送出" />
+    </LinearLayout>
+
+</ScrollView>
