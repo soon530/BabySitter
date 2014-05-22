@@ -59,9 +59,9 @@ public class RecordParseQueryAdapter extends ParseQueryAdapter<BabysitterComment
 		babyRecordTitle = (TextView) view
 				.findViewById(R.id.baby_record_title);
 
-		babyHeart = (TextView) view
+/*		babyHeart = (TextView) view
 				.findViewById(R.id.heart);
-
+*/
 		createDate = (TextView) view.findViewById(R.id.create_date);
 
 		babyRecord = (TextView) view
@@ -73,7 +73,7 @@ public class RecordParseQueryAdapter extends ParseQueryAdapter<BabysitterComment
 		// userAvator.setBackgroundResource(R.drawable.ic_launcher);
 		babyRecordTitle.setText(comment.getTitle());
 		babyRecord.setText(comment.getComment());
-		babyHeart.setText("愛心 +" + comment.getRating());
+		//babyHeart.setText("愛心 +" + comment.getRating());
 
 		SimpleDateFormat formatter = new SimpleDateFormat(
 				"yyyy-MM-dd hh:mm:ss a");

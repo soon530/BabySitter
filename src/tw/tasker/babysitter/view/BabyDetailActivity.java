@@ -104,6 +104,8 @@ public class BabyDetailActivity extends ActionBarActivity implements BabysitterD
 		ParseQueryAdapter<BabysitterComment> mCommentAdapter;
 
 		private View mHeaderView;
+		private Button mHeart;
+		private int count;
 
 		public PlaceholderFragment() {
 
@@ -178,6 +180,16 @@ public class BabyDetailActivity extends ActionBarActivity implements BabysitterD
 			
 			
 			mBabysitterIcon = (Button) mHeaderView.findViewById(R.id.babysitter_icon);
+			
+			
+			mHeart = (Button) mHeaderView.findViewById(R.id.heart);
+			
+			mHeart.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					mHeart.setText("♥ +" + ++count);
+				}
+			});
 			
 		}
 		

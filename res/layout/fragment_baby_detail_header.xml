@@ -18,6 +18,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/heart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=" ♥ +0"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#FFAEAE" />
         
         <TextView
                 android:id="@+id/name"
