@@ -5,9 +5,8 @@ import java.util.List;
 import tw.tasker.babysitter.BabyCommentActivity;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.BabysitterComment;
-import tw.tasker.babysitter.model.CommentParseQueryAdapter;
+import tw.tasker.babysitter.model.RecordParseQueryAdapter;
 import tw.tasker.babysitter.presenter.BabysitterDetailPresenter;
-import tw.tasker.babysitter.presenter.BabysitterDetailPresenterImpl;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -20,7 +19,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -184,7 +182,7 @@ public class BabyDetailActivity extends ActionBarActivity implements BabysitterD
 		
 		public void doCommentQuery(String objectId) {
 			
-			mCommentAdapter = new CommentParseQueryAdapter(getActivity(), getFactory(objectId));
+			mCommentAdapter = new RecordParseQueryAdapter(getActivity(), getFactory(objectId));
 
 			// Disable automatic loading when the list_item_babysitter_comment is
 			// attached to a view.
