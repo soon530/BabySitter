@@ -32,5 +32,6 @@
     <string name="post_words">打卡</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_home">保母搜尋</string>
+    <string name="title_activity_baby_comment">BabyCommentActivity</string>
 
 </resources>
