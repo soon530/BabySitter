@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -88,7 +88,9 @@ public class BabyDetailActivity extends ActionBarActivity {
 		private ImageView mBabyIcon;
 		DisplayImageOptions options;
 		private ImageLoader imageLoader = ImageLoader.getInstance();
-		private ImageButton mBabysitterIcon;
+		private Button mBabysitterIcon;
+
+		private View mHeaderView;
 
 		public PlaceholderFragment() {
 
@@ -111,15 +113,25 @@ public class BabyDetailActivity extends ActionBarActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
+			
+			mHeaderView = inflater.inflate(
+					R.layout.fragment_baby_detail_header, null);
+
+			initHeadUI();
+			
 			View rootView = inflater.inflate(R.layout.fragment_baby_detail,
 					container, false);
 			mListView = (ListView) rootView
 					.findViewById(R.id.baby_comment_list);
-			mListView.setAdapter(new ArrayAdapter<String>(getActivity()
-					.getApplicationContext(),
-					android.R.layout.simple_list_item_1, mStrings));
 
-			mBabyIcon = (ImageView) rootView.findViewById(R.id.baby_avator);
+
+
+			return rootView;
+		}
+		
+
+		private void initHeadUI() {
+			mBabyIcon = (ImageView) mHeaderView.findViewById(R.id.baby_avator);
 
 			imageLoader
 					.displayImage(
@@ -139,11 +151,20 @@ public class BabyDetailActivity extends ActionBarActivity {
 			});
 			
 			
-			mBabysitterIcon = (ImageButton) rootView.findViewById(R.id.babysitter_icon);
-
-			return rootView;
+			mBabysitterIcon = (Button) mHeaderView.findViewById(R.id.babysitter_icon);
+			
 		}
 		
+		@Override
+		public void onViewCreated(View view, Bundle savedInstanceState) {
+			super.onViewCreated(view, savedInstanceState);
+
+			mListView.addHeaderView(mHeaderView);
+			mListView.setAdapter(new ArrayAdapter<String>(getActivity()
+					.getApplicationContext(),
+					android.R.layout.simple_list_item_1, mStrings));
+
+		}
 
 		@Override
 		public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -172,7 +193,7 @@ public class BabyDetailActivity extends ActionBarActivity {
 				// 將資料轉換為圖像格式
 				Bitmap bmp = (Bitmap) extras.get("data");
 				// 載入ImageView
-				mBabysitterIcon.setImageBitmap(bmp);
+				//mBabysitterIcon.setImageBitmap(bmp);
 			}
 
 			// 覆蓋原來的Activity
