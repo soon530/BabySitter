@@ -1,7 +1,13 @@
 package tw.tasker.babysitter.view;
 
+import java.util.List;
+
 import tw.tasker.babysitter.BabyCommentActivity;
 import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.model.BabysitterComment;
+import tw.tasker.babysitter.model.CommentParseQueryAdapter;
+import tw.tasker.babysitter.presenter.BabysitterDetailPresenter;
+import tw.tasker.babysitter.presenter.BabysitterDetailPresenterImpl;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -22,8 +28,14 @@ import android.widget.ListView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.parse.ParseQuery;
+import com.parse.ParseQueryAdapter;
+import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 
-public class BabyDetailActivity extends ActionBarActivity {
+public class BabyDetailActivity extends ActionBarActivity implements BabysitterDetailView {
+
+	private BabysitterDetailPresenter mPresenter;
+
 	private static final String[] mStrings = new String[] { "一", "二", "三", "四",
 			"五", "六", "七", "八", "九" };
 
@@ -82,13 +94,14 @@ public class BabyDetailActivity extends ActionBarActivity {
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
-	public static class PlaceholderFragment extends Fragment {
+	public static class PlaceholderFragment extends Fragment implements OnQueryLoadListener<BabysitterComment> {
 
 		private ListView mListView;
 		private ImageView mBabyIcon;
 		DisplayImageOptions options;
 		private ImageLoader imageLoader = ImageLoader.getInstance();
 		private Button mBabysitterIcon;
+		ParseQueryAdapter<BabysitterComment> mCommentAdapter;
 
 		private View mHeaderView;
 
@@ -107,9 +120,9 @@ public class BabyDetailActivity extends ActionBarActivity {
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-			//setHasOptionsMenu(true);
-		}
 
+		}
+		
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
@@ -160,11 +173,59 @@ public class BabyDetailActivity extends ActionBarActivity {
 			super.onViewCreated(view, savedInstanceState);
 
 			mListView.addHeaderView(mHeaderView);
-			mListView.setAdapter(new ArrayAdapter<String>(getActivity()
+			
+			doCommentQuery("HXSAmYCUdG");
+
+/*			mListView.setAdapter(new ArrayAdapter<String>(getActivity()
 					.getApplicationContext(),
 					android.R.layout.simple_list_item_1, mStrings));
-
+*/
 		}
+		
+		public void doCommentQuery(String objectId) {
+			
+			mCommentAdapter = new CommentParseQueryAdapter(getActivity(), getFactory(objectId));
+
+			// Disable automatic loading when the list_item_babysitter_comment is
+			// attached to a view.
+			mCommentAdapter.setAutoload(false);
+
+			// Disable pagination, we'll manage the query limit ourselves
+			mCommentAdapter.setPaginationEnabled(false);
+
+			mCommentAdapter.addOnQueryLoadListener(this);
+			
+			mCommentAdapter.loadObjects();
+		}
+		
+		public ParseQueryAdapter.QueryFactory<BabysitterComment> getFactory(
+				final String objectId) {
+			// Set up a customized query
+			ParseQueryAdapter.QueryFactory<BabysitterComment> factory = new ParseQueryAdapter.QueryFactory<BabysitterComment>() {
+				public ParseQuery<BabysitterComment> create() {
+					// Location myLoc = (currentLocation == null) ? lastLocation :
+					// currentLocation;
+					ParseQuery<BabysitterComment> query = BabysitterComment
+							.getQuery();
+					// query.include("user");
+					query.orderByDescending("createdAt");
+					query.whereEqualTo("babysitterId", objectId);
+					// query.whereWithinKilometers("location",
+					// geoPointFromLocation(myLoc), radius * METERS_PER_FEET /
+					// METERS_PER_KILOMETER);
+					query.setLimit(20);
+					return query;
+				}
+			};
+			return factory;
+		}
+
+		@Override
+		public void onLoading() {
+			mListView.setAdapter(mCommentAdapter);
+		}
+		
+
 
 		@Override
 		public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -199,6 +260,14 @@ public class BabyDetailActivity extends ActionBarActivity {
 			// 覆蓋原來的Activity
 			super.onActivityResult(requestCode, resultCode, data);
 		}
+
+		@Override
+		public void onLoaded(List<BabysitterComment> arg0, Exception arg1) {
+			// TODO Auto-generated method stub
+			
+		}
+
+
 	}
 	
 
