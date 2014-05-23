@@ -393,7 +393,7 @@ public class BabyDetailActivity extends ActionBarActivity implements
 						isInitData = false;
 					}else {
 						mStar.setChecked(true);
-						
+						mFavorite = favorite;
 					}
 					
 				}

@@ -9,6 +9,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_centerVertical="true"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="2dp"
         android:contentDescription="TODO" />
 
