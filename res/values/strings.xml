@@ -32,7 +32,7 @@
     <string name="post_words">成長記錄</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_home">保母搜尋</string>
-    <string name="title_activity_baby_comment">BabyCommentActivity</string>
-    <string name="title_activity_baby_list">BabyListActivity</string>
+    <string name="title_activity_baby_comment">成長記錄</string>
+    <string name="title_activity_baby_list">我的收藏</string>
 
 </resources>

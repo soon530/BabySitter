@@ -2,6 +2,8 @@ package tw.tasker.babysitter;
 
 import tw.tasker.babysitter.model.Baby;
 import tw.tasker.babysitter.model.Favorite;
+import tw.tasker.babysitter.view.BabyDetailActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -10,6 +12,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -79,10 +83,27 @@ public class BabyListActivity extends ActionBarActivity {
 					container, false);
 
 			mList = (ListView) rootView.findViewById(R.id.list);
+			
+			mList.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					seeBabyDetail();
+				}
+			
+			});
 
 			return rootView;
 		}
 
+		public void seeBabyDetail() {
+			Intent intent = new Intent();
+			intent.setClass(getActivity(), BabyDetailActivity.class);
+			startActivity(intent);
+		}
+
+		
 		@Override
 		public void onViewCreated(View view, Bundle savedInstanceState) {
 			super.onViewCreated(view, savedInstanceState);
