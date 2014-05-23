@@ -8,6 +8,7 @@ import tw.tasker.babysitter.BabyCommentActivity;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.Baby;
 import tw.tasker.babysitter.model.BabysitterComment;
+import tw.tasker.babysitter.model.Favorite;
 import tw.tasker.babysitter.model.RecordParseQueryAdapter;
 import tw.tasker.babysitter.presenter.BabysitterDetailPresenter;
 import android.content.Intent;
@@ -25,20 +26,24 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.parse.DeleteCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
-import com.parse.SaveCallback;
 import com.parse.ParseQueryAdapter.OnQueryLoadListener;
+import com.parse.SaveCallback;
 
 public class BabyDetailActivity extends ActionBarActivity implements
 		BabysitterDetailView {
@@ -110,6 +115,12 @@ public class BabyDetailActivity extends ActionBarActivity implements
 		private int count;
 		private TextView mName;
 		private TextView mNote;
+		private ToggleButton mStar;
+		
+		private Baby mBaby;
+		private Favorite mFavorite;
+		private boolean isInitData;
+
 
 		public PlaceholderFragment() {
 
@@ -240,6 +251,103 @@ public class BabyDetailActivity extends ActionBarActivity implements
 				}
 
 			});
+			
+			
+			mStar = (ToggleButton) mHeaderView.findViewById(R.id.star);
+			
+			mStar.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+				
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					if (isChecked) {
+						Toast.makeText(
+								getActivity()
+										.getApplicationContext(),
+								"加入收藏..",
+								Toast.LENGTH_SHORT)
+								.show();
+
+						
+						saveStar();
+						
+					}else{
+						Toast.makeText(
+								getActivity()
+										.getApplicationContext(),
+								"取消收藏..",
+								Toast.LENGTH_SHORT)
+								.show();
+						
+						deleteStar();
+
+					}
+				}
+
+				private void deleteStar() {
+					//如果是第一次抓data，只是要改變狀態而已，不是要收藏
+					if(isInitData) {
+						isInitData = false;
+						return ;
+					}
+
+					
+					mFavorite.deleteInBackground(new DeleteCallback() {
+						
+						@Override
+						public void done(ParseException e) {
+							if (e == null) {
+								Toast.makeText(
+										getActivity().getApplicationContext(),
+										"deleting doen!", Toast.LENGTH_SHORT)
+										.show();
+							} else {
+								Toast.makeText(
+										getActivity().getApplicationContext(),
+										"Error saving: " + e.getMessage(),
+										Toast.LENGTH_SHORT).show();
+							}
+						}
+					});					
+				}
+
+				private void saveStar() {
+					
+					//如果是第一次抓data，只是要改變狀態而已，不是要收藏
+					if(isInitData == true) {
+						isInitData = false;
+						return ;
+					}
+					
+					// ParseObject post = new ParseObject("Comment");
+					Favorite favorite = new Favorite();
+					mFavorite = favorite;
+					//favorite.put("baby", mBaby);
+					favorite.setBaby(mBaby);
+					favorite.put("user", "0D4sP8BcUE");
+
+					// Save the post and return
+					favorite.saveInBackground(new SaveCallback() {
+
+						@Override
+						public void done(ParseException e) {
+							if (e == null) {
+								// setResult(RESULT_OK);
+								// finish();
+								Toast.makeText(
+										getActivity().getApplicationContext(),
+										"saving doen!", Toast.LENGTH_SHORT)
+										.show();
+							} else {
+								Toast.makeText(
+										getActivity().getApplicationContext(),
+										"Error saving: " + e.getMessage(),
+										Toast.LENGTH_SHORT).show();
+							}
+						}
+
+					});
+				}
+			});
 		}
 
 		@Override
@@ -252,16 +360,52 @@ public class BabyDetailActivity extends ActionBarActivity implements
 
 			doDetailQuery("HXSAmYCUdG");
 
+			getFavorite();
+
 			/*
 			 * mListView.setAdapter(new ArrayAdapter<String>(getActivity()
 			 * .getApplicationContext(), android.R.layout.simple_list_item_1,
 			 * mStrings));
 			 */
 		}
+		
+		private void getFavorite() {
+			ParseQuery<Favorite> favorite_query = Favorite.getQuery();
+			
+			favorite_query.whereEqualTo("baby", mBaby);
+			
+			favorite_query.getFirstInBackground(new GetCallback<Favorite>() {
+
+
+				@Override
+				public void done(Favorite favorite, ParseException e) {
+					//第一次抓data
+					isInitData = true;
+					Toast.makeText(
+							getActivity()
+									.getApplicationContext(),
+							"isInitData" + isInitData,
+							Toast.LENGTH_SHORT)
+							.show();
+					
+					if (favorite == null) {
+						mStar.setChecked(false);
+						isInitData = false;
+					}else {
+						mStar.setChecked(true);
+						
+					}
+					
+				}
+			});
+			
+		}
+
 
 		private void doDetailQuery(String objectId) {
 			ParseQuery<Baby> detailQuery = Baby.getQuery();
 			detailQuery.getInBackground(objectId, new GetCallback<Baby>() {
+
 
 				@Override
 				public void done(Baby baby, ParseException arg1) {
@@ -269,7 +413,10 @@ public class BabyDetailActivity extends ActionBarActivity implements
 					mNote.setText(baby.getNote());
 					mHeart.setText("♥ +" + baby.getFavorite());
 					count = baby.getFavorite();
+					mBaby = baby;
+					
 				}
+
 			});
 
 		}
