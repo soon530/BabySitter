@@ -1,5 +1,6 @@
 package tw.tasker.babysitter;
 
+import tw.tasker.babysitter.model.Baby;
 import tw.tasker.babysitter.model.BabysitterComment;
 import tw.tasker.babysitter.model.BabysitterOutline;
 import android.app.Application;
@@ -22,6 +23,7 @@ public class MyApplication extends Application {
 		super.onCreate();		
 		ParseObject.registerSubclass(BabysitterOutline.class);
 		ParseObject.registerSubclass(BabysitterComment.class);
+		ParseObject.registerSubclass(Baby.class);
 
 		Parse.initialize(this, APPLICATION_ID, CLIENT_KEY);
 

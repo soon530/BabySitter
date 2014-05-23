@@ -26,12 +26,12 @@ public class Baby extends ParseObject {
 	}
 	
 	public int getFavorite() {
-		int value = getInt("note");
+		int value = getInt("favorite");
 		return value;
 	}
 
 	public void setFavorite(int value) {
-		put("note", value);
+		put("favorite", value);
 	}
 
 	public static ParseQuery<Baby> getQuery() {

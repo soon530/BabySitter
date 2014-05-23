@@ -1,9 +1,12 @@
 package tw.tasker.babysitter.view;
 
+import static tw.tasker.babysitter.utils.LogUtils.LOGD;
+
 import java.util.List;
 
 import tw.tasker.babysitter.BabyCommentActivity;
 import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.model.Baby;
 import tw.tasker.babysitter.model.BabysitterComment;
 import tw.tasker.babysitter.model.RecordParseQueryAdapter;
 import tw.tasker.babysitter.presenter.BabysitterDetailPresenter;
@@ -24,15 +27,21 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.parse.GetCallback;
+import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
+import com.parse.SaveCallback;
 import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 
-public class BabyDetailActivity extends ActionBarActivity implements BabysitterDetailView {
+public class BabyDetailActivity extends ActionBarActivity implements
+		BabysitterDetailView {
 
 	private BabysitterDetailPresenter mPresenter;
 
@@ -68,33 +77,26 @@ public class BabyDetailActivity extends ActionBarActivity implements BabysitterD
 		if (id == R.id.post_words) {
 			Intent intent = new Intent();
 			intent.setClass(this, BabyCommentActivity.class);
-			startActivity(intent);	
+			startActivity(intent);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
 
-/*	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// 拍照後顯示圖片
-		//ImageView iv = (ImageView) findViewById(R.id.imagecaptured);
-		if (resultCode == RESULT_OK) {
-			// 取出拍照後回傳資料
-			Bundle extras = data.getExtras();
-			// 將資料轉換為圖像格式
-			//Bitmap bmp = (Bitmap) extras.get("data");
-			// 載入ImageView
-			//iv.setImageBitmap(bmp);
-		}
-
-		// 覆蓋原來的Activity
-		super.onActivityResult(requestCode, resultCode, data);
-	}
-*/
+	/*
+	 * @Override protected void onActivityResult(int requestCode, int
+	 * resultCode, Intent data) { // 拍照後顯示圖片 //ImageView iv = (ImageView)
+	 * findViewById(R.id.imagecaptured); if (resultCode == RESULT_OK) { //
+	 * 取出拍照後回傳資料 Bundle extras = data.getExtras(); // 將資料轉換為圖像格式 //Bitmap bmp =
+	 * (Bitmap) extras.get("data"); // 載入ImageView //iv.setImageBitmap(bmp); }
+	 * 
+	 * // 覆蓋原來的Activity super.onActivityResult(requestCode, resultCode, data); }
+	 */
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
-	public static class PlaceholderFragment extends Fragment implements OnQueryLoadListener<BabysitterComment> {
+	public static class PlaceholderFragment extends Fragment implements
+			OnQueryLoadListener<BabysitterComment> {
 
 		private ListView mListView;
 		private ImageView mBabyIcon;
@@ -106,6 +108,8 @@ public class BabyDetailActivity extends ActionBarActivity implements BabysitterD
 		private View mHeaderView;
 		private Button mHeart;
 		private int count;
+		private TextView mName;
+		private TextView mNote;
 
 		public PlaceholderFragment() {
 
@@ -118,22 +122,22 @@ public class BabyDetailActivity extends ActionBarActivity implements BabysitterD
 					.displayer(new RoundedBitmapDisplayer(20)).build();
 
 		}
-		
+
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 
 		}
-		
+
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			
+
 			mHeaderView = inflater.inflate(
 					R.layout.fragment_baby_detail_header, null);
 
 			initHeadUI();
-			
+
 			View rootView = inflater.inflate(R.layout.fragment_baby_detail,
 					container, false);
 			mListView = (ListView) rootView
@@ -144,19 +148,18 @@ public class BabyDetailActivity extends ActionBarActivity implements BabysitterD
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
-					 //Intent refresh =new Intent(getActivity(), BabyDetailActivity.class);
+					// Intent refresh =new Intent(getActivity(),
+					// BabyDetailActivity.class);
 
-					    //startActivity(refresh);
+					// startActivity(refresh);
 
-					    //getActivity().finish();
-					
+					// getActivity().finish();
+
 				}
 			});
 
-
 			return rootView;
 		}
-		
 
 		private void initHeadUI() {
 			mBabyIcon = (ImageView) mHeaderView.findViewById(R.id.baby_avator);
@@ -177,41 +180,107 @@ public class BabyDetailActivity extends ActionBarActivity implements BabysitterD
 
 				}
 			});
-			
-			
-			mBabysitterIcon = (Button) mHeaderView.findViewById(R.id.babysitter_icon);
-			
-			
+
+			mBabysitterIcon = (Button) mHeaderView
+					.findViewById(R.id.babysitter_icon);
+
+			mName = (TextView) mHeaderView.findViewById(R.id.name);
+			mNote = (TextView) mHeaderView.findViewById(R.id.desciption);
+
 			mHeart = (Button) mHeaderView.findViewById(R.id.heart);
-			
-			mHeart.setOnClickListener(new OnClickListener() {
+
+			mHeart.setOnClickListener(
+
+			new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					mHeart.setText("♥ +" + ++count);
+					// mHeart.setText("♥ +" + ++count);
+					saveHeard();
 				}
+
+				private void saveHeard() {
+					ParseQuery<Baby> query = Baby.getQuery();
+
+					query.getInBackground("HXSAmYCUdG",
+							new GetCallback<Baby>() {
+
+								@Override
+								public void done(Baby baby, ParseException e) {
+									baby.put("favorite", ++count);
+									baby.saveInBackground(new SaveCallback() {
+
+										@Override
+										public void done(ParseException e) {
+											if (e == null) {
+												// setResult(RESULT_OK);
+												// finish();
+												Toast.makeText(
+														getActivity()
+																.getApplicationContext(),
+														"saving doen!",
+														Toast.LENGTH_SHORT)
+														.show();
+												mHeart.setText("♥ +" + count);
+											} else {
+												LOGD("vic", e.getMessage());
+												Toast.makeText(
+														getActivity()
+																.getApplicationContext(),
+														"Error saving: "
+																+ e.getMessage(),
+														Toast.LENGTH_SHORT)
+														.show();
+											}
+
+										}
+									});
+
+								}
+							});
+				}
+
 			});
-			
 		}
-		
+
 		@Override
 		public void onViewCreated(View view, Bundle savedInstanceState) {
 			super.onViewCreated(view, savedInstanceState);
 
 			mListView.addHeaderView(mHeaderView);
-			
+
 			doCommentQuery("HXSAmYCUdG");
 
-/*			mListView.setAdapter(new ArrayAdapter<String>(getActivity()
-					.getApplicationContext(),
-					android.R.layout.simple_list_item_1, mStrings));
-*/
-		}
-		
-		public void doCommentQuery(String objectId) {
-			
-			mCommentAdapter = new RecordParseQueryAdapter(getActivity(), getFactory(objectId));
+			doDetailQuery("HXSAmYCUdG");
 
-			// Disable automatic loading when the list_item_babysitter_comment is
+			/*
+			 * mListView.setAdapter(new ArrayAdapter<String>(getActivity()
+			 * .getApplicationContext(), android.R.layout.simple_list_item_1,
+			 * mStrings));
+			 */
+		}
+
+		private void doDetailQuery(String objectId) {
+			ParseQuery<Baby> detailQuery = Baby.getQuery();
+			detailQuery.getInBackground(objectId, new GetCallback<Baby>() {
+
+				@Override
+				public void done(Baby baby, ParseException arg1) {
+					mName.setText(baby.getName());
+					mNote.setText(baby.getNote());
+					mHeart.setText("♥ +" + baby.getFavorite());
+					count = baby.getFavorite();
+				}
+			});
+
+		}
+
+		public void doCommentQuery(String objectId) {
+
+			mCommentAdapter = new RecordParseQueryAdapter(getActivity(),
+					getFactory(objectId));
+
+			// Disable automatic loading when the list_item_babysitter_comment
+			// is
 			// attached to a view.
 			mCommentAdapter.setAutoload(false);
 
@@ -219,16 +288,17 @@ public class BabyDetailActivity extends ActionBarActivity implements BabysitterD
 			mCommentAdapter.setPaginationEnabled(false);
 
 			mCommentAdapter.addOnQueryLoadListener(this);
-			
+
 			mCommentAdapter.loadObjects();
 		}
-		
+
 		public ParseQueryAdapter.QueryFactory<BabysitterComment> getFactory(
 				final String objectId) {
 			// Set up a customized query
 			ParseQueryAdapter.QueryFactory<BabysitterComment> factory = new ParseQueryAdapter.QueryFactory<BabysitterComment>() {
 				public ParseQuery<BabysitterComment> create() {
-					// Location myLoc = (currentLocation == null) ? lastLocation :
+					// Location myLoc = (currentLocation == null) ? lastLocation
+					// :
 					// currentLocation;
 					ParseQuery<BabysitterComment> query = BabysitterComment
 							.getQuery();
@@ -249,15 +319,13 @@ public class BabyDetailActivity extends ActionBarActivity implements BabysitterD
 		public void onLoading() {
 			mListView.setAdapter(mCommentAdapter);
 		}
-		
-
 
 		@Override
 		public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 			inflater.inflate(R.menu.baby_detail, menu);
 			super.onCreateOptionsMenu(menu, inflater);
 		}
-	
+
 		@Override
 		public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -267,19 +335,19 @@ public class BabyDetailActivity extends ActionBarActivity implements BabysitterD
 
 			return false;
 		}
-	
+
 		@Override
 		public void onActivityResult(int requestCode, int resultCode,
 				Intent data) {
 			// 拍照後顯示圖片
-			//ImageView iv = (ImageView) findViewById(R.id.imagecaptured);
+			// ImageView iv = (ImageView) findViewById(R.id.imagecaptured);
 			if (resultCode == RESULT_OK) {
 				// 取出拍照後回傳資料
 				Bundle extras = data.getExtras();
 				// 將資料轉換為圖像格式
 				Bitmap bmp = (Bitmap) extras.get("data");
 				// 載入ImageView
-				//mBabysitterIcon.setImageBitmap(bmp);
+				// mBabysitterIcon.setImageBitmap(bmp);
 			}
 
 			// 覆蓋原來的Activity
@@ -289,11 +357,9 @@ public class BabyDetailActivity extends ActionBarActivity implements BabysitterD
 		@Override
 		public void onLoaded(List<BabysitterComment> arg0, Exception arg1) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
-
 	}
-	
 
 }
