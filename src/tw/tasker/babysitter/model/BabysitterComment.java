@@ -1,6 +1,7 @@
 package tw.tasker.babysitter.model;
 
 import com.parse.ParseClassName;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -42,6 +43,14 @@ public class BabysitterComment extends ParseObject {
 		put("user", value);
 	}
 	
+	public ParseFile getPhotoFile() {
+		return getParseFile("photo");
+	}
+
+	public void setPhotoFile(ParseFile file) {
+		put("photo", file);
+	}
+
 	
 	
 	public static ParseQuery<BabysitterComment> getQuery() {

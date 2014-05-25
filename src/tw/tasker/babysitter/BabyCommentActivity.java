@@ -1,8 +1,12 @@
 package tw.tasker.babysitter;
 
 import static tw.tasker.babysitter.utils.LogUtils.LOGD;
+
+import java.io.ByteArrayOutputStream;
+
 import tw.tasker.babysitter.model.BabysitterComment;
 import tw.tasker.babysitter.view.BabysitterDetailActivity;
+import tw.tasker.babysitter.view.MainActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -20,6 +24,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseObject;
 import com.parse.SaveCallback;
 
 public class BabyCommentActivity extends ActionBarActivity {
@@ -66,6 +72,8 @@ public class BabyCommentActivity extends ActionBarActivity {
 		private Button mPostCommnet;
 		private String mObjectId;
 		private ImageView mUserAvator;
+		private Bitmap mBmp;
+		private ParseFile mFile;
 
 		public PlaceholderFragment(String babyObjectId) {
 			mObjectId = babyObjectId;
@@ -92,45 +100,14 @@ public class BabyCommentActivity extends ActionBarActivity {
 					Toast.makeText(v.getContext(), "已送出..", Toast.LENGTH_LONG)
 							.show();
 
-					saveComment();
+					savePicture();
+					//saveComment();
 					//updateBabysitter();
 
 					Intent intent = new Intent();
 					intent.setClass(getActivity().getApplicationContext(),
 							BabysitterDetailActivity.class);
 					//startActivity(intent);
-				}
-
-
-				private void saveComment() {
-					// ParseObject post = new ParseObject("Comment");
-					BabysitterComment post = new BabysitterComment();
-					post.put("babysitterId", mObjectId);
-					post.put("title", mBabysitterTitle.getText().toString());
-					post.put("comment", mBabysitterComment.getText().toString());
-
-					// Save the post and return
-					post.saveInBackground(new SaveCallback() {
-
-						@Override
-						public void done(ParseException e) {
-							if (e == null) {
-								// setResult(RESULT_OK);
-								// finish();
-								Toast.makeText(
-										getActivity().getApplicationContext(),
-										"saving doen!", Toast.LENGTH_SHORT)
-										.show();
-							} else {
-								LOGD("vic", e.getMessage());
-								Toast.makeText(
-										getActivity().getApplicationContext(),
-										"Error saving: " + e.getMessage(),
-										Toast.LENGTH_SHORT).show();
-							}
-						}
-
-					});
 				}
 			});
 			
@@ -160,12 +137,98 @@ public class BabyCommentActivity extends ActionBarActivity {
 				Bundle extras = data.getExtras();
 				// 將資料轉換為圖像格式
 				Bitmap bmp = (Bitmap) extras.get("data");
+				
+				mBmp = bmp;
 				// 載入ImageView
 				 mUserAvator.setImageBitmap(bmp);
 			}
 
 			// 覆蓋原來的Activity
 			super.onActivityResult(requestCode, resultCode, data);
+		}
+		
+		private void savePicture() {
+			// Locate the image in res > drawable-hdpi
+            Bitmap bitmap = mBmp;
+            // Convert it to byte
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            // Compress image to lower quality scale 1 - 100
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] image = stream.toByteArray();
+
+            // Create the ParseFile
+             mFile = new ParseFile("androidbegin.png", image);
+
+	            // Upload the image into Parse Cloud
+	            mFile.saveInBackground(new SaveCallback() {
+					
+					@Override
+					public void done(ParseException e) {
+						if (e == null) {
+							// setResult(RESULT_OK);
+							// finish();
+							Toast.makeText(
+									getActivity().getApplicationContext(),
+									"upload doen!", Toast.LENGTH_SHORT)
+									.show();
+							saveComment();
+						} else {
+							Toast.makeText(
+									getActivity().getApplicationContext(),
+									"Error saving: " + e.getMessage(),
+									Toast.LENGTH_SHORT).show();
+						}
+						
+					}
+				});
+
+             
+            // Create a New Class called "ImageUpload" in Parse
+//            ParseObject imgupload = new ParseObject("ImageUpload");
+
+            // Create a column named "ImageName" and set the string
+//            imgupload.put("ImageName", "AndroidBegin Logo");
+
+            // Create a column named "ImageFile" and insert the image
+//            imgupload.put("ImageFile", file);
+
+            // Create the class and the columns
+//            imgupload.saveInBackground();
+
+		}
+		
+		private void saveComment() {
+			
+			// ParseObject post = new ParseObject("Comment");
+			BabysitterComment post = new BabysitterComment();
+			post.put("babysitterId", mObjectId);
+			post.put("title", mBabysitterTitle.getText().toString());
+			post.put("comment", mBabysitterComment.getText().toString());
+			post.setPhotoFile(mFile);
+			
+
+			// Save the post and return
+			post.saveInBackground(new SaveCallback() {
+
+				@Override
+				public void done(ParseException e) {
+					if (e == null) {
+						// setResult(RESULT_OK);
+						// finish();
+						Toast.makeText(
+								getActivity().getApplicationContext(),
+								"saving doen!", Toast.LENGTH_SHORT)
+								.show();
+					} else {
+						LOGD("vic", e.getMessage());
+						Toast.makeText(
+								getActivity().getApplicationContext(),
+								"Error saving: " + e.getMessage(),
+								Toast.LENGTH_SHORT).show();
+					}
+				}
+
+			});
 		}
 	}
 }

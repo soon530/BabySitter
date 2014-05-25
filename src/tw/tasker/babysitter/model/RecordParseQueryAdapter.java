@@ -15,7 +15,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.parse.ParseQueryAdapter;
 
-public class RecordParseQueryAdapter extends ParseQueryAdapter<BabysitterComment> {
+public class RecordParseQueryAdapter extends
+		ParseQueryAdapter<BabysitterComment> {
 	ImageView userAvator;
 	TextView babyRecordTitle;
 	TextView babyRecord;
@@ -37,14 +38,14 @@ public class RecordParseQueryAdapter extends ParseQueryAdapter<BabysitterComment
 				.displayer(new RoundedBitmapDisplayer(20)).build();
 
 	}
-	
+
 	@Override
 	public View getItemView(BabysitterComment comment, View view,
 			ViewGroup parent) {
 
 		if (view == null) {
-			view = View.inflate(getContext(),
-					R.layout.list_item_baby_record, null);
+			view = View.inflate(getContext(), R.layout.list_item_baby_record,
+					null);
 		}
 
 		initUI(view);
@@ -56,16 +57,14 @@ public class RecordParseQueryAdapter extends ParseQueryAdapter<BabysitterComment
 	private void initUI(View view) {
 		userAvator = (ImageView) view.findViewById(R.id.user_avator);
 
-		babyRecordTitle = (TextView) view
-				.findViewById(R.id.baby_record_title);
+		babyRecordTitle = (TextView) view.findViewById(R.id.baby_record_title);
 
-/*		babyHeart = (TextView) view
-				.findViewById(R.id.heart);
-*/
+		/*
+		 * babyHeart = (TextView) view .findViewById(R.id.heart);
+		 */
 		createDate = (TextView) view.findViewById(R.id.create_date);
 
-		babyRecord = (TextView) view
-				.findViewById(R.id.baby_record);
+		babyRecord = (TextView) view.findViewById(R.id.baby_record);
 
 	}
 
@@ -73,7 +72,7 @@ public class RecordParseQueryAdapter extends ParseQueryAdapter<BabysitterComment
 		// userAvator.setBackgroundResource(R.drawable.ic_launcher);
 		babyRecordTitle.setText(comment.getTitle());
 		babyRecord.setText(comment.getComment());
-		//babyHeart.setText("愛心 +" + comment.getRating());
+		// babyHeart.setText("愛心 +" + comment.getRating());
 
 		SimpleDateFormat formatter = new SimpleDateFormat(
 				"yyyy-MM-dd hh:mm:ss a");
@@ -81,10 +80,15 @@ public class RecordParseQueryAdapter extends ParseQueryAdapter<BabysitterComment
 
 		createDate.setText(now);
 
-		imageLoader
-				.displayImage(
-						"https://fbcdn-sphotos-a-a.akamaihd.net/hphotos-ak-ash2/t1.0-9/377076_10150391287099790_1866039278_n.jpg",
-						userAvator, options, null);
+		String url;
+		//if (comment.getPhotoFile().isDataAvailable()) {
+		if(comment.getPhotoFile() != null) {
+			url = comment.getPhotoFile().getUrl();
+		} else {
+			url = "https://fbcdn-sphotos-a-a.akamaihd.net/hphotos-ak-ash2/t1.0-9/377076_10150391287099790_1866039278_n.jpg";
+		}
+
+		imageLoader.displayImage(url, userAvator, options, null);
 
 	}
 
