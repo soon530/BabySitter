@@ -3,28 +3,24 @@ package tw.tasker.babysitter;
 import static tw.tasker.babysitter.utils.LogUtils.LOGD;
 import tw.tasker.babysitter.model.BabysitterComment;
 import tw.tasker.babysitter.view.BabysitterDetailActivity;
-
-import com.parse.GetCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-import com.parse.SaveCallback;
-
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RatingBar;
+import android.widget.ImageView;
 import android.widget.Toast;
-import android.os.Build;
+
+import com.parse.ParseException;
+import com.parse.SaveCallback;
 
 public class BabyCommentActivity extends ActionBarActivity {
 
@@ -69,6 +65,7 @@ public class BabyCommentActivity extends ActionBarActivity {
 		private EditText mBabysitterComment;
 		private Button mPostCommnet;
 		private String mObjectId;
+		private ImageView mUserAvator;
 
 		public PlaceholderFragment(String babyObjectId) {
 			mObjectId = babyObjectId;
@@ -137,8 +134,38 @@ public class BabyCommentActivity extends ActionBarActivity {
 				}
 			});
 			
+			
+			Button selectPhoto = (Button)rootView.findViewById(R.id.photo_button);
+			selectPhoto.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Intent intent_camera = new Intent(
+							android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+					startActivityForResult(intent_camera, 0);
+
+				}
+			});
+			
+			mUserAvator = (ImageView) rootView.findViewById(R.id.user_avator);
+			
 			return rootView;
 		}
-	}
+		
+		@Override
+		public void onActivityResult(int requestCode, int resultCode,
+				Intent data) {
+			if (resultCode == RESULT_OK) {
+				// 取出拍照後回傳資料
+				Bundle extras = data.getExtras();
+				// 將資料轉換為圖像格式
+				Bitmap bmp = (Bitmap) extras.get("data");
+				// 載入ImageView
+				 mUserAvator.setImageBitmap(bmp);
+			}
 
+			// 覆蓋原來的Activity
+			super.onActivityResult(requestCode, resultCode, data);
+		}
+	}
 }

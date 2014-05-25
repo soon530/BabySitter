@@ -10,8 +10,8 @@
 
         <ImageView
             android:id="@+id/user_avator"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="2dp"
             android:contentDescription="TODO"
             android:src="@drawable/ic_launcher" />
@@ -55,8 +55,13 @@
             android:id="@+id/post_comment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="17dp"
             android:text="送出" />
+
+        <Button
+            android:id="@+id/photo_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="拍照" />
     </LinearLayout>
 
 </ScrollView>
