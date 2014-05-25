@@ -1,5 +1,6 @@
 package tw.tasker.babysitter.view;
 
+import tw.tasker.babysitter.BabyDiaryActivity;
 import tw.tasker.babysitter.BabyListActivity;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.R.id;
@@ -23,7 +24,7 @@ import android.os.Build;
 
 public class HomeActivity extends ActionBarActivity {
 	private static final String[] mSearchCondition = new String[] { "附近保母",
-			"我的收藏","托育時段", "收托對象", "收托年齡", "可接受托育人數" };
+			"寶寶日記","我的收藏","托育時段", "收托對象", "收托年齡", "可接受托育人數" };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +96,12 @@ public class HomeActivity extends ActionBarActivity {
 								break;
 								
 							case 1:
+								intent = new Intent();
+								intent.setClass(getActivity(), BabyDiaryActivity.class);
+								startActivity(intent);
+								break;
+								
+							case 2:
 								intent = new Intent();
 								intent.setClass(getActivity(), BabyListActivity.class);
 								startActivity(intent);
