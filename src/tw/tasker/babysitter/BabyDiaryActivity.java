@@ -1,5 +1,7 @@
 package tw.tasker.babysitter;
 
+import java.util.List;
+
 import tw.tasker.babysitter.model.Baby;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -18,6 +21,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
+import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 import com.parse.ParseQueryAdapter.QueryFactory;
 
 public class BabyDiaryActivity extends ActionBarActivity {
@@ -25,12 +29,17 @@ public class BabyDiaryActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		/** Enabling Progress bar for this activity */
+        getWindow().requestFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+
 		setContentView(R.layout.activity_baby_diary);
 
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
+		
+        setProgressBarIndeterminateVisibility(true);
 	}
 
 	@Override
@@ -78,8 +87,9 @@ public class BabyDiaryActivity extends ActionBarActivity {
 		public void onViewCreated(View view, Bundle savedInstanceState) {
 			super.onViewCreated(view, savedInstanceState);
 			doListQuery();
+			
 		}
-
+		
 		public void doListQuery() {
 
 			options = new DisplayImageOptions.Builder()
@@ -105,6 +115,20 @@ public class BabyDiaryActivity extends ActionBarActivity {
 			mList.setAdapter(mAdapter);
 
 			mAdapter.loadObjects();
+			
+			mAdapter.addOnQueryLoadListener(new OnQueryLoadListener<Baby>() {
+
+				@Override
+				public void onLoaded(List<Baby> arg0, Exception arg1) {
+					getActivity().setProgressBarIndeterminateVisibility(false);					
+				}
+
+				@Override
+				public void onLoading() {
+					// TODO Auto-generated method stub
+					
+				}
+			});
 		}
 
 		private ParseQueryAdapter.QueryFactory<Baby> getQueryFactory() {
