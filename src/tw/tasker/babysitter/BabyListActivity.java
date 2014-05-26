@@ -24,6 +24,7 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseQueryAdapter.QueryFactory;
+import com.parse.ParseUser;
 
 public class BabyListActivity extends ActionBarActivity {
 
@@ -147,8 +148,9 @@ public class BabyListActivity extends ActionBarActivity {
 					// :
 					// currentLocation;
 					ParseQuery<Favorite> query = Favorite.getQuery();
-					// query.include("user");
+					query.include("user");
 					query.orderByDescending("createdAt");
+					query.whereEqualTo("user", ParseUser.getCurrentUser());
 					// query.whereWithinKilometers("location",
 					// geoPointFromLocation(myLoc), radius * METERS_PER_FEET /
 					// METERS_PER_KILOMETER);
