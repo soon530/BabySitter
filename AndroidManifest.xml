@@ -42,11 +42,6 @@
             android:name="tw.tasker.babysitter.view.HomeActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="tw.tasker.babysitter.view.BabysitterListActivity"
@@ -126,6 +121,36 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="tw.tasker.babysitter.view.HomeActivity" />
         </activity>
+        
+        
+        <!-- user manager -->
+               <activity
+            android:name="tw.tasker.babysitter.LoginActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="tw.tasker.babysiter.SignUpActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="tw.tasker.babysitter.DispatchActivity"
+            android:noHistory="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="tw.tasker.babysitter.SignUpOrLogInActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Holo" >
+        </activity>
+        
+        
     </application>
 
 </manifest>
