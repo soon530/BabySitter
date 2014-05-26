@@ -68,6 +68,7 @@ public class BabyListActivity extends ActionBarActivity {
 		DisplayImageOptions options;
 		private ImageLoader imageLoader = ImageLoader.getInstance();
 		private ListView mList;
+		private TextView mEmpty;
 
 		public PlaceholderFragment() {
 		}
@@ -94,7 +95,10 @@ public class BabyListActivity extends ActionBarActivity {
 				}
 			
 			});
-
+			
+			mEmpty = (TextView) rootView.findViewById(R.id.empty);
+			mList.setEmptyView(mEmpty);
+			
 			return rootView;
 		}
 
