@@ -2,10 +2,8 @@ package tw.tasker.babysitter.view;
 
 import static tw.tasker.babysitter.utils.LogUtils.LOGD;
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.R.id;
-import tw.tasker.babysitter.R.layout;
-import tw.tasker.babysitter.R.menu;
 import tw.tasker.babysitter.model.BabysitterComment;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -44,8 +42,6 @@ public class BabysitterCommentActivity extends ActionBarActivity {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment(objectId, totalRating, totalComment)).commit();
 		}
-		
-
 	}
 
 	@Override
@@ -67,6 +63,7 @@ public class BabysitterCommentActivity extends ActionBarActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
 
 	/**
 	 * A placeholder fragment containing a simple view.
@@ -81,6 +78,7 @@ public class BabysitterCommentActivity extends ActionBarActivity {
 		private String mObjectId;
 		private int mTotalRating;
 		private int mTotalComment;
+		private ProgressDialog mRingProgressDialog;
 
 
 		public PlaceholderFragment(String objectId, int totalRating, int totalComment) {
@@ -104,8 +102,13 @@ public class BabysitterCommentActivity extends ActionBarActivity {
 			mPostCommnet.setOnClickListener(new View.OnClickListener() {
 
 
+
 				@Override
 				public void onClick(View v) {
+					
+			        mRingProgressDialog = ProgressDialog.show(getActivity(), "請稍等 ...", "資料儲存中...", true); 
+
+					
 					Toast.makeText(v.getContext(), "已送出..", Toast.LENGTH_LONG)
 							.show();
 
@@ -136,6 +139,7 @@ public class BabysitterCommentActivity extends ActionBarActivity {
 								@Override
 								public void done(ParseException e) {
 									if (e == null) {
+										mRingProgressDialog.dismiss();
 								    	getActivity().finish();
 										
 									}
