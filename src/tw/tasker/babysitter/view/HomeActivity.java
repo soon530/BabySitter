@@ -2,15 +2,12 @@ package tw.tasker.babysitter.view;
 
 import tw.tasker.babysitter.BabyDiaryActivity;
 import tw.tasker.babysitter.BabyListActivity;
+import tw.tasker.babysitter.DispatchActivity;
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.R.id;
-import tw.tasker.babysitter.R.layout;
-import tw.tasker.babysitter.R.menu;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,12 +17,13 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.os.Build;
+
+import com.parse.ParseUser;
 
 public class HomeActivity extends ActionBarActivity {
 	private static final String[] mSearchCondition = new String[] { "附近保母",
-			"寶寶日記","我的收藏","托育時段", "收托對象", "收托年齡", "可接受托育人數" };
-
+			"寶寶日記","我的收藏", "登出" };
+	//,"托育時段", "收托對象", "收托年齡", "可接受托育人數"
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -107,6 +105,16 @@ public class HomeActivity extends ActionBarActivity {
 								startActivity(intent);
 								break;
 								
+							case 3:
+						        // Call the Parse log out method
+						        ParseUser.logOut();
+						        intent = new Intent();
+						        // Start and intent for the dispatch activity
+						        intent.setClass(getActivity(), DispatchActivity.class);
+						        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+						        startActivity(intent);
+
+								break;
 							default:
 								break;
 							}
