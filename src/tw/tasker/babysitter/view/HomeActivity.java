@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.parse.ParseUser;
 
@@ -61,6 +62,7 @@ public class HomeActivity extends ActionBarActivity {
 	public static class PlaceholderFragment extends Fragment {
 
 		private ListView mBabysitterSearchCondition;
+		private TextView mUserInfo;
 
 		public PlaceholderFragment() {
 		}
@@ -70,7 +72,14 @@ public class HomeActivity extends ActionBarActivity {
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_home, container,
 					false);
+			
+			
+			mUserInfo = (TextView)rootView.findViewById(R.id.user_info);
 
+			ParseUser user = ParseUser.getCurrentUser();
+			
+			mUserInfo.setText("使用者資訊(" + user.getObjectId() + ")："+ user.getUsername() );
+			
 			mBabysitterSearchCondition = (ListView) rootView
 					.findViewById(R.id.babysitter_search_condition);
 			mBabysitterSearchCondition.setAdapter(new ArrayAdapter<String>(
