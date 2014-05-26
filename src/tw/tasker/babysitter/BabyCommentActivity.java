@@ -7,6 +7,7 @@ import java.io.ByteArrayOutputStream;
 import tw.tasker.babysitter.model.BabysitterComment;
 import tw.tasker.babysitter.view.BabysitterDetailActivity;
 import tw.tasker.babysitter.view.MainActivity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -75,6 +76,8 @@ public class BabyCommentActivity extends ActionBarActivity {
 		private Bitmap mBmp;
 		private ParseFile mFile;
 
+		private ProgressDialog mRingProgressDialog;
+
 		public PlaceholderFragment(String babyObjectId) {
 			mObjectId = babyObjectId;
 		}
@@ -94,9 +97,10 @@ public class BabyCommentActivity extends ActionBarActivity {
 			mPostCommnet.setOnClickListener(new View.OnClickListener() {
 
 
-
 				@Override
 				public void onClick(View v) {
+			        mRingProgressDialog = ProgressDialog.show(getActivity(), "請稍等 ...", "資料儲存中...", true); 
+
 					Toast.makeText(v.getContext(), "已送出..", Toast.LENGTH_LONG)
 							.show();
 
@@ -225,7 +229,7 @@ public class BabyCommentActivity extends ActionBarActivity {
 								"Error saving: " + e.getMessage(),
 								Toast.LENGTH_SHORT).show();
 					}
-					
+					mRingProgressDialog.dismiss();
 					getActivity().finish();
 				}
 
