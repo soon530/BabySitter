@@ -110,7 +110,7 @@ public class BabysitterCommentActivity extends ActionBarActivity {
 							.show();
 
 					saveComment();
-					updateBabysitter();
+					//updateBabysitter();
 
 					Intent intent = new Intent();
 					intent.setClass(getActivity().getApplicationContext(),
@@ -131,7 +131,17 @@ public class BabysitterCommentActivity extends ActionBarActivity {
 					    	int r = (int) mBabysitterRating.getRating();
 					    	babysitter.put("totalRating", mTotalRating + r);
 					    	babysitter.put("totalComment", mTotalComment + 1);
-					    	babysitter.saveInBackground();
+					    	babysitter.saveInBackground(new SaveCallback() {
+								
+								@Override
+								public void done(ParseException e) {
+									if (e == null) {
+								    	getActivity().finish();
+										
+									}
+								}
+							});
+					    	
 					    }
 					  }
 					});					
@@ -158,12 +168,14 @@ public class BabysitterCommentActivity extends ActionBarActivity {
 										getActivity().getApplicationContext(),
 										"saving doen!", Toast.LENGTH_SHORT)
 										.show();
+								updateBabysitter();
 							} else {
 								LOGD("vic", e.getMessage());
 								Toast.makeText(
 										getActivity().getApplicationContext(),
 										"Error saving: " + e.getMessage(),
 										Toast.LENGTH_SHORT).show();
+							
 							}
 						}
 

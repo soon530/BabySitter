@@ -104,9 +104,8 @@ public class BabyCommentActivity extends ActionBarActivity {
 					//saveComment();
 					//updateBabysitter();
 
-					Intent intent = new Intent();
-					intent.setClass(getActivity().getApplicationContext(),
-							BabysitterDetailActivity.class);
+					//Intent intent = new Intent();
+					//intent.setClass(getActivity().getApplicationContext(), BabysitterDetailActivity.class);
 					//startActivity(intent);
 				}
 			});
@@ -226,6 +225,8 @@ public class BabyCommentActivity extends ActionBarActivity {
 								"Error saving: " + e.getMessage(),
 								Toast.LENGTH_SHORT).show();
 					}
+					
+					getActivity().finish();
 				}
 
 			});
