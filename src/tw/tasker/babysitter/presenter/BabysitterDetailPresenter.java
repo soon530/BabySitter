@@ -3,7 +3,7 @@ package tw.tasker.babysitter.presenter;
 public interface BabysitterDetailPresenter {
 	void doDirections(String targetLat, String targetLng);
 
-	void seeBabyDetail();
+	void seeBabyDetail(String string);
 
 	void makePhoneCall(String phoneNumber);
 

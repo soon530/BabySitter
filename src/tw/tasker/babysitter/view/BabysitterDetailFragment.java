@@ -1,8 +1,12 @@
 package tw.tasker.babysitter.view;
 
 import static tw.tasker.babysitter.utils.LogUtils.LOGD;
+
+import java.util.List;
+
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.dummy.DummyContent;
+import tw.tasker.babysitter.model.Baby;
 import tw.tasker.babysitter.model.BabysitterComment;
 import tw.tasker.babysitter.model.BabysitterOutline;
 import tw.tasker.babysitter.presenter.BabysitterDetailPresenter;
@@ -24,6 +28,10 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.parse.FindCallback;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
 /**
@@ -93,6 +101,8 @@ public class BabysitterDetailFragment extends Fragment implements
 
 	private String mTargetLng;
 
+	private BabysitterOutline mOutline;
+
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
 	 * fragment (e.g. upon screen orientation changes).
@@ -117,7 +127,7 @@ public class BabysitterDetailFragment extends Fragment implements
 		Bundle bundle = getActivity().getIntent().getExtras();
 		objectId = bundle.getString("objectId");
 
-		mDistanceValue = "10公尺"; //getDistance(bundle);
+		mDistanceValue = "10公尺"; // getDistance(bundle);
 
 		options = new DisplayImageOptions.Builder()
 				.showImageOnLoading(R.drawable.ic_launcher)
@@ -170,6 +180,8 @@ public class BabysitterDetailFragment extends Fragment implements
 		mPhone.setText(outline.getTel());
 
 		mCallIcon.setOnClickListener(this);
+
+		mOutline = outline;
 	}
 
 	@Override
@@ -247,7 +259,19 @@ public class BabysitterDetailFragment extends Fragment implements
 			mPresenter.doDirections(mTargetLat, mTargetLng);
 			break;
 		case R.id.baby_avator:
-			mPresenter.seeBabyDetail();
+
+			ParseQuery<Baby> detailQuery = Baby.getQuery();
+			//detailQuery.include("babysitter");
+			detailQuery.whereEqualTo("babysitter", mOutline);
+			
+			detailQuery.getFirstInBackground(new GetCallback<Baby>() {
+				
+				@Override
+				public void done(Baby baby, ParseException e) {
+					mPresenter.seeBabyDetail(baby.getObjectId());
+				}
+			});
+			
 			break;
 		case R.id.call_icon:
 			mPresenter.makePhoneCall(mPhone.getText().toString());

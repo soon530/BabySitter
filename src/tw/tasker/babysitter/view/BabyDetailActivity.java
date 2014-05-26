@@ -50,6 +50,8 @@ public class BabyDetailActivity extends ActionBarActivity implements
 
 	private BabysitterDetailPresenter mPresenter;
 
+	//private String mObjectId;
+
 	private static final String[] mStrings = new String[] { "一", "二", "三", "四",
 			"五", "六", "七", "八", "九" };
 
@@ -58,10 +60,14 @@ public class BabyDetailActivity extends ActionBarActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_baby_detail);
 
+		Bundle bundle = getIntent().getExtras();
+		String objectId = bundle.getString("objectId");
+
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
+					.add(R.id.container, new PlaceholderFragment(objectId)).commit();
 		}
+		
 
 	}
 
@@ -120,9 +126,10 @@ public class BabyDetailActivity extends ActionBarActivity implements
 		private Baby mBaby;
 		private Favorite mFavorite;
 		private boolean isInitData;
+		private String mObjectId;
 
 
-		public PlaceholderFragment() {
+		public PlaceholderFragment(String objectId) {
 
 			options = new DisplayImageOptions.Builder()
 					.showImageOnLoading(R.drawable.ic_launcher)
@@ -132,11 +139,13 @@ public class BabyDetailActivity extends ActionBarActivity implements
 					.considerExifParams(true)
 					.displayer(new RoundedBitmapDisplayer(20)).build();
 
+			mObjectId = objectId;
 		}
 
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
+			
 
 		}
 
@@ -356,9 +365,9 @@ public class BabyDetailActivity extends ActionBarActivity implements
 
 			mListView.addHeaderView(mHeaderView);
 
-			doCommentQuery("HXSAmYCUdG");
+			doCommentQuery(mObjectId);
 
-			doDetailQuery("HXSAmYCUdG");
+			doDetailQuery(mObjectId);
 
 			getFavorite();
 

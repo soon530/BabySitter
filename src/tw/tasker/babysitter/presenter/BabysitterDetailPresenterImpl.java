@@ -11,6 +11,7 @@ import tw.tasker.babysitter.view.BabyDetailActivity;
 import tw.tasker.babysitter.view.BabysitterDetailFragment;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseQueryAdapter.OnQueryLoadListener;
@@ -50,8 +51,11 @@ public class BabysitterDetailPresenterImpl implements BabysitterDetailPresenter,
 	}
 
 	@Override
-	public void seeBabyDetail() {
+	public void seeBabyDetail(String objectId) {
+		Bundle bundle = new Bundle();
+		bundle.putString("objectId", objectId);
 		Intent intent = new Intent();
+		intent.putExtras(bundle);
 		intent.setClass(mView.getActivity(), BabyDetailActivity.class);
 		mView.startActivity(intent);
 	}
