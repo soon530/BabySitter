@@ -69,7 +69,8 @@ public class BabyListActivity extends ActionBarActivity {
 		private ImageLoader imageLoader = ImageLoader.getInstance();
 		private ListView mList;
 		private TextView mEmpty;
-
+		
+		
 		public PlaceholderFragment() {
 		}
 
@@ -91,7 +92,11 @@ public class BabyListActivity extends ActionBarActivity {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
-					seeBabyDetail();
+					
+					Favorite favorite = mAdapter.getItem(position);
+					Baby baby = favorite.getBaby();
+					
+					seeBabyDetail(baby.getObjectId());
 				}
 			
 			});
@@ -102,8 +107,11 @@ public class BabyListActivity extends ActionBarActivity {
 			return rootView;
 		}
 
-		public void seeBabyDetail() {
+		public void seeBabyDetail(String babyObjectId) {
+			Bundle bundle = new Bundle();
+			bundle.putString("objectId", babyObjectId);
 			Intent intent = new Intent();
+			intent.putExtras(bundle);
 			intent.setClass(getActivity(), BabyDetailActivity.class);
 			startActivity(intent);
 		}
@@ -171,6 +179,7 @@ public class BabyListActivity extends ActionBarActivity {
 			ParseQueryAdapter<Favorite> adapter;
 			// Set up the query list_item_babysitter_comment
 			adapter = new ParseQueryAdapter<Favorite>(getActivity(), factory) {
+
 				@Override
 				public View getItemView(Favorite post, View view,
 						ViewGroup parent) {
@@ -188,16 +197,15 @@ public class BabyListActivity extends ActionBarActivity {
 
 					Baby baby = post.getBaby();
 
-					babysitterName.setText(baby.getName());
-					babysitterAddress.setText(baby.getNote());
+					babysitterName.setText(baby.getName() + baby.getObjectId());
+					babysitterAddress.setText(baby.getNote() );
 					imageLoader
 							.displayImage(
 									"https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-ash3/t1.0-9/q77/s720x720/1966891_782022338479354_124097698_n.jpg",
 									babysitterImage, options, null);
-
+					
 					return view;
 				}
-
 			};
 			return adapter;
 		}
