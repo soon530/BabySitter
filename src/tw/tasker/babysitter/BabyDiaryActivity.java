@@ -208,9 +208,17 @@ public class BabyDiaryActivity extends ActionBarActivity {
 
 					babysitterName.setText(baby.getName());
 					babysitterAddress.setText(baby.getNote());
+					
+					String url;
+					if(baby.getPhotoFile() != null) {
+						url = baby.getPhotoFile().getUrl();
+					} else {
+						url = "https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-ash3/t1.0-9/q77/s720x720/1966891_782022338479354_124097698_n.jpg";
+					}
+					
 					imageLoader
 							.displayImage(
-									"https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-ash3/t1.0-9/q77/s720x720/1966891_782022338479354_124097698_n.jpg",
+									url,
 									babysitterImage, options, null);
 
 					return view;
