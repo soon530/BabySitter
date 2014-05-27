@@ -219,7 +219,16 @@ public class BabyAddListActivity extends ActionBarActivity {
 					ImageView babysitterImage = (ImageView) view
 							.findViewById(R.id.babysitter_avator);
 
-					babysitterName.setText(baby.getName());
+					String tag = "";
+					if(baby.getIsPublic()) {
+						tag="公開";
+					}else
+					{
+						tag="私藏";
+					}
+					
+					babysitterName.setText(baby.getName() + " (" + tag + ")");
+
 					babysitterAddress.setText(baby.getNote());
 					
 					String url;

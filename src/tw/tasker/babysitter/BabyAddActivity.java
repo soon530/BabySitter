@@ -17,9 +17,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.parse.ParseException;
@@ -77,8 +81,10 @@ public class BabyAddActivity extends ActionBarActivity {
 		private ImageView mUserAvator;
 		private Bitmap mBmp;
 		private ParseFile mFile;
+		private boolean mIsPublic;
 
 		private ProgressDialog mRingProgressDialog;
+		private Spinner mShareType;
 
 		public PlaceholderFragment(String babyObjectId) {
 			mObjectId = babyObjectId;
@@ -87,9 +93,35 @@ public class BabyAddActivity extends ActionBarActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_baby_comment,
+			View rootView = inflater.inflate(R.layout.fragment_baby_add,
 					container, false);
 			
+			mShareType = (Spinner) rootView.findViewById(R.id.share_type);
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,
+					new String[]{"私藏","公開"});
+			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			mShareType.setAdapter(adapter);
+			mIsPublic = false;
+			mShareType.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+				@Override
+				public void onItemSelected(AdapterView<?> parent, View view,
+						int position, long id) {
+					
+					if (position == 0) {
+						mIsPublic = false;
+					}else {
+						mIsPublic = true;
+					}
+					
+				}
+
+				@Override
+				public void onNothingSelected(AdapterView<?> parent) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
 			
 			
 			mBabysitterTitle = (EditText) rootView.findViewById(R.id.babysitter_comment_title);
@@ -198,7 +230,7 @@ public class BabyAddActivity extends ActionBarActivity {
 			post.setFavorite(0);
 			post.setPhotoFile(mFile);
 			post.setUser(ParseUser.getCurrentUser());
-			
+			post.setIsPublic(mIsPublic);
 
 			// Save the post and return
 			post.saveInBackground(new SaveCallback() {
