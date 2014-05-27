@@ -60,6 +60,14 @@ public class Baby extends ParseObject {
 		return (BabysitterOutline) getParseObject("babysitter");
 	}
 
+	public boolean getIsPublic() {
+		return getBoolean("isPublic");
+	}
+	
+	public void setIsPublic(boolean value) {
+		put("isPublic", value);
+	}
+	
 	public static ParseQuery<Baby> getQuery() {
 		return ParseQuery.getQuery(Baby.class);
 	}

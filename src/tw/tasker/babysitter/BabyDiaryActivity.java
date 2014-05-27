@@ -93,10 +93,16 @@ public class BabyDiaryActivity extends ActionBarActivity {
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
 					
+					//mAdapter.isEnabled(position);
+					
 					Baby baby = mAdapter.getItem(position);
 					//Baby baby = favorite.getBaby();
 					
-					seeBabyDetail(baby.getObjectId());
+					
+					if (baby.getIsPublic()) {
+						
+						seeBabyDetail(baby.getObjectId());
+					}
 				}
 			
 			});
@@ -206,7 +212,15 @@ public class BabyDiaryActivity extends ActionBarActivity {
 					ImageView babysitterImage = (ImageView) view
 							.findViewById(R.id.babysitter_avator);
 
-					babysitterName.setText(baby.getName());
+					String tag = "";
+					if(baby.getIsPublic()) {
+						tag="公開";
+					}else
+					{
+						tag="私藏";
+					}
+					
+					babysitterName.setText(baby.getName() + " (" + tag + ")");
 					babysitterAddress.setText(baby.getNote());
 					
 					String url;
@@ -223,7 +237,7 @@ public class BabyDiaryActivity extends ActionBarActivity {
 
 					return view;
 				}
-
+				
 			};
 			return adapter;
 		}
