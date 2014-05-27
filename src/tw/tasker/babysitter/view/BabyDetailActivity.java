@@ -50,6 +50,8 @@ public class BabyDetailActivity extends ActionBarActivity implements
 
 	private BabysitterDetailPresenter mPresenter;
 
+	private String mObjectId;
+
 	//private String mObjectId;
 
 	private static final String[] mStrings = new String[] { "一", "二", "三", "四",
@@ -61,11 +63,11 @@ public class BabyDetailActivity extends ActionBarActivity implements
 		setContentView(R.layout.activity_baby_detail);
 
 		Bundle bundle = getIntent().getExtras();
-		String objectId = bundle.getString("objectId");
+		mObjectId = bundle.getString("objectId");
 
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment(objectId)).commit();
+					.add(R.id.container, new PlaceholderFragment(mObjectId)).commit();
 		}
 		
 
@@ -86,7 +88,10 @@ public class BabyDetailActivity extends ActionBarActivity implements
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.post_words) {
+			Bundle bundle = new Bundle();
+			bundle.putString("objectId", mObjectId);
 			Intent intent = new Intent();
+			intent.putExtras(bundle);
 			intent.setClass(this, BabyCommentActivity.class);
 			startActivity(intent);
 			return true;

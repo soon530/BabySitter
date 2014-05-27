@@ -31,15 +31,20 @@ import com.parse.SaveCallback;
 
 public class BabyCommentActivity extends ActionBarActivity {
 
+	private String mObjectId;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_baby_comment);
 
+		Bundle bundle = getIntent().getExtras();
+		mObjectId = bundle.getString("objectId");
+
 		//Comment.babysitterId 先存 baby.objectId
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment("HXSAmYCUdG")).commit();
+					.add(R.id.container, new PlaceholderFragment(mObjectId)).commit();
 		}
 	}
 
