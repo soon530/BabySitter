@@ -1,8 +1,10 @@
 package tw.tasker.babysitter.model;
 
 import com.parse.ParseClassName;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 @ParseClassName("baby")
 public class Baby extends ParseObject {
@@ -32,6 +34,30 @@ public class Baby extends ParseObject {
 
 	public void setFavorite(int value) {
 		put("favorite", value);
+	}
+	
+	public ParseUser getUser() {
+		return getParseUser("user");
+	}
+
+	public void setUser(ParseUser value) {
+		put("user", value);
+	}
+	
+	public ParseFile getPhotoFile() {
+		return getParseFile("photo");
+	}
+
+	public void setPhotoFile(ParseFile file) {
+		put("photo", file);
+	}
+
+	public void setBabysitter(BabysitterOutline value) {
+		put("babysitter", value);
+	}
+	
+	public BabysitterOutline getBabysitter() {
+		return (BabysitterOutline) getParseObject("babysitter");
 	}
 
 	public static ParseQuery<Baby> getQuery() {

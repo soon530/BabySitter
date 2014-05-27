@@ -260,17 +260,19 @@ public class BabysitterDetailFragment extends Fragment implements
 			break;
 		case R.id.baby_avator:
 
-			ParseQuery<Baby> detailQuery = Baby.getQuery();
+			//ParseQuery<Baby> detailQuery = Baby.getQuery();
 			//detailQuery.include("babysitter");
-			detailQuery.whereEqualTo("babysitter", mOutline);
+			//detailQuery.whereEqualTo("babysitter", mOutline);
 			
-			detailQuery.getFirstInBackground(new GetCallback<Baby>() {
+			//detailQuery.getFirstInBackground(new GetCallback<Baby>() {
 				
-				@Override
-				public void done(Baby baby, ParseException e) {
-					mPresenter.seeBabyDetail(baby.getObjectId());
-				}
-			});
+				//@Override
+				//public void done(Baby baby, ParseException e) {
+					//mPresenter.seeBabyDetail(baby.getObjectId());
+				//}
+			//});
+			
+			mPresenter.seeBabyDetail(objectId);
 			
 			break;
 		case R.id.call_icon:

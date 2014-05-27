@@ -12,14 +12,19 @@ import android.view.ViewGroup;
 
 public class BabyAddListActivity extends ActionBarActivity {
 
+	private String mBabysitterObjectId;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_baby_add_list);
 
+		Bundle bundle = getIntent().getExtras();
+		mBabysitterObjectId = bundle.getString("objectId");
+
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
+					.add(R.id.container, new PlaceholderFragment(mBabysitterObjectId)).commit();
 		}
 	}
 
@@ -38,8 +43,10 @@ public class BabyAddListActivity extends ActionBarActivity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
-			
+			Bundle bundle = new Bundle();
+			bundle.putString("objectId", mBabysitterObjectId);
 			Intent intent = new Intent();
+			intent.putExtras(bundle);
 			intent.setClass(getApplicationContext(), BabyAddActivity.class);
 			startActivity(intent);
 			
@@ -52,8 +59,9 @@ public class BabyAddListActivity extends ActionBarActivity {
 	 * A placeholder fragment containing a simple view.
 	 */
 	public static class PlaceholderFragment extends Fragment {
-
-		public PlaceholderFragment() {
+		private String mBabysitterObjectId;
+		public PlaceholderFragment(String babysitterObjectId) {
+			mBabysitterObjectId = babysitterObjectId;
 		}
 
 		@Override
