@@ -190,11 +190,6 @@ public class BabyDetailActivity extends ActionBarActivity implements
 		private void initHeadUI() {
 			mBabyIcon = (ImageView) mHeaderView.findViewById(R.id.baby_avator);
 
-			imageLoader
-					.displayImage(
-							"https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-ash3/t1.0-9/q77/s720x720/1966891_782022338479354_124097698_n.jpg",
-							mBabyIcon, options, null);
-
 			mBabyIcon.setOnClickListener(new OnClickListener() {
 
 				@Override
@@ -428,6 +423,19 @@ public class BabyDetailActivity extends ActionBarActivity implements
 
 				@Override
 				public void done(Baby baby, ParseException arg1) {
+
+					String url;
+					if(baby.getPhotoFile() != null) {
+						url = baby.getPhotoFile().getUrl();
+					} else {
+						url = "https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-ash3/t1.0-9/q77/s720x720/1966891_782022338479354_124097698_n.jpg";
+					}
+					
+					imageLoader
+					.displayImage(
+							url,
+							mBabyIcon, options, null);
+
 					mName.setText(baby.getName() + baby.getObjectId());
 					mNote.setText(baby.getNote());
 					mHeart.setText("♥ +" + baby.getFavorite());
