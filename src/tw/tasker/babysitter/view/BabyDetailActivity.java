@@ -43,6 +43,7 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseQueryAdapter.OnQueryLoadListener;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 public class BabyDetailActivity extends ActionBarActivity implements
@@ -226,7 +227,7 @@ public class BabyDetailActivity extends ActionBarActivity implements
 				private void saveHeard() {
 					ParseQuery<Baby> query = Baby.getQuery();
 
-					query.getInBackground("HXSAmYCUdG",
+					query.getInBackground(mObjectId,
 							new GetCallback<Baby>() {
 
 								@Override
@@ -337,7 +338,8 @@ public class BabyDetailActivity extends ActionBarActivity implements
 					mFavorite = favorite;
 					//favorite.put("baby", mBaby);
 					favorite.setBaby(mBaby);
-					favorite.put("user", "0D4sP8BcUE");
+					
+					favorite.put("user", ParseUser.getCurrentUser());
 
 					// Save the post and return
 					favorite.saveInBackground(new SaveCallback() {
@@ -374,7 +376,7 @@ public class BabyDetailActivity extends ActionBarActivity implements
 
 			doDetailQuery(mObjectId);
 
-			getFavorite();
+			//getFavorite();
 
 			/*
 			 * mListView.setAdapter(new ArrayAdapter<String>(getActivity()
@@ -387,6 +389,7 @@ public class BabyDetailActivity extends ActionBarActivity implements
 			ParseQuery<Favorite> favorite_query = Favorite.getQuery();
 			
 			favorite_query.whereEqualTo("baby", mBaby);
+			favorite_query.whereEqualTo("user", ParseUser.getCurrentUser());
 			
 			favorite_query.getFirstInBackground(new GetCallback<Favorite>() {
 
@@ -395,12 +398,6 @@ public class BabyDetailActivity extends ActionBarActivity implements
 				public void done(Favorite favorite, ParseException e) {
 					//第一次抓data
 					isInitData = true;
-					Toast.makeText(
-							getActivity()
-									.getApplicationContext(),
-							"isInitData" + isInitData,
-							Toast.LENGTH_SHORT)
-							.show();
 					
 					if (favorite == null) {
 						mStar.setChecked(false);
@@ -408,8 +405,16 @@ public class BabyDetailActivity extends ActionBarActivity implements
 					}else {
 						mStar.setChecked(true);
 						mFavorite = favorite;
+
+						Toast.makeText(
+								getActivity()
+										.getApplicationContext(),
+								"ObjectId = " + favorite.getObjectId(),
+								Toast.LENGTH_SHORT)
+								.show();
 					}
 					
+
 				}
 			});
 			
@@ -423,12 +428,12 @@ public class BabyDetailActivity extends ActionBarActivity implements
 
 				@Override
 				public void done(Baby baby, ParseException arg1) {
-					mName.setText(baby.getName());
+					mName.setText(baby.getName() + baby.getObjectId());
 					mNote.setText(baby.getNote());
 					mHeart.setText("♥ +" + baby.getFavorite());
 					count = baby.getFavorite();
 					mBaby = baby;
-					
+					getFavorite();
 				}
 
 			});
