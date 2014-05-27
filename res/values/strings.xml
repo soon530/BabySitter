@@ -53,7 +53,7 @@
     <string name="log_out">Log out of Anywall</string>
     <string name="post">Post</string>
     <string name="post_out_of_range">Can\'t view post! Get closer.</string>
-    <string name="title_activity_baby_add_list">BabyAddListActivity</string>
-    <string name="title_activity_baby_add">BabyAddActivity</string>
+    <string name="title_activity_baby_add_list">寶寶日記</string>
+    <string name="title_activity_baby_add">新增寶寶日記</string>
 
 </resources>

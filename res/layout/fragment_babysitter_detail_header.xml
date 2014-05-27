@@ -101,7 +101,7 @@
             android:id="@+id/baby_avator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="人見人愛張小包" />
+            android:text="寶寶日記" />
 
     </LinearLayout>
 
