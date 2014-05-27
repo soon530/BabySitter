@@ -3,6 +3,9 @@ package tw.tasker.babysitter;
 import java.util.List;
 
 import tw.tasker.babysitter.model.Baby;
+import tw.tasker.babysitter.model.Favorite;
+import tw.tasker.babysitter.view.BabyDetailActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -12,9 +15,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -70,6 +75,7 @@ public class BabyDiaryActivity extends ActionBarActivity {
 		DisplayImageOptions options;
 		private ImageLoader imageLoader = ImageLoader.getInstance();
 		private ListView mList;
+		private TextView mEmpty;
 
 		public PlaceholderFragment() {
 		}
@@ -80,8 +86,36 @@ public class BabyDiaryActivity extends ActionBarActivity {
 			View rootView = inflater.inflate(R.layout.fragment_baby_list,
 					container, false);
 			mList = (ListView) rootView.findViewById(R.id.list);
+			
+			mList.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					
+					Baby baby = mAdapter.getItem(position);
+					//Baby baby = favorite.getBaby();
+					
+					seeBabyDetail(baby.getObjectId());
+				}
+			
+			});
+			
+			mEmpty = (TextView) rootView.findViewById(R.id.empty);
+			mList.setEmptyView(mEmpty);
+
 			return rootView;
 		}
+		
+		public void seeBabyDetail(String babyObjectId) {
+			Bundle bundle = new Bundle();
+			bundle.putString("objectId", babyObjectId);
+			Intent intent = new Intent();
+			intent.putExtras(bundle);
+			intent.setClass(getActivity(), BabyDetailActivity.class);
+			startActivity(intent);
+		}
+
 
 		@Override
 		public void onViewCreated(View view, Bundle savedInstanceState) {
