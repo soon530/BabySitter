@@ -54,5 +54,6 @@
     <string name="post">Post</string>
     <string name="post_out_of_range">Can\'t view post! Get closer.</string>
     <string name="title_activity_baby_add_list">BabyAddListActivity</string>
+    <string name="title_activity_baby_add">BabyAddActivity</string>
 
 </resources>
