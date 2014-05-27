@@ -31,11 +31,10 @@
     <string name="title_activity_baby_detail">寶寶明細</string>
     <string name="post_words">成長記錄</string>
     <string name="hello_world">Hello world!</string>
-    
     <string name="title_activity_home">保母搜尋</string>
     <string name="title_activity_baby_comment">成長記錄</string>
     <string name="title_activity_baby_list">我的收藏</string>
-    
+
     <!-- BabyDiaryActivity -->
     <string name="title_activity_baby_diary">寶寶日記</string>
 
@@ -54,5 +53,6 @@
     <string name="log_out">Log out of Anywall</string>
     <string name="post">Post</string>
     <string name="post_out_of_range">Can\'t view post! Get closer.</string>
-    
+    <string name="title_activity_baby_add_list">BabyAddListActivity</string>
+
 </resources>
