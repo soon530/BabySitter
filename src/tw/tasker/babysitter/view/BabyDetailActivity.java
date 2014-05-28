@@ -270,24 +270,24 @@ public class BabyDetailActivity extends ActionBarActivity implements
 				@Override
 				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 					if (isChecked) {
-						Toast.makeText(
+/*						Toast.makeText(
 								getActivity()
 										.getApplicationContext(),
 								"加入收藏..",
 								Toast.LENGTH_SHORT)
 								.show();
-
+*/
 						
 						saveStar();
 						
 					}else{
-						Toast.makeText(
+/*						Toast.makeText(
 								getActivity()
 										.getApplicationContext(),
 								"取消收藏..",
 								Toast.LENGTH_SHORT)
 								.show();
-						
+*/						
 						deleteStar();
 
 					}
