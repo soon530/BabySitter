@@ -134,7 +134,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="tw.tasker.babysitter.DispatchActivity"
+            android:name="tw.tasker.babysitter.view.impl.DispatchActivity"
             android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,6 +1,5 @@
 package tw.tasker.babysitter.view.impl;
 
-import tw.tasker.babysitter.DispatchActivity;
 import tw.tasker.babysitter.R;
 import android.content.Intent;
 import android.os.Bundle;
