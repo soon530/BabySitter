@@ -4,7 +4,7 @@ import static tw.tasker.babysitter.utils.LogUtils.LOGD;
 
 import java.io.ByteArrayOutputStream;
 
-import tw.tasker.babysitter.model.BabysitterComment;
+import tw.tasker.babysitter.model.data.BabysitterComment;
 import tw.tasker.babysitter.view.BabysitterDetailActivity;
 import tw.tasker.babysitter.view.MainActivity;
 import android.app.ProgressDialog;

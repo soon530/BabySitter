@@ -6,9 +6,9 @@ import java.util.List;
 
 import tw.tasker.babysitter.BabyCommentActivity;
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.model.BabysitterComment;
 import tw.tasker.babysitter.model.RecordParseQueryAdapter;
 import tw.tasker.babysitter.model.data.Baby;
+import tw.tasker.babysitter.model.data.BabysitterComment;
 import tw.tasker.babysitter.model.data.Favorite;
 import tw.tasker.babysitter.presenter.BabysitterDetailPresenter;
 import android.content.Intent;

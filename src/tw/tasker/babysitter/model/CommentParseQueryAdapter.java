@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.model.data.BabysitterComment;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;

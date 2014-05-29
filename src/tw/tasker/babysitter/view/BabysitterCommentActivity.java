@@ -2,7 +2,7 @@ package tw.tasker.babysitter.view;
 
 import static tw.tasker.babysitter.utils.LogUtils.LOGD;
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.model.BabysitterComment;
+import tw.tasker.babysitter.model.data.BabysitterComment;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;

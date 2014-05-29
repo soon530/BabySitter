@@ -3,6 +3,7 @@ package tw.tasker.babysitter.model;
 import java.text.SimpleDateFormat;
 
 import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.model.data.BabysitterComment;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
