@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
 public class CommentParseQueryAdapter extends
@@ -29,9 +30,8 @@ public class CommentParseQueryAdapter extends
 	private ImageLoader imageLoader = ImageLoader.getInstance();
 	private TextView createDate;
 
-	public CommentParseQueryAdapter(Context context,
-			ParseQueryAdapter.QueryFactory<BabysitterComment> factory) {
-		super(context, factory);
+	public CommentParseQueryAdapter(Context context, String babysitterObjectId) {
+		super(context, getFactory(babysitterObjectId));
 
 		options = new DisplayImageOptions.Builder()
 				.showImageOnLoading(R.drawable.ic_launcher)
@@ -40,6 +40,21 @@ public class CommentParseQueryAdapter extends
 				.cacheOnDisc(true).considerExifParams(true)
 				.displayer(new RoundedBitmapDisplayer(20)).build();
 
+	}
+	
+	public static ParseQueryAdapter.QueryFactory<BabysitterComment> getFactory(
+			final String babysitterObjectId) {
+		ParseQueryAdapter.QueryFactory<BabysitterComment> factory = new ParseQueryAdapter.QueryFactory<BabysitterComment>() {
+			public ParseQuery<BabysitterComment> create() {
+				ParseQuery<BabysitterComment> query = BabysitterComment
+						.getQuery();
+				query.orderByDescending("createdAt");
+				query.whereEqualTo("babysitterId", babysitterObjectId);
+				query.setLimit(20);
+				return query;
+			}
+		};
+		return factory;
 	}
 
 	@Override
@@ -73,7 +88,6 @@ public class CommentParseQueryAdapter extends
 	}
 
 	private void fillDataToUI(BabysitterComment comment) {
-		// babysitterImage.setBackgroundResource(R.drawable.ic_launcher);
 		babysitterCommentTitle.setText(comment.getTitle());
 		babysitterComment.setText(comment.getComment());
 		babysitterRating.setRating(comment.getRating());
@@ -90,5 +104,7 @@ public class CommentParseQueryAdapter extends
 						babysitterImage, options, null);
 
 	}
+	
+	
 
 }

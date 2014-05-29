@@ -14,7 +14,7 @@ import com.parse.ParseQueryAdapter;
 public class BabysitterDetailModelImpl extends GetCallback<Babysitter>
 		implements BabysitterDetailModel {
 	// Maximum results returned from a Parse query
-	private static final int MAX_POST_SEARCH_RESULTS = 20;
+	// private static final int MAX_POST_SEARCH_RESULTS = 20;
 	private BabysitterDetailPresenterImpl mListener;
 
 	public BabysitterDetailModelImpl(BabysitterDetailPresenterImpl listener) {
@@ -24,8 +24,7 @@ public class BabysitterDetailModelImpl extends GetCallback<Babysitter>
 	@Override
 	public void doDetailQuery(String objectId) {
 		LOGD("vic", "objectId" + objectId);
-		ParseQuery<Babysitter> detailQuery = Babysitter
-				.getQuery();
+		ParseQuery<Babysitter> detailQuery = Babysitter.getQuery();
 		detailQuery.getInBackground(objectId, this);
 	}
 
@@ -35,30 +34,8 @@ public class BabysitterDetailModelImpl extends GetCallback<Babysitter>
 			LOGD("vic", "done", e);
 		} else {
 			mListener.fillHeaderUI(outline);
-}
+		}
 
 	}
 
-	@Override
-	public ParseQueryAdapter.QueryFactory<BabysitterComment> getFactory(
-			final String objectId) {
-		// Set up a customized query
-		ParseQueryAdapter.QueryFactory<BabysitterComment> factory = new ParseQueryAdapter.QueryFactory<BabysitterComment>() {
-			public ParseQuery<BabysitterComment> create() {
-				// Location myLoc = (currentLocation == null) ? lastLocation :
-				// currentLocation;
-				ParseQuery<BabysitterComment> query = BabysitterComment
-						.getQuery();
-				// query.include("user");
-				query.orderByDescending("createdAt");
-				query.whereEqualTo("babysitterId", objectId);
-				// query.whereWithinKilometers("location",
-				// geoPointFromLocation(myLoc), radius * METERS_PER_FEET /
-				// METERS_PER_KILOMETER);
-				query.setLimit(MAX_POST_SEARCH_RESULTS);
-				return query;
-			}
-		};
-		return factory;
-	}
 }

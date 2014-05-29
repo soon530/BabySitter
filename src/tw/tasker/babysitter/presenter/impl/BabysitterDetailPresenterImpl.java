@@ -70,24 +70,16 @@ public class BabysitterDetailPresenterImpl implements BabysitterDetailPresenter,
 	}
 
 	@Override
-	public void doDetailQuery(String objectId) {
-		mModel.doDetailQuery(objectId);
+	public void doDetailQuery(String babysitterObjectId) {
+		mModel.doDetailQuery(babysitterObjectId);
 	}
 
 	@Override
-	public void doCommentQuery(String objectId) {
-	
-		mCommentAdapter = new CommentParseQueryAdapter(mView.getActivity(), mModel.getFactory(objectId));
-
-		// Disable automatic loading when the list_item_babysitter_comment is
-		// attached to a view.
+	public void doCommentQuery(String babysitterObjectId) {
+		mCommentAdapter = new CommentParseQueryAdapter(mView.getActivity(), babysitterObjectId);
 		mCommentAdapter.setAutoload(false);
-
-		// Disable pagination, we'll manage the query limit ourselves
 		mCommentAdapter.setPaginationEnabled(false);
-
 		mCommentAdapter.addOnQueryLoadListener(this);
-		
 		mCommentAdapter.loadObjects();
 	}
 
@@ -98,8 +90,6 @@ public class BabysitterDetailPresenterImpl implements BabysitterDetailPresenter,
 
 	@Override
 	public void onLoading() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public void fillHeaderUI(Babysitter outline) {
