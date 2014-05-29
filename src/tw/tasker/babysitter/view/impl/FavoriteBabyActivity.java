@@ -1,5 +1,7 @@
 package tw.tasker.babysitter.view.impl;
 
+import java.util.List;
+
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Baby;
 import tw.tasker.babysitter.model.data.Favorite;
@@ -13,18 +15,23 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.parse.ParseQueryAdapter;
+import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 
 public class FavoriteBabyActivity extends ActionBarActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		/** Enabling Progress bar for this activity */
+		getWindow().requestFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+
 		setContentView(R.layout.activity_baby_list);
 
 		if (savedInstanceState == null) {
@@ -58,7 +65,7 @@ public class FavoriteBabyActivity extends ActionBarActivity {
 	 * A placeholder fragment containing a simple view.
 	 */
 	public static class PlaceholderFragment extends Fragment implements
-			OnItemClickListener {
+			OnItemClickListener, OnQueryLoadListener<Favorite> {
 		private ParseQueryAdapter<Favorite> mAdapter;
 		private ListView mList;
 		private TextView mEmpty;
@@ -94,6 +101,7 @@ public class FavoriteBabyActivity extends ActionBarActivity {
 			mAdapter = new FavoriteBabyParseQueryAdapter(getActivity());
 			mAdapter.setAutoload(false);
 			mAdapter.setPaginationEnabled(false);
+			mAdapter.addOnQueryLoadListener(this);
 			mList.setAdapter(mAdapter);
 			mAdapter.loadObjects();
 		}
@@ -114,5 +122,16 @@ public class FavoriteBabyActivity extends ActionBarActivity {
 			intent.setClass(getActivity(), BabyDetailActivity.class);
 			startActivity(intent);
 		}
+
+		@Override
+		public void onLoading() {
+			getActivity().setProgressBarIndeterminateVisibility(true);
+		}
+
+		@Override
+		public void onLoaded(List<Favorite> favorite, Exception e) {
+			getActivity().setProgressBarIndeterminateVisibility(false);
+		}
+
 	}
 }
