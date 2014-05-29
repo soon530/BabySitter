@@ -1,8 +1,8 @@
 package tw.tasker.babysitter.presenter;
 
 import tw.tasker.babysitter.model.BabysitterListModel;
-import tw.tasker.babysitter.model.BabysitterListModelImpl;
 import tw.tasker.babysitter.model.data.BabysitterOutline;
+import tw.tasker.babysitter.model.impl.BabysitterListModelImpl;
 import tw.tasker.babysitter.view.BabysitterDetailActivity;
 import tw.tasker.babysitter.view.BabysitterListFragment;
 import android.content.Intent;
