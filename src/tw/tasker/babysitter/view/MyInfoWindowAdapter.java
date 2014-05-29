@@ -23,7 +23,7 @@ public class MyInfoWindowAdapter implements InfoWindowAdapter {
 	private ImageLoader imageLoader = ImageLoader.getInstance();
 	HashMap<String, BabysitterOutline> mMapModel;
 
-	MyInfoWindowAdapter(LayoutInflater layoutinflater, HashMap<String, BabysitterOutline> map_model) {
+	public MyInfoWindowAdapter(LayoutInflater layoutinflater, HashMap<String, BabysitterOutline> map_model) {
 		myContentsView = layoutinflater
 				.inflate(R.layout.map_info_content, null);
 		options = new DisplayImageOptions.Builder()

@@ -39,7 +39,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name="tw.tasker.babysitter.view.HomeActivity"
+            android:name="tw.tasker.babysitter.view.impl.HomeActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask" >
         </activity>
@@ -47,7 +47,7 @@
             android:name="tw.tasker.babysitter.view.impl.BabysitterListActivity"
             android:label="@string/title_item_list"
             android:launchMode="singleTask"
-            android:parentActivityName="tw.tasker.babysitter.view.HomeActivity" >
+            android:parentActivityName="tw.tasker.babysitter.view.impl.HomeActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="tw.tasker.babysitter.view.HomeActivity" />
@@ -56,7 +56,7 @@
             android:name="tw.tasker.babysitter.view.impl.BabysitterMapActivity"
             android:label="@string/title_activity_map"
             android:launchMode="singleTask"
-            android:parentActivityName="tw.tasker.babysitter.view.HomeActivity" >
+            android:parentActivityName="tw.tasker.babysitter.view.impl.HomeActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="tw.tasker.babysitter.view.HomeActivity" />
@@ -108,7 +108,7 @@
         <activity
             android:name="tw.tasker.babysitter.BabyListActivity"
             android:label="@string/title_activity_baby_list"
-            android:parentActivityName="tw.tasker.babysitter.view.HomeActivity" >
+            android:parentActivityName="tw.tasker.babysitter.view.impl.HomeActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="tw.tasker.babysitter.view.HomeActivity" />
@@ -116,7 +116,7 @@
         <activity
             android:name="tw.tasker.babysitter.BabyDiaryActivity"
             android:label="@string/title_activity_baby_diary"
-            android:parentActivityName="tw.tasker.babysitter.view.HomeActivity" >
+            android:parentActivityName="tw.tasker.babysitter.view.impl.HomeActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="tw.tasker.babysitter.view.HomeActivity" />
