@@ -18,9 +18,9 @@ public class BabyDiaryParseQueryAdapter extends ParseQueryAdapter<Baby> {
 	DisplayImageOptions options;
 	private ImageLoader imageLoader = ImageLoader.getInstance();
 
-	public BabyDiaryParseQueryAdapter(Context context) {
+	public BabyDiaryParseQueryAdapter(Context context, String babysitterObjectId) {
 
-		super(context, getQueryFactory());
+		super(context, getQueryFactory(babysitterObjectId));
 		options = new DisplayImageOptions.Builder()
 				.showImageOnLoading(R.drawable.ic_launcher)
 				.showImageForEmptyUri(R.drawable.ic_launcher)
@@ -64,13 +64,18 @@ public class BabyDiaryParseQueryAdapter extends ParseQueryAdapter<Baby> {
 		return view;
 	}
 
-	private static ParseQueryAdapter.QueryFactory<Baby> getQueryFactory() {
+	private static ParseQueryAdapter.QueryFactory<Baby> getQueryFactory(final String babysitterObjectId) {
 		ParseQueryAdapter.QueryFactory<Baby> factory = new ParseQueryAdapter.QueryFactory<Baby>() {
 			public ParseQuery<Baby> create() {
 				ParseQuery<Baby> query = Baby.getQuery();
 				query.orderByDescending("createdAt");
 				query.setLimit(20);
 				query.include("baby");
+				
+				if (babysitterObjectId != null) {
+					query.whereEqualTo("babysitterId", babysitterObjectId);
+				}
+				
 				return query;
 			}
 		};

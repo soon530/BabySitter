@@ -2,6 +2,7 @@ package tw.tasker.babysitter.view.impl;
 
 import java.util.List;
 
+import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Baby;
 import tw.tasker.babysitter.presenter.adapter.BabyDiaryParseQueryAdapter;
@@ -34,8 +35,16 @@ public class BabyDiaryActivity extends ActionBarActivity {
 		setContentView(R.layout.activity_baby_diary);
 
 		if (savedInstanceState == null) {
+			
+			Bundle arguments = new Bundle();
+			arguments.putString(
+					Config.BABYSITTER_OBJECT_ID,
+					getIntent().getStringExtra(
+							Config.BABYSITTER_OBJECT_ID));
+			PlaceholderFragment fragment = new PlaceholderFragment();
+			fragment.setArguments(arguments);
 			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
+					.add(R.id.container, fragment).commit();
 		}
 
 	}
@@ -68,10 +77,19 @@ public class BabyDiaryActivity extends ActionBarActivity {
 		private ParseQueryAdapter<Baby> mAdapter;
 		private ListView mList;
 		private TextView mEmpty;
+		private String mBabysitterObjectId;
 
-		public PlaceholderFragment() {
+		@Override
+		public void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+
+			if (getArguments().containsKey(Config.BABYSITTER_OBJECT_ID)) {
+				mBabysitterObjectId = getArguments()
+						.getString(Config.BABYSITTER_OBJECT_ID);
+			}
+
 		}
-
+		
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
@@ -101,7 +119,7 @@ public class BabyDiaryActivity extends ActionBarActivity {
 		}
 
 		public void doListQuery() {
-			mAdapter = new BabyDiaryParseQueryAdapter(getActivity());
+			mAdapter = new BabyDiaryParseQueryAdapter(getActivity(), mBabysitterObjectId);
 			mAdapter.setAutoload(false);
 			mAdapter.setPaginationEnabled(false);
 			mList.setAdapter(mAdapter);

@@ -2,14 +2,13 @@ package tw.tasker.babysitter.presenter.impl;
 
 import java.util.List;
 
+import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.model.BabysitterListModel;
-import tw.tasker.babysitter.model.data.Baby;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.impl.BabysitterListModelImpl;
 import tw.tasker.babysitter.presenter.BabysitterListPresenter;
 import tw.tasker.babysitter.presenter.adapter.BabysitterListParseQueryAdapter;
 import tw.tasker.babysitter.view.impl.BabysitterDetailActivity;
-import tw.tasker.babysitter.view.impl.BabysitterDetailFragment;
 import tw.tasker.babysitter.view.impl.BabysitterListFragment;
 import android.content.Intent;
 import android.widget.BaseAdapter;
@@ -53,7 +52,7 @@ public class BabysitterListPresenterImpl implements BabysitterListPresenter,
 		Babysitter babysitter = mAdapter.getItem(position);
 		Intent detailIntent = new Intent(mView.getActivity(),
 				BabysitterDetailActivity.class);
-		detailIntent.putExtra(BabysitterDetailFragment.BABYSITTER_OBJECT_ID, babysitter.getObjectId());
+		detailIntent.putExtra(Config.BABYSITTER_OBJECT_ID, babysitter.getObjectId());
 		mView.getActivity().startActivity(detailIntent);
 	}
 

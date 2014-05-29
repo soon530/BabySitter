@@ -2,6 +2,7 @@ package tw.tasker.babysitter.presenter.impl;
 
 import java.util.List;
 
+import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.model.BabysitterDetailModel;
 import tw.tasker.babysitter.model.data.BabysitterComment;
 import tw.tasker.babysitter.model.data.Babysitter;
@@ -9,6 +10,7 @@ import tw.tasker.babysitter.model.impl.BabysitterDetailModelImpl;
 import tw.tasker.babysitter.presenter.BabysitterDetailPresenter;
 import tw.tasker.babysitter.presenter.adapter.CommentParseQueryAdapter;
 import tw.tasker.babysitter.view.impl.BabyAddListActivity;
+import tw.tasker.babysitter.view.impl.BabyDiaryActivity;
 import tw.tasker.babysitter.view.impl.BabysitterDetailFragment;
 import android.content.Intent;
 import android.net.Uri;
@@ -54,11 +56,11 @@ public class BabysitterDetailPresenterImpl implements BabysitterDetailPresenter,
 	@Override
 	public void seeBabyDetail(String objectId) {
 		Bundle bundle = new Bundle();
-		bundle.putString("objectId", objectId);
+		bundle.putString(Config.BABYSITTER_OBJECT_ID, objectId);
 		Intent intent = new Intent();
 		intent.putExtras(bundle);
 		//intent.setClass(mView.getActivity(), BabyDetailActivity.class);
-		intent.setClass(mView.getActivity(), BabyAddListActivity.class);
+		intent.setClass(mView.getActivity(), BabyDiaryActivity.class);
 		mView.startActivity(intent);
 	}
 

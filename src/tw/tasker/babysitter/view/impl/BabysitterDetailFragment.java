@@ -1,6 +1,7 @@
 package tw.tasker.babysitter.view.impl;
 
 import static tw.tasker.babysitter.utils.LogUtils.LOGD;
+import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.BabysitterComment;
@@ -43,7 +44,6 @@ public class BabysitterDetailFragment extends Fragment implements
 	 * represents.
 	 */
 	public static final String ARG_ITEM_ID = "item_id";
-	public static final String BABYSITTER_OBJECT_ID = "babysitterObjectId";
 
 	/**
 	 * The dummy content this fragment is presenting.
@@ -109,9 +109,9 @@ public class BabysitterDetailFragment extends Fragment implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		if (getArguments().containsKey(BABYSITTER_OBJECT_ID)) {
+		if (getArguments().containsKey(Config.BABYSITTER_OBJECT_ID)) {
 			mBabysitterObjectId = getArguments()
-					.getString(BABYSITTER_OBJECT_ID);
+					.getString(Config.BABYSITTER_OBJECT_ID);
 		}
 
 		mPresenter = new BabysitterDetailPresenterImpl(this);
@@ -151,7 +151,7 @@ public class BabysitterDetailFragment extends Fragment implements
 			Intent intent = new Intent();
 
 			Bundle bundle = new Bundle();
-			bundle.putString(BABYSITTER_OBJECT_ID, mBabysitterObjectId);
+			bundle.putString(Config.BABYSITTER_OBJECT_ID, mBabysitterObjectId);
 			bundle.putInt("totalRating", mTotalRating);
 			bundle.putInt("totalComment", mTotalComment);
 			intent.putExtras(bundle);

@@ -1,5 +1,6 @@
 package tw.tasker.babysitter.view.impl;
 
+import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -21,9 +22,9 @@ public class BabysitterDetailActivity extends ActionBarActivity {
 		if (savedInstanceState == null) {
 			Bundle arguments = new Bundle();
 			arguments.putString(
-					BabysitterDetailFragment.BABYSITTER_OBJECT_ID,
+					Config.BABYSITTER_OBJECT_ID,
 					getIntent().getStringExtra(
-							BabysitterDetailFragment.BABYSITTER_OBJECT_ID));
+							Config.BABYSITTER_OBJECT_ID));
 
 			BabysitterDetailFragment fragment = new BabysitterDetailFragment();
 
