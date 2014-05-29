@@ -1,10 +1,13 @@
-package tw.tasker.babysitter;
+package tw.tasker.babysitter.view.impl;
 
 import java.util.List;
 
+import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.R.drawable;
+import tw.tasker.babysitter.R.id;
+import tw.tasker.babysitter.R.layout;
+import tw.tasker.babysitter.R.menu;
 import tw.tasker.babysitter.model.data.Baby;
-import tw.tasker.babysitter.view.impl.BabyAddActivity;
-import tw.tasker.babysitter.view.impl.BabyDetailActivity;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
