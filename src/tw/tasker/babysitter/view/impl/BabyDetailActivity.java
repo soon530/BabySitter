@@ -11,7 +11,6 @@ import tw.tasker.babysitter.model.data.Baby;
 import tw.tasker.babysitter.model.data.BabysitterComment;
 import tw.tasker.babysitter.model.data.Favorite;
 import tw.tasker.babysitter.presenter.BabysitterDetailPresenter;
-import tw.tasker.babysitter.view.BabysitterDetailActivity;
 import tw.tasker.babysitter.view.BabysitterDetailView;
 import android.content.Intent;
 import android.graphics.Bitmap;
