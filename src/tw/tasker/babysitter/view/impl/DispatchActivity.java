@@ -1,6 +1,5 @@
 package tw.tasker.babysitter.view.impl;
 
-import tw.tasker.babysitter.SignUpOrLogInActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
