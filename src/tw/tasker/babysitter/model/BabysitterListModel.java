@@ -1,9 +1,9 @@
 package tw.tasker.babysitter.model;
 
-import tw.tasker.babysitter.model.data.BabysitterOutline;
+import tw.tasker.babysitter.model.data.Babysitter;
 
 public interface BabysitterListModel {
 	void doListQuery();
 
-	BabysitterOutline getOutline(int position);
+	Babysitter getOutline(int position);
 }

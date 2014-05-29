@@ -2,7 +2,7 @@ package tw.tasker.babysitter.model.impl;
 
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.BabysitterListModel;
-import tw.tasker.babysitter.model.data.BabysitterOutline;
+import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.presenter.adapter.BabysitterListParseQueryAdapter;
 import tw.tasker.babysitter.presenter.impl.BabysitterListPresenterImpl;
 import android.content.Context;
@@ -36,7 +36,7 @@ public class BabysitterListModelImpl implements BabysitterListModel {
 	}
 
 	@Override
-	public BabysitterOutline getOutline(int position) {
+	public Babysitter getOutline(int position) {
 		return null;
 	}
 

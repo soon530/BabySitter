@@ -7,7 +7,7 @@ import java.util.List;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.BabysitterMapModel;
 import tw.tasker.babysitter.model.OnFinishedListener;
-import tw.tasker.babysitter.model.data.BabysitterOutline;
+import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.impl.BabysitterMapModelImpl;
 import tw.tasker.babysitter.presenter.BabysitterMapPresenter;
 import tw.tasker.babysitter.utils.MyLocation;
@@ -54,7 +54,7 @@ public class BabysitterMapPresenterImpl implements BabysitterMapPresenter, OnFin
 	}
 	
 	@Override
-	public void onDataFinished(List<BabysitterOutline> outlines) {
+	public void onDataFinished(List<Babysitter> outlines) {
 		mBabysitterMap.AddMarkers(outlines);
 	}
 	

@@ -4,7 +4,7 @@ import java.util.List;
 
 import tw.tasker.babysitter.model.BabysitterDetailModel;
 import tw.tasker.babysitter.model.data.BabysitterComment;
-import tw.tasker.babysitter.model.data.BabysitterOutline;
+import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.impl.BabysitterDetailModelImpl;
 import tw.tasker.babysitter.presenter.BabysitterDetailPresenter;
 import tw.tasker.babysitter.presenter.adapter.CommentParseQueryAdapter;
@@ -102,7 +102,7 @@ public class BabysitterDetailPresenterImpl implements BabysitterDetailPresenter,
 		
 	}
 
-	public void fillHeaderUI(BabysitterOutline outline) {
+	public void fillHeaderUI(Babysitter outline) {
 		mView.fillHeaderUI(outline);
 	};
 }

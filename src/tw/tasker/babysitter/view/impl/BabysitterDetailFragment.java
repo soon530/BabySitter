@@ -8,7 +8,7 @@ import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.dummy.DummyContent;
 import tw.tasker.babysitter.model.data.Baby;
 import tw.tasker.babysitter.model.data.BabysitterComment;
-import tw.tasker.babysitter.model.data.BabysitterOutline;
+import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.presenter.BabysitterDetailPresenter;
 import tw.tasker.babysitter.presenter.impl.BabysitterDetailPresenterImpl;
 import tw.tasker.babysitter.view.BabysitterDetailView;
@@ -102,7 +102,7 @@ public class BabysitterDetailFragment extends Fragment implements
 
 	private String mTargetLng;
 
-	private BabysitterOutline mOutline;
+	private Babysitter mOutline;
 
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
@@ -160,7 +160,7 @@ public class BabysitterDetailFragment extends Fragment implements
 		return Double.toString(distance);
 	}
 
-	public void fillHeaderUI(BabysitterOutline outline) {
+	public void fillHeaderUI(Babysitter outline) {
 		mAddress = outline.getAddress();
 		mName = outline.getText();
 		LOGD("vic", "address" + mAddress + "name" + mName);

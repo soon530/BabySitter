@@ -2,7 +2,7 @@ package tw.tasker.babysitter;
 
 import tw.tasker.babysitter.model.data.Baby;
 import tw.tasker.babysitter.model.data.BabysitterComment;
-import tw.tasker.babysitter.model.data.BabysitterOutline;
+import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.Favorite;
 import android.app.Application;
 import android.content.Context;
@@ -22,7 +22,7 @@ public class MyApplication extends Application {
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();		
-		ParseObject.registerSubclass(BabysitterOutline.class);
+		ParseObject.registerSubclass(Babysitter.class);
 		ParseObject.registerSubclass(BabysitterComment.class);
 		ParseObject.registerSubclass(Baby.class);
 		ParseObject.registerSubclass(Favorite.class);

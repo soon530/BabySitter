@@ -3,7 +3,7 @@ package tw.tasker.babysitter.presenter.adapter;
 import java.util.HashMap;
 
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.model.data.BabysitterOutline;
+import tw.tasker.babysitter.model.data.Babysitter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,9 +21,9 @@ public class MyInfoWindowAdapter implements InfoWindowAdapter {
 	private final View myContentsView;
 	DisplayImageOptions options;
 	private ImageLoader imageLoader = ImageLoader.getInstance();
-	HashMap<String, BabysitterOutline> mMapModel;
+	HashMap<String, Babysitter> mMapModel;
 
-	public MyInfoWindowAdapter(LayoutInflater layoutinflater, HashMap<String, BabysitterOutline> map_model) {
+	public MyInfoWindowAdapter(LayoutInflater layoutinflater, HashMap<String, Babysitter> map_model) {
 		myContentsView = layoutinflater
 				.inflate(R.layout.map_info_content, null);
 		options = new DisplayImageOptions.Builder()

@@ -7,7 +7,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 @ParseClassName("babysitter")
-public class BabysitterOutline extends ParseObject {
+public class Babysitter extends ParseObject {
 
 	public int getBabycareCount() {
 		int value = getInt("babycare_count");
@@ -79,7 +79,7 @@ public class BabysitterOutline extends ParseObject {
 		put("tel", value);
 	}
 	
-	public static ParseQuery<BabysitterOutline> getQuery() {
-		return ParseQuery.getQuery(BabysitterOutline.class);
+	public static ParseQuery<Babysitter> getQuery() {
+		return ParseQuery.getQuery(Babysitter.class);
 	}
 }

@@ -4,7 +4,7 @@ import java.util.List;
 
 import tw.tasker.babysitter.model.BabysitterListModel;
 import tw.tasker.babysitter.model.data.Baby;
-import tw.tasker.babysitter.model.data.BabysitterOutline;
+import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.impl.BabysitterListModelImpl;
 import tw.tasker.babysitter.presenter.BabysitterListPresenter;
 import tw.tasker.babysitter.presenter.adapter.BabysitterListParseQueryAdapter;
@@ -16,11 +16,11 @@ import android.widget.BaseAdapter;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 
-public class BabysitterListPresenterImpl implements BabysitterListPresenter, OnQueryLoadListener<BabysitterOutline> {
+public class BabysitterListPresenterImpl implements BabysitterListPresenter, OnQueryLoadListener<Babysitter> {
 
 	private BabysitterListFragment mBabysitterListFragment;
 	private BabysitterListModel mBabysitterListModel;
-	private ParseQueryAdapter<BabysitterOutline> mAdapter;
+	private ParseQueryAdapter<Babysitter> mAdapter;
 
 	public BabysitterListPresenterImpl(
 			BabysitterListFragment babysitterListFragment) {
@@ -54,14 +54,14 @@ public class BabysitterListPresenterImpl implements BabysitterListPresenter, OnQ
 
 	@Override
 	public void onListItemClick(int position) {
-		BabysitterOutline outline = getOutline(position);
+		Babysitter outline = getOutline(position);
 		Intent detailIntent = new Intent(mBabysitterListFragment.getActivity(),
 				BabysitterDetailActivity.class);
 		detailIntent.putExtra("objectId", outline.getObjectId());
 		mBabysitterListFragment.getActivity().startActivity(detailIntent);
 	}
 
-	private BabysitterOutline getOutline(int position) {
+	private Babysitter getOutline(int position) {
 		return mAdapter.getItem(position);
 	}
 
@@ -71,7 +71,7 @@ public class BabysitterListPresenterImpl implements BabysitterListPresenter, OnQ
 	}
 	
 	@Override
-	public void onLoaded(List<BabysitterOutline> babysitter, Exception e) {
+	public void onLoaded(List<Babysitter> babysitter, Exception e) {
 		mBabysitterListFragment.hideProgress();
 	}
 }

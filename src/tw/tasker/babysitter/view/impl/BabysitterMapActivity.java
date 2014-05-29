@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.model.data.BabysitterOutline;
+import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.presenter.BabysitterMapPresenter;
 import tw.tasker.babysitter.presenter.adapter.MyInfoWindowAdapter;
 import tw.tasker.babysitter.presenter.impl.BabysitterMapPresenterImpl;
@@ -36,7 +36,7 @@ public class BabysitterMapActivity extends ActionBarActivity implements
 
 	private GoogleMap mMap;
 	private BabysitterMapPresenter mPresneter;
-	private HashMap<String, BabysitterOutline> map_model= new HashMap<String, BabysitterOutline>();
+	private HashMap<String, Babysitter> map_model= new HashMap<String, Babysitter>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -82,8 +82,8 @@ public class BabysitterMapActivity extends ActionBarActivity implements
 		}
 	}
 	
-	public void AddMarkers(List<BabysitterOutline> outlines) {
-		for (BabysitterOutline outline : outlines) {
+	public void AddMarkers(List<Babysitter> outlines) {
+		for (Babysitter outline : outlines) {
 
 			MarkerOptions markerOpts = getOutlineMarkerOptions(outline);
 			Marker mark = mMap.addMarker(markerOpts);
@@ -92,7 +92,7 @@ public class BabysitterMapActivity extends ActionBarActivity implements
 		
 	}
 	
-	private MarkerOptions getOutlineMarkerOptions(BabysitterOutline outline) {
+	private MarkerOptions getOutlineMarkerOptions(Babysitter outline) {
 		double lat = outline.getLocation().getLatitude();
 		double lng = outline.getLocation().getLongitude();
 		LOGD(TAG, "outline" + outline.getText() + ",lat" + lat + ",lng" + lng);

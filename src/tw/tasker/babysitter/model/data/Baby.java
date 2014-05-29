@@ -52,12 +52,12 @@ public class Baby extends ParseObject {
 		put("photo", file);
 	}
 
-	public void setBabysitter(BabysitterOutline value) {
+	public void setBabysitter(Babysitter value) {
 		put("babysitter", value);
 	}
 	
-	public BabysitterOutline getBabysitter() {
-		return (BabysitterOutline) getParseObject("babysitter");
+	public Babysitter getBabysitter() {
+		return (Babysitter) getParseObject("babysitter");
 	}
 
 	public boolean getIsPublic() {

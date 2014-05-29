@@ -1,7 +1,7 @@
 package tw.tasker.babysitter.presenter.adapter;
 
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.model.data.BabysitterOutline;
+import tw.tasker.babysitter.model.data.Babysitter;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +16,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
 public class BabysitterListParseQueryAdapter extends
-		ParseQueryAdapter<BabysitterOutline> {
+		ParseQueryAdapter<Babysitter> {
 
 	DisplayImageOptions options;
 	private ImageLoader imageLoader = ImageLoader.getInstance();
@@ -34,7 +34,7 @@ public class BabysitterListParseQueryAdapter extends
 	}
 
 	@Override
-	public View getItemView(BabysitterOutline post, View view, ViewGroup parent) {
+	public View getItemView(Babysitter post, View view, ViewGroup parent) {
 		if (view == null) {
 			view = View.inflate(getContext(),
 					R.layout.list_item_babysitter_list, null);
@@ -80,10 +80,10 @@ public class BabysitterListParseQueryAdapter extends
 		return avgRating;
 	}
 
-	private static ParseQueryAdapter.QueryFactory<BabysitterOutline> getQueryFactory() {
-		ParseQueryAdapter.QueryFactory<BabysitterOutline> factory = new ParseQueryAdapter.QueryFactory<BabysitterOutline>() {
-			public ParseQuery<BabysitterOutline> create() {
-				ParseQuery<BabysitterOutline> query = BabysitterOutline
+	private static ParseQueryAdapter.QueryFactory<Babysitter> getQueryFactory() {
+		ParseQueryAdapter.QueryFactory<Babysitter> factory = new ParseQueryAdapter.QueryFactory<Babysitter>() {
+			public ParseQuery<Babysitter> create() {
+				ParseQuery<Babysitter> query = Babysitter
 						.getQuery();
 				query.orderByDescending("createdAt");
 				query.setLimit(20);
