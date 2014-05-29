@@ -74,7 +74,7 @@ public class BabyDiaryActivity extends ActionBarActivity {
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
-	public static class PlaceholderFragment extends Fragment {
+	public static class PlaceholderFragment extends Fragment implements OnItemClickListener {
 		private ParseQueryAdapter<Baby> mAdapter;
 		DisplayImageOptions options;
 		private ImageLoader imageLoader = ImageLoader.getInstance();
@@ -90,22 +90,7 @@ public class BabyDiaryActivity extends ActionBarActivity {
 			View rootView = inflater.inflate(R.layout.fragment_baby_list,
 					container, false);
 			mList = (ListView) rootView.findViewById(R.id.list);
-
-			mList.setOnItemClickListener(new OnItemClickListener() {
-
-				@Override
-				public void onItemClick(AdapterView<?> parent, View view,
-						int position, long id) {
-
-					Baby baby = mAdapter.getItem(position);
-					if (baby.getIsPublic()) {
-
-						seeBabyDetail(baby.getObjectId());
-					}
-				}
-
-			});
-
+			mList.setOnItemClickListener(this);
 			mEmpty = (TextView) rootView.findViewById(R.id.empty);
 			mList.setEmptyView(mEmpty);
 
@@ -233,6 +218,16 @@ public class BabyDiaryActivity extends ActionBarActivity {
 				}
 			};
 			return adapter;
+		}
+
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position,
+				long id) {
+			Baby baby = mAdapter.getItem(position);
+			if (baby.getIsPublic()) {
+
+				seeBabyDetail(baby.getObjectId());
+			}
 		}
 	}
 }
