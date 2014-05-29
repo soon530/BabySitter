@@ -31,50 +31,48 @@ public class FavoriteBabyParseQueryAdapter extends ParseQueryAdapter<Favorite> {
 	}
 
 	@Override
-	public View getItemView(Favorite post, View view, ViewGroup parent) {
+	public View getItemView(Favorite favorite, View view, ViewGroup parent) {
 		if (view == null) {
-			view = View.inflate(getContext(),
-					R.layout.list_item_babysitter_list, null);
+			view = View.inflate(getContext(), R.layout.list_item_baby, null);
 		}
-		TextView babysitterName = (TextView) view
-				.findViewById(R.id.babysitter_name);
-		TextView babysitterAddress = (TextView) view
-				.findViewById(R.id.babysitter_address);
+		ImageView babyAvator = (ImageView) view.findViewById(R.id.baby_avator);
+		TextView babyName = (TextView) view.findViewById(R.id.baby_name);
+		TextView babyNote = (TextView) view.findViewById(R.id.baby_note);
+		TextView totalFavorite = (TextView) view
+				.findViewById(R.id.total_favorite);
+		TextView totalRecord = (TextView) view.findViewById(R.id.total_record);
 
-		ImageView babysitterImage = (ImageView) view
-				.findViewById(R.id.babysitter_avator);
-
-		Baby baby = post.getBaby();
-
-		babysitterName.setText(baby.getName() + baby.getObjectId());
-		babysitterAddress.setText(baby.getNote());
-
+		Baby baby = favorite.getBaby();
 		String url;
 		if (baby.getPhotoFile() != null) {
 			url = baby.getPhotoFile().getUrl();
 		} else {
 			url = "https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-ash3/t1.0-9/q77/s720x720/1966891_782022338479354_124097698_n.jpg";
 		}
+		imageLoader.displayImage(url, babyAvator, options, null);
 
-		imageLoader.displayImage(url, babysitterImage, options, null);
+		String tag = "";
+		if (baby.getIsPublic()) {
+			tag = "公開";
+		} else {
+			tag = "私藏";
+		}
+
+		babyName.setText(baby.getName() + " (" + tag + ")");
+		babyNote.setText(baby.getNote());
+		totalFavorite.setText("最愛：+" + baby.getFavorite());
+		totalRecord.setText("記錄：+5");
 
 		return view;
 	}
 
 	private static ParseQueryAdapter.QueryFactory<Favorite> getQueryFactory() {
-		// Set up a customized query
 		ParseQueryAdapter.QueryFactory<Favorite> factory = new ParseQueryAdapter.QueryFactory<Favorite>() {
 			public ParseQuery<Favorite> create() {
-				// Location myLoc = (currentLocation == null) ? lastLocation
-				// :
-				// currentLocation;
 				ParseQuery<Favorite> query = Favorite.getQuery();
 				query.include("user");
 				query.orderByDescending("createdAt");
 				query.whereEqualTo("user", ParseUser.getCurrentUser());
-				// query.whereWithinKilometers("location",
-				// geoPointFromLocation(myLoc), radius * METERS_PER_FEET /
-				// METERS_PER_KILOMETER);
 				query.setLimit(20);
 				query.include("baby");
 				return query;
@@ -82,5 +80,4 @@ public class FavoriteBabyParseQueryAdapter extends ParseQueryAdapter<Favorite> {
 		};
 		return factory;
 	}
-
 }
