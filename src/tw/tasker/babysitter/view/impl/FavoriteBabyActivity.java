@@ -7,6 +7,7 @@ import tw.tasker.babysitter.R.layout;
 import tw.tasker.babysitter.R.menu;
 import tw.tasker.babysitter.model.data.Baby;
 import tw.tasker.babysitter.model.data.Favorite;
+import tw.tasker.babysitter.presenter.adapter.FavoriteBabyParseQueryAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -69,8 +70,6 @@ public class FavoriteBabyActivity extends ActionBarActivity {
 	 */
 	public static class PlaceholderFragment extends Fragment {
 		private ParseQueryAdapter<Favorite> mAdapter;
-		DisplayImageOptions options;
-		private ImageLoader imageLoader = ImageLoader.getInstance();
 		private ListView mList;
 		private TextView mEmpty;
 		
@@ -131,17 +130,9 @@ public class FavoriteBabyActivity extends ActionBarActivity {
 
 		public void doListQuery() {
 
-			options = new DisplayImageOptions.Builder()
-					.showImageOnLoading(R.drawable.ic_launcher)
-					.showImageForEmptyUri(R.drawable.ic_launcher)
-					.showImageOnFail(R.drawable.ic_launcher)
-					.cacheInMemory(true).cacheOnDisc(true)
-					.considerExifParams(true)
-					.displayer(new RoundedBitmapDisplayer(20)).build();
 
-			ParseQueryAdapter.QueryFactory<Favorite> factory = getQueryFactory();
 
-			mAdapter = getParseQueryAdapter(factory);
+			mAdapter = new FavoriteBabyParseQueryAdapter(getActivity());
 
 			// Disable automatic loading when the list_item_babysitter_comment
 			// is
@@ -156,71 +147,7 @@ public class FavoriteBabyActivity extends ActionBarActivity {
 			mAdapter.loadObjects();
 		}
 
-		private ParseQueryAdapter.QueryFactory<Favorite> getQueryFactory() {
-			// Set up a customized query
-			ParseQueryAdapter.QueryFactory<Favorite> factory = new ParseQueryAdapter.QueryFactory<Favorite>() {
-				public ParseQuery<Favorite> create() {
-					// Location myLoc = (currentLocation == null) ? lastLocation
-					// :
-					// currentLocation;
-					ParseQuery<Favorite> query = Favorite.getQuery();
-					query.include("user");
-					query.orderByDescending("createdAt");
-					query.whereEqualTo("user", ParseUser.getCurrentUser());
-					// query.whereWithinKilometers("location",
-					// geoPointFromLocation(myLoc), radius * METERS_PER_FEET /
-					// METERS_PER_KILOMETER);
-					query.setLimit(20);
-					query.include("baby");
-					return query;
-				}
-			};
-			return factory;
-		}
 
-		private ParseQueryAdapter<Favorite> getParseQueryAdapter(
-				QueryFactory<Favorite> factory) {
-			ParseQueryAdapter<Favorite> adapter;
-			// Set up the query list_item_babysitter_comment
-			adapter = new ParseQueryAdapter<Favorite>(getActivity(), factory) {
-
-				@Override
-				public View getItemView(Favorite post, View view,
-						ViewGroup parent) {
-					if (view == null) {
-						view = View.inflate(getContext(),
-								R.layout.list_item_babysitter_list, null);
-					}
-					TextView babysitterName = (TextView) view
-							.findViewById(R.id.babysitter_name);
-					TextView babysitterAddress = (TextView) view
-							.findViewById(R.id.babysitter_address);
-
-					ImageView babysitterImage = (ImageView) view
-							.findViewById(R.id.babysitter_avator);
-
-					Baby baby = post.getBaby();
-
-					babysitterName.setText(baby.getName() + baby.getObjectId());
-					babysitterAddress.setText(baby.getNote() );
-					
-					String url;
-					if(baby.getPhotoFile() != null) {
-						url = baby.getPhotoFile().getUrl();
-					} else {
-						url = "https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-ash3/t1.0-9/q77/s720x720/1966891_782022338479354_124097698_n.jpg";
-					}
-
-					imageLoader
-							.displayImage(
-									url,
-									babysitterImage, options, null);
-					
-					return view;
-				}
-			};
-			return adapter;
-		}
 
 	}
 
