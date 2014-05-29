@@ -32,7 +32,7 @@ public class BabyDiaryParseQueryAdapter extends ParseQueryAdapter<Baby> {
 	@Override
 	public View getItemView(Baby baby, View view, ViewGroup parent) {
 		if (view == null) {
-			view = View.inflate(getContext(), R.layout.list_item_baby_list,
+			view = View.inflate(getContext(), R.layout.list_item_baby,
 					null);
 		}
 		ImageView babyAvator = (ImageView) view.findViewById(R.id.baby_avator);
