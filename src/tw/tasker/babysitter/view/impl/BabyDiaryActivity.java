@@ -109,20 +109,10 @@ public class BabyDiaryActivity extends ActionBarActivity {
 			return rootView;
 		}
 
-		public void seeBabyDetail(String babyObjectId) {
-			Bundle bundle = new Bundle();
-			bundle.putString("objectId", babyObjectId);
-			Intent intent = new Intent();
-			intent.putExtras(bundle);
-			intent.setClass(getActivity(), BabyDetailActivity.class);
-			startActivity(intent);
-		}
-
 		@Override
 		public void onViewCreated(View view, Bundle savedInstanceState) {
 			super.onViewCreated(view, savedInstanceState);
 			doListQuery();
-
 		}
 
 		public void doListQuery() {
@@ -142,6 +132,15 @@ public class BabyDiaryActivity extends ActionBarActivity {
 
 				seeBabyDetail(baby.getObjectId());
 			}
+		}
+
+		public void seeBabyDetail(String babyObjectId) {
+			Bundle bundle = new Bundle();
+			bundle.putString(Config.BABY_OBJECT_ID, babyObjectId);
+			Intent intent = new Intent();
+			intent.putExtras(bundle);
+			intent.setClass(getActivity(), BabyDetailActivity.class);
+			startActivity(intent);
 		}
 
 		@Override

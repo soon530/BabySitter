@@ -4,13 +4,14 @@ import static tw.tasker.babysitter.utils.LogUtils.LOGD;
 
 import java.util.List;
 
+import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Baby;
 import tw.tasker.babysitter.model.data.BabysitterComment;
 import tw.tasker.babysitter.model.data.Favorite;
-import tw.tasker.babysitter.presenter.BabysitterDetailPresenter;
 import tw.tasker.babysitter.presenter.adapter.RecordParseQueryAdapter;
 import tw.tasker.babysitter.view.BabysitterDetailView;
+import tw.tasker.babysitter.view.impl.BabyDiaryActivity.PlaceholderFragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -49,35 +51,27 @@ import com.parse.SaveCallback;
 public class BabyDetailActivity extends ActionBarActivity implements
 		BabysitterDetailView {
 
-	private BabysitterDetailPresenter mPresenter;
-
-	private String mObjectId;
-
-	//private String mObjectId;
-
-	private static final String[] mStrings = new String[] { "一", "二", "三", "四",
-			"五", "六", "七", "八", "九" };
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		/** Enabling Progress bar for this activity */
+		getWindow().requestFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+
 		setContentView(R.layout.activity_baby_detail);
 
-		Bundle bundle = getIntent().getExtras();
-		mObjectId = bundle.getString("objectId");
-
 		if (savedInstanceState == null) {
+			Bundle arguments = new Bundle();
+			arguments.putString(Config.BABY_OBJECT_ID, getIntent()
+					.getStringExtra(Config.BABY_OBJECT_ID));
+			PlaceholderFragment fragment = new PlaceholderFragment();
+			fragment.setArguments(arguments);
 			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment(mObjectId)).commit();
+					.add(R.id.container, fragment).commit();
 		}
-		
-
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.baby_detail, menu);
 		return true;
 	}
@@ -90,7 +84,7 @@ public class BabyDetailActivity extends ActionBarActivity implements
 		int id = item.getItemId();
 		if (id == R.id.post_words) {
 			Bundle bundle = new Bundle();
-			bundle.putString("objectId", mObjectId);
+			//bundle.putString("objectId", mObjectId);
 			Intent intent = new Intent();
 			intent.putExtras(bundle);
 			intent.setClass(this, BabyCommentActivity.class);
@@ -100,18 +94,6 @@ public class BabyDetailActivity extends ActionBarActivity implements
 		return super.onOptionsItemSelected(item);
 	}
 
-	/*
-	 * @Override protected void onActivityResult(int requestCode, int
-	 * resultCode, Intent data) { // 拍照後顯示圖片 //ImageView iv = (ImageView)
-	 * findViewById(R.id.imagecaptured); if (resultCode == RESULT_OK) { //
-	 * 取出拍照後回傳資料 Bundle extras = data.getExtras(); // 將資料轉換為圖像格式 //Bitmap bmp =
-	 * (Bitmap) extras.get("data"); // 載入ImageView //iv.setImageBitmap(bmp); }
-	 * 
-	 * // 覆蓋原來的Activity super.onActivityResult(requestCode, resultCode, data); }
-	 */
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
 	public static class PlaceholderFragment extends Fragment implements
 			OnQueryLoadListener<BabysitterComment> {
 
@@ -128,14 +110,13 @@ public class BabyDetailActivity extends ActionBarActivity implements
 		private TextView mName;
 		private TextView mNote;
 		private ToggleButton mStar;
-		
+
 		private Baby mBaby;
 		private Favorite mFavorite;
 		private boolean isInitData;
-		private String mObjectId;
+		private String mBabyObjectId;
 
-
-		public PlaceholderFragment(String objectId) {
+		public PlaceholderFragment() {
 
 			options = new DisplayImageOptions.Builder()
 					.showImageOnLoading(R.drawable.ic_launcher)
@@ -145,14 +126,15 @@ public class BabyDetailActivity extends ActionBarActivity implements
 					.considerExifParams(true)
 					.displayer(new RoundedBitmapDisplayer(20)).build();
 
-			mObjectId = objectId;
 		}
 
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-			
 
+			if (getArguments().containsKey(Config.BABY_OBJECT_ID)) {
+				mBabyObjectId = getArguments().getString(Config.BABY_OBJECT_ID);
+			}
 		}
 
 		@Override
@@ -169,20 +151,6 @@ public class BabyDetailActivity extends ActionBarActivity implements
 			mListView = (ListView) rootView
 					.findViewById(R.id.baby_comment_list);
 
-			mListView.setOnItemClickListener(new OnItemClickListener() {
-
-				@Override
-				public void onItemClick(AdapterView<?> parent, View view,
-						int position, long id) {
-					// Intent refresh =new Intent(getActivity(),
-					// BabyDetailActivity.class);
-
-					// startActivity(refresh);
-
-					// getActivity().finish();
-
-				}
-			});
 
 			return rootView;
 		}
@@ -222,7 +190,7 @@ public class BabyDetailActivity extends ActionBarActivity implements
 				private void saveHeard() {
 					ParseQuery<Baby> query = Baby.getQuery();
 
-					query.getInBackground(mObjectId,
+					query.getInBackground(mBabyObjectId,
 							new GetCallback<Baby>() {
 
 								@Override
@@ -261,103 +229,34 @@ public class BabyDetailActivity extends ActionBarActivity implements
 				}
 
 			});
-			
-			
+
 			mStar = (ToggleButton) mHeaderView.findViewById(R.id.star);
-			
+
 			mStar.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-				
+
 				@Override
-				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				public void onCheckedChanged(CompoundButton buttonView,
+						boolean isChecked) {
 					if (isChecked) {
-/*						Toast.makeText(
-								getActivity()
-										.getApplicationContext(),
-								"加入收藏..",
-								Toast.LENGTH_SHORT)
-								.show();
-*/
-						
+						/*
+						 * Toast.makeText( getActivity()
+						 * .getApplicationContext(), "加入收藏..",
+						 * Toast.LENGTH_SHORT) .show();
+						 */
+
 						saveStar();
-						
-					}else{
-/*						Toast.makeText(
-								getActivity()
-										.getApplicationContext(),
-								"取消收藏..",
-								Toast.LENGTH_SHORT)
-								.show();
-*/						
+
+					} else {
+						/*
+						 * Toast.makeText( getActivity()
+						 * .getApplicationContext(), "取消收藏..",
+						 * Toast.LENGTH_SHORT) .show();
+						 */
 						deleteStar();
 
 					}
 				}
 
-				private void deleteStar() {
-					//如果是第一次抓data，只是要改變狀態而已，不是要收藏
-					if(isInitData) {
-						isInitData = false;
-						return ;
-					}
-
-					
-					mFavorite.deleteInBackground(new DeleteCallback() {
-						
-						@Override
-						public void done(ParseException e) {
-							if (e == null) {
-								Toast.makeText(
-										getActivity().getApplicationContext(),
-										"deleting doen!", Toast.LENGTH_SHORT)
-										.show();
-							} else {
-								Toast.makeText(
-										getActivity().getApplicationContext(),
-										"Error saving: " + e.getMessage(),
-										Toast.LENGTH_SHORT).show();
-							}
-						}
-					});					
-				}
-
-				private void saveStar() {
-					
-					//如果是第一次抓data，只是要改變狀態而已，不是要收藏
-					if(isInitData == true) {
-						isInitData = false;
-						return ;
-					}
-					
-					// ParseObject post = new ParseObject("Comment");
-					Favorite favorite = new Favorite();
-					mFavorite = favorite;
-					//favorite.put("baby", mBaby);
-					favorite.setBaby(mBaby);
-					
-					favorite.put("user", ParseUser.getCurrentUser());
-
-					// Save the post and return
-					favorite.saveInBackground(new SaveCallback() {
-
-						@Override
-						public void done(ParseException e) {
-							if (e == null) {
-								// setResult(RESULT_OK);
-								// finish();
-								Toast.makeText(
-										getActivity().getApplicationContext(),
-										"saving doen!", Toast.LENGTH_SHORT)
-										.show();
-							} else {
-								Toast.makeText(
-										getActivity().getApplicationContext(),
-										"Error saving: " + e.getMessage(),
-										Toast.LENGTH_SHORT).show();
-							}
-						}
-
-					});
-				}
 			});
 		}
 
@@ -366,75 +265,57 @@ public class BabyDetailActivity extends ActionBarActivity implements
 			super.onViewCreated(view, savedInstanceState);
 
 			mListView.addHeaderView(mHeaderView);
+			doDetailQuery(mBabyObjectId);
+			doCommentQuery(mBabyObjectId);
+			// getFavorite();
 
-			doCommentQuery(mObjectId);
-
-			doDetailQuery(mObjectId);
-
-			//getFavorite();
-
-			/*
-			 * mListView.setAdapter(new ArrayAdapter<String>(getActivity()
-			 * .getApplicationContext(), android.R.layout.simple_list_item_1,
-			 * mStrings));
-			 */
 		}
-		
+
 		private void getFavorite() {
 			ParseQuery<Favorite> favorite_query = Favorite.getQuery();
-			
+
 			favorite_query.whereEqualTo("baby", mBaby);
 			favorite_query.whereEqualTo("user", ParseUser.getCurrentUser());
-			
-			favorite_query.getFirstInBackground(new GetCallback<Favorite>() {
 
+			favorite_query.getFirstInBackground(new GetCallback<Favorite>() {
 
 				@Override
 				public void done(Favorite favorite, ParseException e) {
-					//第一次抓data
+					// 第一次抓data
 					isInitData = true;
-					
+
 					if (favorite == null) {
 						mStar.setChecked(false);
 						isInitData = false;
-					}else {
+					} else {
 						mStar.setChecked(true);
 						mFavorite = favorite;
 
-						Toast.makeText(
-								getActivity()
-										.getApplicationContext(),
+						Toast.makeText(getActivity().getApplicationContext(),
 								"ObjectId = " + favorite.getObjectId(),
-								Toast.LENGTH_SHORT)
-								.show();
+								Toast.LENGTH_SHORT).show();
 					}
-					
 
 				}
 			});
-			
-		}
 
+		}
 
 		private void doDetailQuery(String objectId) {
 			ParseQuery<Baby> detailQuery = Baby.getQuery();
 			detailQuery.getInBackground(objectId, new GetCallback<Baby>() {
 
-
 				@Override
 				public void done(Baby baby, ParseException arg1) {
 
 					String url;
-					if(baby.getPhotoFile() != null) {
+					if (baby.getPhotoFile() != null) {
 						url = baby.getPhotoFile().getUrl();
 					} else {
 						url = "https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-ash3/t1.0-9/q77/s720x720/1966891_782022338479354_124097698_n.jpg";
 					}
-					
-					imageLoader
-					.displayImage(
-							url,
-							mBabyIcon, options, null);
+
+					imageLoader.displayImage(url, mBabyIcon, options, null);
 
 					mName.setText(baby.getName() + baby.getObjectId());
 					mNote.setText(baby.getNote());
@@ -447,6 +328,71 @@ public class BabyDetailActivity extends ActionBarActivity implements
 			});
 
 		}
+		private void deleteStar() {
+			// 如果是第一次抓data，只是要改變狀態而已，不是要收藏
+			if (isInitData) {
+				isInitData = false;
+				return;
+			}
+
+			mFavorite.deleteInBackground(new DeleteCallback() {
+
+				@Override
+				public void done(ParseException e) {
+					if (e == null) {
+						Toast.makeText(
+								getActivity().getApplicationContext(),
+								"deleting doen!", Toast.LENGTH_SHORT)
+								.show();
+					} else {
+						Toast.makeText(
+								getActivity().getApplicationContext(),
+								"Error saving: " + e.getMessage(),
+								Toast.LENGTH_SHORT).show();
+					}
+				}
+			});
+		}
+
+		private void saveStar() {
+
+			// 如果是第一次抓data，只是要改變狀態而已，不是要收藏
+			if (isInitData == true) {
+				isInitData = false;
+				return;
+			}
+
+			// ParseObject post = new ParseObject("Comment");
+			Favorite favorite = new Favorite();
+			mFavorite = favorite;
+			// favorite.put("baby", mBaby);
+			favorite.setBaby(mBaby);
+
+			favorite.put("user", ParseUser.getCurrentUser());
+
+			// Save the post and return
+			favorite.saveInBackground(new SaveCallback() {
+
+				@Override
+				public void done(ParseException e) {
+					if (e == null) {
+						// setResult(RESULT_OK);
+						// finish();
+						Toast.makeText(
+								getActivity().getApplicationContext(),
+								"saving doen!", Toast.LENGTH_SHORT)
+								.show();
+					} else {
+						Toast.makeText(
+								getActivity().getApplicationContext(),
+								"Error saving: " + e.getMessage(),
+								Toast.LENGTH_SHORT).show();
+					}
+				}
+
+			});
+		}
+
 
 		public void doCommentQuery(String objectId) {
 
@@ -530,7 +476,6 @@ public class BabyDetailActivity extends ActionBarActivity implements
 
 		@Override
 		public void onLoaded(List<BabysitterComment> arg0, Exception arg1) {
-			// TODO Auto-generated method stub
 
 		}
 
@@ -538,14 +483,10 @@ public class BabyDetailActivity extends ActionBarActivity implements
 
 	@Override
 	public void showProgress() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void hideProgress() {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
