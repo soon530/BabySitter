@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="tw.tasker.babysitter.view.BabyDetailActivity" >
+    tools:context="tw.tasker.babysitter.view.impl.BabyDetailActivity" >
 
     <item
         android:id="@+id/post_words"
