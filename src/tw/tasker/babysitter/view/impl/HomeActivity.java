@@ -107,7 +107,7 @@ public class HomeActivity extends ActionBarActivity {
 								
 							case 2:
 								intent = new Intent();
-								intent.setClass(getActivity(), BabyListActivity.class);
+								intent.setClass(getActivity(), FavoriteBabyActivity.class);
 								startActivity(intent);
 								break;
 								

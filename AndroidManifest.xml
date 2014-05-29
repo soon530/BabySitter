@@ -106,7 +106,7 @@
                 android:value="tw.tasker.babysitter.view.BabyDetailActivity" />
         </activity>
         <activity
-            android:name="tw.tasker.babysitter.view.impl.BabyListActivity"
+            android:name="tw.tasker.babysitter.view.impl.FavoriteBabyActivity"
             android:label="@string/title_activity_baby_list"
             android:parentActivityName="tw.tasker.babysitter.view.impl.HomeActivity" >
             <meta-data

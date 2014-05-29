@@ -30,7 +30,7 @@ import com.parse.ParseQueryAdapter;
 import com.parse.ParseQueryAdapter.QueryFactory;
 import com.parse.ParseUser;
 
-public class BabyListActivity extends ActionBarActivity {
+public class FavoriteBabyActivity extends ActionBarActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
