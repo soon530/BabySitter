@@ -1,6 +1,5 @@
 package tw.tasker.babysitter.view.impl;
 
-import tw.tasker.babysitter.BabyDiaryActivity;
 import tw.tasker.babysitter.BabyListActivity;
 import tw.tasker.babysitter.DispatchActivity;
 import tw.tasker.babysitter.R;

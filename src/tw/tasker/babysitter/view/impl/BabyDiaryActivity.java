@@ -1,10 +1,14 @@
-package tw.tasker.babysitter;
+package tw.tasker.babysitter.view.impl;
 
 import java.util.List;
 
+import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.R.drawable;
+import tw.tasker.babysitter.R.id;
+import tw.tasker.babysitter.R.layout;
+import tw.tasker.babysitter.R.menu;
 import tw.tasker.babysitter.model.data.Baby;
 import tw.tasker.babysitter.model.data.Favorite;
-import tw.tasker.babysitter.view.impl.BabyDetailActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
