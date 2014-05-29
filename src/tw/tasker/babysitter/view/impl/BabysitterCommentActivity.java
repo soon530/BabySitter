@@ -1,8 +1,9 @@
-package tw.tasker.babysitter.view;
+package tw.tasker.babysitter.view.impl;
 
 import static tw.tasker.babysitter.utils.LogUtils.LOGD;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabysitterComment;
+import tw.tasker.babysitter.view.BabysitterDetailActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;

@@ -71,7 +71,7 @@
                 android:value="tw.tasker.babysitter.view.BabysitterListActivity" />
         </activity>
         <activity
-            android:name="tw.tasker.babysitter.view.BabysitterCommentActivity"
+            android:name="tw.tasker.babysitter.view.impl.BabysitterCommentActivity"
             android:label="@string/title_activity_babysitter_comment"
             android:launchMode="singleTask"
             android:parentActivityName="tw.tasker.babysitter.view.BabysitterDetailActivity" >
