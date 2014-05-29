@@ -6,9 +6,9 @@ import java.util.List;
 
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.dummy.DummyContent;
-import tw.tasker.babysitter.model.Baby;
 import tw.tasker.babysitter.model.BabysitterComment;
 import tw.tasker.babysitter.model.BabysitterOutline;
+import tw.tasker.babysitter.model.data.Baby;
 import tw.tasker.babysitter.presenter.BabysitterDetailPresenter;
 import tw.tasker.babysitter.presenter.BabysitterDetailPresenterImpl;
 import android.location.Location;

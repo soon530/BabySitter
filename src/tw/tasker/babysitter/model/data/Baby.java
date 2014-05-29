@@ -1,4 +1,6 @@
-package tw.tasker.babysitter.model;
+package tw.tasker.babysitter.model.data;
+
+import tw.tasker.babysitter.model.BabysitterOutline;
 
 import com.parse.ParseClassName;
 import com.parse.ParseFile;

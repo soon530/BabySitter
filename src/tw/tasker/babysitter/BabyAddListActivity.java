@@ -2,7 +2,7 @@ package tw.tasker.babysitter;
 
 import java.util.List;
 
-import tw.tasker.babysitter.model.Baby;
+import tw.tasker.babysitter.model.data.Baby;
 import tw.tasker.babysitter.view.BabyDetailActivity;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;

@@ -4,7 +4,7 @@ import static tw.tasker.babysitter.utils.LogUtils.LOGD;
 
 import java.io.ByteArrayOutputStream;
 
-import tw.tasker.babysitter.model.Baby;
+import tw.tasker.babysitter.model.data.Baby;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;

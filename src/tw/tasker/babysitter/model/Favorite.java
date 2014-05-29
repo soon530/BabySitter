@@ -1,5 +1,7 @@
 package tw.tasker.babysitter.model;
 
+import tw.tasker.babysitter.model.data.Baby;
+
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
