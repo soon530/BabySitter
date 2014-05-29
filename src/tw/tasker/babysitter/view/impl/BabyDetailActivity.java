@@ -48,8 +48,7 @@ import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-public class BabyDetailActivity extends ActionBarActivity implements
-		BabysitterDetailView {
+public class BabyDetailActivity extends ActionBarActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +83,7 @@ public class BabyDetailActivity extends ActionBarActivity implements
 		int id = item.getItemId();
 		if (id == R.id.post_words) {
 			Bundle bundle = new Bundle();
-			//bundle.putString("objectId", mObjectId);
+			// bundle.putString("objectId", mObjectId);
 			Intent intent = new Intent();
 			intent.putExtras(bundle);
 			intent.setClass(this, BabyCommentActivity.class);
@@ -95,7 +94,7 @@ public class BabyDetailActivity extends ActionBarActivity implements
 	}
 
 	public static class PlaceholderFragment extends Fragment implements
-			OnQueryLoadListener<BabysitterComment> {
+			OnQueryLoadListener<BabysitterComment>, BabysitterDetailView {
 
 		private ListView mListView;
 		private ImageView mBabyIcon;
@@ -150,7 +149,6 @@ public class BabyDetailActivity extends ActionBarActivity implements
 					container, false);
 			mListView = (ListView) rootView
 					.findViewById(R.id.baby_comment_list);
-
 
 			return rootView;
 		}
@@ -328,6 +326,7 @@ public class BabyDetailActivity extends ActionBarActivity implements
 			});
 
 		}
+
 		private void deleteStar() {
 			// 如果是第一次抓data，只是要改變狀態而已，不是要收藏
 			if (isInitData) {
@@ -340,13 +339,10 @@ public class BabyDetailActivity extends ActionBarActivity implements
 				@Override
 				public void done(ParseException e) {
 					if (e == null) {
-						Toast.makeText(
-								getActivity().getApplicationContext(),
-								"deleting doen!", Toast.LENGTH_SHORT)
-								.show();
+						Toast.makeText(getActivity().getApplicationContext(),
+								"deleting doen!", Toast.LENGTH_SHORT).show();
 					} else {
-						Toast.makeText(
-								getActivity().getApplicationContext(),
+						Toast.makeText(getActivity().getApplicationContext(),
 								"Error saving: " + e.getMessage(),
 								Toast.LENGTH_SHORT).show();
 					}
@@ -378,13 +374,10 @@ public class BabyDetailActivity extends ActionBarActivity implements
 					if (e == null) {
 						// setResult(RESULT_OK);
 						// finish();
-						Toast.makeText(
-								getActivity().getApplicationContext(),
-								"saving doen!", Toast.LENGTH_SHORT)
-								.show();
+						Toast.makeText(getActivity().getApplicationContext(),
+								"saving doen!", Toast.LENGTH_SHORT).show();
 					} else {
-						Toast.makeText(
-								getActivity().getApplicationContext(),
+						Toast.makeText(getActivity().getApplicationContext(),
 								"Error saving: " + e.getMessage(),
 								Toast.LENGTH_SHORT).show();
 					}
@@ -393,53 +386,38 @@ public class BabyDetailActivity extends ActionBarActivity implements
 			});
 		}
 
-
-		public void doCommentQuery(String objectId) {
-
+		public void doCommentQuery(String babyObjectId) {
 			mCommentAdapter = new RecordParseQueryAdapter(getActivity(),
-					getFactory(objectId));
-
-			// Disable automatic loading when the list_item_babysitter_comment
-			// is
-			// attached to a view.
+					babyObjectId);
 			mCommentAdapter.setAutoload(false);
-
-			// Disable pagination, we'll manage the query limit ourselves
 			mCommentAdapter.setPaginationEnabled(false);
-
 			mCommentAdapter.addOnQueryLoadListener(this);
-
 			mCommentAdapter.loadObjects();
-		}
-
-		public ParseQueryAdapter.QueryFactory<BabysitterComment> getFactory(
-				final String objectId) {
-			// Set up a customized query
-			ParseQueryAdapter.QueryFactory<BabysitterComment> factory = new ParseQueryAdapter.QueryFactory<BabysitterComment>() {
-				public ParseQuery<BabysitterComment> create() {
-					// Location myLoc = (currentLocation == null) ? lastLocation
-					// :
-					// currentLocation;
-					ParseQuery<BabysitterComment> query = BabysitterComment
-							.getQuery();
-					// query.include("user");
-					query.orderByDescending("createdAt");
-					query.whereEqualTo("babysitterId", objectId);
-					// query.whereWithinKilometers("location",
-					// geoPointFromLocation(myLoc), radius * METERS_PER_FEET /
-					// METERS_PER_KILOMETER);
-					query.setLimit(20);
-					return query;
-				}
-			};
-			return factory;
 		}
 
 		@Override
 		public void onLoading() {
-			mListView.setAdapter(mCommentAdapter);
+			showProgress();
 		}
 
+		@Override
+		public void onLoaded(List<BabysitterComment> babysitterComment,
+				Exception e) {
+			mListView.setAdapter(mCommentAdapter);
+			hideProgress();
+		}
+
+		@Override
+		public void showProgress() {
+			getActivity().setProgressBarIndeterminateVisibility(true);
+		}
+
+		@Override
+		public void hideProgress() {
+			getActivity().setProgressBarIndeterminateVisibility(false);
+		}
+
+		
 		@Override
 		public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 			inflater.inflate(R.menu.baby_detail, menu);
@@ -474,19 +452,5 @@ public class BabyDetailActivity extends ActionBarActivity implements
 			super.onActivityResult(requestCode, resultCode, data);
 		}
 
-		@Override
-		public void onLoaded(List<BabysitterComment> arg0, Exception arg1) {
-
-		}
-
 	}
-
-	@Override
-	public void showProgress() {
-	}
-
-	@Override
-	public void hideProgress() {
-	}
-
 }
