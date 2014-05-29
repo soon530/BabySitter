@@ -39,7 +39,7 @@ public class BabyDiaryActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		/** Enabling Progress bar for this activity */
-        getWindow().requestFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		getWindow().requestFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
 		setContentView(R.layout.activity_baby_diary);
 
@@ -47,8 +47,8 @@ public class BabyDiaryActivity extends ActionBarActivity {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
-		
-        setProgressBarIndeterminateVisibility(true);
+
+		setProgressBarIndeterminateVisibility(true);
 	}
 
 	@Override
@@ -90,33 +90,28 @@ public class BabyDiaryActivity extends ActionBarActivity {
 			View rootView = inflater.inflate(R.layout.fragment_baby_list,
 					container, false);
 			mList = (ListView) rootView.findViewById(R.id.list);
-			
+
 			mList.setOnItemClickListener(new OnItemClickListener() {
 
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
-					
-					//mAdapter.isEnabled(position);
-					
+
 					Baby baby = mAdapter.getItem(position);
-					//Baby baby = favorite.getBaby();
-					
-					
 					if (baby.getIsPublic()) {
-						
+
 						seeBabyDetail(baby.getObjectId());
 					}
 				}
-			
+
 			});
-			
+
 			mEmpty = (TextView) rootView.findViewById(R.id.empty);
 			mList.setEmptyView(mEmpty);
 
 			return rootView;
 		}
-		
+
 		public void seeBabyDetail(String babyObjectId) {
 			Bundle bundle = new Bundle();
 			bundle.putString("objectId", babyObjectId);
@@ -126,14 +121,13 @@ public class BabyDiaryActivity extends ActionBarActivity {
 			startActivity(intent);
 		}
 
-
 		@Override
 		public void onViewCreated(View view, Bundle savedInstanceState) {
 			super.onViewCreated(view, savedInstanceState);
 			doListQuery();
-			
+
 		}
-		
+
 		public void doListQuery() {
 
 			options = new DisplayImageOptions.Builder()
@@ -159,18 +153,18 @@ public class BabyDiaryActivity extends ActionBarActivity {
 			mList.setAdapter(mAdapter);
 
 			mAdapter.loadObjects();
-			
+
 			mAdapter.addOnQueryLoadListener(new OnQueryLoadListener<Baby>() {
 
 				@Override
 				public void onLoaded(List<Baby> arg0, Exception arg1) {
-					getActivity().setProgressBarIndeterminateVisibility(false);					
+					getActivity().setProgressBarIndeterminateVisibility(false);
 				}
 
 				@Override
 				public void onLoading() {
 					// TODO Auto-generated method stub
-					
+
 				}
 			});
 		}
@@ -202,49 +196,43 @@ public class BabyDiaryActivity extends ActionBarActivity {
 			// Set up the query list_item_babysitter_comment
 			adapter = new ParseQueryAdapter<Baby>(getActivity(), factory) {
 				@Override
-				public View getItemView(Baby baby, View view,
-						ViewGroup parent) {
+				public View getItemView(Baby baby, View view, ViewGroup parent) {
 					if (view == null) {
 						view = View.inflate(getContext(),
-								R.layout.list_item_babysitter_list, null);
+								R.layout.list_item_baby_list, null);
 					}
-					TextView babysitterName = (TextView) view
-							.findViewById(R.id.babysitter_name);
-					TextView babysitterAddress = (TextView) view
-							.findViewById(R.id.babysitter_address);
+					ImageView babyAvator = (ImageView) view
+							.findViewById(R.id.baby_avator);
+					TextView babyName = (TextView) view
+							.findViewById(R.id.baby_name);
+					TextView babyNote = (TextView) view
+							.findViewById(R.id.baby_note);
+					TextView totalFavorite = (TextView) view.findViewById(R.id.total_favorite);
+					TextView totalRecord = (TextView) view.findViewById(R.id.total_record);
 
-					ImageView babysitterImage = (ImageView) view
-							.findViewById(R.id.babysitter_avator);
-
-					String tag = "";
-					if(baby.getIsPublic()) {
-						tag="公開";
-					}else
-					{
-						tag="私藏";
-					}
-					
-					babysitterName.setText(baby.getName() + " (" + tag + ")");
-					babysitterAddress.setText(baby.getNote());
-					
 					String url;
-					if(baby.getPhotoFile() != null) {
+					if (baby.getPhotoFile() != null) {
 						url = baby.getPhotoFile().getUrl();
 					} else {
 						url = "https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-ash3/t1.0-9/q77/s720x720/1966891_782022338479354_124097698_n.jpg";
 					}
+					imageLoader.displayImage(url, babyAvator, options, null);
 					
-					imageLoader
-							.displayImage(
-									url,
-									babysitterImage, options, null);
+					String tag = "";
+					if (baby.getIsPublic()) {
+						tag = "公開";
+					} else {
+						tag = "私藏";
+					}
 
+					babyName.setText(baby.getName() + " (" + tag + ")");
+					babyNote.setText(baby.getNote());
+					totalFavorite.setText("最愛：+" + baby.getFavorite());
+					totalRecord.setText("記錄：+5");
 					return view;
 				}
-				
 			};
 			return adapter;
 		}
-
 	}
 }
