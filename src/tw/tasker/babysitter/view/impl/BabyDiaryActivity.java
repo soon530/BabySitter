@@ -120,13 +120,14 @@ public class BabyDiaryActivity extends ActionBarActivity {
 		}
 
 		@Override
+		public void onLoading() {
+			getActivity().setProgressBarIndeterminateVisibility(true);
+		}
+
+		@Override
 		public void onLoaded(List<Baby> arg0, Exception arg1) {
 			getActivity().setProgressBarIndeterminateVisibility(false);
 		}
 
-		@Override
-		public void onLoading() {
-			getActivity().setProgressBarIndeterminateVisibility(true);
-		}
 	}
 }

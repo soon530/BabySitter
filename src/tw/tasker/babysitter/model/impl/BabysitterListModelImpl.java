@@ -24,40 +24,20 @@ public class BabysitterListModelImpl implements BabysitterListModel {
 	// Maximum results returned from a Parse query
 	//private static final int MAX_POST_SEARCH_RESULTS = 20;
 	private BabysitterListPresenterImpl mBabysitterListPresenterImpl;
-	private Context mContext;
-	private ParseQueryAdapter<BabysitterOutline> mAdapter;
 
 
 	public BabysitterListModelImpl(
-			BabysitterListPresenterImpl babysitterListPresenterImpl,
-			Context applicationContext) {
+			BabysitterListPresenterImpl babysitterListPresenterImpl) {
 		mBabysitterListPresenterImpl = babysitterListPresenterImpl;
-		mContext = applicationContext;
 	}
 
 	@Override
 	public void doListQuery() {
-		
-
-		mAdapter = new BabysitterListParseQueryAdapter(mContext);
-
-		// Disable automatic loading when the list_item_babysitter_comment is
-		// attached to a view.
-		mAdapter.setAutoload(false);
-
-		// Disable pagination, we'll manage the query limit ourselves
-		mAdapter.setPaginationEnabled(false);
-
-		mBabysitterListPresenterImpl.setAdapter(mAdapter);
-
-		mAdapter.loadObjects();
 	}
-
-
 
 	@Override
 	public BabysitterOutline getOutline(int position) {
-		return mAdapter.getItem(position);
+		return null;
 	}
 
 }

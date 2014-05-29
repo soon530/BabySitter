@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 
 /**
  * An activity representing a list of Items. This activity has different
@@ -39,6 +40,10 @@ public class BabysitterListActivity extends ActionBarActivity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		/** Enabling Progress bar for this activity */
+		getWindow().requestFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+
 		setContentView(R.layout.activity_babysitter_list);
 
 		if (findViewById(R.id.babysitter_detail_container) != null) {

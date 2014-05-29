@@ -158,10 +158,12 @@ public class BabysitterListFragment extends ListFragment implements
 
 	@Override
 	public void showProgress() {
+		getActivity().setProgressBarIndeterminateVisibility(true);
 	}
 
 	@Override
 	public void hideProgress() {
+		getActivity().setProgressBarIndeterminateVisibility(false);
 	}
 
 	@Override
