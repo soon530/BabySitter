@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.model.BabysitterOutline;
+import tw.tasker.babysitter.model.data.BabysitterOutline;
 import tw.tasker.babysitter.presenter.BabysitterMapPresenter;
 import tw.tasker.babysitter.presenter.BabysitterMapPresenterImpl;
 import android.os.Bundle;

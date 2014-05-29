@@ -6,6 +6,7 @@ import static tw.tasker.babysitter.utils.LogUtils.makeLogTag;
 import java.util.ArrayList;
 import java.util.List;
 
+import tw.tasker.babysitter.model.data.BabysitterOutline;
 import tw.tasker.babysitter.presenter.BabysitterMapPresenterImpl;
 import android.location.Location;
 

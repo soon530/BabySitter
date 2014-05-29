@@ -3,7 +3,7 @@ package tw.tasker.babysitter.view;
 import java.util.HashMap;
 
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.model.BabysitterOutline;
+import tw.tasker.babysitter.model.data.BabysitterOutline;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;

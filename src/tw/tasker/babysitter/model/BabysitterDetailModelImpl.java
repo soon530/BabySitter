@@ -2,6 +2,7 @@ package tw.tasker.babysitter.model;
 
 import static tw.tasker.babysitter.utils.LogUtils.LOGD;
 import tw.tasker.babysitter.model.data.BabysitterComment;
+import tw.tasker.babysitter.model.data.BabysitterOutline;
 import tw.tasker.babysitter.presenter.BabysitterDetailPresenterImpl;
 
 import com.parse.GetCallback;
