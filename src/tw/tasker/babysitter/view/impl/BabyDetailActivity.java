@@ -4,7 +4,6 @@ import static tw.tasker.babysitter.utils.LogUtils.LOGD;
 
 import java.util.List;
 
-import tw.tasker.babysitter.BabyCommentActivity;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Baby;
 import tw.tasker.babysitter.model.data.BabysitterComment;
