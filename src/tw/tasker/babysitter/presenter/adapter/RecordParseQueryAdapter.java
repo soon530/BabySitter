@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
 public class RecordParseQueryAdapter extends
@@ -27,9 +28,8 @@ public class RecordParseQueryAdapter extends
 	private ImageLoader imageLoader = ImageLoader.getInstance();
 	private TextView createDate;
 
-	public RecordParseQueryAdapter(Context context,
-			ParseQueryAdapter.QueryFactory<BabysitterComment> factory) {
-		super(context, factory);
+	public RecordParseQueryAdapter(Context context, String babyObejctId) {
+		super(context, getFactory(babyObejctId));
 
 		options = new DisplayImageOptions.Builder()
 				.showImageOnLoading(R.drawable.ic_launcher)
@@ -40,7 +40,21 @@ public class RecordParseQueryAdapter extends
 
 	}
 
-	@Override
+	public static ParseQueryAdapter.QueryFactory<BabysitterComment> getFactory(
+			final String babyObjectId) {
+		ParseQueryAdapter.QueryFactory<BabysitterComment> factory = new ParseQueryAdapter.QueryFactory<BabysitterComment>() {
+			public ParseQuery<BabysitterComment> create() {
+				ParseQuery<BabysitterComment> query = BabysitterComment
+						.getQuery();
+				query.orderByDescending("createdAt");
+				query.whereEqualTo("babysitterId", babyObjectId);
+				query.setLimit(20);
+				return query;
+			}
+		};
+		return factory;
+	}
+
 	public View getItemView(BabysitterComment comment, View view,
 			ViewGroup parent) {
 
@@ -70,7 +84,6 @@ public class RecordParseQueryAdapter extends
 	}
 
 	private void fillDataToUI(BabysitterComment comment) {
-		// userAvator.setBackgroundResource(R.drawable.ic_launcher);
 		babyRecordTitle.setText(comment.getTitle());
 		babyRecord.setText(comment.getComment());
 		// babyHeart.setText("愛心 +" + comment.getRating());
@@ -82,15 +95,11 @@ public class RecordParseQueryAdapter extends
 		createDate.setText(now);
 
 		String url;
-		//if (comment.getPhotoFile().isDataAvailable()) {
-		if(comment.getPhotoFile() != null) {
+		if (comment.getPhotoFile() != null) {
 			url = comment.getPhotoFile().getUrl();
 		} else {
 			url = "https://fbcdn-sphotos-a-a.akamaihd.net/hphotos-ak-ash2/t1.0-9/377076_10150391287099790_1866039278_n.jpg";
 		}
-
 		imageLoader.displayImage(url, userAvator, options, null);
-
 	}
-
 }
