@@ -37,7 +37,8 @@
 
     <!-- BabyDiaryActivity -->
     <string name="title_activity_baby_diary">寶寶日記</string>
-
+    <string name="action_add">新增</string>
+    
     <!-- login -->
     <string name="title_activity_sign_up_or_log_in">SignUpOrLogInActivity</string>
     <string name="log_in">登入</string>
@@ -50,7 +51,7 @@
     <string name="log_out">Log out of Anywall</string>
     <string name="post">Post</string>
     <string name="post_out_of_range">Can\'t view post! Get closer.</string>
-    <string name="title_activity_baby_add_list">寶寶日記</string>
+
     <string name="title_activity_baby_add">新增寶寶日記</string>
 
 </resources>

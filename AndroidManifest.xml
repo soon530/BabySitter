@@ -149,10 +149,6 @@
             android:theme="@android:style/Theme.Holo" >
         </activity>
         <activity
-            android:name="tw.tasker.babysitter.view.impl.BabyAddListActivity"
-            android:label="@string/title_activity_baby_add_list" >
-        </activity>
-        <activity
             android:name="tw.tasker.babysitter.view.impl.BabyAddActivity"
             android:label="@string/title_activity_baby_add" >
         </activity>

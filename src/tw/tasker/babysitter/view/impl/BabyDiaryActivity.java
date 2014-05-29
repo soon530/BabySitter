@@ -76,14 +76,14 @@ public class BabyDiaryActivity extends ActionBarActivity {
 		
 		@Override
 		public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-			inflater.inflate(R.menu.baby_add_list, menu);
+			inflater.inflate(R.menu.baby_diary, menu);
 			super.onCreateOptionsMenu(menu, inflater);
 		}
 		
 		@Override
 		public boolean onOptionsItemSelected(MenuItem item) {
 			int id = item.getItemId();
-			if (id == R.id.action_settings) {
+			if (id == R.id.action_add) {
 				Bundle bundle = new Bundle();
 				bundle.putString("objectId", mBabysitterObjectId);
 				Intent intent = new Intent();
