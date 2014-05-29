@@ -1,21 +1,21 @@
 package tw.tasker.babysitter.view.impl;
 
 import static tw.tasker.babysitter.utils.LogUtils.LOGD;
-
-import java.util.List;
-
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.dummy.DummyContent;
-import tw.tasker.babysitter.model.data.Baby;
-import tw.tasker.babysitter.model.data.BabysitterComment;
 import tw.tasker.babysitter.model.data.Babysitter;
+import tw.tasker.babysitter.model.data.BabysitterComment;
 import tw.tasker.babysitter.presenter.BabysitterDetailPresenter;
 import tw.tasker.babysitter.presenter.impl.BabysitterDetailPresenterImpl;
-import tw.tasker.babysitter.view.BabysitterDetailView;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NavUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -29,10 +29,6 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
-import com.parse.FindCallback;
-import com.parse.GetCallback;
-import com.parse.ParseException;
-import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
 /**
@@ -41,22 +37,21 @@ import com.parse.ParseQueryAdapter;
  * or a {@link BabysitterDetailActivity} on handsets.
  */
 public class BabysitterDetailFragment extends Fragment implements
-		BabysitterDetailView, OnClickListener {
+		//BabysitterDetailView, 
+		OnClickListener {
 	/**
 	 * The fragment argument representing the item ID that this fragment
 	 * represents.
 	 */
 	public static final String ARG_ITEM_ID = "item_id";
+	public static final String BABYSITTER_OBJECT_ID = "babysitterObjectId";
 
 	/**
 	 * The dummy content this fragment is presenting.
 	 */
-	private DummyContent.DummyItem mItem;
 	private ListView mBabysitterCommentList;
 
 	private Button mBabyIcon;
-	private static final String[] mStrings = new String[] { "一", "二", "三", "四",
-			"五", "六", "七", "八", "九" };
 
 	private String mAddress;
 	private String mName;
@@ -66,7 +61,6 @@ public class BabysitterDetailFragment extends Fragment implements
 	private TextView mBabysitterAddress;
 	private RatingBar mBabysitterRating;
 
-	private String objectId;
 
 	public int mTotalRating;
 	public int mTotalComment;
@@ -104,6 +98,10 @@ public class BabysitterDetailFragment extends Fragment implements
 
 	private Babysitter mOutline;
 
+	
+	private String mBabysitterObjectId;
+
+	
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
 	 * fragment (e.g. upon screen orientation changes).
@@ -115,18 +113,14 @@ public class BabysitterDetailFragment extends Fragment implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		if (getArguments().containsKey(ARG_ITEM_ID)) {
-			// Load the dummy content specified by the fragment
-			// arguments. In a real-world scenario, use a Loader
-			// to load content from a content provider.
-			mItem = DummyContent.ITEM_MAP.get(getArguments().getString(
-					ARG_ITEM_ID));
+		if (getArguments().containsKey(BABYSITTER_OBJECT_ID)) {
+			mBabysitterObjectId = getArguments().getString(BABYSITTER_OBJECT_ID);
 		}
 
 		mPresenter = new BabysitterDetailPresenterImpl(this);
 
-		Bundle bundle = getActivity().getIntent().getExtras();
-		objectId = bundle.getString("objectId");
+		//Bundle bundle = getActivity().getIntent().getExtras();
+		//mBabysitterObjectId = bundle.getString(BABYSITTER_OBJECT_ID);
 
 		mDistanceValue = "10公尺"; // getDistance(bundle);
 
@@ -136,8 +130,45 @@ public class BabysitterDetailFragment extends Fragment implements
 				.showImageOnFail(R.drawable.ic_launcher).cacheInMemory(true)
 				.cacheOnDisc(true).considerExifParams(true)
 				.displayer(new RoundedBitmapDisplayer(20)).build();
+	
+		setHasOptionsMenu(true);
+	
 	}
 
+	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.babysitter_detail, menu);
+		super.onCreateOptionsMenu(menu, inflater);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+		if (id == android.R.id.home) {
+			NavUtils.navigateUpTo(getActivity(), new Intent(getActivity(),
+					BabysitterListActivity.class));
+			return true;
+		}
+
+		if (id == R.id.action_comment) {
+			Intent intent = new Intent();
+
+			Bundle bundle = new Bundle();
+			bundle.putString(BABYSITTER_OBJECT_ID, mBabysitterObjectId);
+			bundle.putInt("totalRating", mTotalRating);
+			bundle.putInt("totalComment", mTotalComment);
+			intent.putExtras(bundle);
+
+			intent.setClass(getActivity(), BabysitterCommentActivity.class);
+			startActivity(intent);
+		}
+
+		return super.onOptionsItemSelected(item);
+	}
+
+	
+	
 	private String getDistance(Bundle bundle) {
 
 		mSlat = bundle.getString("slat");
@@ -244,8 +275,8 @@ public class BabysitterDetailFragment extends Fragment implements
 		super.onViewCreated(view, savedInstanceState);
 
 		mBabysitterCommentList.addHeaderView(mHeaderView);
-		mPresenter.doDetailQuery(objectId);
-		mPresenter.doCommentQuery(objectId);
+		mPresenter.doDetailQuery(mBabysitterObjectId);
+		mPresenter.doCommentQuery(mBabysitterObjectId);
 
 	}
 
@@ -273,7 +304,7 @@ public class BabysitterDetailFragment extends Fragment implements
 				//}
 			//});
 			
-			mPresenter.seeBabyDetail(objectId);
+			mPresenter.seeBabyDetail(mBabysitterObjectId);
 			
 			break;
 		case R.id.call_icon:

@@ -9,6 +9,7 @@ import tw.tasker.babysitter.model.impl.BabysitterListModelImpl;
 import tw.tasker.babysitter.presenter.BabysitterListPresenter;
 import tw.tasker.babysitter.presenter.adapter.BabysitterListParseQueryAdapter;
 import tw.tasker.babysitter.view.impl.BabysitterDetailActivity;
+import tw.tasker.babysitter.view.impl.BabysitterDetailFragment;
 import tw.tasker.babysitter.view.impl.BabysitterListFragment;
 import android.content.Intent;
 import android.widget.BaseAdapter;
@@ -16,16 +17,17 @@ import android.widget.BaseAdapter;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 
-public class BabysitterListPresenterImpl implements BabysitterListPresenter, OnQueryLoadListener<Babysitter> {
+public class BabysitterListPresenterImpl implements BabysitterListPresenter,
+		OnQueryLoadListener<Babysitter> {
 
-	private BabysitterListFragment mBabysitterListFragment;
-	private BabysitterListModel mBabysitterListModel;
+	private BabysitterListFragment mView;
+	private BabysitterListModel mModel;
 	private ParseQueryAdapter<Babysitter> mAdapter;
 
 	public BabysitterListPresenterImpl(
 			BabysitterListFragment babysitterListFragment) {
-		mBabysitterListFragment = babysitterListFragment;
-		mBabysitterListModel = new BabysitterListModelImpl(this);
+		mView = babysitterListFragment;
+		mModel = new BabysitterListModelImpl(this);
 	}
 
 	@Override
@@ -34,14 +36,8 @@ public class BabysitterListPresenterImpl implements BabysitterListPresenter, OnQ
 	}
 
 	private void doListQuery() {
-		mAdapter = new BabysitterListParseQueryAdapter(
-				mBabysitterListFragment.getActivity());
-
-		// Disable automatic loading when the list_item_babysitter_comment is
-		// attached to a view.
+		mAdapter = new BabysitterListParseQueryAdapter(mView.getActivity());
 		mAdapter.setAutoload(false);
-
-		// Disable pagination, we'll manage the query limit ourselves
 		mAdapter.setPaginationEnabled(false);
 		mAdapter.addOnQueryLoadListener(this);
 		setAdapter(mAdapter);
@@ -49,29 +45,25 @@ public class BabysitterListPresenterImpl implements BabysitterListPresenter, OnQ
 	}
 
 	public void setAdapter(BaseAdapter adapter) {
-		mBabysitterListFragment.setAdapter(adapter);
+		mView.setAdapter(adapter);
 	}
 
 	@Override
 	public void onListItemClick(int position) {
-		Babysitter outline = getOutline(position);
-		Intent detailIntent = new Intent(mBabysitterListFragment.getActivity(),
+		Babysitter babysitter = mAdapter.getItem(position);
+		Intent detailIntent = new Intent(mView.getActivity(),
 				BabysitterDetailActivity.class);
-		detailIntent.putExtra("objectId", outline.getObjectId());
-		mBabysitterListFragment.getActivity().startActivity(detailIntent);
-	}
-
-	private Babysitter getOutline(int position) {
-		return mAdapter.getItem(position);
+		detailIntent.putExtra(BabysitterDetailFragment.BABYSITTER_OBJECT_ID, babysitter.getObjectId());
+		mView.getActivity().startActivity(detailIntent);
 	}
 
 	@Override
 	public void onLoading() {
-		mBabysitterListFragment.showProgress();
+		mView.showProgress();
 	}
-	
+
 	@Override
 	public void onLoaded(List<Babysitter> babysitter, Exception e) {
-		mBabysitterListFragment.hideProgress();
+		mView.hideProgress();
 	}
 }
