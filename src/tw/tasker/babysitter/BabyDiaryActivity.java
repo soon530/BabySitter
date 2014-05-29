@@ -2,8 +2,8 @@ package tw.tasker.babysitter;
 
 import java.util.List;
 
-import tw.tasker.babysitter.model.Favorite;
 import tw.tasker.babysitter.model.data.Baby;
+import tw.tasker.babysitter.model.data.Favorite;
 import tw.tasker.babysitter.view.BabyDetailActivity;
 import android.content.Intent;
 import android.os.Bundle;

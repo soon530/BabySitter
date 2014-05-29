@@ -2,8 +2,8 @@ package tw.tasker.babysitter;
 
 import tw.tasker.babysitter.model.BabysitterComment;
 import tw.tasker.babysitter.model.BabysitterOutline;
-import tw.tasker.babysitter.model.Favorite;
 import tw.tasker.babysitter.model.data.Baby;
+import tw.tasker.babysitter.model.data.Favorite;
 import android.app.Application;
 import android.content.Context;
 
