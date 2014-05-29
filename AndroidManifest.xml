@@ -53,7 +53,7 @@
                 android:value="tw.tasker.babysitter.view.HomeActivity" />
         </activity>
         <activity
-            android:name="tw.tasker.babysitter.view.BabysitterMapActivity"
+            android:name="tw.tasker.babysitter.view.impl.BabysitterMapActivity"
             android:label="@string/title_activity_map"
             android:launchMode="singleTask"
             android:parentActivityName="tw.tasker.babysitter.view.HomeActivity" >

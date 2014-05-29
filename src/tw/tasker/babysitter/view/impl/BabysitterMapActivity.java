@@ -1,4 +1,4 @@
-package tw.tasker.babysitter.view;
+package tw.tasker.babysitter.view.impl;
 
 import static tw.tasker.babysitter.utils.LogUtils.LOGD;
 import static tw.tasker.babysitter.utils.LogUtils.makeLogTag;
@@ -10,6 +10,8 @@ import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabysitterOutline;
 import tw.tasker.babysitter.presenter.BabysitterMapPresenter;
 import tw.tasker.babysitter.presenter.impl.BabysitterMapPresenterImpl;
+import tw.tasker.babysitter.view.BabysitterMapView;
+import tw.tasker.babysitter.view.MyInfoWindowAdapter;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;

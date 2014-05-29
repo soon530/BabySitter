@@ -6,6 +6,7 @@ import tw.tasker.babysitter.R.layout;
 import tw.tasker.babysitter.R.menu;
 import tw.tasker.babysitter.R.string;
 import tw.tasker.babysitter.view.NavigationDrawerFragment.NavigationDrawerCallbacks;
+import tw.tasker.babysitter.view.impl.BabysitterMapActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
