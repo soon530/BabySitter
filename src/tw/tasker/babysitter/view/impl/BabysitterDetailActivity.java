@@ -5,7 +5,6 @@ import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.R.id;
 import tw.tasker.babysitter.R.layout;
 import tw.tasker.babysitter.R.menu;
-import tw.tasker.babysitter.view.BabysitterDetailFragment;
 import tw.tasker.babysitter.view.BabysitterListActivity;
 import android.content.Intent;
 import android.os.Bundle;
