@@ -1,10 +1,6 @@
 package tw.tasker.babysitter.view.impl;
 
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.R.drawable;
-import tw.tasker.babysitter.R.id;
-import tw.tasker.babysitter.R.layout;
-import tw.tasker.babysitter.R.menu;
 import tw.tasker.babysitter.model.data.Baby;
 import tw.tasker.babysitter.model.data.Favorite;
 import tw.tasker.babysitter.presenter.adapter.FavoriteBabyParseQueryAdapter;
@@ -19,17 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
-import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
-import com.parse.ParseQueryAdapter.QueryFactory;
-import com.parse.ParseUser;
 
 public class FavoriteBabyActivity extends ActionBarActivity {
 
@@ -68,12 +57,12 @@ public class FavoriteBabyActivity extends ActionBarActivity {
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
-	public static class PlaceholderFragment extends Fragment {
+	public static class PlaceholderFragment extends Fragment implements
+			OnItemClickListener {
 		private ParseQueryAdapter<Favorite> mAdapter;
 		private ListView mList;
 		private TextView mEmpty;
-		
-		
+
 		public PlaceholderFragment() {
 		}
 
@@ -89,25 +78,32 @@ public class FavoriteBabyActivity extends ActionBarActivity {
 					container, false);
 
 			mList = (ListView) rootView.findViewById(R.id.list);
-			
-			mList.setOnItemClickListener(new OnItemClickListener() {
-
-				@Override
-				public void onItemClick(AdapterView<?> parent, View view,
-						int position, long id) {
-					
-					Favorite favorite = mAdapter.getItem(position);
-					Baby baby = favorite.getBaby();
-					
-					seeBabyDetail(baby.getObjectId());
-				}
-			
-			});
-			
+			mList.setOnItemClickListener(this);
 			mEmpty = (TextView) rootView.findViewById(R.id.empty);
 			mList.setEmptyView(mEmpty);
-			
 			return rootView;
+		}
+
+		@Override
+		public void onViewCreated(View view, Bundle savedInstanceState) {
+			super.onViewCreated(view, savedInstanceState);
+			doListQuery();
+		}
+
+		public void doListQuery() {
+			mAdapter = new FavoriteBabyParseQueryAdapter(getActivity());
+			mAdapter.setAutoload(false);
+			mAdapter.setPaginationEnabled(false);
+			mList.setAdapter(mAdapter);
+			mAdapter.loadObjects();
+		}
+
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position,
+				long id) {
+			Favorite favorite = mAdapter.getItem(position);
+			Baby baby = favorite.getBaby();
+			seeBabyDetail(baby.getObjectId());
 		}
 
 		public void seeBabyDetail(String babyObjectId) {
@@ -118,37 +114,5 @@ public class FavoriteBabyActivity extends ActionBarActivity {
 			intent.setClass(getActivity(), BabyDetailActivity.class);
 			startActivity(intent);
 		}
-
-		
-		@Override
-		public void onViewCreated(View view, Bundle savedInstanceState) {
-			super.onViewCreated(view, savedInstanceState);
-
-			doListQuery();
-
-		}
-
-		public void doListQuery() {
-
-
-
-			mAdapter = new FavoriteBabyParseQueryAdapter(getActivity());
-
-			// Disable automatic loading when the list_item_babysitter_comment
-			// is
-			// attached to a view.
-			mAdapter.setAutoload(false);
-
-			// Disable pagination, we'll manage the query limit ourselves
-			mAdapter.setPaginationEnabled(false);
-
-			mList.setAdapter(mAdapter);
-
-			mAdapter.loadObjects();
-		}
-
-
-
 	}
-
 }
