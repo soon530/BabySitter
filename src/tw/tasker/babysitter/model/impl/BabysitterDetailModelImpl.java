@@ -1,6 +1,7 @@
-package tw.tasker.babysitter.model;
+package tw.tasker.babysitter.model.impl;
 
 import static tw.tasker.babysitter.utils.LogUtils.LOGD;
+import tw.tasker.babysitter.model.BabysitterDetailModel;
 import tw.tasker.babysitter.model.data.BabysitterComment;
 import tw.tasker.babysitter.model.data.BabysitterOutline;
 import tw.tasker.babysitter.presenter.BabysitterDetailPresenterImpl;

@@ -4,10 +4,10 @@ import java.util.List;
 
 import tw.tasker.babysitter.BabyAddListActivity;
 import tw.tasker.babysitter.model.BabysitterDetailModel;
-import tw.tasker.babysitter.model.BabysitterDetailModelImpl;
 import tw.tasker.babysitter.model.CommentParseQueryAdapter;
 import tw.tasker.babysitter.model.data.BabysitterComment;
 import tw.tasker.babysitter.model.data.BabysitterOutline;
+import tw.tasker.babysitter.model.impl.BabysitterDetailModelImpl;
 import tw.tasker.babysitter.view.BabysitterDetailFragment;
 import android.content.Intent;
 import android.net.Uri;
