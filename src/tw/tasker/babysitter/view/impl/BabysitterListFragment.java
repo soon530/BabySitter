@@ -1,8 +1,8 @@
-package tw.tasker.babysitter.view;
+package tw.tasker.babysitter.view.impl;
 
 import tw.tasker.babysitter.presenter.BabysitterListPresenter;
 import tw.tasker.babysitter.presenter.impl.BabysitterListPresenterImpl;
-import tw.tasker.babysitter.view.impl.BabysitterDetailFragment;
+import tw.tasker.babysitter.view.BabysitterListView;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
