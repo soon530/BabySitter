@@ -1,4 +1,4 @@
-package tw.tasker.babysitter.presenter;
+package tw.tasker.babysitter.presenter.impl;
 
 import static tw.tasker.babysitter.utils.LogUtils.makeLogTag;
 
@@ -9,6 +9,7 @@ import tw.tasker.babysitter.model.BabysitterMapModel;
 import tw.tasker.babysitter.model.OnFinishedListener;
 import tw.tasker.babysitter.model.data.BabysitterOutline;
 import tw.tasker.babysitter.model.impl.BabysitterMapModelImpl;
+import tw.tasker.babysitter.presenter.BabysitterMapPresenter;
 import tw.tasker.babysitter.utils.MyLocation;
 import tw.tasker.babysitter.view.BabysitterDetailActivity;
 import tw.tasker.babysitter.view.BabysitterListActivity;

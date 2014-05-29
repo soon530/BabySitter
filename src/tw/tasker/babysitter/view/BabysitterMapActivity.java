@@ -9,7 +9,7 @@ import java.util.List;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabysitterOutline;
 import tw.tasker.babysitter.presenter.BabysitterMapPresenter;
-import tw.tasker.babysitter.presenter.BabysitterMapPresenterImpl;
+import tw.tasker.babysitter.presenter.impl.BabysitterMapPresenterImpl;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;

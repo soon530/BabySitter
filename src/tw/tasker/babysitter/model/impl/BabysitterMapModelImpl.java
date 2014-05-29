@@ -9,7 +9,7 @@ import java.util.List;
 import tw.tasker.babysitter.model.BabysitterMapModel;
 import tw.tasker.babysitter.model.OnFinishedListener;
 import tw.tasker.babysitter.model.data.BabysitterOutline;
-import tw.tasker.babysitter.presenter.BabysitterMapPresenterImpl;
+import tw.tasker.babysitter.presenter.impl.BabysitterMapPresenterImpl;
 import android.location.Location;
 
 import com.google.android.gms.maps.model.BitmapDescriptor;
