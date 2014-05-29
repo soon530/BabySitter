@@ -1,6 +1,9 @@
-package tw.tasker.babysitter;
+package tw.tasker.babysitter.view.impl;
 
-import tw.tasker.babysitter.view.impl.DispatchActivity;
+import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.R.id;
+import tw.tasker.babysitter.R.layout;
+import tw.tasker.babysitter.R.string;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;

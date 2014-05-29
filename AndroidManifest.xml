@@ -124,7 +124,7 @@
 
         <!-- user manager -->
         <activity
-            android:name="tw.tasker.babysitter.LoginActivity"
+            android:name="tw.tasker.babysitter.view.impl.LoginActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>
