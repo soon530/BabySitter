@@ -4,7 +4,7 @@ import static tw.tasker.babysitter.utils.LogUtils.LOGD;
 import tw.tasker.babysitter.model.BabysitterDetailModel;
 import tw.tasker.babysitter.model.data.BabysitterComment;
 import tw.tasker.babysitter.model.data.BabysitterOutline;
-import tw.tasker.babysitter.presenter.BabysitterDetailPresenterImpl;
+import tw.tasker.babysitter.presenter.impl.BabysitterDetailPresenterImpl;
 
 import com.parse.GetCallback;
 import com.parse.ParseException;

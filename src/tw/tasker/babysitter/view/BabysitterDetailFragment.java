@@ -10,7 +10,7 @@ import tw.tasker.babysitter.model.data.Baby;
 import tw.tasker.babysitter.model.data.BabysitterComment;
 import tw.tasker.babysitter.model.data.BabysitterOutline;
 import tw.tasker.babysitter.presenter.BabysitterDetailPresenter;
-import tw.tasker.babysitter.presenter.BabysitterDetailPresenterImpl;
+import tw.tasker.babysitter.presenter.impl.BabysitterDetailPresenterImpl;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
