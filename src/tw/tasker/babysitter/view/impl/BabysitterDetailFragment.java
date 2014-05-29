@@ -2,11 +2,11 @@ package tw.tasker.babysitter.view.impl;
 
 import static tw.tasker.babysitter.utils.LogUtils.LOGD;
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.dummy.DummyContent;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.BabysitterComment;
 import tw.tasker.babysitter.presenter.BabysitterDetailPresenter;
 import tw.tasker.babysitter.presenter.impl.BabysitterDetailPresenterImpl;
+import tw.tasker.babysitter.view.BabysitterDetailView;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
@@ -37,8 +37,7 @@ import com.parse.ParseQueryAdapter;
  * or a {@link BabysitterDetailActivity} on handsets.
  */
 public class BabysitterDetailFragment extends Fragment implements
-		//BabysitterDetailView, 
-		OnClickListener {
+		BabysitterDetailView, OnClickListener {
 	/**
 	 * The fragment argument representing the item ID that this fragment
 	 * represents.
@@ -60,7 +59,6 @@ public class BabysitterDetailFragment extends Fragment implements
 
 	private TextView mBabysitterAddress;
 	private RatingBar mBabysitterRating;
-
 
 	public int mTotalRating;
 	public int mTotalComment;
@@ -98,10 +96,8 @@ public class BabysitterDetailFragment extends Fragment implements
 
 	private Babysitter mOutline;
 
-	
 	private String mBabysitterObjectId;
 
-	
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
 	 * fragment (e.g. upon screen orientation changes).
@@ -114,13 +110,14 @@ public class BabysitterDetailFragment extends Fragment implements
 		super.onCreate(savedInstanceState);
 
 		if (getArguments().containsKey(BABYSITTER_OBJECT_ID)) {
-			mBabysitterObjectId = getArguments().getString(BABYSITTER_OBJECT_ID);
+			mBabysitterObjectId = getArguments()
+					.getString(BABYSITTER_OBJECT_ID);
 		}
 
 		mPresenter = new BabysitterDetailPresenterImpl(this);
 
-		//Bundle bundle = getActivity().getIntent().getExtras();
-		//mBabysitterObjectId = bundle.getString(BABYSITTER_OBJECT_ID);
+		// Bundle bundle = getActivity().getIntent().getExtras();
+		// mBabysitterObjectId = bundle.getString(BABYSITTER_OBJECT_ID);
 
 		mDistanceValue = "10公尺"; // getDistance(bundle);
 
@@ -130,18 +127,17 @@ public class BabysitterDetailFragment extends Fragment implements
 				.showImageOnFail(R.drawable.ic_launcher).cacheInMemory(true)
 				.cacheOnDisc(true).considerExifParams(true)
 				.displayer(new RoundedBitmapDisplayer(20)).build();
-	
+
 		setHasOptionsMenu(true);
-	
+
 	}
 
-	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		inflater.inflate(R.menu.babysitter_detail, menu);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
@@ -167,8 +163,6 @@ public class BabysitterDetailFragment extends Fragment implements
 		return super.onOptionsItemSelected(item);
 	}
 
-	
-	
 	private String getDistance(Bundle bundle) {
 
 		mSlat = bundle.getString("slat");
@@ -292,20 +286,20 @@ public class BabysitterDetailFragment extends Fragment implements
 			break;
 		case R.id.baby_avator:
 
-			//ParseQuery<Baby> detailQuery = Baby.getQuery();
-			//detailQuery.include("babysitter");
-			//detailQuery.whereEqualTo("babysitter", mOutline);
-			
-			//detailQuery.getFirstInBackground(new GetCallback<Baby>() {
-				
-				//@Override
-				//public void done(Baby baby, ParseException e) {
-					//mPresenter.seeBabyDetail(baby.getObjectId());
-				//}
-			//});
-			
+			// ParseQuery<Baby> detailQuery = Baby.getQuery();
+			// detailQuery.include("babysitter");
+			// detailQuery.whereEqualTo("babysitter", mOutline);
+
+			// detailQuery.getFirstInBackground(new GetCallback<Baby>() {
+
+			// @Override
+			// public void done(Baby baby, ParseException e) {
+			// mPresenter.seeBabyDetail(baby.getObjectId());
+			// }
+			// });
+
 			mPresenter.seeBabyDetail(mBabysitterObjectId);
-			
+
 			break;
 		case R.id.call_icon:
 			mPresenter.makePhoneCall(mPhone.getText().toString());
@@ -315,4 +309,13 @@ public class BabysitterDetailFragment extends Fragment implements
 		}
 	}
 
+	@Override
+	public void showProgress() {
+		getActivity().setProgressBarIndeterminateVisibility(true);
+	}
+
+	@Override
+	public void hideProgress() {
+		getActivity().setProgressBarIndeterminateVisibility(false);
+	}
 }

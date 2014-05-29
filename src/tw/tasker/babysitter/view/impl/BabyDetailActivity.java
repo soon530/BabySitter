@@ -536,4 +536,16 @@ public class BabyDetailActivity extends ActionBarActivity implements
 
 	}
 
+	@Override
+	public void showProgress() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void hideProgress() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

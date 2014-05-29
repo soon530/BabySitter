@@ -84,12 +84,14 @@ public class BabysitterDetailPresenterImpl implements BabysitterDetailPresenter,
 	}
 
 	@Override
-	public void onLoaded(List<BabysitterComment> arg0, Exception arg1) {
-		mView.setCommentData(mCommentAdapter);
+	public void onLoading() {
+		mView.showProgress();
 	}
 
 	@Override
-	public void onLoading() {
+	public void onLoaded(List<BabysitterComment> babysitterComment, Exception e) {
+		mView.setCommentData(mCommentAdapter);
+		mView.hideProgress();
 	}
 
 	public void fillHeaderUI(Babysitter outline) {
