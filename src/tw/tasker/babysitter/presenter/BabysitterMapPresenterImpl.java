@@ -6,9 +6,9 @@ import java.util.List;
 
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.BabysitterMapModel;
-import tw.tasker.babysitter.model.BabysitterMapModelImpl;
 import tw.tasker.babysitter.model.OnFinishedListener;
 import tw.tasker.babysitter.model.data.BabysitterOutline;
+import tw.tasker.babysitter.model.impl.BabysitterMapModelImpl;
 import tw.tasker.babysitter.utils.MyLocation;
 import tw.tasker.babysitter.view.BabysitterDetailActivity;
 import tw.tasker.babysitter.view.BabysitterListActivity;
