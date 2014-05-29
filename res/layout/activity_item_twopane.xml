@@ -8,7 +8,7 @@
     android:divider="?android:attr/dividerHorizontal"
     android:orientation="horizontal"
     android:showDividers="middle"
-    tools:context="tw.tasker.babysitter.view.BabysitterListActivity" >
+    tools:context="tw.tasker.babysitter.view.impl.BabysitterListActivity" >
 
     <!--
     This layout is a two-pane layout for the Items

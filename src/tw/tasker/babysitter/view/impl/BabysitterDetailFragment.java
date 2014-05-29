@@ -12,7 +12,6 @@ import tw.tasker.babysitter.model.data.BabysitterOutline;
 import tw.tasker.babysitter.presenter.BabysitterDetailPresenter;
 import tw.tasker.babysitter.presenter.impl.BabysitterDetailPresenterImpl;
 import tw.tasker.babysitter.view.BabysitterDetailView;
-import tw.tasker.babysitter.view.BabysitterListActivity;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

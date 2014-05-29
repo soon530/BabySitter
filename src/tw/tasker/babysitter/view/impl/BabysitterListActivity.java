@@ -1,12 +1,12 @@
-package tw.tasker.babysitter.view;
+package tw.tasker.babysitter.view.impl;
 
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.R.id;
 import tw.tasker.babysitter.R.layout;
 import tw.tasker.babysitter.R.menu;
+import tw.tasker.babysitter.view.BabysitterListFragment;
+import tw.tasker.babysitter.view.BabysitterMapActivity;
 import tw.tasker.babysitter.view.BabysitterListFragment.Callbacks;
-import tw.tasker.babysitter.view.impl.BabysitterDetailActivity;
-import tw.tasker.babysitter.view.impl.BabysitterDetailFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;

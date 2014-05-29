@@ -6,6 +6,6 @@
     android:layout_height="match_parent"
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
-    tools:context="tw.tasker.babysitter.view.BabysitterListActivity"
+    tools:context="tw.tasker.babysitter.view.impl.BabysitterListActivity"
     tools:layout="@android:layout/list_content" />
 
