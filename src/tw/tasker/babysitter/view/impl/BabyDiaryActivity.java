@@ -85,7 +85,7 @@ public class BabyDiaryActivity extends ActionBarActivity {
 			int id = item.getItemId();
 			if (id == R.id.action_add) {
 				Bundle bundle = new Bundle();
-				bundle.putString("objectId", mBabysitterObjectId);
+				bundle.putString(Config.BABYSITTER_OBJECT_ID, mBabysitterObjectId);
 				Intent intent = new Intent();
 				intent.putExtras(bundle);
 				intent.setClass(getActivity(), BabyAddActivity.class);
