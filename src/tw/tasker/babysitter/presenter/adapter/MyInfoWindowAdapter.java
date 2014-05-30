@@ -31,7 +31,7 @@ public class MyInfoWindowAdapter implements InfoWindowAdapter {
 		.showImageForEmptyUri(R.drawable.ic_launcher)
 		.showImageOnFail(R.drawable.ic_launcher).cacheInMemory(true)
 		.cacheOnDisc(true).considerExifParams(true)
-		.displayer(new RoundedBitmapDisplayer(20)).build();
+		.displayer(new RoundedBitmapDisplayer(1)).build();
 
 		mMapModel = map_model;
 	}

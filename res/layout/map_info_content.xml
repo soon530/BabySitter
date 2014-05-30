@@ -6,9 +6,14 @@
 
     <ImageView
         android:id="@+id/babysitter_avstor"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/ic_launcher" />
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginTop="2dp"
+        android:contentDescription="TODO"
+        android:scaleType="centerCrop" />
 
     <LinearLayout
         android:layout_width="match_parent"

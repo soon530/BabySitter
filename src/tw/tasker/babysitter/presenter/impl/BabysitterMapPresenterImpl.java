@@ -4,6 +4,7 @@ import static tw.tasker.babysitter.utils.LogUtils.makeLogTag;
 
 import java.util.List;
 
+import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.BabysitterMapModel;
 import tw.tasker.babysitter.model.OnFinishedListener;
@@ -73,7 +74,7 @@ public class BabysitterMapPresenterImpl implements BabysitterMapPresenter, OnFin
 		final Intent intent = new Intent();
 		intent.setClass(mBabysitterMap, BabysitterDetailActivity.class);
 		Bundle bundle = new Bundle();
-		bundle.putString("objectId", marker.getTitle());
+		bundle.putString(Config.BABYSITTER_OBJECT_ID, marker.getTitle());
 		bundle.putString("slat", String.valueOf(marker.getPosition().latitude));
 		bundle.putString("slng", String.valueOf(marker.getPosition().longitude));
 
