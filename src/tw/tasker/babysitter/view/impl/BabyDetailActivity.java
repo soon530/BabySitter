@@ -1,7 +1,5 @@
 package tw.tasker.babysitter.view.impl;
 
-import static tw.tasker.babysitter.utils.LogUtils.LOGD;
-
 import java.util.List;
 
 import tw.tasker.babysitter.Config;
@@ -11,9 +9,7 @@ import tw.tasker.babysitter.model.data.BabysitterComment;
 import tw.tasker.babysitter.model.data.Favorite;
 import tw.tasker.babysitter.presenter.adapter.RecordParseQueryAdapter;
 import tw.tasker.babysitter.view.BabysitterDetailView;
-import tw.tasker.babysitter.view.impl.BabyDiaryActivity.PlaceholderFragment;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -22,19 +18,15 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
+import android.view.Window;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -77,9 +69,6 @@ public class BabyDetailActivity extends ActionBarActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.post_words) {
 			Bundle bundle = new Bundle();
@@ -94,26 +83,23 @@ public class BabyDetailActivity extends ActionBarActivity {
 	}
 
 	public static class PlaceholderFragment extends Fragment implements
-			OnQueryLoadListener<BabysitterComment>, BabysitterDetailView {
+			OnQueryLoadListener<BabysitterComment>, BabysitterDetailView,
+			OnClickListener {
+
+		DisplayImageOptions options;
+		private ImageLoader imageLoader = ImageLoader.getInstance();
+		private Baby mBaby;
+		private Favorite mFavorite;
+		private String mBabyObjectId;
 
 		private ListView mListView;
 		private ImageView mBabyIcon;
-		DisplayImageOptions options;
-		private ImageLoader imageLoader = ImageLoader.getInstance();
 		private Button mBabysitterIcon;
-		ParseQueryAdapter<BabysitterComment> mCommentAdapter;
-
+		private ParseQueryAdapter<BabysitterComment> mCommentAdapter;
 		private View mHeaderView;
-		private Button mHeart;
-		private int count;
 		private TextView mName;
 		private TextView mNote;
-		private ToggleButton mStar;
-
-		private Baby mBaby;
-		private Favorite mFavorite;
-		private boolean isInitData;
-		private String mBabyObjectId;
+		private CheckBox mFavoriteBaby;
 
 		public PlaceholderFragment() {
 
@@ -156,17 +142,8 @@ public class BabyDetailActivity extends ActionBarActivity {
 		private void initHeadUI() {
 			mBabyIcon = (ImageView) mHeaderView.findViewById(R.id.baby_avator);
 
-			mBabyIcon.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					Intent intent = new Intent();
-					intent.setClass(getActivity().getApplicationContext(),
-							BabysitterDetailActivity.class);
-					startActivity(intent);
-
-				}
-			});
+			mFavoriteBaby = (CheckBox) mHeaderView
+					.findViewById(R.id.favorite_baby);
 
 			mBabysitterIcon = (Button) mHeaderView
 					.findViewById(R.id.babysitter_icon);
@@ -174,88 +151,7 @@ public class BabyDetailActivity extends ActionBarActivity {
 			mName = (TextView) mHeaderView.findViewById(R.id.name);
 			mNote = (TextView) mHeaderView.findViewById(R.id.desciption);
 
-			mHeart = (Button) mHeaderView.findViewById(R.id.heart);
-
-			mHeart.setOnClickListener(
-
-			new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					// mHeart.setText("♥ +" + ++count);
-					saveHeard();
-				}
-
-				private void saveHeard() {
-					ParseQuery<Baby> query = Baby.getQuery();
-
-					query.getInBackground(mBabyObjectId,
-							new GetCallback<Baby>() {
-
-								@Override
-								public void done(Baby baby, ParseException e) {
-									baby.put("favorite", ++count);
-									baby.saveInBackground(new SaveCallback() {
-
-										@Override
-										public void done(ParseException e) {
-											if (e == null) {
-												// setResult(RESULT_OK);
-												// finish();
-												Toast.makeText(
-														getActivity()
-																.getApplicationContext(),
-														"saving doen!",
-														Toast.LENGTH_SHORT)
-														.show();
-												mHeart.setText("♥ +" + count);
-											} else {
-												LOGD("vic", e.getMessage());
-												Toast.makeText(
-														getActivity()
-																.getApplicationContext(),
-														"Error saving: "
-																+ e.getMessage(),
-														Toast.LENGTH_SHORT)
-														.show();
-											}
-
-										}
-									});
-
-								}
-							});
-				}
-
-			});
-
-			mStar = (ToggleButton) mHeaderView.findViewById(R.id.star);
-
-			mStar.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-				@Override
-				public void onCheckedChanged(CompoundButton buttonView,
-						boolean isChecked) {
-					if (isChecked) {
-						/*
-						 * Toast.makeText( getActivity()
-						 * .getApplicationContext(), "加入收藏..",
-						 * Toast.LENGTH_SHORT) .show();
-						 */
-
-						saveStar();
-
-					} else {
-						/*
-						 * Toast.makeText( getActivity()
-						 * .getApplicationContext(), "取消收藏..",
-						 * Toast.LENGTH_SHORT) .show();
-						 */
-						deleteStar();
-
-					}
-				}
-
-			});
+			mFavoriteBaby.setOnClickListener(this);
 		}
 
 		@Override
@@ -264,38 +160,7 @@ public class BabyDetailActivity extends ActionBarActivity {
 
 			mListView.addHeaderView(mHeaderView);
 			doDetailQuery(mBabyObjectId);
-			doCommentQuery(mBabyObjectId);
 			// getFavorite();
-
-		}
-
-		private void getFavorite() {
-			ParseQuery<Favorite> favorite_query = Favorite.getQuery();
-
-			favorite_query.whereEqualTo("baby", mBaby);
-			favorite_query.whereEqualTo("user", ParseUser.getCurrentUser());
-
-			favorite_query.getFirstInBackground(new GetCallback<Favorite>() {
-
-				@Override
-				public void done(Favorite favorite, ParseException e) {
-					// 第一次抓data
-					isInitData = true;
-
-					if (favorite == null) {
-						mStar.setChecked(false);
-						isInitData = false;
-					} else {
-						mStar.setChecked(true);
-						mFavorite = favorite;
-
-						Toast.makeText(getActivity().getApplicationContext(),
-								"ObjectId = " + favorite.getObjectId(),
-								Toast.LENGTH_SHORT).show();
-					}
-
-				}
-			});
 
 		}
 
@@ -317,72 +182,32 @@ public class BabyDetailActivity extends ActionBarActivity {
 
 					mName.setText(baby.getName() + baby.getObjectId());
 					mNote.setText(baby.getNote());
-					mHeart.setText("♥ +" + baby.getFavorite());
-					count = baby.getFavorite();
 					mBaby = baby;
 					getFavorite();
-				}
-
-			});
-
-		}
-
-		private void deleteStar() {
-			// 如果是第一次抓data，只是要改變狀態而已，不是要收藏
-			if (isInitData) {
-				isInitData = false;
-				return;
-			}
-
-			mFavorite.deleteInBackground(new DeleteCallback() {
-
-				@Override
-				public void done(ParseException e) {
-					if (e == null) {
-						Toast.makeText(getActivity().getApplicationContext(),
-								"deleting doen!", Toast.LENGTH_SHORT).show();
-					} else {
-						Toast.makeText(getActivity().getApplicationContext(),
-								"Error saving: " + e.getMessage(),
-								Toast.LENGTH_SHORT).show();
-					}
+					doCommentQuery(mBabyObjectId);
 				}
 			});
 		}
 
-		private void saveStar() {
+		private void getFavorite() {
+			ParseQuery<Favorite> favorite_query = Favorite.getQuery();
 
-			// 如果是第一次抓data，只是要改變狀態而已，不是要收藏
-			if (isInitData == true) {
-				isInitData = false;
-				return;
-			}
+			favorite_query.whereEqualTo("baby", mBaby);
+			favorite_query.whereEqualTo("user", ParseUser.getCurrentUser());
 
-			// ParseObject post = new ParseObject("Comment");
-			Favorite favorite = new Favorite();
-			mFavorite = favorite;
-			// favorite.put("baby", mBaby);
-			favorite.setBaby(mBaby);
-
-			favorite.put("user", ParseUser.getCurrentUser());
-
-			// Save the post and return
-			favorite.saveInBackground(new SaveCallback() {
+			favorite_query.getFirstInBackground(new GetCallback<Favorite>() {
 
 				@Override
-				public void done(ParseException e) {
-					if (e == null) {
-						// setResult(RESULT_OK);
-						// finish();
-						Toast.makeText(getActivity().getApplicationContext(),
-								"saving doen!", Toast.LENGTH_SHORT).show();
+				public void done(Favorite favorite, ParseException e) {
+					if (favorite == null) {
+						mFavoriteBaby.setChecked(false);
+						mFavoriteBaby.setText("已取消");
 					} else {
-						Toast.makeText(getActivity().getApplicationContext(),
-								"Error saving: " + e.getMessage(),
-								Toast.LENGTH_SHORT).show();
+						mFavoriteBaby.setChecked(true);
+						mFavoriteBaby.setText("已收藏");
+						mFavorite = favorite;
 					}
 				}
-
 			});
 		}
 
@@ -417,7 +242,6 @@ public class BabyDetailActivity extends ActionBarActivity {
 			getActivity().setProgressBarIndeterminateVisibility(false);
 		}
 
-		
 		@Override
 		public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 			inflater.inflate(R.menu.baby_detail, menu);
@@ -435,21 +259,67 @@ public class BabyDetailActivity extends ActionBarActivity {
 		}
 
 		@Override
-		public void onActivityResult(int requestCode, int resultCode,
-				Intent data) {
-			// 拍照後顯示圖片
-			// ImageView iv = (ImageView) findViewById(R.id.imagecaptured);
-			if (resultCode == RESULT_OK) {
-				// 取出拍照後回傳資料
-				Bundle extras = data.getExtras();
-				// 將資料轉換為圖像格式
-				Bitmap bmp = (Bitmap) extras.get("data");
-				// 載入ImageView
-				// mBabysitterIcon.setImageBitmap(bmp);
-			}
+		public void onClick(View v) {
+			switch (v.getId()) {
+			case R.id.babysitter_icon:
+				Intent intent = new Intent();
+				intent.setClass(getActivity().getApplicationContext(),
+						BabysitterDetailActivity.class);
+				startActivity(intent);
 
-			// 覆蓋原來的Activity
-			super.onActivityResult(requestCode, resultCode, data);
+				break;
+			case R.id.favorite_baby:
+				if (mFavoriteBaby.isChecked()) {
+					mFavoriteBaby.setText("已收藏");
+					addFavorite();
+				} else {
+					mFavoriteBaby.setText("已取消");
+					deleteFavorite();
+				}
+				break;
+			default:
+				break;
+			}
+		}
+
+		private void addFavorite() {
+			Favorite favorite = new Favorite();
+			mFavorite = favorite;
+			// favorite.put("baby", mBaby);
+			favorite.setBaby(mBaby);
+
+			favorite.put("user", ParseUser.getCurrentUser());
+			favorite.saveInBackground(new SaveCallback() {
+				@Override
+				public void done(ParseException e) {
+					if (e == null) {
+						// Toast.makeText(getActivity().getApplicationContext(),
+						// "saving doen!", Toast.LENGTH_SHORT).show();
+					} else {
+						Toast.makeText(getActivity().getApplicationContext(),
+								"Error saving: " + e.getMessage(),
+								Toast.LENGTH_SHORT).show();
+					}
+				}
+
+			});
+		}
+
+		private void deleteFavorite() {
+			mFavorite.deleteInBackground(new DeleteCallback() {
+
+				@Override
+				public void done(ParseException e) {
+					if (e == null) {
+						// Toast.makeText(getActivity().getApplicationContext(),
+						// "deleting doen!", Toast.LENGTH_SHORT).show();
+					} else {
+						Toast.makeText(getActivity().getApplicationContext(),
+								"Error saving: " + e.getMessage(),
+								Toast.LENGTH_SHORT).show();
+					}
+				}
+			});
 		}
 
 	}

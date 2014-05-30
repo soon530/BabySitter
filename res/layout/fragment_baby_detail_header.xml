@@ -19,19 +19,15 @@
         android:layout_gravity="center"
         android:orientation="vertical" >
 
-        <ToggleButton
-            android:id="@+id/star"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="收藏" />
-
-        <Button
-            android:id="@+id/heart"
+        <CheckBox
+            android:id="@+id/favorite_baby"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=" ♥ +0"
+            android:text="已取消"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#FFAEAE" />
+            android:textColor="#FFAEAE"
+            style="?android:attr/starStyle"
+             />
         
         <TextView
                 android:id="@+id/name"
