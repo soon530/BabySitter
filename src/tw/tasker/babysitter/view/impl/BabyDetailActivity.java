@@ -61,27 +61,6 @@ public class BabyDetailActivity extends ActionBarActivity {
 		}
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.baby_detail, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		int id = item.getItemId();
-		if (id == R.id.post_words) {
-			Bundle bundle = new Bundle();
-			// bundle.putString("objectId", mObjectId);
-			Intent intent = new Intent();
-			intent.putExtras(bundle);
-			intent.setClass(this, BabyCommentActivity.class);
-			startActivity(intent);
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
 	public static class PlaceholderFragment extends Fragment implements
 			OnQueryLoadListener<BabysitterComment>, BabysitterDetailView,
 			OnClickListener {
@@ -120,6 +99,8 @@ public class BabyDetailActivity extends ActionBarActivity {
 			if (getArguments().containsKey(Config.BABY_OBJECT_ID)) {
 				mBabyObjectId = getArguments().getString(Config.BABY_OBJECT_ID);
 			}
+			
+			setHasOptionsMenu(true);
 		}
 
 		@Override
@@ -250,12 +231,17 @@ public class BabyDetailActivity extends ActionBarActivity {
 
 		@Override
 		public boolean onOptionsItemSelected(MenuItem item) {
-
-			Intent intent_camera = new Intent(
-					android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-			startActivityForResult(intent_camera, 0);
-
-			return false;
+			int id = item.getItemId();
+			if (id == R.id.post_words) {
+				Bundle bundle = new Bundle();
+				bundle.putString(Config.BABY_OBJECT_ID, mBabyObjectId);
+				Intent intent = new Intent();
+				intent.putExtras(bundle);
+				intent.setClass(getActivity(), BabyCommentActivity.class);
+				startActivity(intent);
+				return true;
+			}
+			return super.onOptionsItemSelected(item);
 		}
 
 		@Override

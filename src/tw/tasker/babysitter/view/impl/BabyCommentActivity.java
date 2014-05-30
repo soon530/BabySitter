@@ -4,11 +4,13 @@ import static tw.tasker.babysitter.utils.LogUtils.LOGD;
 
 import java.io.ByteArrayOutputStream;
 
+import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.R.id;
 import tw.tasker.babysitter.R.layout;
 import tw.tasker.babysitter.R.menu;
 import tw.tasker.babysitter.model.data.BabysitterComment;
+import tw.tasker.babysitter.view.impl.BabyDetailActivity.PlaceholderFragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -33,36 +35,30 @@ import com.parse.SaveCallback;
 
 public class BabyCommentActivity extends ActionBarActivity {
 
-	private String mObjectId;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_baby_comment);
 
-		Bundle bundle = getIntent().getExtras();
-		mObjectId = bundle.getString("objectId");
-
-		//Comment.babysitterId 先存 baby.objectId
 		if (savedInstanceState == null) {
+			Bundle arguments = new Bundle();
+			arguments.putString(Config.BABY_OBJECT_ID, getIntent()
+					.getStringExtra(Config.BABY_OBJECT_ID));
+			PlaceholderFragment fragment = new PlaceholderFragment();
+			fragment.setArguments(arguments);
 			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment(mObjectId)).commit();
+					.add(R.id.container, fragment).commit();
 		}
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.baby_comment, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
 			return true;
@@ -78,15 +74,21 @@ public class BabyCommentActivity extends ActionBarActivity {
 		private EditText mBabysitterTitle;
 		private EditText mBabysitterComment;
 		private Button mPostCommnet;
-		private String mObjectId;
+		private String mBabyObjectId;
 		private ImageView mUserAvator;
 		private Bitmap mBmp;
 		private ParseFile mFile;
 
 		private ProgressDialog mRingProgressDialog;
 
-		public PlaceholderFragment(String babyObjectId) {
-			mObjectId = babyObjectId;
+		@Override
+		public void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+
+			if (getArguments().containsKey(Config.BABY_OBJECT_ID)) {
+				mBabyObjectId = getArguments().getString(Config.BABY_OBJECT_ID);
+			}
+
 		}
 
 		@Override
@@ -94,37 +96,31 @@ public class BabyCommentActivity extends ActionBarActivity {
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_baby_comment,
 					container, false);
-			
-			
-			
-			mBabysitterTitle = (EditText) rootView.findViewById(R.id.babysitter_comment_title);
-			mBabysitterComment = (EditText) rootView.findViewById(R.id.babysitter_comment);
-			
+
+			mBabysitterTitle = (EditText) rootView
+					.findViewById(R.id.babysitter_comment_title);
+			mBabysitterComment = (EditText) rootView
+					.findViewById(R.id.babysitter_comment);
+
 			mPostCommnet = (Button) rootView.findViewById(R.id.post_comment);
 			mPostCommnet.setOnClickListener(new View.OnClickListener() {
 
-
 				@Override
 				public void onClick(View v) {
-			        mRingProgressDialog = ProgressDialog.show(getActivity(), "請稍等 ...", "資料儲存中...", true); 
+					mRingProgressDialog = ProgressDialog.show(getActivity(),
+							"請稍等 ...", "資料儲存中...", true);
 
 					Toast.makeText(v.getContext(), "已送出..", Toast.LENGTH_LONG)
 							.show();
 
 					savePicture();
-					//saveComment();
-					//updateBabysitter();
-
-					//Intent intent = new Intent();
-					//intent.setClass(getActivity().getApplicationContext(), BabysitterDetailActivity.class);
-					//startActivity(intent);
 				}
 			});
-			
-			
-			Button selectPhoto = (Button)rootView.findViewById(R.id.photo_button);
+
+			Button selectPhoto = (Button) rootView
+					.findViewById(R.id.photo_button);
 			selectPhoto.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
 					Intent intent_camera = new Intent(
@@ -133,12 +129,12 @@ public class BabyCommentActivity extends ActionBarActivity {
 
 				}
 			});
-			
+
 			mUserAvator = (ImageView) rootView.findViewById(R.id.user_avator);
-			
+
 			return rootView;
 		}
-		
+
 		@Override
 		public void onActivityResult(int requestCode, int resultCode,
 				Intent data) {
@@ -147,92 +143,65 @@ public class BabyCommentActivity extends ActionBarActivity {
 				Bundle extras = data.getExtras();
 				// 將資料轉換為圖像格式
 				Bitmap bmp = (Bitmap) extras.get("data");
-				
+
 				mBmp = bmp;
 				// 載入ImageView
-				 mUserAvator.setImageBitmap(bmp);
+				mUserAvator.setImageBitmap(bmp);
 			}
 
 			// 覆蓋原來的Activity
 			super.onActivityResult(requestCode, resultCode, data);
 		}
-		
+
 		private void savePicture() {
 			// Locate the image in res > drawable-hdpi
-            Bitmap bitmap = mBmp;
-            // Convert it to byte
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            // Compress image to lower quality scale 1 - 100
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            byte[] image = stream.toByteArray();
+			Bitmap bitmap = mBmp;
+			// Convert it to byte
+			ByteArrayOutputStream stream = new ByteArrayOutputStream();
+			// Compress image to lower quality scale 1 - 100
+			bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+			byte[] image = stream.toByteArray();
 
-            // Create the ParseFile
-             mFile = new ParseFile("androidbegin.png", image);
+			// Create the ParseFile
+			mFile = new ParseFile("androidbegin.png", image);
 
-	            // Upload the image into Parse Cloud
-	            mFile.saveInBackground(new SaveCallback() {
-					
-					@Override
-					public void done(ParseException e) {
-						if (e == null) {
-							// setResult(RESULT_OK);
-							// finish();
-							Toast.makeText(
-									getActivity().getApplicationContext(),
-									"upload doen!", Toast.LENGTH_SHORT)
-									.show();
-							saveComment();
-						} else {
-							Toast.makeText(
-									getActivity().getApplicationContext(),
-									"Error saving: " + e.getMessage(),
-									Toast.LENGTH_SHORT).show();
-						}
-						
+			// Upload the image into Parse Cloud
+			mFile.saveInBackground(new SaveCallback() {
+
+				@Override
+				public void done(ParseException e) {
+					if (e == null) {
+						Toast.makeText(getActivity().getApplicationContext(),
+								"upload doen!", Toast.LENGTH_SHORT).show();
+						saveComment();
+					} else {
+						Toast.makeText(getActivity().getApplicationContext(),
+								"Error saving: " + e.getMessage(),
+								Toast.LENGTH_SHORT).show();
 					}
-				});
 
-             
-            // Create a New Class called "ImageUpload" in Parse
-//            ParseObject imgupload = new ParseObject("ImageUpload");
-
-            // Create a column named "ImageName" and set the string
-//            imgupload.put("ImageName", "AndroidBegin Logo");
-
-            // Create a column named "ImageFile" and insert the image
-//            imgupload.put("ImageFile", file);
-
-            // Create the class and the columns
-//            imgupload.saveInBackground();
-
+				}
+			});
 		}
-		
+
 		private void saveComment() {
-			
-			// ParseObject post = new ParseObject("Comment");
 			BabysitterComment post = new BabysitterComment();
-			post.put("babysitterId", mObjectId);
+			// we need a BabyRecord class to record baby info.
+			post.put("babysitterId", mBabyObjectId);
 			post.put("title", mBabysitterTitle.getText().toString());
 			post.put("comment", mBabysitterComment.getText().toString());
 			post.setPhotoFile(mFile);
-			
 
-			// Save the post and return
 			post.saveInBackground(new SaveCallback() {
 
 				@Override
 				public void done(ParseException e) {
 					if (e == null) {
-						// setResult(RESULT_OK);
-						// finish();
-						Toast.makeText(
-								getActivity().getApplicationContext(),
-								"saving doen!", Toast.LENGTH_SHORT)
-								.show();
+						Toast.makeText(getActivity().getApplicationContext(),
+								"saving doen!", Toast.LENGTH_SHORT).show();
 					} else {
 						LOGD("vic", e.getMessage());
-						Toast.makeText(
-								getActivity().getApplicationContext(),
+						Toast.makeText(getActivity().getApplicationContext(),
 								"Error saving: " + e.getMessage(),
 								Toast.LENGTH_SHORT).show();
 					}
