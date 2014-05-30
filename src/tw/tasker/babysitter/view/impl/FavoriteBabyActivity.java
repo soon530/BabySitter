@@ -2,6 +2,7 @@ package tw.tasker.babysitter.view.impl;
 
 import java.util.List;
 
+import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Baby;
 import tw.tasker.babysitter.model.data.Favorite;
@@ -116,7 +117,7 @@ public class FavoriteBabyActivity extends ActionBarActivity {
 
 		public void seeBabyDetail(String babyObjectId) {
 			Bundle bundle = new Bundle();
-			bundle.putString("objectId", babyObjectId);
+			bundle.putString(Config.BABY_OBJECT_ID, babyObjectId);
 			Intent intent = new Intent();
 			intent.putExtras(bundle);
 			intent.setClass(getActivity(), BabyDetailActivity.class);
