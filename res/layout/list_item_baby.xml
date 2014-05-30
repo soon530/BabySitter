@@ -6,12 +6,15 @@
 
     <ImageView
         android:id="@+id/baby_avator"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
         android:layout_centerVertical="true"
+        android:layout_marginBottom="2dp"
         android:layout_marginLeft="2dp"
-        android:layout_marginTop="5dp"
-        android:contentDescription="TODO" />
+        android:layout_marginRight="2dp"
+        android:layout_marginTop="2dp"
+        android:contentDescription="TODO"
+        android:scaleType="centerCrop" />
 
     <LinearLayout
         android:layout_width="wrap_content"

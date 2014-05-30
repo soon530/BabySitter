@@ -6,11 +6,16 @@
 
     <ImageView
         android:id="@+id/user_avator"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
         android:layout_centerVertical="true"
+        android:layout_marginBottom="2dp"
         android:layout_marginLeft="2dp"
-        android:contentDescription="TODO" />
+        android:layout_marginRight="2dp"
+        android:layout_marginTop="2dp"
+        android:contentDescription="TODO"
+        android:scaleType="centerCrop" />
+
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -40,8 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:text="日期"
-             android:textColor="#000000"
-             />
+            android:textColor="#000000" />
 
         <TextView
             android:id="@+id/babysitter_comment"
@@ -51,7 +55,6 @@
             android:layout_marginTop="5dp"
             android:text="評論"
             android:textColor="#000000" />
-
     </LinearLayout>
 
 </LinearLayout>
