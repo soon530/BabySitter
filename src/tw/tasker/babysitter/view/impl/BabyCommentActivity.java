@@ -107,6 +107,12 @@ public class BabyCommentActivity extends ActionBarActivity {
 
 				@Override
 				public void onClick(View v) {
+					if (mBmp == null) {
+						Toast.makeText(getActivity().getApplicationContext(),
+								"拍張照吧，不會花你太多時間的!", Toast.LENGTH_SHORT).show();
+						return ;
+					}
+					
 					mRingProgressDialog = ProgressDialog.show(getActivity(),
 							"請稍等 ...", "資料儲存中...", true);
 
