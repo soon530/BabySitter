@@ -1,6 +1,7 @@
 package tw.tasker.babysitter.view.impl;
 
 import static tw.tasker.babysitter.utils.LogUtils.LOGD;
+import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabysitterComment;
 import android.app.ProgressDialog;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,21 +28,31 @@ import com.parse.SaveCallback;
 
 public class BabysitterCommentActivity extends ActionBarActivity {
 
-	//private String objectId;
+	// private String objectId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_babysitter_comment);
 
-		Bundle bundle = getIntent().getExtras();
-		String objectId = bundle.getString("objectId");
-		int totalRating = bundle.getInt("totalRating");
-		int totalComment = bundle.getInt("totalComment");
-		
 		if (savedInstanceState == null) {
+
+			Bundle arguments = new Bundle();
+			arguments.putString(Config.BABYSITTER_OBJECT_ID, getIntent()
+					.getStringExtra(Config.BABYSITTER_OBJECT_ID));
+
+			arguments.putString(Config.TOTAL_RATING, getIntent()
+					.getStringExtra(Config.TOTAL_RATING));
+
+			arguments.putString(Config.TOTAL_COMMENT, getIntent()
+					.getStringExtra(Config.TOTAL_COMMENT));
+
+			PlaceholderFragment fragment = new PlaceholderFragment();
+
+			fragment.setArguments(arguments);
+			
 			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment(objectId, totalRating, totalComment)).commit();
+					.add(R.id.container, fragment).commit();
 		}
 	}
 
@@ -63,28 +75,37 @@ public class BabysitterCommentActivity extends ActionBarActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
 
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
-	public static class PlaceholderFragment extends Fragment {
+	public static class PlaceholderFragment extends Fragment implements
+			OnClickListener {
 
 		private Button mPostCommnet;
 		private EditText mBabysitterTitle;
 		private EditText mBabysitterComment;
 		private RatingBar mBabysitterRating;
-		
-		private String mObjectId;
+
+		private String mBabysitterObjectId;
 		private int mTotalRating;
 		private int mTotalComment;
 		private ProgressDialog mRingProgressDialog;
 
+		public PlaceholderFragment() {
+		}
 
-		public PlaceholderFragment(String objectId, int totalRating, int totalComment) {
-			mObjectId = objectId;
-			mTotalComment = totalRating;
-			mTotalRating = totalComment;
+		@Override
+		public void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+
+			if (getArguments().containsKey(Config.BABYSITTER_OBJECT_ID)) {
+				mBabysitterObjectId = getArguments().getString(
+						Config.BABYSITTER_OBJECT_ID);
+				mTotalRating = getArguments().getInt(Config.TOTAL_RATING);
+				mTotalComment = getArguments().getInt(Config.BABYSITTER_OBJECT_ID);
+			}
+
 		}
 
 		@Override
@@ -92,103 +113,92 @@ public class BabysitterCommentActivity extends ActionBarActivity {
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(
 					R.layout.fragment_babysitter_comment, container, false);
-			
-			
-			mBabysitterTitle = (EditText) rootView.findViewById(R.id.babysitter_comment_title);
-			mBabysitterComment = (EditText) rootView.findViewById(R.id.babysitter_comment);
-			mBabysitterRating = (RatingBar) rootView.findViewById(R.id.babysitter_rating);
-			
+
+			mBabysitterTitle = (EditText) rootView
+					.findViewById(R.id.babysitter_comment_title);
+			mBabysitterComment = (EditText) rootView
+					.findViewById(R.id.babysitter_comment);
+			mBabysitterRating = (RatingBar) rootView
+					.findViewById(R.id.babysitter_rating);
+
 			mPostCommnet = (Button) rootView.findViewById(R.id.post_comment);
-			mPostCommnet.setOnClickListener(new View.OnClickListener() {
-
-
-
-				@Override
-				public void onClick(View v) {
-					
-			        mRingProgressDialog = ProgressDialog.show(getActivity(), "請稍等 ...", "資料儲存中...", true); 
-
-					
-					Toast.makeText(v.getContext(), "已送出..", Toast.LENGTH_LONG)
-							.show();
-
-					saveComment();
-					//updateBabysitter();
-
-					Intent intent = new Intent();
-					intent.setClass(getActivity().getApplicationContext(),
-							BabysitterDetailActivity.class);
-					//startActivity(intent);
-				}
-
-				private void updateBabysitter() {
-					ParseQuery<ParseObject> query = ParseQuery.getQuery("babysitter");
-					 
-					// Retrieve the object by id
-					query.getInBackground(mObjectId, new GetCallback<ParseObject>() {
-
-					public void done(ParseObject babysitter, ParseException e) {
-					    if (e == null) {
-					      // Now let's update it with some new data. In this case, only cheatMode and score
-					      // will get sent to the Parse Cloud. playerName hasn't changed.
-					    	int r = (int) mBabysitterRating.getRating();
-					    	babysitter.put("totalRating", mTotalRating + r);
-					    	babysitter.put("totalComment", mTotalComment + 1);
-					    	babysitter.saveInBackground(new SaveCallback() {
-								
-								@Override
-								public void done(ParseException e) {
-									if (e == null) {
-										mRingProgressDialog.dismiss();
-								    	getActivity().finish();
-										
-									}
-								}
-							});
-					    	
-					    }
-					  }
-					});					
-				}
-
-				private void saveComment() {
-					// ParseObject post = new ParseObject("Comment");
-					BabysitterComment post = new BabysitterComment();
-					post.put("babysitterId", mObjectId);
-					int r = (int) mBabysitterRating.getRating();
-					post.put("rating", r);
-					post.put("title", mBabysitterTitle.getText().toString());
-					post.put("comment", mBabysitterComment.getText().toString());
-
-					// Save the post and return
-					post.saveInBackground(new SaveCallback() {
-
-						@Override
-						public void done(ParseException e) {
-							if (e == null) {
-								// setResult(RESULT_OK);
-								// finish();
-								Toast.makeText(
-										getActivity().getApplicationContext(),
-										"saving doen!", Toast.LENGTH_SHORT)
-										.show();
-								updateBabysitter();
-							} else {
-								LOGD("vic", e.getMessage());
-								Toast.makeText(
-										getActivity().getApplicationContext(),
-										"Error saving: " + e.getMessage(),
-										Toast.LENGTH_SHORT).show();
-							
-							}
-						}
-
-					});
-				}
-			});
+			mPostCommnet.setOnClickListener(this);
 
 			return rootView;
 		}
-	}
 
+		@Override
+		public void onClick(View v) {
+			mRingProgressDialog = ProgressDialog.show(getActivity(), "請稍等 ...",
+					"資料儲存中...", true);
+
+			Toast.makeText(v.getContext(), "已送出..", Toast.LENGTH_LONG).show();
+			saveComment();
+/*			Intent intent = new Intent();
+			intent.setClass(getActivity().getApplicationContext(),
+					BabysitterDetailActivity.class);
+*/
+		}
+
+		private void saveComment() {
+			BabysitterComment post = new BabysitterComment();
+			post.put("babysitterId", mBabysitterObjectId);
+			int r = (int) mBabysitterRating.getRating();
+			post.put("rating", r);
+			post.put("title", mBabysitterTitle.getText().toString());
+			post.put("comment", mBabysitterComment.getText().toString());
+
+			post.saveInBackground(new SaveCallback() {
+
+				@Override
+				public void done(ParseException e) {
+					if (e == null) {
+						// setResult(RESULT_OK);
+						// finish();
+						Toast.makeText(getActivity().getApplicationContext(),
+								"saving doen!", Toast.LENGTH_SHORT).show();
+						updateBabysitter();
+					} else {
+						LOGD("vic", e.getMessage());
+						Toast.makeText(getActivity().getApplicationContext(),
+								"Error saving: " + e.getMessage(),
+								Toast.LENGTH_SHORT).show();
+
+					}
+				}
+
+			});
+		}
+
+		private void updateBabysitter() {
+			ParseQuery<ParseObject> query = ParseQuery.getQuery("babysitter");
+
+			query.getInBackground(mBabysitterObjectId,
+					new GetCallback<ParseObject>() {
+
+						public void done(ParseObject babysitter,
+								ParseException e) {
+							if (e == null) {
+								int r = (int) mBabysitterRating.getRating();
+								babysitter.put("totalRating", mTotalRating + r);
+								babysitter.put("totalComment",
+										mTotalComment + 1);
+								babysitter.saveInBackground(new SaveCallback() {
+
+									@Override
+									public void done(ParseException e) {
+										if (e == null) {
+											mRingProgressDialog.dismiss();
+											getActivity().finish();
+
+										}
+									}
+								});
+
+							}
+						}
+					});
+		}
+
+	}
 }

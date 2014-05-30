@@ -152,8 +152,8 @@ public class BabysitterDetailFragment extends Fragment implements
 
 			Bundle bundle = new Bundle();
 			bundle.putString(Config.BABYSITTER_OBJECT_ID, mBabysitterObjectId);
-			bundle.putInt("totalRating", mTotalRating);
-			bundle.putInt("totalComment", mTotalComment);
+			bundle.putInt(Config.TOTAL_RATING, mTotalRating);
+			bundle.putInt(Config.TOTAL_COMMENT, mTotalComment);
 			intent.putExtras(bundle);
 
 			intent.setClass(getActivity(), BabysitterCommentActivity.class);
