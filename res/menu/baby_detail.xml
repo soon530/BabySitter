@@ -9,4 +9,10 @@
         android:title="@string/post_words"
         app:showAsAction="always"/>
 
+        <item
+        android:id="@+id/refresh"
+        android:orderInCategory="100"
+        android:title="更新"
+        app:showAsAction="always"/>
+    
 </menu>

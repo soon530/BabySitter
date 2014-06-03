@@ -241,6 +241,11 @@ public class BabyDetailActivity extends ActionBarActivity {
 				startActivity(intent);
 				return true;
 			}
+			
+			if(id == R.id.refresh) {
+				mCommentAdapter.loadObjects();
+			}
+			
 			return super.onOptionsItemSelected(item);
 		}
 
