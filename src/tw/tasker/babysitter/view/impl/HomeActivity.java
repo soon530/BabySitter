@@ -1,5 +1,6 @@
 package tw.tasker.babysitter.view.impl;
 
+import tw.tasker.babysitter.FavoriteBabysitterActivity;
 import tw.tasker.babysitter.R;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,7 +21,7 @@ import com.parse.ParseUser;
 
 public class HomeActivity extends ActionBarActivity {
 	private static final String[] mSearchCondition = new String[] { "附近保母",
-			"寶寶日記","我的收藏", "登出" };
+			"寶寶日記","我的收藏", "我的保母收藏", "登出" };
 	//,"托育時段", "收托對象", "收托年齡", "可接受托育人數"
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -110,8 +111,15 @@ public class HomeActivity extends ActionBarActivity {
 								intent.setClass(getActivity(), FavoriteBabyActivity.class);
 								startActivity(intent);
 								break;
-								
+
 							case 3:
+								intent = new Intent();
+								intent.setClass(getActivity(), FavoriteBabysitterActivity.class);
+								startActivity(intent);
+								
+								break;
+
+							case 4:
 						        // Call the Parse log out method
 						        ParseUser.logOut();
 						        intent = new Intent();
@@ -119,8 +127,8 @@ public class HomeActivity extends ActionBarActivity {
 						        intent.setClass(getActivity(), DispatchActivity.class);
 						        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 						        startActivity(intent);
-
 								break;
+								
 							default:
 								break;
 							}

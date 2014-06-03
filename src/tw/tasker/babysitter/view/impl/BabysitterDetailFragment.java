@@ -211,6 +211,7 @@ public class BabysitterDetailFragment extends Fragment implements
 	}
 
 	public void fillHeaderUI(Babysitter outline) {
+
 		mAddress = outline.getAddress();
 		mName = outline.getText();
 		LOGD("vic", "address" + mAddress + "name" + mName);
@@ -231,10 +232,10 @@ public class BabysitterDetailFragment extends Fragment implements
 		mPhone.setText(outline.getTel());
 
 		mCallIcon.setOnClickListener(this);
-
-		mOutline = outline;
 		
+		mOutline = outline;
 		getFavorite();
+		mPresenter.doCommentQuery(mBabysitterObjectId);
 	}
 	
 	
@@ -326,7 +327,6 @@ public class BabysitterDetailFragment extends Fragment implements
 
 		mBabysitterCommentList.addHeaderView(mHeaderView);
 		mPresenter.doDetailQuery(mBabysitterObjectId);
-		mPresenter.doCommentQuery(mBabysitterObjectId);
 	}
 	
 
