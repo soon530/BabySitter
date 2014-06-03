@@ -1,10 +1,8 @@
 package tw.tasker.babysitter.presenter.adapter;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabysitterComment;
+import tw.tasker.babysitter.utils.DateTimeUtils;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,10 +90,7 @@ public class CommentParseQueryAdapter extends
 		babysitterComment.setText(comment.getComment());
 		babysitterRating.setRating(comment.getRating());
 
-		SimpleDateFormat formatter = new SimpleDateFormat(
-				"yyyy-MM-dd hh:mm:ss a");
-		String now = formatter.format(comment.getCreatedAt());
-
+		String now = DateTimeUtils.show(comment.getCreatedAt());		
 		createDate.setText(now);
 
 		imageLoader

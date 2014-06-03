@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Baby;
 import tw.tasker.babysitter.model.data.BabyRecord;
+import tw.tasker.babysitter.utils.DateTimeUtils;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,23 +70,16 @@ public class RecordParseQueryAdapter extends ParseQueryAdapter<BabyRecord> {
 
 	private void initUI(View view) {
 		mUserAvator = (ImageView) view.findViewById(R.id.user_avator);
-
 		mTitle = (TextView) view.findViewById(R.id.baby_record_title);
-
 		mCreateDate = (TextView) view.findViewById(R.id.create_date);
-
 		mDescription = (TextView) view.findViewById(R.id.baby_record);
-
 	}
 
 	private void fillDataToUI(BabyRecord babyrecord) {
 		mTitle.setText(babyrecord.getTitle());
 		mDescription.setText(babyrecord.getDescription());
 
-		SimpleDateFormat formatter = new SimpleDateFormat(
-				"yyyy-MM-dd hh:mm:ss a");
-		String now = formatter.format(babyrecord.getCreatedAt());
-
+		String now = DateTimeUtils.show(babyrecord.getCreatedAt());
 		mCreateDate.setText(now);
 
 		String url;
