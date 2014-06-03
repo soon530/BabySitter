@@ -7,7 +7,7 @@
     <ImageView
         android:id="@+id/user_avator"
         android:layout_width="130dp"
-        android:layout_height="130dp"
+        android:layout_height="217dp"
         android:layout_centerVertical="true"
         android:layout_marginBottom="2dp"
         android:layout_marginLeft="2dp"
