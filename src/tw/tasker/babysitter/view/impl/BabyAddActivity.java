@@ -7,6 +7,8 @@ import java.io.ByteArrayOutputStream;
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Baby;
+import tw.tasker.babysitter.utils.PictureHelper;
+import tw.tasker.babysitter.view.impl.BabyRecordActivity.PlaceholderFragment.BabyRecordSaveCallback;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -77,6 +79,25 @@ public class BabyAddActivity extends ActionBarActivity {
 	 */
 	public static class PlaceholderFragment extends Fragment {
 
+		public class BabyAddSaveCallback extends SaveCallback {
+
+			@Override
+			public void done(ParseException e) {
+				if (e == null) {
+					Toast.makeText(getActivity().getApplicationContext(),
+							"upload doen!", Toast.LENGTH_SHORT).show();
+					saveComment();
+				} else {
+					Toast.makeText(getActivity().getApplicationContext(),
+							"Error saving: " + e.getMessage(),
+							Toast.LENGTH_SHORT).show();
+				}
+
+			}
+
+		}
+
+		
 		private EditText mBabysitterTitle;
 		private EditText mBabysitterComment;
 		private Button mPostCommnet;
@@ -88,6 +109,7 @@ public class BabyAddActivity extends ActionBarActivity {
 
 		private ProgressDialog mRingProgressDialog;
 		private Spinner mShareType;
+		private PictureHelper mPictureHelper;
 
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
@@ -97,6 +119,9 @@ public class BabyAddActivity extends ActionBarActivity {
 				mBabysitterObjectId = getArguments().getString(
 						Config.BABYSITTER_OBJECT_ID);
 			}
+			
+			mPictureHelper = new PictureHelper();
+
 		}
 
 		@Override
@@ -142,7 +167,7 @@ public class BabyAddActivity extends ActionBarActivity {
 
 				@Override
 				public void onClick(View v) {
-					if (mBmp == null) {
+					if (mPictureHelper.noPicture()) {
 						Toast.makeText(getActivity().getApplicationContext(),
 								"拍張照吧，不會花你太多時間的!", Toast.LENGTH_SHORT).show();
 						return;
@@ -154,7 +179,8 @@ public class BabyAddActivity extends ActionBarActivity {
 					Toast.makeText(v.getContext(), "已送出..", Toast.LENGTH_LONG)
 							.show();
 
-					savePicture();
+					mPictureHelper.setSaveCallback(new BabyAddSaveCallback());
+					mPictureHelper.savePicture();
 				}
 			});
 
@@ -185,45 +211,14 @@ public class BabyAddActivity extends ActionBarActivity {
 				// 將資料轉換為圖像格式
 				Bitmap bmp = (Bitmap) extras.get("data");
 
-				mBmp = bmp;
+				mPictureHelper.setBitmap(bmp);
+
 				// 載入ImageView
 				mUserAvator.setImageBitmap(bmp);
 			}
 
 			// 覆蓋原來的Activity
 			super.onActivityResult(requestCode, resultCode, data);
-		}
-
-		private void savePicture() {
-			// Locate the image in res > drawable-hdpi
-			Bitmap bitmap = mBmp;
-
-			// Convert it to byte
-			ByteArrayOutputStream stream = new ByteArrayOutputStream();
-			// Compress image to lower quality scale 1 - 100
-			bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-			byte[] image = stream.toByteArray();
-
-			// Create the ParseFile
-			mFile = new ParseFile("androidbegin.png", image);
-
-			// Upload the image into Parse Cloud
-			mFile.saveInBackground(new SaveCallback() {
-
-				@Override
-				public void done(ParseException e) {
-					if (e == null) {
-						Toast.makeText(getActivity().getApplicationContext(),
-								"upload doen!", Toast.LENGTH_SHORT).show();
-						saveComment();
-					} else {
-						Toast.makeText(getActivity().getApplicationContext(),
-								"Error saving: " + e.getMessage(),
-								Toast.LENGTH_SHORT).show();
-					}
-
-				}
-			});
 		}
 
 		private void saveComment() {
@@ -234,7 +229,7 @@ public class BabyAddActivity extends ActionBarActivity {
 			post.put("name", mBabysitterTitle.getText().toString());
 			post.put("note", mBabysitterComment.getText().toString());
 			post.setFavorite(0);
-			post.setPhotoFile(mFile);
+			post.setPhotoFile(mPictureHelper.getFile());
 			post.setUser(ParseUser.getCurrentUser());
 			post.setIsPublic(mIsPublic);
 
