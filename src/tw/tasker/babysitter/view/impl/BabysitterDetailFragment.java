@@ -5,6 +5,8 @@ import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.BabysitterComment;
+import tw.tasker.babysitter.model.data.Favorite;
+import tw.tasker.babysitter.model.data.FavoriteBabysitter;
 import tw.tasker.babysitter.presenter.BabysitterDetailPresenter;
 import tw.tasker.babysitter.presenter.impl.BabysitterDetailPresenterImpl;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
@@ -22,16 +24,24 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.parse.DeleteCallback;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 /**
  * A fragment representing a single Item detail screen. This fragment is either
@@ -98,6 +108,11 @@ public class BabysitterDetailFragment extends Fragment implements
 	private Babysitter mOutline;
 
 	private String mBabysitterObjectId;
+
+	private CheckBox mFavoriteBabysitter;
+	
+	private FavoriteBabysitter mFavorite;
+
 
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
@@ -218,7 +233,33 @@ public class BabysitterDetailFragment extends Fragment implements
 		mCallIcon.setOnClickListener(this);
 
 		mOutline = outline;
+		
+		getFavorite();
 	}
+	
+	
+	private void getFavorite() {
+		ParseQuery<FavoriteBabysitter> favorite_query = FavoriteBabysitter.getQuery();
+
+		favorite_query.whereEqualTo("babysitter", mOutline);
+		favorite_query.whereEqualTo("user", ParseUser.getCurrentUser());
+
+		favorite_query.getFirstInBackground(new GetCallback<FavoriteBabysitter>() {
+
+			@Override
+			public void done(FavoriteBabysitter favorite, ParseException e) {
+				if (favorite == null) {
+					mFavoriteBabysitter.setChecked(false);
+					mFavoriteBabysitter.setText("已取消");
+				} else {
+					mFavoriteBabysitter.setChecked(true);
+					mFavoriteBabysitter.setText("已收藏");
+					mFavorite = favorite;
+				}
+			}
+		});
+	}
+
 
 	@Override
 	public void onResume() {
@@ -247,6 +288,10 @@ public class BabysitterDetailFragment extends Fragment implements
 		mBabysitterImage = (ImageView) mHeaderView
 				.findViewById(R.id.babysitter_avator);
 
+		mFavoriteBabysitter = (CheckBox) mHeaderView
+				.findViewById(R.id.favorite_babysitter);
+
+		
 		mBabysitterName = (TextView) mHeaderView
 				.findViewById(R.id.babysitter_name);
 
@@ -272,6 +317,7 @@ public class BabysitterDetailFragment extends Fragment implements
 		mDirection.setOnClickListener(this);
 		mDistance.setText(mDistanceValue);
 		mBabyIcon.setOnClickListener(this);
+		mFavoriteBabysitter.setOnClickListener(this);
 	}
 
 	@Override
@@ -281,8 +327,9 @@ public class BabysitterDetailFragment extends Fragment implements
 		mBabysitterCommentList.addHeaderView(mHeaderView);
 		mPresenter.doDetailQuery(mBabysitterObjectId);
 		mPresenter.doCommentQuery(mBabysitterObjectId);
-
 	}
+	
+
 
 	public void setCommentData(ParseQueryAdapter<BabysitterComment> adapter) {
 		mBabysitterCommentList.setAdapter(adapter);
@@ -314,10 +361,61 @@ public class BabysitterDetailFragment extends Fragment implements
 		case R.id.call_icon:
 			mPresenter.makePhoneCall(mPhone.getText().toString());
 			break;
+			
+		case R.id.favorite_babysitter:
+			if (mFavoriteBabysitter.isChecked()) {
+				mFavoriteBabysitter.setText("已收藏");
+				addFavorite();
+			} else {
+				mFavoriteBabysitter.setText("已取消");
+				deleteFavorite();
+			}
+			break;
 		default:
 			break;
 		}
 	}
+	
+	private void addFavorite() {
+		FavoriteBabysitter favorite = new FavoriteBabysitter();
+		mFavorite = favorite;
+		// favorite.put("baby", mBaby);
+		favorite.setBaby(mOutline);
+
+		favorite.put("user", ParseUser.getCurrentUser());
+		favorite.saveInBackground(new SaveCallback() {
+			@Override
+			public void done(ParseException e) {
+				if (e == null) {
+					// Toast.makeText(getActivity().getApplicationContext(),
+					// "saving doen!", Toast.LENGTH_SHORT).show();
+				} else {
+					Toast.makeText(getActivity().getApplicationContext(),
+							"Error saving: " + e.getMessage(),
+							Toast.LENGTH_SHORT).show();
+				}
+			}
+
+		});
+	}
+
+	private void deleteFavorite() {
+		mFavorite.deleteInBackground(new DeleteCallback() {
+
+			@Override
+			public void done(ParseException e) {
+				if (e == null) {
+					// Toast.makeText(getActivity().getApplicationContext(),
+					// "deleting doen!", Toast.LENGTH_SHORT).show();
+				} else {
+					Toast.makeText(getActivity().getApplicationContext(),
+							"Error saving: " + e.getMessage(),
+							Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
+	}
+
 
 	@Override
 	public void showProgress() {
