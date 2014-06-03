@@ -67,7 +67,8 @@ public class BabyRecordActivity extends ActionBarActivity {
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
-	public static class PlaceholderFragment extends Fragment {
+	public static class PlaceholderFragment extends Fragment implements
+			OnClickListener {
 
 		private EditText mTitle;
 		private EditText mDescription;
@@ -95,48 +96,49 @@ public class BabyRecordActivity extends ActionBarActivity {
 			View rootView = inflater.inflate(R.layout.fragment_baby_record,
 					container, false);
 
-			mTitle = (EditText) rootView
-					.findViewById(R.id.title);
-			mDescription = (EditText) rootView
-					.findViewById(R.id.description);
+			mTitle = (EditText) rootView.findViewById(R.id.title);
+			mDescription = (EditText) rootView.findViewById(R.id.description);
 
 			mPost = (Button) rootView.findViewById(R.id.post);
-			mPost.setOnClickListener(new View.OnClickListener() {
+			mPost.setOnClickListener(this);
 
-				@Override
-				public void onClick(View v) {
-					if (mBmp == null) {
-						Toast.makeText(getActivity().getApplicationContext(),
-								"拍張照吧，不會花你太多時間的!", Toast.LENGTH_SHORT).show();
-						return;
-					}
-
-					mRingProgressDialog = ProgressDialog.show(getActivity(),
-							"請稍等 ...", "資料儲存中...", true);
-
-					Toast.makeText(v.getContext(), "已送出..", Toast.LENGTH_LONG)
-							.show();
-
-					savePicture();
-				}
-			});
-
-			Button selectPhoto = (Button) rootView
-					.findViewById(R.id.photo);
-			selectPhoto.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					Intent intent_camera = new Intent(
-							android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-					startActivityForResult(intent_camera, 0);
-
-				}
-			});
+			Button selectPhoto = (Button) rootView.findViewById(R.id.photo);
+			selectPhoto.setOnClickListener(this);
 
 			mUserAvator = (ImageView) rootView.findViewById(R.id.user_avator);
 
 			return rootView;
+		}
+
+		@Override
+		public void onClick(View v) {
+			int id = v.getId();
+			switch (id) {
+			case R.id.post:
+				if (mBmp == null) {
+					Toast.makeText(getActivity().getApplicationContext(),
+							"拍張照吧，不會花你太多時間的!", Toast.LENGTH_SHORT).show();
+					return;
+				}
+
+				mRingProgressDialog = ProgressDialog.show(getActivity(),
+						"請稍等 ...", "資料儲存中...", true);
+
+				Toast.makeText(v.getContext(), "已送出..", Toast.LENGTH_LONG)
+						.show();
+
+				savePicture();
+
+				break;
+
+			case R.id.photo:
+				Intent intent_camera = new Intent(
+						android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+				startActivityForResult(intent_camera, 0);
+
+			default:
+				break;
+			}
 		}
 
 		@Override
@@ -218,5 +220,6 @@ public class BabyRecordActivity extends ActionBarActivity {
 
 			});
 		}
+
 	}
 }
