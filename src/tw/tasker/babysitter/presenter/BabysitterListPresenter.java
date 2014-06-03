@@ -4,4 +4,6 @@ public interface BabysitterListPresenter {
 	void onCreate();
 
 	void onListItemClick(int position);
+
+	void refresh();
 }

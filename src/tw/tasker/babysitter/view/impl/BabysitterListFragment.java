@@ -4,10 +4,13 @@ import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.presenter.BabysitterListPresenter;
 import tw.tasker.babysitter.presenter.impl.BabysitterListPresenterImpl;
 import tw.tasker.babysitter.view.BabysitterListView;
-import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -36,8 +39,36 @@ public class BabysitterListFragment extends Fragment implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-				
+		setHasOptionsMenu(true);
 		mPresenter = new BabysitterListPresenterImpl(this);
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.babysitter_list, menu);
+		super.onCreateOptionsMenu(menu, inflater);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		int id = item.getItemId();
+
+		switch (id) {
+		case R.id.action_map:
+			Intent intent = new Intent();
+			intent.setClass(getActivity(), BabysitterMapActivity.class);
+			startActivity(intent);
+			break;
+
+		case R.id.refresh:
+			mPresenter.refresh();
+
+		default:
+			break;
+		}
+
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
@@ -49,10 +80,10 @@ public class BabysitterListFragment extends Fragment implements
 		mList.setOnItemClickListener(this);
 		mEmpty = (TextView) rootView.findViewById(R.id.empty);
 		mList.setEmptyView(mEmpty);
-		
+
 		return rootView;
 	}
-	
+
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);

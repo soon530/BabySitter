@@ -52,7 +52,8 @@ public class BabysitterListPresenterImpl implements BabysitterListPresenter,
 		Babysitter babysitter = mAdapter.getItem(position);
 		Intent detailIntent = new Intent(mView.getActivity(),
 				BabysitterDetailActivity.class);
-		detailIntent.putExtra(Config.BABYSITTER_OBJECT_ID, babysitter.getObjectId());
+		detailIntent.putExtra(Config.BABYSITTER_OBJECT_ID,
+				babysitter.getObjectId());
 		mView.getActivity().startActivity(detailIntent);
 	}
 
@@ -64,5 +65,10 @@ public class BabysitterListPresenterImpl implements BabysitterListPresenter,
 	@Override
 	public void onLoaded(List<Babysitter> babysitter, Exception e) {
 		mView.hideProgress();
+	}
+
+	@Override
+	public void refresh() {
+		mAdapter.loadObjects();
 	}
 }
