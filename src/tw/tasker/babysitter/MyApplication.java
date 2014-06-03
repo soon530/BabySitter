@@ -1,6 +1,7 @@
 package tw.tasker.babysitter;
 
 import tw.tasker.babysitter.model.data.Baby;
+import tw.tasker.babysitter.model.data.BabyRecord;
 import tw.tasker.babysitter.model.data.BabysitterComment;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.Favorite;
@@ -21,13 +22,13 @@ public class MyApplication extends Application {
 
 	@Override
 	public void onCreate() {
-		// TODO Auto-generated method stub
 		super.onCreate();		
 		ParseObject.registerSubclass(Babysitter.class);
 		ParseObject.registerSubclass(BabysitterComment.class);
 		ParseObject.registerSubclass(Baby.class);
 		ParseObject.registerSubclass(Favorite.class);
 		ParseObject.registerSubclass(FavoriteBabysitter.class);
+		ParseObject.registerSubclass(BabyRecord.class);
 
 		Parse.initialize(this, APPLICATION_ID, CLIENT_KEY);
 

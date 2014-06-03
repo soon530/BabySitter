@@ -6,7 +6,8 @@ import java.io.ByteArrayOutputStream;
 
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.model.data.BabysitterComment;
+import tw.tasker.babysitter.model.data.Baby;
+import tw.tasker.babysitter.model.data.BabyRecord;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -26,6 +27,8 @@ import android.widget.Toast;
 
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 public class BabyCommentActivity extends ActionBarActivity {
@@ -186,14 +189,16 @@ public class BabyCommentActivity extends ActionBarActivity {
 		}
 
 		private void saveComment() {
-			BabysitterComment post = new BabysitterComment();
-			// we need a BabyRecord class to record baby info.
-			post.put("babysitterId", mBabyObjectId);
-			post.put("title", mBabysitterTitle.getText().toString());
-			post.put("comment", mBabysitterComment.getText().toString());
-			post.setPhotoFile(mFile);
+			Baby baby = ParseObject.createWithoutData(Baby.class, mBabyObjectId);
 
-			post.saveInBackground(new SaveCallback() {
+			BabyRecord babyRecord = new BabyRecord();
+			babyRecord.setBaby(baby);
+			babyRecord.setTitle(mBabysitterTitle.getText().toString());
+			babyRecord.setDescription(mBabysitterComment.getText().toString());
+			babyRecord.setPhotoFile(mFile);			
+			babyRecord.setUser(ParseUser.getCurrentUser());
+			
+			babyRecord.saveInBackground(new SaveCallback() {
 
 				@Override
 				public void done(ParseException e) {
