@@ -1,13 +1,11 @@
 package tw.tasker.babysitter.view.impl;
 
 import static tw.tasker.babysitter.utils.LogUtils.LOGD;
-
-import java.io.ByteArrayOutputStream;
-
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Baby;
 import tw.tasker.babysitter.model.data.BabyRecord;
+import tw.tasker.babysitter.utils.PictureHelper;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -70,15 +68,35 @@ public class BabyRecordActivity extends ActionBarActivity {
 	public static class PlaceholderFragment extends Fragment implements
 			OnClickListener {
 
+		public class BabyRecordSaveCallback extends SaveCallback {
+
+			@Override
+			public void done(ParseException e) {
+				if (e == null) {
+					Toast.makeText(getActivity().getApplicationContext(),
+							"upload doen!", Toast.LENGTH_SHORT).show();
+					saveComment();
+				} else {
+					Toast.makeText(getActivity().getApplicationContext(),
+							"Error saving: " + e.getMessage(),
+							Toast.LENGTH_SHORT).show();
+				}
+
+			}
+
+		}
+
 		private EditText mTitle;
 		private EditText mDescription;
 		private Button mPost;
 		private String mBabyObjectId;
 		private ImageView mUserAvator;
-		private Bitmap mBmp;
-		private ParseFile mFile;
+		//private Bitmap mBmp;
+		//private ParseFile mFile;
 
 		private ProgressDialog mRingProgressDialog;
+
+		private PictureHelper mPictureHelper;
 
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
@@ -87,6 +105,8 @@ public class BabyRecordActivity extends ActionBarActivity {
 			if (getArguments().containsKey(Config.BABY_OBJECT_ID)) {
 				mBabyObjectId = getArguments().getString(Config.BABY_OBJECT_ID);
 			}
+
+			mPictureHelper = new PictureHelper();
 
 		}
 
@@ -114,8 +134,15 @@ public class BabyRecordActivity extends ActionBarActivity {
 		public void onClick(View v) {
 			int id = v.getId();
 			switch (id) {
+			case R.id.photo:
+				Intent intent_camera = new Intent(
+						android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+				startActivityForResult(intent_camera, 0);
+				break;
+
 			case R.id.post:
-				if (mBmp == null) {
+								
+				if (mPictureHelper.noPicture()) {
 					Toast.makeText(getActivity().getApplicationContext(),
 							"拍張照吧，不會花你太多時間的!", Toast.LENGTH_SHORT).show();
 					return;
@@ -127,14 +154,10 @@ public class BabyRecordActivity extends ActionBarActivity {
 				Toast.makeText(v.getContext(), "已送出..", Toast.LENGTH_LONG)
 						.show();
 
-				savePicture();
+				mPictureHelper.setSaveCallback(new BabyRecordSaveCallback());
+				mPictureHelper.savePicture();
 
 				break;
-
-			case R.id.photo:
-				Intent intent_camera = new Intent(
-						android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-				startActivityForResult(intent_camera, 0);
 
 			default:
 				break;
@@ -150,44 +173,14 @@ public class BabyRecordActivity extends ActionBarActivity {
 				// 將資料轉換為圖像格式
 				Bitmap bmp = (Bitmap) extras.get("data");
 
-				mBmp = bmp;
+				mPictureHelper.setBitmap(bmp);
+
 				// 載入ImageView
 				mUserAvator.setImageBitmap(bmp);
 			}
 
 			// 覆蓋原來的Activity
 			super.onActivityResult(requestCode, resultCode, data);
-		}
-
-		private void savePicture() {
-			// Locate the image in res > drawable-hdpi
-			Bitmap bitmap = mBmp;
-			// Convert it to byte
-			ByteArrayOutputStream stream = new ByteArrayOutputStream();
-			// Compress image to lower quality scale 1 - 100
-			bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-			byte[] image = stream.toByteArray();
-
-			// Create the ParseFile
-			mFile = new ParseFile("androidbegin.png", image);
-
-			// Upload the image into Parse Cloud
-			mFile.saveInBackground(new SaveCallback() {
-
-				@Override
-				public void done(ParseException e) {
-					if (e == null) {
-						Toast.makeText(getActivity().getApplicationContext(),
-								"upload doen!", Toast.LENGTH_SHORT).show();
-						saveComment();
-					} else {
-						Toast.makeText(getActivity().getApplicationContext(),
-								"Error saving: " + e.getMessage(),
-								Toast.LENGTH_SHORT).show();
-					}
-
-				}
-			});
 		}
 
 		private void saveComment() {
@@ -198,7 +191,7 @@ public class BabyRecordActivity extends ActionBarActivity {
 			babyRecord.setBaby(baby);
 			babyRecord.setTitle(mTitle.getText().toString());
 			babyRecord.setDescription(mDescription.getText().toString());
-			babyRecord.setPhotoFile(mFile);
+			babyRecord.setPhotoFile(mPictureHelper.getFile());
 			babyRecord.setUser(ParseUser.getCurrentUser());
 
 			babyRecord.saveInBackground(new SaveCallback() {
