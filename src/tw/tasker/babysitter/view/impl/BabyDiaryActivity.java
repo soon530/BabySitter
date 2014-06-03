@@ -83,7 +83,9 @@ public class BabyDiaryActivity extends ActionBarActivity {
 		@Override
 		public boolean onOptionsItemSelected(MenuItem item) {
 			int id = item.getItemId();
-			if (id == R.id.action_add) {
+			
+			switch (id) {
+			case R.id.action_add:
 				Bundle bundle = new Bundle();
 				bundle.putString(Config.BABYSITTER_OBJECT_ID, mBabysitterObjectId);
 				Intent intent = new Intent();
@@ -91,9 +93,15 @@ public class BabyDiaryActivity extends ActionBarActivity {
 				intent.setClass(getActivity(), BabyAddActivity.class);
 				startActivity(intent);
 				
-				return true;
-			}
+				break;
 
+			case R.id.refresh:
+				mAdapter.loadObjects();
+				
+			default:
+				break;
+			}
+			
 			return super.onOptionsItemSelected(item);
 		}
 		
