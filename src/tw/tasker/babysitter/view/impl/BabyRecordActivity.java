@@ -36,7 +36,7 @@ public class BabyRecordActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_baby_comment);
+		setContentView(R.layout.activity_baby_record);
 
 		if (savedInstanceState == null) {
 			Bundle arguments = new Bundle();
@@ -51,7 +51,7 @@ public class BabyRecordActivity extends ActionBarActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.baby_comment, menu);
+		getMenuInflater().inflate(R.menu.baby_record, menu);
 		return true;
 	}
 
@@ -69,9 +69,9 @@ public class BabyRecordActivity extends ActionBarActivity {
 	 */
 	public static class PlaceholderFragment extends Fragment {
 
-		private EditText mBabysitterTitle;
-		private EditText mBabysitterComment;
-		private Button mPostCommnet;
+		private EditText mTitle;
+		private EditText mDescription;
+		private Button mPost;
 		private String mBabyObjectId;
 		private ImageView mUserAvator;
 		private Bitmap mBmp;
@@ -92,16 +92,16 @@ public class BabyRecordActivity extends ActionBarActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_baby_comment,
+			View rootView = inflater.inflate(R.layout.fragment_baby_record,
 					container, false);
 
-			mBabysitterTitle = (EditText) rootView
-					.findViewById(R.id.babysitter_comment_title);
-			mBabysitterComment = (EditText) rootView
-					.findViewById(R.id.babysitter_comment);
+			mTitle = (EditText) rootView
+					.findViewById(R.id.title);
+			mDescription = (EditText) rootView
+					.findViewById(R.id.description);
 
-			mPostCommnet = (Button) rootView.findViewById(R.id.post_comment);
-			mPostCommnet.setOnClickListener(new View.OnClickListener() {
+			mPost = (Button) rootView.findViewById(R.id.post);
+			mPost.setOnClickListener(new View.OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
@@ -122,7 +122,7 @@ public class BabyRecordActivity extends ActionBarActivity {
 			});
 
 			Button selectPhoto = (Button) rootView
-					.findViewById(R.id.photo_button);
+					.findViewById(R.id.photo);
 			selectPhoto.setOnClickListener(new OnClickListener() {
 
 				@Override
@@ -189,15 +189,16 @@ public class BabyRecordActivity extends ActionBarActivity {
 		}
 
 		private void saveComment() {
-			Baby baby = ParseObject.createWithoutData(Baby.class, mBabyObjectId);
+			Baby baby = ParseObject
+					.createWithoutData(Baby.class, mBabyObjectId);
 
 			BabyRecord babyRecord = new BabyRecord();
 			babyRecord.setBaby(baby);
-			babyRecord.setTitle(mBabysitterTitle.getText().toString());
-			babyRecord.setDescription(mBabysitterComment.getText().toString());
-			babyRecord.setPhotoFile(mFile);			
+			babyRecord.setTitle(mTitle.getText().toString());
+			babyRecord.setDescription(mDescription.getText().toString());
+			babyRecord.setPhotoFile(mFile);
 			babyRecord.setUser(ParseUser.getCurrentUser());
-			
+
 			babyRecord.saveInBackground(new SaveCallback() {
 
 				@Override
