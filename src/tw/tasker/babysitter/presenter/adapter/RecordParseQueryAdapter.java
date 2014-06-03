@@ -3,30 +3,29 @@ package tw.tasker.babysitter.presenter.adapter;
 import java.text.SimpleDateFormat;
 
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.model.data.BabysitterComment;
+import tw.tasker.babysitter.model.data.Baby;
+import tw.tasker.babysitter.model.data.BabyRecord;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
-public class RecordParseQueryAdapter extends
-		ParseQueryAdapter<BabysitterComment> {
-	ImageView userAvator;
-	TextView babyRecordTitle;
-	TextView babyRecord;
-	TextView babyHeart;
+public class RecordParseQueryAdapter extends ParseQueryAdapter<BabyRecord> {
+	ImageView mUserAvator;
+	TextView mTitle;
+	TextView mDescription;
+	private TextView mCreateDate;
 
 	DisplayImageOptions options;
 	private ImageLoader imageLoader = ImageLoader.getInstance();
-	private TextView createDate;
 
 	public RecordParseQueryAdapter(Context context, String babyObejctId) {
 		super(context, getFactory(babyObejctId));
@@ -40,14 +39,14 @@ public class RecordParseQueryAdapter extends
 
 	}
 
-	public static ParseQueryAdapter.QueryFactory<BabysitterComment> getFactory(
+	public static ParseQueryAdapter.QueryFactory<BabyRecord> getFactory(
 			final String babyObjectId) {
-		ParseQueryAdapter.QueryFactory<BabysitterComment> factory = new ParseQueryAdapter.QueryFactory<BabysitterComment>() {
-			public ParseQuery<BabysitterComment> create() {
-				ParseQuery<BabysitterComment> query = BabysitterComment
-						.getQuery();
+		ParseQueryAdapter.QueryFactory<BabyRecord> factory = new ParseQueryAdapter.QueryFactory<BabyRecord>() {
+			public ParseQuery<BabyRecord> create() {
+				ParseQuery<BabyRecord> query = BabyRecord.getQuery();
 				query.orderByDescending("createdAt");
-				query.whereEqualTo("babysitterId", babyObjectId);
+				Baby baby = ParseObject.createWithoutData(Baby.class, babyObjectId);
+				query.whereEqualTo("baby", baby);
 				query.setLimit(20);
 				return query;
 			}
@@ -55,8 +54,7 @@ public class RecordParseQueryAdapter extends
 		return factory;
 	}
 
-	public View getItemView(BabysitterComment comment, View view,
-			ViewGroup parent) {
+	public View getItemView(BabyRecord comment, View view, ViewGroup parent) {
 
 		if (view == null) {
 			view = View.inflate(getContext(), R.layout.list_item_baby_record,
@@ -70,36 +68,32 @@ public class RecordParseQueryAdapter extends
 	};
 
 	private void initUI(View view) {
-		userAvator = (ImageView) view.findViewById(R.id.user_avator);
+		mUserAvator = (ImageView) view.findViewById(R.id.user_avator);
 
-		babyRecordTitle = (TextView) view.findViewById(R.id.baby_record_title);
+		mTitle = (TextView) view.findViewById(R.id.baby_record_title);
 
-		/*
-		 * babyHeart = (TextView) view .findViewById(R.id.heart);
-		 */
-		createDate = (TextView) view.findViewById(R.id.create_date);
+		mCreateDate = (TextView) view.findViewById(R.id.create_date);
 
-		babyRecord = (TextView) view.findViewById(R.id.baby_record);
+		mDescription = (TextView) view.findViewById(R.id.baby_record);
 
 	}
 
-	private void fillDataToUI(BabysitterComment comment) {
-		babyRecordTitle.setText(comment.getTitle());
-		babyRecord.setText(comment.getComment());
-		// babyHeart.setText("愛心 +" + comment.getRating());
+	private void fillDataToUI(BabyRecord babyrecord) {
+		mTitle.setText(babyrecord.getTitle());
+		mDescription.setText(babyrecord.getDescription());
 
 		SimpleDateFormat formatter = new SimpleDateFormat(
 				"yyyy-MM-dd hh:mm:ss a");
-		String now = formatter.format(comment.getCreatedAt());
+		String now = formatter.format(babyrecord.getCreatedAt());
 
-		createDate.setText(now);
+		mCreateDate.setText(now);
 
 		String url;
-		if (comment.getPhotoFile() != null) {
-			url = comment.getPhotoFile().getUrl();
+		if (babyrecord.getPhotoFile() != null) {
+			url = babyrecord.getPhotoFile().getUrl();
 		} else {
 			url = "https://fbcdn-sphotos-a-a.akamaihd.net/hphotos-ak-ash2/t1.0-9/377076_10150391287099790_1866039278_n.jpg";
 		}
-		imageLoader.displayImage(url, userAvator, options, null);
+		imageLoader.displayImage(url, mUserAvator, options, null);
 	}
 }

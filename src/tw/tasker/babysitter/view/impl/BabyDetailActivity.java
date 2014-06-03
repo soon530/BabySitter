@@ -5,7 +5,7 @@ import java.util.List;
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Baby;
-import tw.tasker.babysitter.model.data.BabysitterComment;
+import tw.tasker.babysitter.model.data.BabyRecord;
 import tw.tasker.babysitter.model.data.Favorite;
 import tw.tasker.babysitter.presenter.adapter.RecordParseQueryAdapter;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
@@ -60,7 +60,7 @@ public class BabyDetailActivity extends ActionBarActivity {
 	}
 
 	public static class PlaceholderFragment extends Fragment implements
-			OnQueryLoadListener<BabysitterComment>, BabysitterDetailView,
+			OnQueryLoadListener<BabyRecord>, BabysitterDetailView,
 			OnClickListener {
 
 		DisplayImageOptions options;
@@ -72,7 +72,7 @@ public class BabyDetailActivity extends ActionBarActivity {
 		private ListView mListView;
 		private ImageView mBabyIcon;
 		private Button mBabysitterIcon;
-		private ParseQueryAdapter<BabysitterComment> mCommentAdapter;
+		private ParseQueryAdapter<BabyRecord> mCommentAdapter;
 		private View mHeaderView;
 		private TextView mName;
 		private TextView mNote;
@@ -205,7 +205,7 @@ public class BabyDetailActivity extends ActionBarActivity {
 		}
 
 		@Override
-		public void onLoaded(List<BabysitterComment> babysitterComment,
+		public void onLoaded(List<BabyRecord> babysitterComment,
 				Exception e) {
 			mListView.setAdapter(mCommentAdapter);
 			hideProgress();
