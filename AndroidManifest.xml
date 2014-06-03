@@ -98,7 +98,7 @@
             -->
         </activity>
         <activity
-            android:name="tw.tasker.babysitter.view.impl.BabyCommentActivity"
+            android:name="tw.tasker.babysitter.view.impl.BabyRecordActivity"
             android:label="@string/title_activity_baby_comment"
             android:parentActivityName="tw.tasker.babysitter.view.impl.BabyDetailActivity" >
             <meta-data

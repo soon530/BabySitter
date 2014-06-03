@@ -235,7 +235,7 @@ public class BabyDetailActivity extends ActionBarActivity {
 				bundle.putString(Config.BABY_OBJECT_ID, mBabyObjectId);
 				Intent intent = new Intent();
 				intent.putExtras(bundle);
-				intent.setClass(getActivity(), BabyCommentActivity.class);
+				intent.setClass(getActivity(), BabyRecordActivity.class);
 				startActivity(intent);
 				return true;
 			}
