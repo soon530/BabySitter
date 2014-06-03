@@ -98,4 +98,10 @@ public class BabysitterDetailPresenterImpl implements BabysitterDetailPresenter,
 	public void fillHeaderUI(Babysitter outline) {
 		mView.fillHeaderUI(outline);
 	};
+	
+	
+	@Override
+	public void refresh() {
+		mCommentAdapter.loadObjects();
+	}
 }

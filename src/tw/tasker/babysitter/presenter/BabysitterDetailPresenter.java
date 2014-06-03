@@ -10,4 +10,6 @@ public interface BabysitterDetailPresenter {
 	void doDetailQuery(String objectId);
 
 	void doCommentQuery(String objectId);
+
+	void refresh();
 }

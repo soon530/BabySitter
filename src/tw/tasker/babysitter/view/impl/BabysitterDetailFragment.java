@@ -110,8 +110,8 @@ public class BabysitterDetailFragment extends Fragment implements
 		super.onCreate(savedInstanceState);
 
 		if (getArguments().containsKey(Config.BABYSITTER_OBJECT_ID)) {
-			mBabysitterObjectId = getArguments()
-					.getString(Config.BABYSITTER_OBJECT_ID);
+			mBabysitterObjectId = getArguments().getString(
+					Config.BABYSITTER_OBJECT_ID);
 		}
 
 		mPresenter = new BabysitterDetailPresenterImpl(this);
@@ -141,13 +141,16 @@ public class BabysitterDetailFragment extends Fragment implements
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
-		if (id == android.R.id.home) {
+
+		switch (id) {
+		case android.R.id.home:
 			NavUtils.navigateUpTo(getActivity(), new Intent(getActivity(),
 					BabysitterListActivity.class));
-			return true;
-		}
 
-		if (id == R.id.action_comment) {
+			break;
+
+		case R.id.action_comment:
+
 			Intent intent = new Intent();
 
 			Bundle bundle = new Bundle();
@@ -158,6 +161,12 @@ public class BabysitterDetailFragment extends Fragment implements
 
 			intent.setClass(getActivity(), BabysitterCommentActivity.class);
 			startActivity(intent);
+
+		case R.id.refresh:
+			mPresenter.refresh();
+			
+		default:
+			break;
 		}
 
 		return super.onOptionsItemSelected(item);
