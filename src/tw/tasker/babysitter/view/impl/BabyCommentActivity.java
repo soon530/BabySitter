@@ -6,11 +6,7 @@ import java.io.ByteArrayOutputStream;
 
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.R.id;
-import tw.tasker.babysitter.R.layout;
-import tw.tasker.babysitter.R.menu;
 import tw.tasker.babysitter.model.data.BabysitterComment;
-import tw.tasker.babysitter.view.impl.BabyDetailActivity.PlaceholderFragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -30,7 +26,6 @@ import android.widget.Toast;
 
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseObject;
 import com.parse.SaveCallback;
 
 public class BabyCommentActivity extends ActionBarActivity {
@@ -110,9 +105,9 @@ public class BabyCommentActivity extends ActionBarActivity {
 					if (mBmp == null) {
 						Toast.makeText(getActivity().getApplicationContext(),
 								"拍張照吧，不會花你太多時間的!", Toast.LENGTH_SHORT).show();
-						return ;
+						return;
 					}
-					
+
 					mRingProgressDialog = ProgressDialog.show(getActivity(),
 							"請稍等 ...", "資料儲存中...", true);
 

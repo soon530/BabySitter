@@ -6,6 +6,7 @@ import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Baby;
 import tw.tasker.babysitter.presenter.adapter.BabyDiaryParseQueryAdapter;
+import tw.tasker.babysitter.utils.ProgressBarUtils;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -30,9 +31,8 @@ public class BabyDiaryActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		/** Enabling Progress bar for this activity */
-		getWindow().requestFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-
+		ProgressBarUtils.init(this);
+		
 		setContentView(R.layout.activity_baby_diary);
 
 		if (savedInstanceState == null) {
@@ -153,12 +153,12 @@ public class BabyDiaryActivity extends ActionBarActivity {
 
 		@Override
 		public void onLoading() {
-			getActivity().setProgressBarIndeterminateVisibility(true);
+			ProgressBarUtils.show(getActivity());
 		}
 
 		@Override
 		public void onLoaded(List<Baby> arg0, Exception arg1) {
-			getActivity().setProgressBarIndeterminateVisibility(false);
+			ProgressBarUtils.hide(getActivity());
 		}
 
 	}

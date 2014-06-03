@@ -145,7 +145,7 @@ public class BabyAddActivity extends ActionBarActivity {
 					if (mBmp == null) {
 						Toast.makeText(getActivity().getApplicationContext(),
 								"拍張照吧，不會花你太多時間的!", Toast.LENGTH_SHORT).show();
-						return ;
+						return;
 					}
 
 					mRingProgressDialog = ProgressDialog.show(getActivity(),
@@ -197,7 +197,7 @@ public class BabyAddActivity extends ActionBarActivity {
 		private void savePicture() {
 			// Locate the image in res > drawable-hdpi
 			Bitmap bitmap = mBmp;
-			
+
 			// Convert it to byte
 			ByteArrayOutputStream stream = new ByteArrayOutputStream();
 			// Compress image to lower quality scale 1 - 100

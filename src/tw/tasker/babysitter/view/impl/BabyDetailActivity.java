@@ -8,6 +8,7 @@ import tw.tasker.babysitter.model.data.Baby;
 import tw.tasker.babysitter.model.data.BabysitterComment;
 import tw.tasker.babysitter.model.data.Favorite;
 import tw.tasker.babysitter.presenter.adapter.RecordParseQueryAdapter;
+import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.BabysitterDetailView;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,7 +21,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -45,9 +45,7 @@ public class BabyDetailActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		/** Enabling Progress bar for this activity */
-		getWindow().requestFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-
+		ProgressBarUtils.init(this);
 		setContentView(R.layout.activity_baby_detail);
 
 		if (savedInstanceState == null) {
@@ -99,7 +97,7 @@ public class BabyDetailActivity extends ActionBarActivity {
 			if (getArguments().containsKey(Config.BABY_OBJECT_ID)) {
 				mBabyObjectId = getArguments().getString(Config.BABY_OBJECT_ID);
 			}
-			
+
 			setHasOptionsMenu(true);
 		}
 
@@ -215,12 +213,12 @@ public class BabyDetailActivity extends ActionBarActivity {
 
 		@Override
 		public void showProgress() {
-			getActivity().setProgressBarIndeterminateVisibility(true);
+			ProgressBarUtils.show(getActivity());
 		}
 
 		@Override
 		public void hideProgress() {
-			getActivity().setProgressBarIndeterminateVisibility(false);
+			ProgressBarUtils.hide(getActivity());
 		}
 
 		@Override
@@ -241,11 +239,11 @@ public class BabyDetailActivity extends ActionBarActivity {
 				startActivity(intent);
 				return true;
 			}
-			
-			if(id == R.id.refresh) {
+
+			if (id == R.id.refresh) {
 				mCommentAdapter.loadObjects();
 			}
-			
+
 			return super.onOptionsItemSelected(item);
 		}
 

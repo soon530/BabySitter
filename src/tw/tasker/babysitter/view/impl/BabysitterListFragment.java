@@ -3,6 +3,7 @@ package tw.tasker.babysitter.view.impl;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.presenter.BabysitterListPresenter;
 import tw.tasker.babysitter.presenter.impl.BabysitterListPresenterImpl;
+import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.BabysitterListView;
 import android.app.Fragment;
 import android.content.Intent;
@@ -92,12 +93,12 @@ public class BabysitterListFragment extends Fragment implements
 
 	@Override
 	public void showProgress() {
-		getActivity().setProgressBarIndeterminateVisibility(true);
+		ProgressBarUtils.show(getActivity());
 	}
 
 	@Override
 	public void hideProgress() {
-		getActivity().setProgressBarIndeterminateVisibility(false);
+		ProgressBarUtils.hide(getActivity());
 	}
 
 	@Override

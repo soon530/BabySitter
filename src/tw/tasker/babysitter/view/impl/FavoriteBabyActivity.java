@@ -7,6 +7,7 @@ import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Baby;
 import tw.tasker.babysitter.model.data.Favorite;
 import tw.tasker.babysitter.presenter.adapter.FavoriteBabyParseQueryAdapter;
+import tw.tasker.babysitter.utils.ProgressBarUtils;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,7 +17,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -30,8 +30,7 @@ public class FavoriteBabyActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		/** Enabling Progress bar for this activity */
-		getWindow().requestFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		ProgressBarUtils.init(this);
 
 		setContentView(R.layout.activity_baby_list);
 
@@ -126,12 +125,12 @@ public class FavoriteBabyActivity extends ActionBarActivity {
 
 		@Override
 		public void onLoading() {
-			getActivity().setProgressBarIndeterminateVisibility(true);
+			ProgressBarUtils.show(getActivity());
 		}
 
 		@Override
 		public void onLoaded(List<Favorite> favorite, Exception e) {
-			getActivity().setProgressBarIndeterminateVisibility(false);
+			ProgressBarUtils.hide(getActivity());
 		}
 
 	}
