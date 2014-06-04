@@ -73,11 +73,21 @@ public class FavoriteBabyParseQueryAdapter extends ParseQueryAdapter<Favorite> {
 				query.include("user");
 				query.orderByDescending("createdAt");
 				query.whereEqualTo("user", ParseUser.getCurrentUser());
-				query.setLimit(20);
+				//query.setLimit(20);
 				query.include("baby");
 				return query;
 			}
 		};
 		return factory;
 	}
+
+	@Override
+	public View getNextPageView(View v, ViewGroup parent) {
+		if (v == null) {
+			v = View.inflate(getContext(), R.layout.adapter_next_page, null);
+		}
+
+		return v;
+	}
+
 }

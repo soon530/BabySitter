@@ -106,7 +106,8 @@ public class FavoriteBabyActivity extends ActionBarActivity {
 		public void doListQuery() {
 			mAdapter = new FavoriteBabyParseQueryAdapter(getActivity());
 			mAdapter.setAutoload(false);
-			mAdapter.setPaginationEnabled(false);
+			//mAdapter.setPaginationEnabled(false);
+			mAdapter.setObjectsPerPage(5);
 			mAdapter.addOnQueryLoadListener(this);
 			mList.setAdapter(mAdapter);
 			mAdapter.loadObjects();
