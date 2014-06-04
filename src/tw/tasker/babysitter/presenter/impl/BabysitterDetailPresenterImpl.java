@@ -22,7 +22,7 @@ public class BabysitterDetailPresenterImpl implements BabysitterDetailPresenter,
 
 	private BabysitterDetailFragment mView;
 	private BabysitterDetailModel mModel;
-	ParseQueryAdapter<BabysitterComment> mCommentAdapter;
+	ParseQueryAdapter<BabysitterComment> mAdapter;
 	
 	
 	public BabysitterDetailPresenterImpl(
@@ -77,12 +77,12 @@ public class BabysitterDetailPresenterImpl implements BabysitterDetailPresenter,
 
 	@Override
 	public void doCommentQuery(String babysitterObjectId) {
-		mCommentAdapter = new CommentParseQueryAdapter(mView.getActivity(), babysitterObjectId);
-		mCommentAdapter.setAutoload(false);
-		//mCommentAdapter.setPaginationEnabled(false);
-		mCommentAdapter.setObjectsPerPage(5);
-		mCommentAdapter.addOnQueryLoadListener(this);
-		mCommentAdapter.loadObjects();
+		mAdapter = new CommentParseQueryAdapter(mView.getActivity(), babysitterObjectId);
+		mAdapter.setAutoload(false);
+		//mAdapter.setPaginationEnabled(false);
+		mAdapter.setObjectsPerPage(5);
+		mAdapter.addOnQueryLoadListener(this);
+		mAdapter.loadObjects();
 	}
 
 	@Override
@@ -92,7 +92,7 @@ public class BabysitterDetailPresenterImpl implements BabysitterDetailPresenter,
 
 	@Override
 	public void onLoaded(List<BabysitterComment> babysitterComment, Exception e) {
-		mView.setCommentData(mCommentAdapter);
+		mView.setCommentData(mAdapter);
 		mView.hideProgress();
 	}
 
@@ -103,6 +103,6 @@ public class BabysitterDetailPresenterImpl implements BabysitterDetailPresenter,
 	
 	@Override
 	public void refresh() {
-		mCommentAdapter.loadObjects();
+		mAdapter.loadObjects();
 	}
 }

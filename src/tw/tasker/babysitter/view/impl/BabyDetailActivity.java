@@ -72,7 +72,7 @@ public class BabyDetailActivity extends ActionBarActivity {
 		private ListView mListView;
 		private ImageView mBabyIcon;
 		private Button mBabysitterIcon;
-		private ParseQueryAdapter<BabyRecord> mCommentAdapter;
+		private ParseQueryAdapter<BabyRecord> mAdapter;
 		private View mHeaderView;
 		private TextView mName;
 		private TextView mNote;
@@ -191,13 +191,13 @@ public class BabyDetailActivity extends ActionBarActivity {
 		}
 
 		public void doCommentQuery(String babyObjectId) {
-			mCommentAdapter = new RecordParseQueryAdapter(getActivity(),
+			mAdapter = new RecordParseQueryAdapter(getActivity(),
 					babyObjectId);
-			mCommentAdapter.setAutoload(false);
-			//mCommentAdapter.setPaginationEnabled(false);
-			mCommentAdapter.setObjectsPerPage(5);
-			mCommentAdapter.addOnQueryLoadListener(this);
-			mCommentAdapter.loadObjects();
+			mAdapter.setAutoload(false);
+			//mAdapter.setPaginationEnabled(false);
+			mAdapter.setObjectsPerPage(5);
+			mAdapter.addOnQueryLoadListener(this);
+			mAdapter.loadObjects();
 		}
 
 		@Override
@@ -208,7 +208,7 @@ public class BabyDetailActivity extends ActionBarActivity {
 		@Override
 		public void onLoaded(List<BabyRecord> babysitterComment,
 				Exception e) {
-			mListView.setAdapter(mCommentAdapter);
+			mListView.setAdapter(mAdapter);
 			hideProgress();
 		}
 
@@ -242,7 +242,7 @@ public class BabyDetailActivity extends ActionBarActivity {
 			}
 
 			if (id == R.id.refresh) {
-				mCommentAdapter.loadObjects();
+				mAdapter.loadObjects();
 			}
 
 			return super.onOptionsItemSelected(item);
