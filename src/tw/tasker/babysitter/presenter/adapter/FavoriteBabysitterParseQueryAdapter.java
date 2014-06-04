@@ -97,4 +97,13 @@ public class FavoriteBabysitterParseQueryAdapter extends ParseQueryAdapter<Favor
 		};
 		return factory;
 	}
+
+	@Override
+	public View getNextPageView(View v, ViewGroup parent) {
+		if (v == null) {
+			v = View.inflate(getContext(), R.layout.adapter_next_page, null);
+		}
+
+		return v;
+	}
 }
