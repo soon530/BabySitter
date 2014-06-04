@@ -37,7 +37,8 @@ public class BabysitterListPresenterImpl implements BabysitterListPresenter,
 	private void doListQuery() {
 		mAdapter = new BabysitterListParseQueryAdapter(mView.getActivity());
 		mAdapter.setAutoload(false);
-		mAdapter.setPaginationEnabled(false);
+		//mAdapter.setPaginationEnabled(false);
+		mAdapter.setObjectsPerPage(5);
 		mAdapter.addOnQueryLoadListener(this);
 		setAdapter(mAdapter);
 		mAdapter.loadObjects();

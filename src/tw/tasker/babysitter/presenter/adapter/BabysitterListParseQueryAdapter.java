@@ -83,13 +83,21 @@ public class BabysitterListParseQueryAdapter extends
 	private static ParseQueryAdapter.QueryFactory<Babysitter> getQueryFactory() {
 		ParseQueryAdapter.QueryFactory<Babysitter> factory = new ParseQueryAdapter.QueryFactory<Babysitter>() {
 			public ParseQuery<Babysitter> create() {
-				ParseQuery<Babysitter> query = Babysitter
-						.getQuery();
+				ParseQuery<Babysitter> query = Babysitter.getQuery();
 				query.orderByDescending("createdAt");
-				query.setLimit(20);
+				// query.setLimit(20);
 				return query;
 			}
 		};
 		return factory;
+	}
+
+	@Override
+	public View getNextPageView(View v, ViewGroup parent) {
+		if (v == null) {
+			v = View.inflate(getContext(), R.layout.adapter_next_page, null);
+		}
+
+		return v;
 	}
 }
