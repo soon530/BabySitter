@@ -79,7 +79,8 @@ public class BabysitterDetailPresenterImpl implements BabysitterDetailPresenter,
 	public void doCommentQuery(String babysitterObjectId) {
 		mCommentAdapter = new CommentParseQueryAdapter(mView.getActivity(), babysitterObjectId);
 		mCommentAdapter.setAutoload(false);
-		mCommentAdapter.setPaginationEnabled(false);
+		//mCommentAdapter.setPaginationEnabled(false);
+		mCommentAdapter.setObjectsPerPage(5);
 		mCommentAdapter.addOnQueryLoadListener(this);
 		mCommentAdapter.loadObjects();
 	}

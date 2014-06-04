@@ -48,7 +48,7 @@ public class CommentParseQueryAdapter extends
 						.getQuery();
 				query.orderByDescending("createdAt");
 				query.whereEqualTo("babysitterId", babysitterObjectId);
-				query.setLimit(20);
+				//query.setLimit(20);
 				return query;
 			}
 		};
@@ -98,6 +98,15 @@ public class CommentParseQueryAdapter extends
 						"https://lh3.googleusercontent.com/-3ett5vaAVZc/AAAAAAAAAAI/AAAAAAAACSQ/BUns79OwRrI/s120-c/photo.jpg",
 						babysitterImage, options, null);
 
+	}
+	
+	@Override
+	public View getNextPageView(View v, ViewGroup parent) {
+		if (v == null) {
+			v = View.inflate(getContext(), R.layout.adapter_next_page, null);
+		}
+
+		return v;
 	}
 	
 	
