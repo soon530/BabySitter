@@ -4,9 +4,9 @@
     tools:context="tw.tasker.babysitter.view.impl.FavoriteBabyActivity" >
 
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/refresh"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never"/>
-
+        android:title="更新"
+        app:showAsAction="always"/>
+    
 </menu>
