@@ -126,7 +126,8 @@ public class BabyDiaryActivity extends ActionBarActivity {
 		public void doListQuery() {
 			mAdapter = new BabyDiaryParseQueryAdapter(getActivity(), mBabysitterObjectId);
 			mAdapter.setAutoload(false);
-			mAdapter.setPaginationEnabled(false);
+			mAdapter.setObjectsPerPage(5);
+			//mAdapter.setPaginationEnabled(false);
 			mList.setAdapter(mAdapter);
 			mAdapter.loadObjects();
 			mAdapter.addOnQueryLoadListener(this);

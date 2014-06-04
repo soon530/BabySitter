@@ -69,7 +69,7 @@ public class BabyDiaryParseQueryAdapter extends ParseQueryAdapter<Baby> {
 			public ParseQuery<Baby> create() {
 				ParseQuery<Baby> query = Baby.getQuery();
 				query.orderByDescending("createdAt");
-				query.setLimit(20);
+				//query.setLimit(20);
 				query.include("baby");
 				
 				if (babysitterObjectId != null) {
@@ -81,4 +81,14 @@ public class BabyDiaryParseQueryAdapter extends ParseQueryAdapter<Baby> {
 		};
 		return factory;
 	}
+	
+	@Override
+	public View getNextPageView(View v, ViewGroup parent) {
+		if (v == null) {
+			v = View.inflate(getContext(), R.layout.adapter_next_page, null);
+		}
+
+		return v;
+	}
+
 }
