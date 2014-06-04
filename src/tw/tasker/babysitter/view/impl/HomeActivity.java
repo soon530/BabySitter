@@ -21,7 +21,7 @@ import com.parse.ParseUser;
 
 public class HomeActivity extends ActionBarActivity {
 	private static final String[] mSearchCondition = new String[] { "附近保母",
-			"寶寶日記","我的收藏", "我的保母收藏", "登出" };
+			"寶寶日記","寶寶收藏", "保母收藏", "登出" };
 	//,"托育時段", "收托對象", "收托年齡", "可接受托育人數"
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
