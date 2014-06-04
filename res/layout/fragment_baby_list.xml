@@ -6,11 +6,16 @@
     android:orientation="vertical"
     tools:context="tw.tasker.babysitter.BabyListActivity$PlaceholderFragment" >
 
-    <ListView
+    <GridView
         android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-    </ListView>
+        android:layout_height="match_parent"
+        android:columnWidth="130dp"
+        android:gravity="center"
+        android:horizontalSpacing="2dp"
+        android:numColumns="2"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="3dp" />
 
     <TextView
         android:id="@+id/empty"

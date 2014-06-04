@@ -20,7 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
+import android.widget.GridView;
 import android.widget.TextView;
 
 import com.parse.ParseQueryAdapter;
@@ -48,7 +48,7 @@ public class FavoriteBabyActivity extends ActionBarActivity {
 	public static class PlaceholderFragment extends Fragment implements
 			OnItemClickListener, OnQueryLoadListener<Favorite> {
 		private ParseQueryAdapter<Favorite> mAdapter;
-		private ListView mList;
+		private GridView mList;
 		private TextView mEmpty;
 
 		public PlaceholderFragment() {
@@ -90,7 +90,7 @@ public class FavoriteBabyActivity extends ActionBarActivity {
 			View rootView = inflater.inflate(R.layout.fragment_baby_list,
 					container, false);
 
-			mList = (ListView) rootView.findViewById(R.id.list);
+			mList = (GridView) rootView.findViewById(R.id.list);
 			mList.setOnItemClickListener(this);
 			mEmpty = (TextView) rootView.findViewById(R.id.empty);
 			mList.setEmptyView(mEmpty);
@@ -107,7 +107,7 @@ public class FavoriteBabyActivity extends ActionBarActivity {
 			mAdapter = new FavoriteBabyParseQueryAdapter(getActivity());
 			mAdapter.setAutoload(false);
 			//mAdapter.setPaginationEnabled(false);
-			mAdapter.setObjectsPerPage(5);
+			mAdapter.setObjectsPerPage(6);
 			mAdapter.addOnQueryLoadListener(this);
 			mList.setAdapter(mAdapter);
 			mAdapter.loadObjects();
