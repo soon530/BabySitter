@@ -194,7 +194,8 @@ public class BabyDetailActivity extends ActionBarActivity {
 			mCommentAdapter = new RecordParseQueryAdapter(getActivity(),
 					babyObjectId);
 			mCommentAdapter.setAutoload(false);
-			mCommentAdapter.setPaginationEnabled(false);
+			//mCommentAdapter.setPaginationEnabled(false);
+			mCommentAdapter.setObjectsPerPage(5);
 			mCommentAdapter.addOnQueryLoadListener(this);
 			mCommentAdapter.loadObjects();
 		}

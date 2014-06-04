@@ -90,4 +90,13 @@ public class RecordParseQueryAdapter extends ParseQueryAdapter<BabyRecord> {
 		}
 		imageLoader.displayImage(url, mUserAvator, options, null);
 	}
+	
+	@Override
+	public View getNextPageView(View v, ViewGroup parent) {
+		if (v == null) {
+			v = View.inflate(getContext(), R.layout.adapter_next_page, null);
+		}
+
+		return v;
+	}
 }
