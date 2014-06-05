@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -34,7 +35,7 @@ public class BabysitterListFragment extends Fragment implements
 
 	private BabysitterListPresenter mPresenter;
 
-	private ListView mList;
+	private GridView mList;
 	private TextView mEmpty;
 
 	@Override
@@ -77,7 +78,7 @@ public class BabysitterListFragment extends Fragment implements
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_baby_list,
 				container, false);
-		mList = (ListView) rootView.findViewById(R.id.list);
+		mList = (GridView) rootView.findViewById(R.id.list);
 		mList.setOnItemClickListener(this);
 		mEmpty = (TextView) rootView.findViewById(R.id.empty);
 		mList.setEmptyView(mEmpty);
