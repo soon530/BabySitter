@@ -12,6 +12,7 @@ import android.content.Context;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.nostra13.universalimageloader.core.imageaware.ImageAware;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
@@ -55,9 +57,21 @@ public class FavoriteBabyParseQueryAdapter extends ParseQueryAdapter<Favorite> {
         mCard.headerTitle = baby.getName();
         mCard.secondaryTitle = baby.getNote();
         mCard.rating = (float) (Math.random() * (5.0));
-        mCard.resourceIdThumbnail = R.drawable.ic_launcher;
+        //mCard.resourceIdThumbnail = R.drawable.ic_launcher;
         mCard.init();
 		
+        
+		String url;
+		if (baby.getPhotoFile() != null) {
+			url = baby.getPhotoFile().getUrl();
+		} else {
+			url = "https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-ash3/t1.0-9/q77/s720x720/1966891_782022338479354_124097698_n.jpg";
+		}
+		
+		mCard.mUrl=url;
+
+        
+        
         CardView mCardView;
 
         //Setup card
@@ -148,6 +162,8 @@ public class FavoriteBabyParseQueryAdapter extends ParseQueryAdapter<Favorite> {
         protected String headerTitle;
         protected String secondaryTitle;
         protected float rating;
+        
+        protected String mUrl;
 
         public GplayGridCard(Context context) {
             super(context, R.layout.carddemo_gplay_inner_content);
@@ -171,10 +187,13 @@ public class FavoriteBabyParseQueryAdapter extends ParseQueryAdapter<Favorite> {
             addCardHeader(header);
 
             GplayGridThumb thumbnail = new GplayGridThumb(getContext());
-            if (resourceIdThumbnail > -1)
+            
+/*            if (resourceIdThumbnail > -1)
                 thumbnail.setDrawableResource(resourceIdThumbnail);
             else
                 thumbnail.setDrawableResource(R.drawable.ic_launcher);
+*/            
+            
             addCardThumbnail(thumbnail);
 
             setOnClickListener(new OnCardClickListener() {
@@ -210,6 +229,10 @@ public class FavoriteBabyParseQueryAdapter extends ParseQueryAdapter<Favorite> {
 
             @Override
             public void setupInnerViewElements(ViewGroup parent, View viewImage) {
+            	
+        		imageLoader.displayImage(mUrl, (ImageView) viewImage, options, null);
+
+            	
                 //viewImage.getLayoutParams().width = 196;
                 //viewImage.getLayoutParams().height = 196;
 

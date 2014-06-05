@@ -35,7 +35,9 @@ public class BabyDiaryParseQueryAdapter extends ParseQueryAdapter<Baby> {
 			view = View.inflate(getContext(), R.layout.list_item_baby,
 					null);
 		}
-		ImageView babyAvator = (ImageView) view.findViewById(R.id.baby_avator);
+		
+		
+/*		ImageView babyAvator = (ImageView) view.findViewById(R.id.baby_avator);
 		TextView babyName = (TextView) view.findViewById(R.id.baby_name);
 		TextView babyNote = (TextView) view.findViewById(R.id.baby_note);
 		TextView totalFavorite = (TextView) view
@@ -61,7 +63,7 @@ public class BabyDiaryParseQueryAdapter extends ParseQueryAdapter<Baby> {
 		babyNote.setText(baby.getNote());
 		totalFavorite.setText("最愛：+" + baby.getFavorite());
 		totalRecord.setText("記錄：+5");
-		return view;
+*/		return view;
 	}
 
 	private static ParseQueryAdapter.QueryFactory<Baby> getQueryFactory(final String babysitterObjectId) {
