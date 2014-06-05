@@ -2,17 +2,17 @@ package tw.tasker.babysitter;
 
 import tw.tasker.babysitter.model.data.Baby;
 import tw.tasker.babysitter.model.data.BabyRecord;
-import tw.tasker.babysitter.model.data.BabysitterComment;
 import tw.tasker.babysitter.model.data.Babysitter;
+import tw.tasker.babysitter.model.data.BabysitterComment;
 import tw.tasker.babysitter.model.data.Favorite;
 import tw.tasker.babysitter.model.data.FavoriteBabysitter;
 import android.app.Application;
 import android.content.Context;
 
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
@@ -41,13 +41,21 @@ public class MyApplication extends Application {
 		// or you can create default configuration by
 		//  ImageLoaderConfiguration.createDefault(this);
 		// method.
-		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
+/*		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
 				.threadPriority(Thread.NORM_PRIORITY - 2)
 				.denyCacheImageMultipleSizesInMemory()
 				.discCacheFileNameGenerator(new Md5FileNameGenerator())
 				.tasksProcessingOrder(QueueProcessingType.LIFO)
 				.writeDebugLogs() // Remove for release app
 				.build();
+*/		
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
+        .memoryCache(new LruMemoryCache(2 * 1024 * 1024))
+        .defaultDisplayImageOptions(DisplayImageOptions.createSimple())
+        .writeDebugLogs()
+        .build();
+
+		
 		// Initialize ImageLoader with configuration.
 		ImageLoader.getInstance().init(config);
 	}

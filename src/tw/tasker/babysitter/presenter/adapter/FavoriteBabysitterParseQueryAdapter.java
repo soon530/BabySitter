@@ -3,16 +3,11 @@ package tw.tasker.babysitter.presenter.adapter;
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardHeader;
 import it.gmariotti.cardslib.library.internal.CardThumbnail;
-import it.gmariotti.cardslib.library.internal.Card.OnCardClickListener;
 import it.gmariotti.cardslib.library.internal.base.BaseCard;
 import it.gmariotti.cardslib.library.view.CardView;
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.model.data.Baby;
 import tw.tasker.babysitter.model.data.Babysitter;
-import tw.tasker.babysitter.model.data.Favorite;
 import tw.tasker.babysitter.model.data.FavoriteBabysitter;
-import tw.tasker.babysitter.presenter.adapter.FavoriteBabyParseQueryAdapter.GplayGridCard;
-import tw.tasker.babysitter.presenter.adapter.FavoriteBabyParseQueryAdapter.GplayGridCard.GplayGridThumb;
 import android.content.Context;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,7 +19,7 @@ import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
@@ -36,13 +31,21 @@ public class FavoriteBabysitterParseQueryAdapter extends
 
 	public FavoriteBabysitterParseQueryAdapter(Context context) {
 		super(context, getQueryFactory());
-		options = new DisplayImageOptions.Builder()
+		
+        options = new DisplayImageOptions.Builder()
+        .cacheInMemory(true)
+        .displayer(new SimpleBitmapDisplayer())
+        .showImageOnFail(R.drawable.ic_launcher)
+        .build();
+		
+		
+/*		options = new DisplayImageOptions.Builder()
 				.showImageOnLoading(R.drawable.ic_launcher)
 				.showImageForEmptyUri(R.drawable.ic_launcher)
 				.showImageOnFail(R.drawable.ic_launcher).cacheInMemory(true)
 				.cacheOnDisc(true).considerExifParams(true)
 				.displayer(new RoundedBitmapDisplayer(20)).build();
-	}
+*/	}
 
 	@Override
 	public View getItemView(FavoriteBabysitter favorite, View view,
@@ -218,7 +221,7 @@ public class FavoriteBabysitterParseQueryAdapter extends
 			addCardHeader(header);
 
 			GplayGridThumb thumbnail = new GplayGridThumb(getContext());
-		
+			thumbnail.setExternalUsage(true);
 /*			if (resourceIdThumbnail > -1)
 				thumbnail.setDrawableResource(resourceIdThumbnail);
 			else

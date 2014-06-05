@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.nostra13.universalimageloader.core.imageaware.ImageAware;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
@@ -31,13 +32,21 @@ public class FavoriteBabyParseQueryAdapter extends ParseQueryAdapter<Favorite> {
 
 	public FavoriteBabyParseQueryAdapter(Context context) {
 		super(context, getQueryFactory());
-		options = new DisplayImageOptions.Builder()
+		
+        options = new DisplayImageOptions.Builder()
+        .cacheInMemory(true)
+        .displayer(new SimpleBitmapDisplayer())
+        .showImageOnFail(R.drawable.ic_launcher)
+        .build();
+
+		
+/*		options = new DisplayImageOptions.Builder()
 				.showImageOnLoading(R.drawable.ic_launcher)
 				.showImageForEmptyUri(R.drawable.ic_launcher)
 				.showImageOnFail(R.drawable.ic_launcher).cacheInMemory(true)
 				.cacheOnDisc(true).considerExifParams(true)
 				.displayer(new RoundedBitmapDisplayer(20)).build();
-	}
+*/	}
 
 	@Override
 	public View getItemView(Favorite favorite, View view, ViewGroup parent) {
@@ -188,6 +197,7 @@ public class FavoriteBabyParseQueryAdapter extends ParseQueryAdapter<Favorite> {
 
             GplayGridThumb thumbnail = new GplayGridThumb(getContext());
             
+            thumbnail.setExternalUsage(true);
 /*            if (resourceIdThumbnail > -1)
                 thumbnail.setDrawableResource(resourceIdThumbnail);
             else
