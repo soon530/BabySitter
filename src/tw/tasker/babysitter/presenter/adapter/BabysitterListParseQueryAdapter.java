@@ -6,11 +6,14 @@ import it.gmariotti.cardslib.library.internal.CardThumbnail;
 import it.gmariotti.cardslib.library.internal.Card.OnCardClickListener;
 import it.gmariotti.cardslib.library.internal.base.BaseCard;
 import it.gmariotti.cardslib.library.view.CardView;
+import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.presenter.adapter.FavoriteBabysitterParseQueryAdapter.GplayGridCard;
 import tw.tasker.babysitter.presenter.adapter.FavoriteBabysitterParseQueryAdapter.GplayGridCard.GplayGridThumb;
+import tw.tasker.babysitter.view.impl.BabysitterDetailActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,6 +80,8 @@ public class BabysitterListParseQueryAdapter extends
 		 mCard.rating = rating;
 		//mCard.resourceIdThumbnail = R.drawable.ic_launcher;
 		mCard.mComment = String.valueOf(totalComementValue);
+		mCard.mBabysitterObjectId = babysitter.getObjectId();
+		
 		
 		String url;
 		//if (babysitter.getPhotoFile() != null) {
@@ -184,6 +189,7 @@ public class BabysitterListParseQueryAdapter extends
 	
 	public class GplayGridCard extends Card {
 
+		public String mBabysitterObjectId;
 		public String mUrl;
 		protected TextView mTitle;
 		protected TextView mSecondaryTitle;
@@ -234,8 +240,12 @@ public class BabysitterListParseQueryAdapter extends
 			setOnClickListener(new OnCardClickListener() {
 				@Override
 				public void onClick(Card card, View view) {
-					Toast.makeText(getContext(), "你點是的：" + card.getTitle(),
-							Toast.LENGTH_SHORT).show();
+					//Babysitter babysitter = getItem(position);
+					Intent detailIntent = new Intent(getContext(),
+							BabysitterDetailActivity.class);
+					detailIntent.putExtra(Config.BABYSITTER_OBJECT_ID,
+							mBabysitterObjectId);
+					getContext().startActivity(detailIntent);
 				}
 			});
 		}
