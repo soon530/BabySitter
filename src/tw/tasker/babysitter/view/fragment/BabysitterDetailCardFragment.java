@@ -1,4 +1,4 @@
-package tw.tasker.babysitter.view.impl;
+package tw.tasker.babysitter.view.fragment;
 
 //import it.gmariotti.cardslib.demo.R;
 //import it.gmariotti.cardslib.demo.cards.SuggestedCard;

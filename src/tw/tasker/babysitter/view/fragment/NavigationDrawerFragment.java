@@ -1,4 +1,4 @@
-package tw.tasker.babysitter.view.impl;
+package tw.tasker.babysitter.view.fragment;
 
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.R.drawable;
