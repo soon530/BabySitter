@@ -2,7 +2,7 @@ package tw.tasker.babysitter.view.activity;
 
 import tw.tasker.babysitter.FavoriteBabysitterActivity;
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.view.fragment.ListColorFragment;
+import tw.tasker.babysitter.view.fragment.HomeFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -31,7 +31,7 @@ public class HomeActivity extends ActionBarActivity {
 
 		if (savedInstanceState == null) {
 			
-			ListColorFragment fragment = new ListColorFragment();
+			HomeFragment fragment = new HomeFragment();
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, fragment).commit();
 		}

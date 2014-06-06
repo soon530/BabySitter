@@ -51,7 +51,7 @@ import com.parse.ParseUser;
  *
  * @author Gabriele Mariotti (gabri.mariotti@gmail.com)
  */
-public class ListColorFragment extends Fragment implements OnCardClickListener {
+public class HomeFragment extends Fragment implements OnCardClickListener {
 
     protected ScrollView mScrollView;
 
