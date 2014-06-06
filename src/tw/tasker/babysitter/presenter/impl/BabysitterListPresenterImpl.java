@@ -9,7 +9,7 @@ import tw.tasker.babysitter.model.impl.BabysitterListModelImpl;
 import tw.tasker.babysitter.presenter.BabysitterListPresenter;
 import tw.tasker.babysitter.presenter.adapter.BabysitterListParseQueryAdapter;
 import tw.tasker.babysitter.view.activity.BabysitterActivity;
-import tw.tasker.babysitter.view.fragment.BabysitterListFragment;
+import tw.tasker.babysitter.view.fragment.BabysittersFragment;
 import android.content.Intent;
 import android.widget.BaseAdapter;
 
@@ -19,12 +19,12 @@ import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 public class BabysitterListPresenterImpl implements BabysitterListPresenter,
 		OnQueryLoadListener<Babysitter> {
 
-	private BabysitterListFragment mView;
+	private BabysittersFragment mView;
 	private BabysitterListModel mModel;
 	private ParseQueryAdapter<Babysitter> mAdapter;
 
 	public BabysitterListPresenterImpl(
-			BabysitterListFragment babysitterListFragment) {
+			BabysittersFragment babysitterListFragment) {
 		mView = babysitterListFragment;
 		mModel = new BabysitterListModelImpl(this);
 	}

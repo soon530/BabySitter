@@ -31,7 +31,7 @@ import android.widget.TextView;
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class BabysitterListFragment extends Fragment implements
+public class BabysittersFragment extends Fragment implements
 		BabysitterListView, OnItemClickListener {
 
 	private BabysitterListPresenter mPresenter;
