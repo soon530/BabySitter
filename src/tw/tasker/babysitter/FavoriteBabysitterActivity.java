@@ -7,6 +7,7 @@ import tw.tasker.babysitter.model.data.FavoriteBabysitter;
 import tw.tasker.babysitter.presenter.adapter.FavoriteBabysitterParseQueryAdapter;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.impl.BabysitterDetailActivity;
+import tw.tasker.babysitter.view.impl.FavoriteBabyActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,7 +21,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.parse.ParseQueryAdapter;
@@ -68,9 +68,22 @@ public class FavoriteBabysitterActivity extends ActionBarActivity {
 		@Override
 		public boolean onOptionsItemSelected(MenuItem item) {
 			int id = item.getItemId();
-			if (id == R.id.refresh) {
+			
+			switch (id) {
+			case R.id.refresh:
 				mAdapter.loadObjects();
+				break;
+
+			case R.id.favorite_baby:
+				Intent intent = new Intent();
+				intent.setClass(getActivity(), FavoriteBabyActivity.class);
+				startActivity(intent);
+				break;
+
+			default:
+				break;
 			}
+			
 			return super.onOptionsItemSelected(item);
 		}
 

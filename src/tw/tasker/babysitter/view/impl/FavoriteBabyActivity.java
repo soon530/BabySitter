@@ -3,6 +3,7 @@ package tw.tasker.babysitter.view.impl;
 import java.util.List;
 
 import tw.tasker.babysitter.Config;
+import tw.tasker.babysitter.FavoriteBabysitterActivity;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Baby;
 import tw.tasker.babysitter.model.data.Favorite;
@@ -77,6 +78,12 @@ public class FavoriteBabyActivity extends ActionBarActivity {
 			switch (id) {
 			case R.id.refresh:
 				mAdapter.loadObjects();
+				break;
+			case R.id.favorite_babysitter:
+				Intent intent = new Intent();
+				intent.setClass(getActivity(), FavoriteBabysitterActivity.class);
+				startActivity(intent);
+				break;
 			default:
 				break;
 			}

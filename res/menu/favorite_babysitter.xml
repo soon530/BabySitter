@@ -4,6 +4,11 @@
     tools:context="tw.tasker.babysitter.FavoriteBabysitterActivity" >
 
     <item
+        android:id="@+id/favorite_baby"
+        android:orderInCategory="100"
+        android:title="寶寶收藏"
+        app:showAsAction="always"/>
+    <item
         android:id="@+id/refresh"
         android:orderInCategory="100"
         android:title="更新"
