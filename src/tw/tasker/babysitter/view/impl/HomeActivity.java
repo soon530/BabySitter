@@ -29,8 +29,10 @@ public class HomeActivity extends ActionBarActivity {
 		setContentView(R.layout.activity_home);
 
 		if (savedInstanceState == null) {
+			
+			ListColorFragment fragment = new ListColorFragment();
 			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
+					.add(R.id.container, fragment).commit();
 		}
 	}
 

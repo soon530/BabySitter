@@ -2,13 +2,13 @@
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
+            backward-compatibility can go here.
         -->
     </style>
 
@@ -64,6 +64,14 @@
         <item name="android:paddingRight">@dimen/grid_card_padding_right</item>
         <item name="android:paddingBottom">@dimen/grid_card_padding_bottom</item>
         <item name="android:paddingTop">@dimen/grid_card_padding_top</item>
+    </style>
+
+    <!-- Style for simple title inner main view -->
+    <style name="card.base_simple_title">
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_gravity">left|center_vertical</item>
+        <item name="android:layout_marginLeft">@dimen/card_main_simple_title_margin_left</item>
+        <item name="android:layout_marginTop">@dimen/card_main_simple_title_margin_top</item>
     </style>
 
 </resources>
