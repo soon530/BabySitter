@@ -4,13 +4,13 @@ import java.util.List;
 
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.model.BabysitterDetailModel;
-import tw.tasker.babysitter.model.data.BabysitterComment;
 import tw.tasker.babysitter.model.data.Babysitter;
+import tw.tasker.babysitter.model.data.BabysitterComment;
 import tw.tasker.babysitter.model.impl.BabysitterDetailModelImpl;
 import tw.tasker.babysitter.presenter.BabysitterDetailPresenter;
 import tw.tasker.babysitter.presenter.adapter.CommentParseQueryAdapter;
 import tw.tasker.babysitter.view.impl.BabyDiaryActivity;
-import tw.tasker.babysitter.view.impl.BabysitterDetailFragment;
+import tw.tasker.babysitter.view.impl.BabysitterDetailCardFragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,13 +20,13 @@ import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 
 public class BabysitterDetailPresenterImpl implements BabysitterDetailPresenter, OnQueryLoadListener<BabysitterComment> {
 
-	private BabysitterDetailFragment mView;
+	private BabysitterDetailCardFragment mView;
 	private BabysitterDetailModel mModel;
 	ParseQueryAdapter<BabysitterComment> mAdapter;
 	
 	
 	public BabysitterDetailPresenterImpl(
-			BabysitterDetailFragment babysitterDetailFragment) {
+			BabysitterDetailCardFragment babysitterDetailFragment) {
 		mView = babysitterDetailFragment;
 		mModel = new BabysitterDetailModelImpl(this);
 	}
@@ -92,7 +92,7 @@ public class BabysitterDetailPresenterImpl implements BabysitterDetailPresenter,
 
 	@Override
 	public void onLoaded(List<BabysitterComment> babysitterComment, Exception e) {
-		mView.setCommentData(mAdapter);
+		//mView.setCommentData(mAdapter);
 		mView.hideProgress();
 	}
 

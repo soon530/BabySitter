@@ -24,7 +24,7 @@ public class BabysitterDetailActivity extends ActionBarActivity {
 					getIntent().getStringExtra(
 							Config.BABYSITTER_OBJECT_ID));
 
-			BabysitterDetailFragment fragment = new BabysitterDetailFragment();
+			BabysitterDetailCardFragment fragment = new BabysitterDetailCardFragment();
 
 			fragment.setArguments(arguments);
 

@@ -130,7 +130,7 @@ public class BabysitterDetailFragment extends Fragment implements
 					Config.BABYSITTER_OBJECT_ID);
 		}
 
-		mPresenter = new BabysitterDetailPresenterImpl(this);
+		//mPresenter = new BabysitterDetailPresenterImpl(this);
 
 		// Bundle bundle = getActivity().getIntent().getExtras();
 		// mBabysitterObjectId = bundle.getString(BABYSITTER_OBJECT_ID);
