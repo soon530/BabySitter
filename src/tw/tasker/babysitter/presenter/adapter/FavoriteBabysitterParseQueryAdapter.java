@@ -26,26 +26,10 @@ import com.parse.ParseUser;
 
 public class FavoriteBabysitterParseQueryAdapter extends
 		ParseQueryAdapter<FavoriteBabysitter> {
-	DisplayImageOptions options;
-	private ImageLoader imageLoader = ImageLoader.getInstance();
 
 	public FavoriteBabysitterParseQueryAdapter(Context context) {
 		super(context, getQueryFactory());
-		
-        options = new DisplayImageOptions.Builder()
-        .cacheInMemory(true)
-        .displayer(new SimpleBitmapDisplayer())
-        .showImageOnFail(R.drawable.ic_launcher)
-        .build();
-		
-		
-/*		options = new DisplayImageOptions.Builder()
-				.showImageOnLoading(R.drawable.ic_launcher)
-				.showImageForEmptyUri(R.drawable.ic_launcher)
-				.showImageOnFail(R.drawable.ic_launcher).cacheInMemory(true)
-				.cacheOnDisc(true).considerExifParams(true)
-				.displayer(new RoundedBitmapDisplayer(20)).build();
-*/	}
+	}
 
 	@Override
 	public View getItemView(FavoriteBabysitter favorite, View view,
@@ -61,7 +45,7 @@ public class FavoriteBabysitterParseQueryAdapter extends
 
 		Babysitter babysitter = favorite.getBabysitter();
 
-		GplayGridCard mCard = new GplayGridCard(getContext());
+		GridCard mCard = new GridCard(getContext());
 
 		mCard.headerTitle = babysitter.getText();
 		mCard.secondaryTitle = babysitter.getAddress();
@@ -74,7 +58,8 @@ public class FavoriteBabysitterParseQueryAdapter extends
 		 mCard.rating = rating;
 		//mCard.resourceIdThumbnail = R.drawable.ic_launcher;
 		mCard.mComment = String.valueOf(totalComementValue);
-		
+		mCard.mBabysitterObjectId = babysitter.getObjectId();
+
 		String url;
 		//if (babysitter.getPhotoFile() != null) {
 			//url = babysitter.getPhotoFile().getUrl();
@@ -182,99 +167,5 @@ public class FavoriteBabysitterParseQueryAdapter extends
 		return v;
 	}
 
-	public class GplayGridCard extends Card {
-
-		public String mUrl;
-		protected TextView mTitle;
-		protected TextView mSecondaryTitle;
-		protected RatingBar mRatingBar;
-		protected int resourceIdThumbnail = -1;
-		protected int count;
-
-		protected String headerTitle;
-		protected String secondaryTitle;
-		protected float rating;
-		protected String mComment;
-		
-		public GplayGridCard(Context context) {
-			super(context, R.layout.carddemo_gplay_inner_content);
-		}
-
-		public GplayGridCard(Context context, int innerLayout) {
-			super(context, innerLayout);
-		}
-
-		private void init() {
-			CardHeader header = new CardHeader(getContext());
-			header.setButtonOverflowVisible(true);
-			header.setTitle(headerTitle);
-			header.setPopupMenu(R.menu.popupmain,
-					new CardHeader.OnClickCardHeaderPopupMenuListener() {
-						@Override
-						public void onMenuItemClick(BaseCard card, MenuItem item) {
-							Toast.makeText(getContext(),
-									"Item " + item.getTitle(),
-									Toast.LENGTH_SHORT).show();
-						}
-					});
-
-			addCardHeader(header);
-
-			GplayGridThumb thumbnail = new GplayGridThumb(getContext());
-			thumbnail.setExternalUsage(true);
-/*			if (resourceIdThumbnail > -1)
-				thumbnail.setDrawableResource(resourceIdThumbnail);
-			else
-				thumbnail.setDrawableResource(R.drawable.ic_launcher);
-*/
-			addCardThumbnail(thumbnail);
-
-			setOnClickListener(new OnCardClickListener() {
-				@Override
-				public void onClick(Card card, View view) {
-					Toast.makeText(getContext(), "你點是的：" + card.getTitle(),
-							Toast.LENGTH_SHORT).show();
-				}
-			});
-		}
-
-		@Override
-		public void setupInnerViewElements(ViewGroup parent, View view) {
-
-			TextView title = (TextView) view
-					.findViewById(R.id.carddemo_gplay_main_inner_title);
-			title.setText("評論"+mComment);
-
-			TextView subtitle = (TextView) view
-					.findViewById(R.id.carddemo_gplay_main_inner_subtitle);
-			subtitle.setText(secondaryTitle);
-
-			RatingBar mRatingBar = (RatingBar) parent
-					.findViewById(R.id.carddemo_gplay_main_inner_ratingBar);
-
-			mRatingBar.setNumStars(5);
-			mRatingBar.setMax(5);
-			mRatingBar.setStepSize(0.5f);
-			mRatingBar.setRating(rating);
-		}
-
-		class GplayGridThumb extends CardThumbnail {
-
-			public GplayGridThumb(Context context) {
-				super(context);
-			}
-
-			@Override
-			public void setupInnerViewElements(ViewGroup parent, View viewImage) {
-
-        		imageLoader.displayImage(mUrl, (ImageView) viewImage, options, null);
-
-				// viewImage.getLayoutParams().width = 196;
-				// viewImage.getLayoutParams().height = 196;
-
-			}
-		}
-
-	}
 
 }
