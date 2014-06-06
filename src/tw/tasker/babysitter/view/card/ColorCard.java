@@ -16,7 +16,7 @@
  *  *****************************************************************************
  */
 
-package tw.tasker.babysitter.view;
+package tw.tasker.babysitter.view.card;
 
 import android.content.Context;
 import android.view.View;

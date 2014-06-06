@@ -29,7 +29,7 @@ import java.util.ArrayList;
 
 import tw.tasker.babysitter.FavoriteBabysitterActivity;
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.view.ColorCard;
+import tw.tasker.babysitter.view.card.ColorCard;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
