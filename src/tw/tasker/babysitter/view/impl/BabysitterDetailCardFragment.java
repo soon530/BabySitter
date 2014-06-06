@@ -12,7 +12,7 @@ import tw.tasker.babysitter.presenter.BabysitterDetailPresenter;
 import tw.tasker.babysitter.presenter.impl.BabysitterDetailPresenterImpl;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.BabysitterDetailView;
-import tw.tasker.babysitter.view.SuggestedCard;
+import tw.tasker.babysitter.view.card.SuggestedCard;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.ActionMode;
