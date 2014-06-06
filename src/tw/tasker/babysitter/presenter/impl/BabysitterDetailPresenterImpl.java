@@ -10,7 +10,7 @@ import tw.tasker.babysitter.model.impl.BabysitterDetailModelImpl;
 import tw.tasker.babysitter.presenter.BabysitterDetailPresenter;
 import tw.tasker.babysitter.presenter.adapter.CommentParseQueryAdapter;
 import tw.tasker.babysitter.view.activity.BabyDiaryActivity;
-import tw.tasker.babysitter.view.fragment.BabysitterDetailCardFragment;
+import tw.tasker.babysitter.view.fragment.BabysitterFragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,13 +20,13 @@ import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 
 public class BabysitterDetailPresenterImpl implements BabysitterDetailPresenter, OnQueryLoadListener<BabysitterComment> {
 
-	private BabysitterDetailCardFragment mView;
+	private BabysitterFragment mView;
 	private BabysitterDetailModel mModel;
 	ParseQueryAdapter<BabysitterComment> mAdapter;
 	
 	
 	public BabysitterDetailPresenterImpl(
-			BabysitterDetailCardFragment babysitterDetailFragment) {
+			BabysitterFragment babysitterDetailFragment) {
 		mView = babysitterDetailFragment;
 		mModel = new BabysitterDetailModelImpl(this);
 	}

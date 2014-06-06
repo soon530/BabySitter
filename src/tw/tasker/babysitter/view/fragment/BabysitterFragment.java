@@ -22,7 +22,7 @@ import android.view.ViewGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-public class BabysitterDetailCardFragment extends Fragment implements
+public class BabysitterFragment extends Fragment implements
 		BabysitterDetailView {
 	protected ScrollView mScrollView;
 	protected TextView mTextViewSwipe;
