@@ -5,6 +5,7 @@ import tw.tasker.babysitter.presenter.BabysitterListPresenter;
 import tw.tasker.babysitter.presenter.impl.BabysitterListPresenterImpl;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.BabysitterListView;
+import tw.tasker.babysitter.view.activity.BabysitterMapActivity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;

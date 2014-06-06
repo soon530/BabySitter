@@ -1,4 +1,4 @@
-package tw.tasker.babysitter.view.impl;
+package tw.tasker.babysitter.view.activity;
 
 import static tw.tasker.babysitter.utils.LogUtils.LOGD;
 
@@ -8,7 +8,7 @@ import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Baby;
 import tw.tasker.babysitter.utils.PictureHelper;
-import tw.tasker.babysitter.view.impl.BabyRecordActivity.PlaceholderFragment.BabyRecordSaveCallback;
+import tw.tasker.babysitter.view.activity.BabyRecordActivity.PlaceholderFragment.BabyRecordSaveCallback;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;

@@ -1,4 +1,4 @@
-package tw.tasker.babysitter.view.impl;
+package tw.tasker.babysitter.view.activity;
 
 import android.app.Activity;
 import android.content.Intent;

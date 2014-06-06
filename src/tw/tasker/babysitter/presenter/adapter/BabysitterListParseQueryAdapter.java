@@ -11,7 +11,7 @@ import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.presenter.adapter.FavoriteBabysitterParseQueryAdapter.GplayGridCard;
 import tw.tasker.babysitter.presenter.adapter.FavoriteBabysitterParseQueryAdapter.GplayGridCard.GplayGridThumb;
-import tw.tasker.babysitter.view.impl.BabysitterDetailActivity;
+import tw.tasker.babysitter.view.activity.BabysitterDetailActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.MenuItem;

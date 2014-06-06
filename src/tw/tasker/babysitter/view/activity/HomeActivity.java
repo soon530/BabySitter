@@ -1,7 +1,8 @@
-package tw.tasker.babysitter.view.impl;
+package tw.tasker.babysitter.view.activity;
 
 import tw.tasker.babysitter.FavoriteBabysitterActivity;
 import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.view.impl.ListColorFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

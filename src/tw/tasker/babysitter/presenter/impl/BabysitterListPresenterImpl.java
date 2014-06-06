@@ -8,7 +8,7 @@ import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.impl.BabysitterListModelImpl;
 import tw.tasker.babysitter.presenter.BabysitterListPresenter;
 import tw.tasker.babysitter.presenter.adapter.BabysitterListParseQueryAdapter;
-import tw.tasker.babysitter.view.impl.BabysitterDetailActivity;
+import tw.tasker.babysitter.view.activity.BabysitterDetailActivity;
 import tw.tasker.babysitter.view.impl.BabysitterListFragment;
 import android.content.Intent;
 import android.widget.BaseAdapter;

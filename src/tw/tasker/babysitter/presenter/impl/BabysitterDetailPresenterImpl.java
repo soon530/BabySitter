@@ -9,7 +9,7 @@ import tw.tasker.babysitter.model.data.BabysitterComment;
 import tw.tasker.babysitter.model.impl.BabysitterDetailModelImpl;
 import tw.tasker.babysitter.presenter.BabysitterDetailPresenter;
 import tw.tasker.babysitter.presenter.adapter.CommentParseQueryAdapter;
-import tw.tasker.babysitter.view.impl.BabyDiaryActivity;
+import tw.tasker.babysitter.view.activity.BabyDiaryActivity;
 import tw.tasker.babysitter.view.impl.BabysitterDetailCardFragment;
 import android.content.Intent;
 import android.net.Uri;

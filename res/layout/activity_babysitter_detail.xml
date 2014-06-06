@@ -3,6 +3,6 @@
     android:id="@+id/babysitter_detail_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="tw.tasker.babysitter.view.impl.BabysitterDetailActivity"
+    tools:context="tw.tasker.babysitter.view.activity.BabysitterDetailActivity"
     tools:ignore="MergeRootFrame" />
 

@@ -29,6 +29,10 @@ import java.util.ArrayList;
 
 import tw.tasker.babysitter.FavoriteBabysitterActivity;
 import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.view.activity.BabyDiaryActivity;
+import tw.tasker.babysitter.view.activity.BabysitterListActivity;
+import tw.tasker.babysitter.view.activity.DispatchActivity;
+import tw.tasker.babysitter.view.activity.FavoriteBabyActivity;
 import tw.tasker.babysitter.view.card.ColorCard;
 import android.content.Intent;
 import android.os.Bundle;
