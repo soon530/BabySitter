@@ -3,7 +3,6 @@ package tw.tasker.babysitter.view.activity;
 import java.util.List;
 
 import tw.tasker.babysitter.Config;
-import tw.tasker.babysitter.FavoriteBabysitterActivity;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Baby;
 import tw.tasker.babysitter.model.data.Favorite;

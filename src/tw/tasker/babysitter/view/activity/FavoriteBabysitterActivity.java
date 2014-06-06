@@ -1,13 +1,16 @@
-package tw.tasker.babysitter;
+package tw.tasker.babysitter.view.activity;
 
 import java.util.List;
 
+import tw.tasker.babysitter.Config;
+import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.R.id;
+import tw.tasker.babysitter.R.layout;
+import tw.tasker.babysitter.R.menu;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.FavoriteBabysitter;
 import tw.tasker.babysitter.presenter.adapter.FavoriteBabysitterParseQueryAdapter;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
-import tw.tasker.babysitter.view.activity.BabysitterActivity;
-import tw.tasker.babysitter.view.activity.FavoriteBabyActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

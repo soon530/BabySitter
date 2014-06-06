@@ -1,6 +1,5 @@
 package tw.tasker.babysitter.view.activity;
 
-import tw.tasker.babysitter.FavoriteBabysitterActivity;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.view.fragment.HomeFragment;
 import android.content.Intent;
