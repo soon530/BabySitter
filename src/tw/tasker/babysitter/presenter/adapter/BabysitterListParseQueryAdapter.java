@@ -11,7 +11,7 @@ import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.presenter.adapter.FavoriteBabysitterParseQueryAdapter.GplayGridCard;
 import tw.tasker.babysitter.presenter.adapter.FavoriteBabysitterParseQueryAdapter.GplayGridCard.GplayGridThumb;
-import tw.tasker.babysitter.view.activity.BabysitterDetailActivity;
+import tw.tasker.babysitter.view.activity.BabysitterActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.MenuItem;
@@ -242,7 +242,7 @@ public class BabysitterListParseQueryAdapter extends
 				public void onClick(Card card, View view) {
 					//Babysitter babysitter = getItem(position);
 					Intent detailIntent = new Intent(getContext(),
-							BabysitterDetailActivity.class);
+							BabysitterActivity.class);
 					detailIntent.putExtra(Config.BABYSITTER_OBJECT_ID,
 							mBabysitterObjectId);
 					getContext().startActivity(detailIntent);

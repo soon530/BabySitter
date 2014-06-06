@@ -6,7 +6,7 @@ import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.FavoriteBabysitter;
 import tw.tasker.babysitter.presenter.adapter.FavoriteBabysitterParseQueryAdapter;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
-import tw.tasker.babysitter.view.activity.BabysitterDetailActivity;
+import tw.tasker.babysitter.view.activity.BabysitterActivity;
 import tw.tasker.babysitter.view.activity.FavoriteBabyActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -141,7 +141,7 @@ public class FavoriteBabysitterActivity extends ActionBarActivity {
 			bundle.putString(Config.BABYSITTER_OBJECT_ID, babysitterObjectId);
 			Intent intent = new Intent();
 			intent.putExtras(bundle);
-			intent.setClass(getActivity(), BabysitterDetailActivity.class);
+			intent.setClass(getActivity(), BabysitterActivity.class);
 			startActivity(intent);
 		}
 	}

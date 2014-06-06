@@ -254,7 +254,7 @@ public class BabyDetailActivity extends ActionBarActivity {
 			case R.id.babysitter_icon:
 				Intent intent = new Intent();
 				intent.setClass(getActivity().getApplicationContext(),
-						BabysitterDetailActivity.class);
+						BabysitterActivity.class);
 				startActivity(intent);
 
 				break;

@@ -136,7 +136,7 @@ public class BabysitterCommentActivity extends ActionBarActivity {
 			saveComment();
 /*			Intent intent = new Intent();
 			intent.setClass(getActivity().getApplicationContext(),
-					BabysitterDetailActivity.class);
+					BabysitterActivity.class);
 */
 		}
 

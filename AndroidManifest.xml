@@ -62,7 +62,7 @@
                 android:value="tw.tasker.babysitter.view.HomeActivity" />
         </activity>
         <activity
-            android:name="tw.tasker.babysitter.view.activity.BabysitterDetailActivity"
+            android:name="tw.tasker.babysitter.view.activity.BabysitterActivity"
             android:label="@string/title_item_detail"
             android:launchMode="singleTask"
             android:parentActivityName="tw.tasker.babysitter.view.activity.BabysittersActivity" >
@@ -74,7 +74,7 @@
             android:name="tw.tasker.babysitter.view.activity.BabysitterCommentActivity"
             android:label="@string/title_activity_babysitter_comment"
             android:launchMode="singleTask"
-            android:parentActivityName="tw.tasker.babysitter.view.activity.BabysitterDetailActivity" >
+            android:parentActivityName="tw.tasker.babysitter.view.activity.BabysitterActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="tw.tasker.babysitter.view.BabysitterDetailActivity" />

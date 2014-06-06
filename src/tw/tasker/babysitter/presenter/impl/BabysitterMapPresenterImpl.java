@@ -12,7 +12,7 @@ import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.impl.BabysitterMapModelImpl;
 import tw.tasker.babysitter.presenter.BabysitterMapPresenter;
 import tw.tasker.babysitter.utils.MyLocation;
-import tw.tasker.babysitter.view.activity.BabysitterDetailActivity;
+import tw.tasker.babysitter.view.activity.BabysitterActivity;
 import tw.tasker.babysitter.view.activity.BabysittersActivity;
 import tw.tasker.babysitter.view.activity.BabysitterMapActivity;
 import android.content.Intent;
@@ -72,7 +72,7 @@ public class BabysitterMapPresenterImpl implements BabysitterMapPresenter, OnFin
 	@Override
 	public void onInfoWindowClick(Marker marker) {
 		final Intent intent = new Intent();
-		intent.setClass(mBabysitterMap, BabysitterDetailActivity.class);
+		intent.setClass(mBabysitterMap, BabysitterActivity.class);
 		Bundle bundle = new Bundle();
 		bundle.putString(Config.BABYSITTER_OBJECT_ID, marker.getTitle());
 		bundle.putString("slat", String.valueOf(marker.getPosition().latitude));

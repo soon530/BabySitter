@@ -12,7 +12,7 @@ import tw.tasker.babysitter.presenter.impl.BabysitterDetailPresenterImpl;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.BabysitterDetailView;
 import tw.tasker.babysitter.view.activity.BabysitterCommentActivity;
-import tw.tasker.babysitter.view.activity.BabysitterDetailActivity;
+import tw.tasker.babysitter.view.activity.BabysitterActivity;
 import tw.tasker.babysitter.view.activity.BabysittersActivity;
 import android.content.Intent;
 import android.location.Location;
@@ -49,7 +49,7 @@ import com.parse.SaveCallback;
 /**
  * A fragment representing a single Item detail screen. This fragment is either
  * contained in a {@link BabysittersActivity} in two-pane mode (on tablets)
- * or a {@link BabysitterDetailActivity} on handsets.
+ * or a {@link BabysitterActivity} on handsets.
  */
 public class BabysitterDetailFragment extends Fragment implements
 		BabysitterDetailView, OnClickListener {

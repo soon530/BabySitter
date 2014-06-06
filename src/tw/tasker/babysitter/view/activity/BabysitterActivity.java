@@ -7,7 +7,7 @@ import tw.tasker.babysitter.view.fragment.BabysitterDetailCardFragment;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
-public class BabysitterDetailActivity extends ActionBarActivity {
+public class BabysitterActivity extends ActionBarActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
