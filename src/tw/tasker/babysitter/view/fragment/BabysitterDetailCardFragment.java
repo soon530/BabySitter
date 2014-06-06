@@ -12,7 +12,7 @@ import tw.tasker.babysitter.presenter.BabysitterDetailPresenter;
 import tw.tasker.babysitter.presenter.impl.BabysitterDetailPresenterImpl;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.BabysitterDetailView;
-import tw.tasker.babysitter.view.card.SuggestedCard;
+import tw.tasker.babysitter.view.card.BabysitterCard;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.ActionMode;
@@ -111,7 +111,7 @@ public class BabysitterDetailCardFragment extends Fragment implements
 	 */
 	private void initCardSuggested(String name) {
 
-		SuggestedCard card = new SuggestedCard(getActivity());
+		BabysitterCard card = new BabysitterCard(getActivity());
 		//card.mName = name;
 		CardView cardView = (CardView) getActivity().findViewById(
 				R.id.carddemo_suggested);

@@ -34,16 +34,16 @@ import it.gmariotti.cardslib.library.internal.CardThumbnail;
 /**
  * @author Gabriele Mariotti (gabri.mariotti@gmail.com)
  */
-public class SuggestedCard extends Card {
+public class BabysitterCard extends Card {
 
 	//public String mName;
 
-    public SuggestedCard(Context context) {
+    public BabysitterCard(Context context) {
         this(context, R.layout.carddemo_suggested_inner_content);
         //mName = name;
     }
 
-    public SuggestedCard(Context context, int innerLayout) {
+    public BabysitterCard(Context context, int innerLayout) {
         super(context, innerLayout);
         init();
     }
