@@ -99,7 +99,7 @@ public class HomeActivity extends ActionBarActivity {
 							case 0:
 								intent = new Intent();
 								intent.setClass(getActivity(),
-										BabysitterListActivity.class);
+										BabysittersActivity.class);
 								startActivity(intent);
 								break;
 								

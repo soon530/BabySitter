@@ -5,7 +5,7 @@ import tw.tasker.babysitter.utils.ProgressBarUtils;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
-public class BabysitterListActivity extends ActionBarActivity {
+public class BabysittersActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

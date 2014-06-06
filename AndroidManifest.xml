@@ -44,7 +44,7 @@
             android:launchMode="singleTask" >
         </activity>
         <activity
-            android:name="tw.tasker.babysitter.view.activity.BabysitterListActivity"
+            android:name="tw.tasker.babysitter.view.activity.BabysittersActivity"
             android:label="@string/title_item_list"
             android:launchMode="singleTask"
             android:parentActivityName="tw.tasker.babysitter.view.activity.HomeActivity" >
@@ -65,7 +65,7 @@
             android:name="tw.tasker.babysitter.view.activity.BabysitterDetailActivity"
             android:label="@string/title_item_detail"
             android:launchMode="singleTask"
-            android:parentActivityName="tw.tasker.babysitter.view.activity.BabysitterListActivity" >
+            android:parentActivityName="tw.tasker.babysitter.view.activity.BabysittersActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="tw.tasker.babysitter.view.BabysitterListActivity" />

@@ -13,7 +13,7 @@ import tw.tasker.babysitter.model.impl.BabysitterMapModelImpl;
 import tw.tasker.babysitter.presenter.BabysitterMapPresenter;
 import tw.tasker.babysitter.utils.MyLocation;
 import tw.tasker.babysitter.view.activity.BabysitterDetailActivity;
-import tw.tasker.babysitter.view.activity.BabysitterListActivity;
+import tw.tasker.babysitter.view.activity.BabysittersActivity;
 import tw.tasker.babysitter.view.activity.BabysitterMapActivity;
 import android.content.Intent;
 import android.location.Location;
@@ -64,7 +64,7 @@ public class BabysitterMapPresenterImpl implements BabysitterMapPresenter, OnFin
 	public void onOptionsItemSelected(int id) {
 		if (id == R.id.action_list) {
 			Intent intent = new Intent();
-			intent.setClass(mBabysitterMap, BabysitterListActivity.class);
+			intent.setClass(mBabysitterMap, BabysittersActivity.class);
 			mBabysitterMap.startActivity(intent);
 		}
 	}

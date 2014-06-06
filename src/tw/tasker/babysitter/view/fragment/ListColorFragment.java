@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import tw.tasker.babysitter.FavoriteBabysitterActivity;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.view.activity.BabyDiaryActivity;
-import tw.tasker.babysitter.view.activity.BabysitterListActivity;
+import tw.tasker.babysitter.view.activity.BabysittersActivity;
 import tw.tasker.babysitter.view.activity.DispatchActivity;
 import tw.tasker.babysitter.view.activity.FavoriteBabyActivity;
 import tw.tasker.babysitter.view.card.ColorCard;
@@ -122,7 +122,7 @@ public class ListColorFragment extends Fragment implements OnCardClickListener {
 		case 0:
 			intent = new Intent();
 			intent.setClass(getActivity(),
-					BabysitterListActivity.class);
+					BabysittersActivity.class);
 			startActivity(intent);
 			break;
 			

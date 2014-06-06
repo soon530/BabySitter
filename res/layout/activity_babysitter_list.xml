@@ -4,6 +4,6 @@
     android:name="tw.tasker.babysitter.view.fragment.BabysitterListFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="tw.tasker.babysitter.view.activity.BabysitterListActivity"
+    tools:context="tw.tasker.babysitter.view.activity.BabysittersActivity"
     tools:layout="@android:layout/list_content" />
 

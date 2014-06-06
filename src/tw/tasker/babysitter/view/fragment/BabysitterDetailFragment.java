@@ -13,7 +13,7 @@ import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.BabysitterDetailView;
 import tw.tasker.babysitter.view.activity.BabysitterCommentActivity;
 import tw.tasker.babysitter.view.activity.BabysitterDetailActivity;
-import tw.tasker.babysitter.view.activity.BabysitterListActivity;
+import tw.tasker.babysitter.view.activity.BabysittersActivity;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
@@ -48,7 +48,7 @@ import com.parse.SaveCallback;
 
 /**
  * A fragment representing a single Item detail screen. This fragment is either
- * contained in a {@link BabysitterListActivity} in two-pane mode (on tablets)
+ * contained in a {@link BabysittersActivity} in two-pane mode (on tablets)
  * or a {@link BabysitterDetailActivity} on handsets.
  */
 public class BabysitterDetailFragment extends Fragment implements
@@ -164,7 +164,7 @@ public class BabysitterDetailFragment extends Fragment implements
 		switch (id) {
 		case android.R.id.home:
 			NavUtils.navigateUpTo(getActivity(), new Intent(getActivity(),
-					BabysitterListActivity.class));
+					BabysittersActivity.class));
 
 			break;
 
