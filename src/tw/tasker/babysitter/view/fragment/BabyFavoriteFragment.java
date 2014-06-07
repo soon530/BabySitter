@@ -7,6 +7,7 @@ import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Baby;
 import tw.tasker.babysitter.model.data.Favorite;
 import tw.tasker.babysitter.presenter.adapter.FavoriteBabyParseQueryAdapter;
+import tw.tasker.babysitter.utils.EndlessScrollListener;
 import tw.tasker.babysitter.view.activity.BabyDetailActivity;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
@@ -68,7 +69,13 @@ public class BabyFavoriteFragment extends Fragment implements
 		mList.setOnItemClickListener(this);
 		mEmpty = (TextView) rootView.findViewById(R.id.empty);
 		mList.setEmptyView(mEmpty);
-		
+		mList.setOnScrollListener(new EndlessScrollListener(6) {
+			
+			@Override
+			public void onLoadMore(int page, int totalItemsCount) {
+				mAdapter.loadNextPage();
+			}
+		});
 		
         // Retrieve the PullToRefreshLayout from the content view
         mPullToRefreshLayout = (PullToRefreshLayout) rootView.findViewById(R.id.carddemo_extra_ptr_layout);
@@ -94,7 +101,7 @@ public class BabyFavoriteFragment extends Fragment implements
 
 	public void doListQuery() {
 		mAdapter = new FavoriteBabyParseQueryAdapter(getActivity());
-		mAdapter.setAutoload(false);
+		//mAdapter.setAutoload(true);
 		mAdapter.setObjectsPerPage(6);
 		mAdapter.addOnQueryLoadListener(this);
 		mList.setAdapter(mAdapter);
