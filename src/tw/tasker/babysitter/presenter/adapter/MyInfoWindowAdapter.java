@@ -44,7 +44,7 @@ public class MyInfoWindowAdapter implements InfoWindowAdapter {
 		RatingBar rating = (RatingBar) myContentsView.findViewById(R.id.babysitter_rating);
 		TextView totalComemnt = (TextView) myContentsView.findViewById(R.id.babysitter_totalComment);
 		
-		name.setText(mMapModel.get(marker.getId()).getText());
+		name.setText(mMapModel.get(marker.getId()).getName());
 		rating.setRating(getRatingValue( mMapModel.get(marker.getId()).getTotalRating(), mMapModel.get(marker.getId()).getTotalComment()));
 		
 		int comment = mMapModel.get(marker.getId()).getTotalComment();

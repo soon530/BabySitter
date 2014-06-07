@@ -78,14 +78,14 @@ public class BabysitterMapModelImpl extends FindCallback<Babysitter>
 	private MarkerOptions getOutlineMarkerOptions(Babysitter outline) {
 		double lat = outline.getLocation().getLatitude();
 		double lng = outline.getLocation().getLongitude();
-		LOGD(TAG, "outline" + outline.getText() + ",lat" + lat + ",lng" + lng);
+		LOGD(TAG, "outline" + outline.getName() + ",lat" + lat + ",lng" + lng);
 
 		LatLng latLng = new LatLng(lat, lng);
 
 		MarkerOptions markerOpts = new MarkerOptions();
 		markerOpts.position(latLng);
 		markerOpts.title(outline.getObjectId());
-		markerOpts.snippet("保母：" + outline.getText() + "\n已托育："
+		markerOpts.snippet("保母：" + outline.getName() + "\n已托育："
 				+ outline.getBabycareCount());
 		BitmapDescriptor icon = BitmapDescriptorFactory
 				.defaultMarker(BitmapDescriptorFactory.HUE_RED);

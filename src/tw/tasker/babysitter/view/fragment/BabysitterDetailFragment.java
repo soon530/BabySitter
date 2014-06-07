@@ -216,7 +216,7 @@ public class BabysitterDetailFragment extends Fragment implements
 	public void fillHeaderUI(Babysitter outline) {
 
 		mAddress = outline.getAddress();
-		mName = outline.getText();
+		mName = outline.getName();
 		LOGD("vic", "address" + mAddress + "name" + mName);
 		mBabysitterName.setText(mName);
 		mBabysitterAddress.setText(mAddress);

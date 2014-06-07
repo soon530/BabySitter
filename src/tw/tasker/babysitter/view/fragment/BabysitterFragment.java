@@ -87,8 +87,8 @@ public class BabysitterFragment extends Fragment implements
 		// init_card_inner_layout("年齡", "40", R.id.carddemo_card_inner4);
 		// init_card_inner_layout("教育程度", "大學", R.id.carddemo_card_inner5);
 
-		initCardSuggested(babysitter.getText());
-		init_card_inner_layout("電話",  babysitter.getText() + babysitter.getTel(), R.id.carddemo_card_inner1);
+		initCardSuggested(babysitter.getName());
+		init_card_inner_layout("電話",  babysitter.getName() + babysitter.getTel(), R.id.carddemo_card_inner1);
 		init_card_inner_layout("郵件", "soon530@gmail.com",
 				R.id.carddemo_card_inner2);
 		init_card_inner_layout("地址", babysitter.getAddress(),

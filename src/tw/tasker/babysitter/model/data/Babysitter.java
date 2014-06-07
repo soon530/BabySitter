@@ -18,13 +18,13 @@ public class Babysitter extends ParseObject {
 		put("babycare_count", value);
 	}
 
-	public String getText() {
+	public String getName() {
 		String value = getString("name");
 		return value;
 	}
 
-	public void setText(String value) {
-		put("text", value);
+	public void setName(String value) {
+		put("name", value);
 	}
 
 	public ParseUser getUser() {

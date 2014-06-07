@@ -37,7 +37,7 @@ public class BabysittersParseQueryAdapter extends
 
 		GridCard mCard = new GridCard(getContext());
 
-		mCard.headerTitle = babysitter.getText();
+		mCard.headerTitle = babysitter.getName();
 		mCard.secondaryTitle = babysitter.getAddress();
 		
 		 int totalRatingValue = babysitter.getTotalRating(); 
