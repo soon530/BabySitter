@@ -5,7 +5,7 @@ import java.util.List;
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
-import tw.tasker.babysitter.model.data.FavoriteBabysitter;
+import tw.tasker.babysitter.model.data.BabysitterFavorite;
 import tw.tasker.babysitter.presenter.adapter.FavoriteBabysitterParseQueryAdapter;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.activity.BabysitterActivity;
@@ -27,8 +27,8 @@ import com.parse.ParseQueryAdapter;
 import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 
 public class BabysitterFavoriteFragment extends Fragment implements
-		OnItemClickListener, OnQueryLoadListener<FavoriteBabysitter> {
-	private ParseQueryAdapter<FavoriteBabysitter> mAdapter;
+		OnItemClickListener, OnQueryLoadListener<BabysitterFavorite> {
+	private ParseQueryAdapter<BabysitterFavorite> mAdapter;
 	private GridView mList;
 	private TextView mEmpty;
 	
@@ -101,14 +101,14 @@ public class BabysitterFavoriteFragment extends Fragment implements
 	}
 
 	@Override
-	public void onLoaded(List<FavoriteBabysitter> arg0, Exception arg1) {
+	public void onLoaded(List<BabysitterFavorite> arg0, Exception arg1) {
 		ProgressBarUtils.hide(getActivity());
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		FavoriteBabysitter favorite = mAdapter.getItem(position);
+		BabysitterFavorite favorite = mAdapter.getItem(position);
 		Babysitter babysitter = favorite.getBabysitter();
 		seeBabysitterDetail(babysitter.getObjectId());
 	}

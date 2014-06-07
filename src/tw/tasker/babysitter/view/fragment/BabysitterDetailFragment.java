@@ -6,7 +6,7 @@ import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.BabysitterComment;
 import tw.tasker.babysitter.model.data.BabyFavorite;
-import tw.tasker.babysitter.model.data.FavoriteBabysitter;
+import tw.tasker.babysitter.model.data.BabysitterFavorite;
 import tw.tasker.babysitter.presenter.BabysitterDetailPresenter;
 import tw.tasker.babysitter.presenter.impl.BabysitterDetailPresenterImpl;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
@@ -114,7 +114,7 @@ public class BabysitterDetailFragment extends Fragment implements
 
 	private CheckBox mFavoriteBabysitter;
 	
-	private FavoriteBabysitter mFavorite;
+	private BabysitterFavorite mFavorite;
 
 
 	/**
@@ -243,15 +243,15 @@ public class BabysitterDetailFragment extends Fragment implements
 	
 	
 	private void getFavorite() {
-		ParseQuery<FavoriteBabysitter> favorite_query = FavoriteBabysitter.getQuery();
+		ParseQuery<BabysitterFavorite> favorite_query = BabysitterFavorite.getQuery();
 
 		favorite_query.whereEqualTo("babysitter", mOutline);
 		favorite_query.whereEqualTo("user", ParseUser.getCurrentUser());
 
-		favorite_query.getFirstInBackground(new GetCallback<FavoriteBabysitter>() {
+		favorite_query.getFirstInBackground(new GetCallback<BabysitterFavorite>() {
 
 			@Override
-			public void done(FavoriteBabysitter favorite, ParseException e) {
+			public void done(BabysitterFavorite favorite, ParseException e) {
 				if (favorite == null) {
 					mFavoriteBabysitter.setChecked(false);
 					mFavoriteBabysitter.setText("已取消");
@@ -380,7 +380,7 @@ public class BabysitterDetailFragment extends Fragment implements
 	}
 	
 	private void addFavorite() {
-		FavoriteBabysitter favorite = new FavoriteBabysitter();
+		BabysitterFavorite favorite = new BabysitterFavorite();
 		mFavorite = favorite;
 		// favorite.put("baby", mBaby);
 		favorite.setBaby(mOutline);

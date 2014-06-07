@@ -5,8 +5,8 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-@ParseClassName("FavoriteBabysitter")
-public class FavoriteBabysitter extends ParseObject {
+@ParseClassName("BabysitterFavorite")
+public class BabysitterFavorite extends ParseObject {
 
 	public ParseUser getUser() {
 		return getParseUser("user");
@@ -24,7 +24,7 @@ public class FavoriteBabysitter extends ParseObject {
 		put("babysitter", babysitter);
 	}
 	
-	public static ParseQuery<FavoriteBabysitter> getQuery() {
-		return ParseQuery.getQuery(FavoriteBabysitter.class);
+	public static ParseQuery<BabysitterFavorite> getQuery() {
+		return ParseQuery.getQuery(BabysitterFavorite.class);
 	}
 }
