@@ -1,7 +1,10 @@
 package tw.tasker.babysitter.presenter.adapter;
 
+import it.gmariotti.cardslib.library.internal.Card;
+import it.gmariotti.cardslib.library.view.CardView;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Baby;
+import tw.tasker.babysitter.view.card.BabyGridCard;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,26 +18,48 @@ import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
 public class BabyDiaryParseQueryAdapter extends ParseQueryAdapter<Baby> {
-	DisplayImageOptions options;
-	private ImageLoader imageLoader = ImageLoader.getInstance();
 
 	public BabyDiaryParseQueryAdapter(Context context, String babysitterObjectId) {
-
 		super(context, getQueryFactory(babysitterObjectId));
-		options = new DisplayImageOptions.Builder()
-				.showImageOnLoading(R.drawable.ic_launcher)
-				.showImageForEmptyUri(R.drawable.ic_launcher)
-				.showImageOnFail(R.drawable.ic_launcher).cacheInMemory(true)
-				.cacheOnDisc(true).considerExifParams(true)
-				.displayer(new RoundedBitmapDisplayer(20)).build();
 	}
 
 	@Override
 	public View getItemView(Baby baby, View view, ViewGroup parent) {
+		boolean recycle = false;
 		if (view == null) {
-			view = View.inflate(getContext(), R.layout.list_item_baby,
-					null);
+			recycle = false;
+			view = View.inflate(getContext(), R.layout.list_item_baby, null);
+		} else {
+			recycle = true;
 		}
+		
+		BabyGridCard mCard = new BabyGridCard(getContext());
+		mCard.setBaby(baby);
+		mCard.init();
+
+		CardView mCardView;
+		// Setup card
+		mCardView = (CardView) view.findViewById(R.id.list_cardId);
+		if (mCardView != null) {
+			// It is important to set recycle value for inner layout elements
+			mCardView.setForceReplaceInnerLayout(Card.equalsInnerLayout(
+					mCardView.getCard(), mCard));
+
+			// It is important to set recycle value for performance issue
+			mCardView.setRecycle(recycle);
+
+			// Save original swipeable to prevent cardSwipeListener (listView
+			// requires another cardSwipeListener)
+			// boolean origianlSwipeable = mCard.isSwipeable();
+			// mCard.setSwipeable(false);
+
+			mCardView.setCard(mCard);
+
+			// Set originalValue
+			// mCard.setSwipeable(origianlSwipeable);
+
+		}
+
 		
 		
 /*		ImageView babyAvator = (ImageView) view.findViewById(R.id.baby_avator);

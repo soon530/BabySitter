@@ -1,16 +1,13 @@
 package tw.tasker.babysitter.view.card;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
-
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardHeader;
 import it.gmariotti.cardslib.library.internal.CardThumbnail;
 import it.gmariotti.cardslib.library.internal.base.BaseCard;
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.view.activity.BabysitterActivity;
+import tw.tasker.babysitter.model.data.Baby;
+import tw.tasker.babysitter.view.activity.BabyDetailActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.MenuItem;
@@ -21,21 +18,15 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+
 public class BabyGridCard extends Card {
 
-	public String mBabysitterObjectId;
-	public String mUrl;
-	public TextView mTitle;
-	public TextView mSecondaryTitle;
-	public RatingBar mRatingBar;
 	public int resourceIdThumbnail = -1;
-	public int count;
+	private Baby mBaby;
 
-	public String headerTitle;
-	public String secondaryTitle;
-	public float rating;
-	public String mComment;
-	
 	public BabyGridCard(Context context) {
 		super(context, R.layout.carddemo_gplay_inner_content);
 	}
@@ -47,13 +38,12 @@ public class BabyGridCard extends Card {
 	public void init() {
 		CardHeader header = new CardHeader(getContext());
 		header.setButtonOverflowVisible(true);
-		header.setTitle(headerTitle);
+		header.setTitle(mBaby.getName());
 		header.setPopupMenu(R.menu.popupmain,
 				new CardHeader.OnClickCardHeaderPopupMenuListener() {
 					@Override
 					public void onMenuItemClick(BaseCard card, MenuItem item) {
-						Toast.makeText(getContext(),
-								"Item " + item.getTitle(),
+						Toast.makeText(getContext(), "Item " + item.getTitle(),
 								Toast.LENGTH_SHORT).show();
 					}
 				});
@@ -62,21 +52,20 @@ public class BabyGridCard extends Card {
 
 		GplayGridThumb thumbnail = new GplayGridThumb(getContext());
 		thumbnail.setExternalUsage(true);
-/*			if (resourceIdThumbnail > -1)
-			thumbnail.setDrawableResource(resourceIdThumbnail);
-		else
-			thumbnail.setDrawableResource(R.drawable.ic_launcher);
-*/
+		/*
+		 * if (resourceIdThumbnail > -1)
+		 * thumbnail.setDrawableResource(resourceIdThumbnail); else
+		 * thumbnail.setDrawableResource(R.drawable.ic_launcher);
+		 */
 		addCardThumbnail(thumbnail);
 
 		setOnClickListener(new OnCardClickListener() {
 			@Override
 			public void onClick(Card card, View view) {
-				Intent detailIntent = new Intent(getContext(),
-						BabysitterActivity.class);
-				detailIntent.putExtra(Config.BABYSITTER_OBJECT_ID,
-						mBabysitterObjectId);
-				getContext().startActivity(detailIntent);
+				Intent intent = new Intent(getContext(),
+						BabyDetailActivity.class);
+				intent.putExtra(Config.BABY_OBJECT_ID, mBaby.getObjectId());
+				getContext().startActivity(intent);
 			}
 		});
 	}
@@ -86,11 +75,11 @@ public class BabyGridCard extends Card {
 
 		TextView title = (TextView) view
 				.findViewById(R.id.carddemo_gplay_main_inner_title);
-		title.setText("評論"+mComment);
+		title.setText("成長記錄:5");
 
 		TextView subtitle = (TextView) view
 				.findViewById(R.id.carddemo_gplay_main_inner_subtitle);
-		subtitle.setText(secondaryTitle);
+		subtitle.setText(mBaby.getNote());
 
 		RatingBar mRatingBar = (RatingBar) parent
 				.findViewById(R.id.carddemo_gplay_main_inner_ratingBar);
@@ -98,7 +87,7 @@ public class BabyGridCard extends Card {
 		mRatingBar.setNumStars(5);
 		mRatingBar.setMax(5);
 		mRatingBar.setStepSize(0.5f);
-		mRatingBar.setRating(rating);
+		mRatingBar.setRating((float) (Math.random() * (5.0)));
 	}
 
 	class GplayGridThumb extends CardThumbnail {
@@ -107,24 +96,35 @@ public class BabyGridCard extends Card {
 
 		public GplayGridThumb(Context context) {
 			super(context);
-			
-	        options = new DisplayImageOptions.Builder()
-	        .cacheInMemory(true)
-	        .displayer(new SimpleBitmapDisplayer())
-	        .showImageOnFail(R.drawable.ic_launcher)
-	        .build();
+
+			options = new DisplayImageOptions.Builder().cacheInMemory(true)
+					.displayer(new SimpleBitmapDisplayer())
+					.showImageOnFail(R.drawable.ic_launcher).build();
 
 		}
 
 		@Override
 		public void setupInnerViewElements(ViewGroup parent, View viewImage) {
 
-    		imageLoader.displayImage(mUrl, (ImageView) viewImage, options, null);
+			String url;
+			if (mBaby.getPhotoFile() != null) {
+				url = mBaby.getPhotoFile().getUrl();
+			} else {
+				url = "https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-ash3/t1.0-9/q77/s720x720/1966891_782022338479354_124097698_n.jpg";
+			}
+
+			
+			imageLoader
+					.displayImage(url, (ImageView) viewImage, options, null);
 
 			// viewImage.getLayoutParams().width = 196;
 			// viewImage.getLayoutParams().height = 196;
 
 		}
+	}
+
+	public void setBaby(Baby baby) {
+		mBaby = baby;
 	}
 
 }
