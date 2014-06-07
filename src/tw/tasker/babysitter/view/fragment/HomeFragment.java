@@ -33,6 +33,7 @@ import tw.tasker.babysitter.view.activity.BabysittersActivity;
 import tw.tasker.babysitter.view.activity.DispatchActivity;
 import tw.tasker.babysitter.view.activity.FavoriteBabyActivity;
 import tw.tasker.babysitter.view.activity.FavoriteBabysitterActivity;
+import tw.tasker.babysitter.view.activity.MyFavoriteActivity;
 import tw.tasker.babysitter.view.card.ColorCard;
 import android.content.Intent;
 import android.os.Bundle;
@@ -134,7 +135,7 @@ public class HomeFragment extends Fragment implements OnCardClickListener {
 			
 		case 2:
 			intent = new Intent();
-			intent.setClass(getActivity(), FavoriteBabyActivity.class);
+			intent.setClass(getActivity(), MyFavoriteActivity.class);
 			startActivity(intent);
 
 /*			intent = new Intent();
