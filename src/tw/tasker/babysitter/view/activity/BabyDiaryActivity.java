@@ -17,10 +17,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
+import android.widget.GridView;
 import android.widget.TextView;
 
 import com.parse.ParseQueryAdapter;
@@ -56,7 +55,7 @@ public class BabyDiaryActivity extends ActionBarActivity {
 	public static class PlaceholderFragment extends Fragment implements
 			OnItemClickListener, OnQueryLoadListener<Baby> {
 		private ParseQueryAdapter<Baby> mAdapter;
-		private ListView mList;
+		private GridView mList;
 		private TextView mEmpty;
 		private String mBabysitterObjectId;
 
@@ -110,7 +109,7 @@ public class BabyDiaryActivity extends ActionBarActivity {
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_baby_list,
 					container, false);
-			mList = (ListView) rootView.findViewById(R.id.list);
+			mList = (GridView) rootView.findViewById(R.id.list);
 			mList.setOnItemClickListener(this);
 			mEmpty = (TextView) rootView.findViewById(R.id.empty);
 			mList.setEmptyView(mEmpty);
