@@ -14,10 +14,10 @@ import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
-public class BabysitterListParseQueryAdapter extends
+public class BabysittersParseQueryAdapter extends
 		ParseQueryAdapter<Babysitter> {
 
-	public BabysitterListParseQueryAdapter(Context context) {
+	public BabysittersParseQueryAdapter(Context context) {
 		super(context, getQueryFactory());
 	}
 

@@ -7,7 +7,7 @@ import tw.tasker.babysitter.model.BabysitterListModel;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.impl.BabysitterListModelImpl;
 import tw.tasker.babysitter.presenter.BabysitterListPresenter;
-import tw.tasker.babysitter.presenter.adapter.BabysitterListParseQueryAdapter;
+import tw.tasker.babysitter.presenter.adapter.BabysittersParseQueryAdapter;
 import tw.tasker.babysitter.view.activity.BabysitterActivity;
 import tw.tasker.babysitter.view.fragment.BabysittersFragment;
 import android.content.Intent;
@@ -35,7 +35,7 @@ public class BabysitterListPresenterImpl implements BabysitterListPresenter,
 	}
 
 	private void doListQuery() {
-		mAdapter = new BabysitterListParseQueryAdapter(mView.getActivity());
+		mAdapter = new BabysittersParseQueryAdapter(mView.getActivity());
 		mAdapter.setAutoload(false);
 		//mAdapter.setPaginationEnabled(false);
 		mAdapter.setObjectsPerPage(6);
