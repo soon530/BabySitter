@@ -10,6 +10,7 @@ import it.gmariotti.cardslib.library.internal.CardThumbnail;
 import it.gmariotti.cardslib.library.internal.base.BaseCard;
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.view.activity.BabysitterActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -21,39 +22,29 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class GridCard extends Card {
+public class BabysitterGridCard extends Card {
 
-	public String mBabysitterObjectId;
-	public String mUrl;
-	public TextView mTitle;
-	public TextView mSecondaryTitle;
-	public RatingBar mRatingBar;
-	public int resourceIdThumbnail = -1;
-	public int count;
+	private RatingBar mRatingBar;
+	private int resourceIdThumbnail = -1;
+	private Babysitter mBabysitter;
 
-	public String headerTitle;
-	public String secondaryTitle;
-	public float rating;
-	public String mComment;
-	
-	public GridCard(Context context) {
+	public BabysitterGridCard(Context context) {
 		super(context, R.layout.carddemo_gplay_inner_content);
 	}
 
-	public GridCard(Context context, int innerLayout) {
+	public BabysitterGridCard(Context context, int innerLayout) {
 		super(context, innerLayout);
 	}
 
 	public void init() {
 		CardHeader header = new CardHeader(getContext());
 		header.setButtonOverflowVisible(true);
-		header.setTitle(headerTitle);
+		header.setTitle(mBabysitter.getName());
 		header.setPopupMenu(R.menu.popupmain,
 				new CardHeader.OnClickCardHeaderPopupMenuListener() {
 					@Override
 					public void onMenuItemClick(BaseCard card, MenuItem item) {
-						Toast.makeText(getContext(),
-								"Item " + item.getTitle(),
+						Toast.makeText(getContext(), "Item " + item.getTitle(),
 								Toast.LENGTH_SHORT).show();
 					}
 				});
@@ -62,11 +53,11 @@ public class GridCard extends Card {
 
 		GplayGridThumb thumbnail = new GplayGridThumb(getContext());
 		thumbnail.setExternalUsage(true);
-/*			if (resourceIdThumbnail > -1)
-			thumbnail.setDrawableResource(resourceIdThumbnail);
-		else
-			thumbnail.setDrawableResource(R.drawable.ic_launcher);
-*/
+		/*
+		 * if (resourceIdThumbnail > -1)
+		 * thumbnail.setDrawableResource(resourceIdThumbnail); else
+		 * thumbnail.setDrawableResource(R.drawable.ic_launcher);
+		 */
 		addCardThumbnail(thumbnail);
 
 		setOnClickListener(new OnCardClickListener() {
@@ -75,7 +66,7 @@ public class GridCard extends Card {
 				Intent detailIntent = new Intent(getContext(),
 						BabysitterActivity.class);
 				detailIntent.putExtra(Config.BABYSITTER_OBJECT_ID,
-						mBabysitterObjectId);
+						mBabysitter.getObjectId());
 				getContext().startActivity(detailIntent);
 			}
 		});
@@ -83,14 +74,17 @@ public class GridCard extends Card {
 
 	@Override
 	public void setupInnerViewElements(ViewGroup parent, View view) {
+		int totalRatingValue = mBabysitter.getTotalRating();
+		int totalComementValue = mBabysitter.getTotalComment();
 
 		TextView title = (TextView) view
 				.findViewById(R.id.carddemo_gplay_main_inner_title);
-		title.setText("評論"+mComment);
+
+		title.setText("評論" + String.valueOf(totalComementValue));
 
 		TextView subtitle = (TextView) view
 				.findViewById(R.id.carddemo_gplay_main_inner_subtitle);
-		subtitle.setText(secondaryTitle);
+		subtitle.setText(mBabysitter.getAddress());
 
 		RatingBar mRatingBar = (RatingBar) parent
 				.findViewById(R.id.carddemo_gplay_main_inner_ratingBar);
@@ -98,6 +92,8 @@ public class GridCard extends Card {
 		mRatingBar.setNumStars(5);
 		mRatingBar.setMax(5);
 		mRatingBar.setStepSize(0.5f);
+
+		float rating = getRatingValue(totalRatingValue, totalComementValue);
 		mRatingBar.setRating(rating);
 	}
 
@@ -107,24 +103,41 @@ public class GridCard extends Card {
 
 		public GplayGridThumb(Context context) {
 			super(context);
-			
-	        options = new DisplayImageOptions.Builder()
-	        .cacheInMemory(true)
-	        .displayer(new SimpleBitmapDisplayer())
-	        .showImageOnFail(R.drawable.ic_launcher)
-	        .build();
+
+			options = new DisplayImageOptions.Builder().cacheInMemory(true)
+					.displayer(new SimpleBitmapDisplayer())
+					.showImageOnFail(R.drawable.ic_launcher).build();
 
 		}
 
 		@Override
 		public void setupInnerViewElements(ViewGroup parent, View viewImage) {
+			String url;
+			// if (babysitter.getPhotoFile() != null) {
+			// url = babysitter.getPhotoFile().getUrl();
+			// } else {
+			url = "http://cwisweb.sfaa.gov.tw/babysitterFiles/20140315134959_0822R167.jpg";
+			// }
 
-    		imageLoader.displayImage(mUrl, (ImageView) viewImage, options, null);
+			imageLoader.displayImage(url, (ImageView) viewImage, options, null);
 
 			// viewImage.getLayoutParams().width = 196;
 			// viewImage.getLayoutParams().height = 196;
 
 		}
+	}
+
+	public void setBabysitter(Babysitter babysitter) {
+		mBabysitter = babysitter;
+	}
+
+	private float getRatingValue(int totalRating, int totalComment) {
+		float avgRating = 0.0f;
+
+		if (totalComment != 0) {
+			avgRating = totalRating / totalComment;
+		}
+		return avgRating;
 	}
 
 }

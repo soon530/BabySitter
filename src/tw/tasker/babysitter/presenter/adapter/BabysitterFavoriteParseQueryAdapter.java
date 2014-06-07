@@ -5,7 +5,7 @@ import it.gmariotti.cardslib.library.view.CardView;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.BabysitterFavorite;
-import tw.tasker.babysitter.view.card.GridCard;
+import tw.tasker.babysitter.view.card.BabysitterGridCard;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,37 +35,9 @@ public class BabysitterFavoriteParseQueryAdapter extends
 
 		Babysitter babysitter = favorite.getBabysitter();
 
-		GridCard mCard = new GridCard(getContext());
-		//mCard.setBabysitter(babysitter);
-
-		mCard.headerTitle = babysitter.getName();
-		mCard.secondaryTitle = babysitter.getAddress();
-		
-		 int totalRatingValue = babysitter.getTotalRating(); 
-		 int totalComementValue = babysitter.getTotalComment();
-
-		 float rating = getRatingValue(totalRatingValue, totalComementValue);		
-		
-		 mCard.rating = rating;
-		//mCard.resourceIdThumbnail = R.drawable.ic_launcher;
-		mCard.mComment = String.valueOf(totalComementValue);
-		mCard.mBabysitterObjectId = babysitter.getObjectId();
-
-		String url;
-		//if (babysitter.getPhotoFile() != null) {
-			//url = babysitter.getPhotoFile().getUrl();
-		//} else {
-			url = "http://cwisweb.sfaa.gov.tw/babysitterFiles/20140315134959_0822R167.jpg";
-		//}
-		
-		mCard.mUrl=url;
-
-		
-		
-		
-		
+		BabysitterGridCard mCard = new BabysitterGridCard(getContext());
+		mCard.setBabysitter(babysitter);
 		mCard.init();
-
 		CardView mCardView;
 
 		// Setup card
@@ -126,14 +98,6 @@ public class BabysitterFavoriteParseQueryAdapter extends
 		return view;
 	}
 
-	private float getRatingValue(int totalRating, int totalComment) {
-		float avgRating = 0.0f;
-
-		if (totalComment != 0) {
-			avgRating = totalRating / totalComment;
-		}
-		return avgRating;
-	}
 
 	private static ParseQueryAdapter.QueryFactory<BabysitterFavorite> getQueryFactory() {
 		ParseQueryAdapter.QueryFactory<BabysitterFavorite> factory = new ParseQueryAdapter.QueryFactory<BabysitterFavorite>() {
