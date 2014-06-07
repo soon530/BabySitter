@@ -90,10 +90,10 @@ public class BabyDetailFragment extends Fragment implements
 
 		initHeadUI();
 
-		View rootView = inflater.inflate(R.layout.fragment_baby_detail,
+		View rootView = inflater.inflate(R.layout.fragment_list,
 				container, false);
 		mListView = (ListView) rootView
-				.findViewById(R.id.baby_comment_list);
+				.findViewById(R.id.list);
 
 		return rootView;
 	}

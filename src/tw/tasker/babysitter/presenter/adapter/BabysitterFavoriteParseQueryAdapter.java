@@ -49,52 +49,9 @@ public class BabysitterFavoriteParseQueryAdapter extends
 
 			// It is important to set recycle value for performance issue
 			mCardView.setRecycle(recycle);
-
-			// Save original swipeable to prevent cardSwipeListener (listView
-			// requires another cardSwipeListener)
-			// boolean origianlSwipeable = mCard.isSwipeable();
-			// mCard.setSwipeable(false);
-
 			mCardView.setCard(mCard);
-
-			// Set originalValue
-			// mCard.setSwipeable(origianlSwipeable);
-
 		}
 
-		/*
-		 * if (view == null) { view = View.inflate(getContext(),
-		 * R.layout.list_item_babysitter_list, null); }
-		 * 
-		 * TextView babysitterName = (TextView) view
-		 * .findViewById(R.id.babysitter_name); TextView babysitterAddress =
-		 * (TextView) view .findViewById(R.id.babysitter_address);
-		 * 
-		 * ImageView babysitterImage = (ImageView) view
-		 * .findViewById(R.id.babysitter_avator);
-		 * 
-		 * RatingBar babysitterRating = (RatingBar) view
-		 * .findViewById(R.id.babysitter_rating);
-		 * 
-		 * TextView totalComment = (TextView)
-		 * view.findViewById(R.id.totalComment);
-		 * 
-		 * Babysitter babysitter = favorite.getBabysitter();
-		 * 
-		 * babysitterName.setText(babysitter.getText());
-		 * babysitterAddress.setText(babysitter.getAddress());
-		 * 
-		 * imageLoader .displayImage(
-		 * "http://cwisweb.sfaa.gov.tw/babysitterFiles/20140315134959_0822R167.jpg"
-		 * , babysitterImage, options, null);
-		 * 
-		 * int totalRatingValue = babysitter.getTotalRating(); int
-		 * totalComementValue = babysitter.getTotalComment();
-		 * 
-		 * totalComment .setText("共有：" + String.valueOf(totalComementValue) +
-		 * "筆評論"); float rating = getRatingValue(totalRatingValue,
-		 * totalComementValue); babysitterRating.setRating(rating);
-		 */
 		return view;
 	}
 
