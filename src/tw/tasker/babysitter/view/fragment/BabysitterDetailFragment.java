@@ -279,7 +279,7 @@ public class BabysitterDetailFragment extends Fragment implements
 
 		initHeadUI();
 
-		View rootView = inflater.inflate(R.layout.fragment_babysitter_detail,
+		View rootView = inflater.inflate(R.layout.fragment_list,
 				container, false);
 
 		mBabysitterCommentList = (ListView) rootView
