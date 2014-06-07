@@ -16,7 +16,7 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
-public class CommentParseQueryAdapter extends
+public class BabysitterCommentParseQueryAdapter extends
 		ParseQueryAdapter<BabysitterComment> {
 
 	ImageView babysitterImage;
@@ -28,7 +28,7 @@ public class CommentParseQueryAdapter extends
 	private ImageLoader imageLoader = ImageLoader.getInstance();
 	private TextView createDate;
 
-	public CommentParseQueryAdapter(Context context, String babysitterObjectId) {
+	public BabysitterCommentParseQueryAdapter(Context context, String babysitterObjectId) {
 		super(context, getFactory(babysitterObjectId));
 
 		options = new DisplayImageOptions.Builder()

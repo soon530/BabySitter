@@ -8,7 +8,7 @@ import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.BabysitterComment;
 import tw.tasker.babysitter.model.impl.BabysitterDetailModelImpl;
 import tw.tasker.babysitter.presenter.BabysitterDetailPresenter;
-import tw.tasker.babysitter.presenter.adapter.CommentParseQueryAdapter;
+import tw.tasker.babysitter.presenter.adapter.BabysitterCommentParseQueryAdapter;
 import tw.tasker.babysitter.view.activity.BabyDiaryActivity;
 import tw.tasker.babysitter.view.fragment.BabysitterFragment;
 import android.content.Intent;
@@ -77,7 +77,7 @@ public class BabysitterDetailPresenterImpl implements BabysitterDetailPresenter,
 
 	@Override
 	public void doCommentQuery(String babysitterObjectId) {
-		mAdapter = new CommentParseQueryAdapter(mView.getActivity(), babysitterObjectId);
+		mAdapter = new BabysitterCommentParseQueryAdapter(mView.getActivity(), babysitterObjectId);
 		mAdapter.setAutoload(false);
 		//mAdapter.setPaginationEnabled(false);
 		mAdapter.setObjectsPerPage(5);
