@@ -9,7 +9,6 @@ import tw.tasker.babysitter.model.data.FavoriteBabysitter;
 import tw.tasker.babysitter.presenter.adapter.FavoriteBabysitterParseQueryAdapter;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.activity.BabysitterActivity;
-import tw.tasker.babysitter.view.activity.FavoriteBabyActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -57,12 +56,6 @@ public class BabysitterFavoriteFragment extends Fragment implements
 		switch (id) {
 		case R.id.refresh:
 			mAdapter.loadObjects();
-			break;
-
-		case R.id.favorite_baby:
-			Intent intent = new Intent();
-			intent.setClass(getActivity(), FavoriteBabyActivity.class);
-			startActivity(intent);
 			break;
 
 		default:

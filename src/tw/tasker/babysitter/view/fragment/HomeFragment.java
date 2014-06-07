@@ -31,8 +31,6 @@ import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.view.activity.BabyDiaryActivity;
 import tw.tasker.babysitter.view.activity.BabysittersActivity;
 import tw.tasker.babysitter.view.activity.DispatchActivity;
-import tw.tasker.babysitter.view.activity.FavoriteBabyActivity;
-import tw.tasker.babysitter.view.activity.FavoriteBabysitterActivity;
 import tw.tasker.babysitter.view.activity.MyFavoriteActivity;
 import tw.tasker.babysitter.view.card.ColorCard;
 import android.content.Intent;
@@ -41,8 +39,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ScrollView;
 
 import com.parse.ParseUser;

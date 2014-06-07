@@ -34,6 +34,10 @@ public class HomeActivity extends ActionBarActivity {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, fragment).commit();
 		}
+		
+		// 後續看要不要放在ActionBar之類的
+		//mUserInfo.setText("使用者資訊(" + user.getObjectId() + ")："+ user.getUsername() );
+
 	}
 
 	@Override
@@ -55,90 +59,4 @@ public class HomeActivity extends ActionBarActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	public static class PlaceholderFragment extends Fragment {
-
-		private ListView mBabysitterSearchCondition;
-		private TextView mUserInfo;
-
-		public PlaceholderFragment() {
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_home, container,
-					false);
-			
-			
-			mUserInfo = (TextView)rootView.findViewById(R.id.user_info);
-
-			ParseUser user = ParseUser.getCurrentUser();
-			
-			mUserInfo.setText("使用者資訊(" + user.getObjectId() + ")："+ user.getUsername() );
-			
-			mBabysitterSearchCondition = (ListView) rootView
-					.findViewById(R.id.babysitter_search_condition);
-			mBabysitterSearchCondition.setAdapter(new ArrayAdapter<String>(
-					getActivity().getApplicationContext(),
-					android.R.layout.simple_list_item_1, mSearchCondition));
-
-			mBabysitterSearchCondition
-					.setOnItemClickListener(new OnItemClickListener() {
-
-						@Override
-						public void onItemClick(AdapterView<?> parent,
-								View view, int position, long id) {
-							
-							Intent intent;
-							switch (position) {
-							case 0:
-								intent = new Intent();
-								intent.setClass(getActivity(),
-										BabysittersActivity.class);
-								startActivity(intent);
-								break;
-								
-							case 1:
-								intent = new Intent();
-								intent.setClass(getActivity(), BabyDiaryActivity.class);
-								startActivity(intent);
-								break;
-								
-							case 2:
-								intent = new Intent();
-								intent.setClass(getActivity(), FavoriteBabyActivity.class);
-								startActivity(intent);
-								break;
-
-							case 3:
-								intent = new Intent();
-								intent.setClass(getActivity(), FavoriteBabysitterActivity.class);
-								startActivity(intent);
-								
-								break;
-
-							case 4:
-						        // Call the Parse log out method
-						        ParseUser.logOut();
-						        intent = new Intent();
-						        // Start and intent for the dispatch activity
-						        intent.setClass(getActivity(), DispatchActivity.class);
-						        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-						        startActivity(intent);
-								break;
-								
-							default:
-								break;
-							}
-						}
-					});
-
-			return rootView;
-		}
-	}
-
 }
