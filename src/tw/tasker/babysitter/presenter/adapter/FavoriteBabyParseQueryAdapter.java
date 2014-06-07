@@ -7,7 +7,7 @@ import it.gmariotti.cardslib.library.internal.base.BaseCard;
 import it.gmariotti.cardslib.library.view.CardView;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Baby;
-import tw.tasker.babysitter.model.data.Favorite;
+import tw.tasker.babysitter.model.data.BabyFavorite;
 import android.content.Context;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,7 +26,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
 
-public class FavoriteBabyParseQueryAdapter extends ParseQueryAdapter<Favorite> {
+public class FavoriteBabyParseQueryAdapter extends ParseQueryAdapter<BabyFavorite> {
 	DisplayImageOptions options;
 	private ImageLoader imageLoader = ImageLoader.getInstance();
 
@@ -49,7 +49,7 @@ public class FavoriteBabyParseQueryAdapter extends ParseQueryAdapter<Favorite> {
 */	}
 
 	@Override
-	public View getItemView(Favorite favorite, View view, ViewGroup parent) {
+	public View getItemView(BabyFavorite favorite, View view, ViewGroup parent) {
         
 		boolean recycle = false;
 		if (view == null) {
@@ -135,10 +135,10 @@ public class FavoriteBabyParseQueryAdapter extends ParseQueryAdapter<Favorite> {
 		return view;
 	}
 
-	private static ParseQueryAdapter.QueryFactory<Favorite> getQueryFactory() {
-		ParseQueryAdapter.QueryFactory<Favorite> factory = new ParseQueryAdapter.QueryFactory<Favorite>() {
-			public ParseQuery<Favorite> create() {
-				ParseQuery<Favorite> query = Favorite.getQuery();
+	private static ParseQueryAdapter.QueryFactory<BabyFavorite> getQueryFactory() {
+		ParseQueryAdapter.QueryFactory<BabyFavorite> factory = new ParseQueryAdapter.QueryFactory<BabyFavorite>() {
+			public ParseQuery<BabyFavorite> create() {
+				ParseQuery<BabyFavorite> query = BabyFavorite.getQuery();
 				query.include("user");
 				query.orderByDescending("createdAt");
 				query.whereEqualTo("user", ParseUser.getCurrentUser());

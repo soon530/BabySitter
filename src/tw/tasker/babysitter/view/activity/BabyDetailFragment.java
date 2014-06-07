@@ -6,7 +6,7 @@ import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Baby;
 import tw.tasker.babysitter.model.data.BabyRecord;
-import tw.tasker.babysitter.model.data.Favorite;
+import tw.tasker.babysitter.model.data.BabyFavorite;
 import tw.tasker.babysitter.presenter.adapter.RecordParseQueryAdapter;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.BabysitterDetailView;
@@ -46,7 +46,7 @@ public class BabyDetailFragment extends Fragment implements
 	DisplayImageOptions options;
 	private ImageLoader imageLoader = ImageLoader.getInstance();
 	private Baby mBaby;
-	private Favorite mFavorite;
+	private BabyFavorite mFavorite;
 	private String mBabyObjectId;
 
 	private ListView mListView;
@@ -149,15 +149,15 @@ public class BabyDetailFragment extends Fragment implements
 	}
 
 	private void getFavorite() {
-		ParseQuery<Favorite> favorite_query = Favorite.getQuery();
+		ParseQuery<BabyFavorite> favorite_query = BabyFavorite.getQuery();
 
 		favorite_query.whereEqualTo("baby", mBaby);
 		favorite_query.whereEqualTo("user", ParseUser.getCurrentUser());
 
-		favorite_query.getFirstInBackground(new GetCallback<Favorite>() {
+		favorite_query.getFirstInBackground(new GetCallback<BabyFavorite>() {
 
 			@Override
-			public void done(Favorite favorite, ParseException e) {
+			public void done(BabyFavorite favorite, ParseException e) {
 				if (favorite == null) {
 					mFavoriteBaby.setChecked(false);
 					mFavoriteBaby.setText("已取消");
@@ -253,7 +253,7 @@ public class BabyDetailFragment extends Fragment implements
 	}
 
 	private void addFavorite() {
-		Favorite favorite = new Favorite();
+		BabyFavorite favorite = new BabyFavorite();
 		mFavorite = favorite;
 		// favorite.put("baby", mBaby);
 		favorite.setBaby(mBaby);

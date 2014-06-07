@@ -5,7 +5,7 @@ import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.BabysitterComment;
-import tw.tasker.babysitter.model.data.Favorite;
+import tw.tasker.babysitter.model.data.BabyFavorite;
 import tw.tasker.babysitter.model.data.FavoriteBabysitter;
 import tw.tasker.babysitter.presenter.BabysitterDetailPresenter;
 import tw.tasker.babysitter.presenter.impl.BabysitterDetailPresenterImpl;

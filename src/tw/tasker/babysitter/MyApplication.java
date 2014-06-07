@@ -4,7 +4,7 @@ import tw.tasker.babysitter.model.data.Baby;
 import tw.tasker.babysitter.model.data.BabyRecord;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.BabysitterComment;
-import tw.tasker.babysitter.model.data.Favorite;
+import tw.tasker.babysitter.model.data.BabyFavorite;
 import tw.tasker.babysitter.model.data.FavoriteBabysitter;
 import android.app.Application;
 import android.content.Context;
@@ -26,7 +26,7 @@ public class MyApplication extends Application {
 		ParseObject.registerSubclass(Babysitter.class);
 		ParseObject.registerSubclass(BabysitterComment.class);
 		ParseObject.registerSubclass(Baby.class);
-		ParseObject.registerSubclass(Favorite.class);
+		ParseObject.registerSubclass(BabyFavorite.class);
 		ParseObject.registerSubclass(FavoriteBabysitter.class);
 		ParseObject.registerSubclass(BabyRecord.class);
 

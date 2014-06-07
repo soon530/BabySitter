@@ -5,7 +5,7 @@ import java.util.List;
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Baby;
-import tw.tasker.babysitter.model.data.Favorite;
+import tw.tasker.babysitter.model.data.BabyFavorite;
 import tw.tasker.babysitter.presenter.adapter.FavoriteBabyParseQueryAdapter;
 import tw.tasker.babysitter.utils.EndlessScrollListener;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
@@ -31,8 +31,8 @@ import com.parse.ParseQueryAdapter;
 import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 
 public class BabyFavoriteFragment extends Fragment implements
-		OnItemClickListener, OnQueryLoadListener<Favorite>, OnRefreshListener {
-	private ParseQueryAdapter<Favorite> mAdapter;
+		OnItemClickListener, OnQueryLoadListener<BabyFavorite>, OnRefreshListener {
+	private ParseQueryAdapter<BabyFavorite> mAdapter;
 	private GridView mList;
 	private TextView mEmpty;
     PullToRefreshLayout mPullToRefreshLayout;
@@ -112,7 +112,7 @@ public class BabyFavoriteFragment extends Fragment implements
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		Favorite favorite = mAdapter.getItem(position);
+		BabyFavorite favorite = mAdapter.getItem(position);
 		Baby baby = favorite.getBaby();
 		seeBabyDetail(baby.getObjectId());
 	}
@@ -132,7 +132,7 @@ public class BabyFavoriteFragment extends Fragment implements
 	}
 
 	@Override
-	public void onLoaded(List<Favorite> favorite, Exception e) {
+	public void onLoaded(List<BabyFavorite> favorite, Exception e) {
 		ProgressBarUtils.hide(getActivity());
         // Notify PullToRefreshAttacher that the refresh has finished
         mPullToRefreshLayout.setRefreshComplete();
