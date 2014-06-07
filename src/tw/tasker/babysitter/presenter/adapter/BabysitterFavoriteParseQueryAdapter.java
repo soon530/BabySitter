@@ -24,10 +24,10 @@ import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
 
-public class FavoriteBabysitterParseQueryAdapter extends
+public class BabysitterFavoriteParseQueryAdapter extends
 		ParseQueryAdapter<BabysitterFavorite> {
 
-	public FavoriteBabysitterParseQueryAdapter(Context context) {
+	public BabysitterFavoriteParseQueryAdapter(Context context) {
 		super(context, getQueryFactory());
 	}
 
