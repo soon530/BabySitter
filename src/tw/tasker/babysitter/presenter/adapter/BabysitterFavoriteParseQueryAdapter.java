@@ -1,25 +1,15 @@
 package tw.tasker.babysitter.presenter.adapter;
 
 import it.gmariotti.cardslib.library.internal.Card;
-import it.gmariotti.cardslib.library.internal.CardHeader;
-import it.gmariotti.cardslib.library.internal.CardThumbnail;
-import it.gmariotti.cardslib.library.internal.base.BaseCard;
 import it.gmariotti.cardslib.library.view.CardView;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.BabysitterFavorite;
+import tw.tasker.babysitter.view.card.GridCard;
 import android.content.Context;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RatingBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
@@ -46,6 +36,7 @@ public class BabysitterFavoriteParseQueryAdapter extends
 		Babysitter babysitter = favorite.getBabysitter();
 
 		GridCard mCard = new GridCard(getContext());
+		//mCard.setBabysitter(babysitter);
 
 		mCard.headerTitle = babysitter.getText();
 		mCard.secondaryTitle = babysitter.getAddress();
@@ -69,6 +60,8 @@ public class BabysitterFavoriteParseQueryAdapter extends
 		
 		mCard.mUrl=url;
 
+		
+		
 		
 		
 		mCard.init();

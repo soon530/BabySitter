@@ -1,4 +1,4 @@
-package tw.tasker.babysitter.presenter.adapter;
+package tw.tasker.babysitter.view.card;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -25,16 +25,16 @@ public class GridCard extends Card {
 
 	public String mBabysitterObjectId;
 	public String mUrl;
-	protected TextView mTitle;
-	protected TextView mSecondaryTitle;
-	protected RatingBar mRatingBar;
-	protected int resourceIdThumbnail = -1;
-	protected int count;
+	public TextView mTitle;
+	public TextView mSecondaryTitle;
+	public RatingBar mRatingBar;
+	public int resourceIdThumbnail = -1;
+	public int count;
 
-	protected String headerTitle;
-	protected String secondaryTitle;
-	protected float rating;
-	protected String mComment;
+	public String headerTitle;
+	public String secondaryTitle;
+	public float rating;
+	public String mComment;
 	
 	public GridCard(Context context) {
 		super(context, R.layout.carddemo_gplay_inner_content);
