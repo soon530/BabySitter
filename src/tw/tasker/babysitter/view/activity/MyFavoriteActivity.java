@@ -50,7 +50,7 @@ public class MyFavoriteActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		ProgressBarUtils.init(this);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_page);
 
 		tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
 		pager = (ViewPager) findViewById(R.id.pager);
