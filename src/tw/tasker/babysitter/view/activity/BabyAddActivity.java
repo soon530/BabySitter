@@ -39,7 +39,7 @@ public class BabyAddActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_baby_add);
+		setContentView(R.layout.activity_container);
 
 		if (savedInstanceState == null) {
 

@@ -33,7 +33,7 @@ public class BabysitterCommentActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_babysitter_comment);
+		setContentView(R.layout.activity_container);
 
 		if (savedInstanceState == null) {
 

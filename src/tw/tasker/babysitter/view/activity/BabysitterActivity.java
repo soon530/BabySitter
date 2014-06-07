@@ -14,7 +14,7 @@ public class BabysitterActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		ProgressBarUtils.init(this);
 
-		setContentView(R.layout.activity_babysitter_detail);
+		setContentView(R.layout.activity_container);
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -30,7 +30,7 @@ public class BabysitterActivity extends ActionBarActivity {
 			fragment.setArguments(arguments);
 
 			getSupportFragmentManager().beginTransaction()
-					.add(R.id.babysitter_detail_container, fragment).commit();
+					.add(R.id.container, fragment).commit();
 		}
 	}
 }

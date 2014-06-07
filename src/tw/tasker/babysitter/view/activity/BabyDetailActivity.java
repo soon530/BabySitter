@@ -46,7 +46,7 @@ public class BabyDetailActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		ProgressBarUtils.init(this);
-		setContentView(R.layout.activity_baby_detail);
+		setContentView(R.layout.activity_container);
 
 		if (savedInstanceState == null) {
 			Bundle arguments = new Bundle();

@@ -32,7 +32,7 @@ public class BabyDiaryActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		ProgressBarUtils.init(this);
 		
-		setContentView(R.layout.activity_baby_diary);
+		setContentView(R.layout.activity_container);
 
 		if (savedInstanceState == null) {
 			

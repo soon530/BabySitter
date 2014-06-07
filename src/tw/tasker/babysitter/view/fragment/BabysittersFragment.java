@@ -6,9 +6,9 @@ import tw.tasker.babysitter.presenter.impl.BabysitterListPresenterImpl;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.BabysitterListView;
 import tw.tasker.babysitter.view.activity.BabysitterMapActivity;
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,8 +19,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.TextView;
+import fr.castorflex.android.smoothprogressbar.SmoothProgressDrawable.Callbacks;
 
 /**
  * A list fragment representing a list of Items. This fragment also supports
