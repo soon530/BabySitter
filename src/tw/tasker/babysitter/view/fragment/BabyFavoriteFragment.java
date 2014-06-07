@@ -7,8 +7,10 @@ import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Baby;
 import tw.tasker.babysitter.model.data.Favorite;
 import tw.tasker.babysitter.presenter.adapter.FavoriteBabyParseQueryAdapter;
-import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.activity.BabyDetailActivity;
+import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
+import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,12 +28,12 @@ import android.widget.TextView;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 
-
 public class BabyFavoriteFragment extends Fragment implements
-		OnItemClickListener, OnQueryLoadListener<Favorite> {
+		OnItemClickListener, OnQueryLoadListener<Favorite>, OnRefreshListener {
 	private ParseQueryAdapter<Favorite> mAdapter;
 	private GridView mList;
 	private TextView mEmpty;
+    PullToRefreshLayout mPullToRefreshLayout;
 
 	public static Fragment newInstance(int position) {
 		BabyFavoriteFragment fragment = new BabyFavoriteFragment();
@@ -41,7 +43,7 @@ public class BabyFavoriteFragment extends Fragment implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-	
+
 		setHasOptionsMenu(true);
 	}
 
@@ -53,19 +55,6 @@ public class BabyFavoriteFragment extends Fragment implements
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		
-		switch (id) {
-		case R.id.refresh:
-			mAdapter.loadObjects();
-			break;
-		default:
-			break;
-		}
-		
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -79,6 +68,21 @@ public class BabyFavoriteFragment extends Fragment implements
 		mList.setOnItemClickListener(this);
 		mEmpty = (TextView) rootView.findViewById(R.id.empty);
 		mList.setEmptyView(mEmpty);
+		
+		
+        // Retrieve the PullToRefreshLayout from the content view
+        mPullToRefreshLayout = (PullToRefreshLayout) rootView.findViewById(R.id.carddemo_extra_ptr_layout);
+
+        // Now setup the PullToRefreshLayout
+        ActionBarPullToRefresh.from(getActivity())
+                // Mark All Children as pullable
+                .allChildrenArePullable()
+                // Set the OnRefreshListener
+                .listener(this)
+                // Finally commit the setup to our PullToRefreshLayout
+                .setup(mPullToRefreshLayout);
+
+		
 		return rootView;
 	}
 
@@ -91,7 +95,6 @@ public class BabyFavoriteFragment extends Fragment implements
 	public void doListQuery() {
 		mAdapter = new FavoriteBabyParseQueryAdapter(getActivity());
 		mAdapter.setAutoload(false);
-		//mAdapter.setPaginationEnabled(false);
 		mAdapter.setObjectsPerPage(6);
 		mAdapter.addOnQueryLoadListener(this);
 		mList.setAdapter(mAdapter);
@@ -117,12 +120,16 @@ public class BabyFavoriteFragment extends Fragment implements
 
 	@Override
 	public void onLoading() {
-		ProgressBarUtils.show(getActivity());
 	}
 
 	@Override
 	public void onLoaded(List<Favorite> favorite, Exception e) {
-		ProgressBarUtils.hide(getActivity());
+        // Notify PullToRefreshAttacher that the refresh has finished
+        mPullToRefreshLayout.setRefreshComplete();
 	}
 
+	@Override
+	public void onRefreshStarted(View view) {
+		mAdapter.loadObjects();
+	}
 }
