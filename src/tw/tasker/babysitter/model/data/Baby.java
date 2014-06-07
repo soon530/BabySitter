@@ -53,11 +53,11 @@ public class Baby extends ParseObject {
 	}
 
 	public void setBabysitter(Babysitter value) {
-		put("Babysitter", value);
+		put("babysitter", value);
 	}
 	
 	public Babysitter getBabysitter() {
-		return (Babysitter) getParseObject("Babysitter");
+		return (Babysitter) getParseObject("babysitter");
 	}
 
 	public boolean getIsPublic() {

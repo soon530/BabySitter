@@ -245,7 +245,7 @@ public class BabysitterDetailFragment extends Fragment implements
 	private void getFavorite() {
 		ParseQuery<BabysitterFavorite> favorite_query = BabysitterFavorite.getQuery();
 
-		favorite_query.whereEqualTo("Babysitter", mBabysitter);
+		favorite_query.whereEqualTo("babysitter", mBabysitter);
 		favorite_query.whereEqualTo("user", ParseUser.getCurrentUser());
 
 		favorite_query.getFirstInBackground(new GetCallback<BabysitterFavorite>() {

@@ -151,7 +151,7 @@ public class FavoriteBabysitterParseQueryAdapter extends
 				query.orderByDescending("createdAt");
 				query.whereEqualTo("user", ParseUser.getCurrentUser());
 				query.setLimit(20);
-				query.include("Babysitter");
+				query.include("babysitter");
 				return query;
 			}
 		};
