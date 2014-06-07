@@ -108,7 +108,7 @@ public class BabysitterDetailFragment extends Fragment implements
 
 	private String mTargetLng;
 
-	private Babysitter mOutline;
+	private Babysitter mBabysitter;
 
 	private String mBabysitterObjectId;
 
@@ -236,7 +236,7 @@ public class BabysitterDetailFragment extends Fragment implements
 
 		mCallIcon.setOnClickListener(this);
 		
-		mOutline = outline;
+		mBabysitter = outline;
 		getFavorite();
 		mPresenter.doCommentQuery(mBabysitterObjectId);
 	}
@@ -245,7 +245,7 @@ public class BabysitterDetailFragment extends Fragment implements
 	private void getFavorite() {
 		ParseQuery<BabysitterFavorite> favorite_query = BabysitterFavorite.getQuery();
 
-		favorite_query.whereEqualTo("Babysitter", mOutline);
+		favorite_query.whereEqualTo("Babysitter", mBabysitter);
 		favorite_query.whereEqualTo("user", ParseUser.getCurrentUser());
 
 		favorite_query.getFirstInBackground(new GetCallback<BabysitterFavorite>() {
@@ -348,7 +348,7 @@ public class BabysitterDetailFragment extends Fragment implements
 
 			// ParseQuery<Baby> detailQuery = Baby.getQuery();
 			// detailQuery.include("babysitter");
-			// detailQuery.whereEqualTo("babysitter", mOutline);
+			// detailQuery.whereEqualTo("babysitter", mBabysitter);
 
 			// detailQuery.getFirstInBackground(new GetCallback<Baby>() {
 
@@ -383,7 +383,7 @@ public class BabysitterDetailFragment extends Fragment implements
 		BabysitterFavorite favorite = new BabysitterFavorite();
 		mFavorite = favorite;
 		// favorite.put("baby", mBaby);
-		favorite.setBaby(mOutline);
+		favorite.setBaby(mBabysitter);
 
 		favorite.put("user", ParseUser.getCurrentUser());
 		favorite.saveInBackground(new SaveCallback() {
