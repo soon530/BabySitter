@@ -117,7 +117,7 @@ import com.parse.SaveCallback;
 		}
 
 		private void updateBabysitter() {
-			ParseQuery<ParseObject> query = ParseQuery.getQuery("babysitter");
+			ParseQuery<ParseObject> query = ParseQuery.getQuery("Babysitter");
 
 			query.getInBackground(mBabysitterObjectId,
 					new GetCallback<ParseObject>() {

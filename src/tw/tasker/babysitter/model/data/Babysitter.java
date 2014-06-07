@@ -6,7 +6,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-@ParseClassName("babysitter")
+@ParseClassName("Babysitter")
 public class Babysitter extends ParseObject {
 
 	public int getBabycareCount() {
