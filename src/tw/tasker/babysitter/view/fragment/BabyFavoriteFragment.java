@@ -6,7 +6,7 @@ import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Baby;
 import tw.tasker.babysitter.model.data.BabyFavorite;
-import tw.tasker.babysitter.presenter.adapter.FavoriteBabyParseQueryAdapter;
+import tw.tasker.babysitter.presenter.adapter.BabyFavoriteParseQueryAdapter;
 import tw.tasker.babysitter.utils.EndlessScrollListener;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.activity.BabyDetailActivity;
@@ -101,7 +101,7 @@ public class BabyFavoriteFragment extends Fragment implements
 	}
 
 	public void doListQuery() {
-		mAdapter = new FavoriteBabyParseQueryAdapter(getActivity());
+		mAdapter = new BabyFavoriteParseQueryAdapter(getActivity());
 		//mAdapter.setAutoload(true);
 		mAdapter.setObjectsPerPage(6);
 		mAdapter.addOnQueryLoadListener(this);

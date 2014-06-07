@@ -26,11 +26,11 @@ import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
 
-public class FavoriteBabyParseQueryAdapter extends ParseQueryAdapter<BabyFavorite> {
+public class BabyFavoriteParseQueryAdapter extends ParseQueryAdapter<BabyFavorite> {
 	DisplayImageOptions options;
 	private ImageLoader imageLoader = ImageLoader.getInstance();
 
-	public FavoriteBabyParseQueryAdapter(Context context) {
+	public BabyFavoriteParseQueryAdapter(Context context) {
 		super(context, getQueryFactory());
 		
         options = new DisplayImageOptions.Builder()
