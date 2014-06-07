@@ -13,4 +13,10 @@
         android:orderInCategory="100"
         android:title="更新"
         app:showAsAction="always"/>
-</menu>
+    <item
+        android:id="@+id/baby_diary"
+        android:orderInCategory="100"
+        android:title="寶寶日誌"
+        app:showAsAction="always"/>
+
+</menu>

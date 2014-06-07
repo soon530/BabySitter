@@ -12,11 +12,18 @@ import tw.tasker.babysitter.presenter.BabysitterDetailPresenter;
 import tw.tasker.babysitter.presenter.impl.BabysitterDetailPresenterImpl;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.BabysitterDetailView;
+import tw.tasker.babysitter.view.activity.BabysitterCommentActivity;
+import tw.tasker.babysitter.view.activity.BabysittersActivity;
 import tw.tasker.babysitter.view.card.BabysitterCard;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NavUtils;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
@@ -34,6 +41,9 @@ public class BabysitterFragment extends Fragment implements
 	private String mBabysitterObjectId;
 	private BabysitterDetailPresenter mPresenter;
 
+	private int mTotalRating;
+	private int mTotalComment;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,6 +55,7 @@ public class BabysitterFragment extends Fragment implements
 
 		mPresenter = new BabysitterDetailPresenterImpl(this);
 
+		setHasOptionsMenu(true);
 	}
 
 	@Override
@@ -73,11 +84,11 @@ public class BabysitterFragment extends Fragment implements
 			mActionMode.finish();
 	}
 
-	//call back
+	// call back
 	public void fillHeaderUI(Babysitter outline) {
 		initCards(outline);
 	}
-	
+
 	private void initCards(Babysitter babysitter) {
 		// init_simple_card();
 		// init_card_inner_layout("保母姓名", "張女士", R.id.carddemo_card_inner1);
@@ -88,14 +99,16 @@ public class BabysitterFragment extends Fragment implements
 		// init_card_inner_layout("教育程度", "大學", R.id.carddemo_card_inner5);
 
 		initCardSuggested(babysitter.getName());
-		init_card_inner_layout("電話",  babysitter.getName() + babysitter.getTel(), R.id.carddemo_card_inner1);
+		init_card_inner_layout("電話",
+				babysitter.getName() + babysitter.getTel(),
+				R.id.carddemo_card_inner1);
 		init_card_inner_layout("郵件", "soon530@gmail.com",
 				R.id.carddemo_card_inner2);
 		init_card_inner_layout("地址", babysitter.getAddress(),
 				R.id.carddemo_card_inner3);
 
 		init_card_inner_layout("時段", "全天24hr 臨時保母", R.id.carddemo_card_inner4);
-		init_card_inner_layout("托育", "共" + babysitter.getBabycareCount() +"人",
+		init_card_inner_layout("托育", "共" + babysitter.getBabycareCount() + "人",
 				R.id.carddemo_card_inner5);
 
 		// init_custom_card();
@@ -107,41 +120,17 @@ public class BabysitterFragment extends Fragment implements
 
 	/**
 	 * This method builds a suggested card example
-	 * @param babysitter 
+	 * 
+	 * @param babysitter
 	 */
 	private void initCardSuggested(String name) {
 
 		BabysitterCard card = new BabysitterCard(getActivity());
-		//card.mName = name;
+		// card.mName = name;
 		CardView cardView = (CardView) getActivity().findViewById(
 				R.id.carddemo_suggested);
 		cardView.setCard(card);
 	}
-
-	// /**
-	// * This method builds a simple card
-	// */
-	// private void init_simple_card() {
-	//
-	// //Create a Card
-	// Card card = new Card(getActivity());
-	//
-	// //Create a CardHeader
-	// CardHeader header = new CardHeader(getActivity());
-	//
-	// //Set the header title
-	// header.setTitle(getString(R.string.demo_header_basetitle));
-	//
-	// card.addCardHeader(header);
-	//
-	// //Set the card inner text
-	// card.setTitle(getString(R.string.demo_card_basetitle));
-	//
-	// //Set card in the cardView
-	// CardView cardView = (CardView)
-	// getActivity().findViewById(R.id.carddemo_card_id);
-	// cardView.setCard(card);
-	// }
 
 	/**
 	 * This method builds a simple card with a custom inner layout
@@ -181,6 +170,44 @@ public class BabysitterFragment extends Fragment implements
 	@Override
 	public void hideProgress() {
 		ProgressBarUtils.hide(getActivity());
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.babysitter_detail, menu);
+		super.onCreateOptionsMenu(menu, inflater);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+
+		switch (id) {
+
+		case R.id.action_comment:
+
+			Intent intent = new Intent();
+
+			Bundle bundle = new Bundle();
+			bundle.putString(Config.BABYSITTER_OBJECT_ID, mBabysitterObjectId);
+			bundle.putInt(Config.TOTAL_RATING, mTotalRating);
+			bundle.putInt(Config.TOTAL_COMMENT, mTotalComment);
+			intent.putExtras(bundle);
+
+			intent.setClass(getActivity(), BabysitterCommentActivity.class);
+			startActivity(intent);
+			break;
+		case R.id.refresh:
+			mPresenter.refresh();
+			break;
+		case R.id.baby_diary:
+			mPresenter.seeBabyDetail(mBabysitterObjectId);
+			break;
+		default:
+			break;
+		}
+
+		return super.onOptionsItemSelected(item);
 	}
 
 }
