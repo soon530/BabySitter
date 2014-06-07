@@ -17,6 +17,7 @@
 package tw.tasker.babysitter.view.activity;
 
 import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.fragment.BabyFavoriteFragment;
 import tw.tasker.babysitter.view.fragment.BabysitterFavoriteFragment;
 import android.graphics.Color;
@@ -48,6 +49,7 @@ public class MyFavoriteActivity extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		ProgressBarUtils.init(this);
 		setContentView(R.layout.activity_main);
 
 		tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);

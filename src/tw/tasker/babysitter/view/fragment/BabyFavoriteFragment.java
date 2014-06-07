@@ -8,6 +8,7 @@ import tw.tasker.babysitter.model.data.Baby;
 import tw.tasker.babysitter.model.data.Favorite;
 import tw.tasker.babysitter.presenter.adapter.FavoriteBabyParseQueryAdapter;
 import tw.tasker.babysitter.utils.EndlessScrollListener;
+import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.activity.BabyDetailActivity;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
@@ -127,10 +128,12 @@ public class BabyFavoriteFragment extends Fragment implements
 
 	@Override
 	public void onLoading() {
+		ProgressBarUtils.show(getActivity());
 	}
 
 	@Override
 	public void onLoaded(List<Favorite> favorite, Exception e) {
+		ProgressBarUtils.hide(getActivity());
         // Notify PullToRefreshAttacher that the refresh has finished
         mPullToRefreshLayout.setRefreshComplete();
 	}
