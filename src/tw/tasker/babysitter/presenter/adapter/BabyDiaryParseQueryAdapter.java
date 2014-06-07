@@ -72,7 +72,7 @@ public class BabyDiaryParseQueryAdapter extends ParseQueryAdapter<Baby> {
 				ParseQuery<Baby> query = Baby.getQuery();
 				query.orderByDescending("createdAt");
 				//query.setLimit(20);
-				query.include("baby");
+				//query.include("baby");
 				
 				if (babysitterObjectId != null) {
 					query.whereEqualTo("babysitterId", babysitterObjectId);

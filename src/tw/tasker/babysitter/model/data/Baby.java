@@ -6,7 +6,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-@ParseClassName("baby")
+@ParseClassName("Baby")
 public class Baby extends ParseObject {
 
 	public String getName() {
