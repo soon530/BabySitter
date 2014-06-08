@@ -9,11 +9,6 @@
         android:title="@string/goto_babysittercomment_activity"
         app:showAsAction="always"/>
     <item
-        android:id="@+id/refresh"
-        android:orderInCategory="100"
-        android:title="更新"
-        app:showAsAction="always"/>
-    <item
         android:id="@+id/baby_diary"
         android:orderInCategory="100"
         android:title="寶寶日誌"

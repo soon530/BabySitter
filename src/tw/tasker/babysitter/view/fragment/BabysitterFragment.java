@@ -30,11 +30,8 @@ import android.widget.TextView;
 public class BabysitterFragment extends Fragment implements
 		BabysitterDetailView {
 	protected ScrollView mScrollView;
-	protected TextView mTextViewSwipe;
 
-	protected ActionMode mActionMode;
 	protected Card mCardCab;
-	protected CardView cardViewCab;
 
 	private String mBabysitterObjectId;
 	private BabysitterDetailPresenter mPresenter;
@@ -43,7 +40,7 @@ public class BabysitterFragment extends Fragment implements
 	private int mTotalComment;
 
 	public static Fragment newInstance(int position) {
-		BabysitterFragment fragment =  new BabysitterFragment();
+		BabysitterFragment fragment = new BabysitterFragment();
 		return fragment;
 	}
 
@@ -67,14 +64,13 @@ public class BabysitterFragment extends Fragment implements
 		return inflater.inflate(R.layout.demo_fragment_card, container, false);
 	}
 
-	
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		
+
 		mPresenter.doDetailQuery(mBabysitterObjectId);
 	}
-	
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -82,13 +78,6 @@ public class BabysitterFragment extends Fragment implements
 		mScrollView = (ScrollView) getActivity().findViewById(
 				R.id.card_scrollview);
 
-	}
-
-	@Override
-	public void onPause() {
-		super.onPause();
-		if (mActionMode != null)
-			mActionMode.finish();
 	}
 
 	// call back
@@ -109,7 +98,6 @@ public class BabysitterFragment extends Fragment implements
 		init_card_inner_layout("托育", "共" + babysitter.getBabycareCount() + "人",
 				R.id.carddemo_card_inner5);
 
-	
 		hideProgress();
 	}
 
@@ -192,9 +180,6 @@ public class BabysitterFragment extends Fragment implements
 
 			intent.setClass(getActivity(), BabysitterCommentActivity.class);
 			startActivity(intent);
-			break;
-		case R.id.refresh:
-			mPresenter.refresh();
 			break;
 		case R.id.baby_diary:
 			mPresenter.seeBabyDetail(mBabysitterObjectId);
