@@ -97,7 +97,7 @@ public class BabysitterGridCard extends Card {
 	}
 
 	class GplayGridThumb extends CardThumbnail {
-		DisplayImageOptions options;
+		private DisplayImageOptions options;
 		private ImageLoader imageLoader = ImageLoader.getInstance();
 
 		public GplayGridThumb(Context context) {

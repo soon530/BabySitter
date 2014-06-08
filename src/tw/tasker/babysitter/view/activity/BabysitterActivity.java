@@ -98,12 +98,6 @@ public class BabysitterActivity extends ActionBarActivity {
 			}
 			
 			return fragment;
-			//return null;
 		}
-	}
-
-	public BabyFavoriteFragment BabysitterFragment() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

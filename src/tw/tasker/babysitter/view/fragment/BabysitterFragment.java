@@ -67,16 +67,20 @@ public class BabysitterFragment extends Fragment implements
 		return inflater.inflate(R.layout.demo_fragment_card, container, false);
 	}
 
+	
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		
+		mPresenter.doDetailQuery(mBabysitterObjectId);
+	}
+	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
 		mScrollView = (ScrollView) getActivity().findViewById(
 				R.id.card_scrollview);
-		// mTextViewSwipe = (TextView)
-		// getActivity().findViewById(R.id.carddemo_card3_text);
-
-		mPresenter.doDetailQuery(mBabysitterObjectId);
 
 	}
 
@@ -93,17 +97,8 @@ public class BabysitterFragment extends Fragment implements
 	}
 
 	private void initCards(Babysitter babysitter) {
-		// init_simple_card();
-		// init_card_inner_layout("保母姓名", "張女士", R.id.carddemo_card_inner1);
-		// init_card_inner_layout("技術證號", "1234567890",
-		// R.id.carddemo_card_inner2);
-		// init_card_inner_layout("性別", "女", R.id.carddemo_card_inner3);
-		// init_card_inner_layout("年齡", "40", R.id.carddemo_card_inner4);
-		// init_card_inner_layout("教育程度", "大學", R.id.carddemo_card_inner5);
-
-		initCardSuggested(babysitter.getName());
-		init_card_inner_layout("電話",
-				babysitter.getName() + babysitter.getTel(),
+		initCardSuggested(babysitter);
+		init_card_inner_layout("電話", babysitter.getTel(),
 				R.id.carddemo_card_inner1);
 		init_card_inner_layout("郵件", "soon530@gmail.com",
 				R.id.carddemo_card_inner2);
@@ -114,11 +109,8 @@ public class BabysitterFragment extends Fragment implements
 		init_card_inner_layout("托育", "共" + babysitter.getBabycareCount() + "人",
 				R.id.carddemo_card_inner5);
 
-		// init_custom_card();
-		// init_custom_card_swipe();
-		// init_custom_card_clickable();
-		// init_custom_card_partial_listener();
-		// init_cab();
+	
+		hideProgress();
 	}
 
 	/**
@@ -126,10 +118,11 @@ public class BabysitterFragment extends Fragment implements
 	 * 
 	 * @param babysitter
 	 */
-	private void initCardSuggested(String name) {
+	private void initCardSuggested(Babysitter babysitter) {
 
 		BabysitterCard card = new BabysitterCard(getActivity());
-		// card.mName = name;
+		card.setBabysitter(babysitter);
+		card.init();
 		CardView cardView = (CardView) getActivity().findViewById(
 				R.id.carddemo_suggested);
 		cardView.setCard(card);

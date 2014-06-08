@@ -53,11 +53,6 @@ import com.parse.SaveCallback;
  */
 public class BabysitterDetailFragment extends Fragment implements
 		BabysitterDetailView, OnClickListener {
-	/**
-	 * The fragment argument representing the item ID that this fragment
-	 * represents.
-	 */
-	public static final String ARG_ITEM_ID = "item_id";
 
 	/**
 	 * The dummy content this fragment is presenting.
@@ -191,27 +186,6 @@ public class BabysitterDetailFragment extends Fragment implements
 		return super.onOptionsItemSelected(item);
 	}
 
-	private String getDistance(Bundle bundle) {
-
-		mSlat = bundle.getString("slat");
-		mSlng = bundle.getString("slng");
-		mDlat = bundle.getString("dlat");
-		mDlng = bundle.getString("dlng");
-
-		mTargetLat = mSlat;
-		mTargetLng = mSlng;
-
-		double distance = 0;
-		Location locationA = new Location("A");
-		locationA.setLatitude(Double.valueOf(mSlat).doubleValue());
-		locationA.setLongitude(Double.valueOf(mSlng).doubleValue());
-		Location locationB = new Location("B");
-		locationB.setLatitude(Double.valueOf(mDlat).doubleValue());
-		locationB.setLongitude(Double.valueOf(mDlng).doubleValue());
-		distance = locationA.distanceTo(locationB);
-
-		return Double.toString(distance);
-	}
 
 	public void fillHeaderUI(Babysitter outline) {
 
@@ -274,16 +248,14 @@ public class BabysitterDetailFragment extends Fragment implements
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		mHeaderView = inflater.inflate(
-				R.layout.fragment_babysitter_detail_header, null);
+		mHeaderView = inflater.inflate(R.layout.fragment_babysitter_detail_header, null);
 
 		initHeadUI();
 
 		View rootView = inflater.inflate(R.layout.fragment_list,
 				container, false);
 
-		mBabysitterCommentList = (ListView) rootView
-				.findViewById(R.id.list);
+		mBabysitterCommentList = (ListView) rootView.findViewById(R.id.list);
 
 		return rootView;
 	}
