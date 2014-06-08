@@ -37,13 +37,9 @@ import com.astuetz.PagerSlidingTabStrip;
 
 public class MyFavoriteActivity extends FragmentActivity {
 
-	private final Handler handler = new Handler();
-
 	private PagerSlidingTabStrip tabs;
 	private ViewPager pager;
 	private MyPagerAdapter adapter;
-
-	private Drawable oldBackground = null;
 	private int currentColor = Color.parseColor("#A966CC"); //0xFF666666;
 
 	@Override

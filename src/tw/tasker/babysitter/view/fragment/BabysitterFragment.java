@@ -13,12 +13,10 @@ import tw.tasker.babysitter.presenter.impl.BabysitterDetailPresenterImpl;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.BabysitterDetailView;
 import tw.tasker.babysitter.view.activity.BabysitterCommentActivity;
-import tw.tasker.babysitter.view.activity.BabysittersActivity;
 import tw.tasker.babysitter.view.card.BabysitterCard;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.NavUtils;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -43,6 +41,11 @@ public class BabysitterFragment extends Fragment implements
 
 	private int mTotalRating;
 	private int mTotalComment;
+
+	public static Fragment newInstance(int position) {
+		BabysitterFragment fragment =  new BabysitterFragment();
+		return fragment;
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -209,5 +212,4 @@ public class BabysitterFragment extends Fragment implements
 
 		return super.onOptionsItemSelected(item);
 	}
-
 }

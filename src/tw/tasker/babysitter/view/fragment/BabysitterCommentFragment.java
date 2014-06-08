@@ -18,6 +18,7 @@
 
 package tw.tasker.babysitter.view.fragment;
 
+import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.presenter.adapter.BabysitterCommentParseQueryAdapter;
 import android.os.Bundle;
@@ -29,30 +30,49 @@ import android.widget.ListView;
 
 /**
  * List of Google Play cards Example
- *
+ * 
  * @author Gabriele Mariotti (gabri.mariotti@gmail.com)
  */
 public class BabysitterCommentFragment extends Fragment {
+	private String mBabysitterObjectId;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_list, container, false);
-    }
+	public static Fragment newInstance(int position) {
+		Fragment fragment = new BabysitterCommentFragment();
+		return fragment;
+	}
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		if (getArguments().containsKey(Config.BABYSITTER_OBJECT_ID)) {
+			mBabysitterObjectId = getArguments().getString(
+					Config.BABYSITTER_OBJECT_ID);
+		}
 
-        initCards();
-    }
+	}
 
-    private void initCards() {
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		return inflater.inflate(R.layout.fragment_list, container, false);
+	}
 
-    	BabysitterCommentParseQueryAdapter mAdapter = new BabysitterCommentParseQueryAdapter(getActivity(), null);
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
 
-        ListView listView = (ListView) getActivity().findViewById(R.id.list);
-        if (listView!=null){
-            listView.setAdapter(mAdapter);
-        }
-    }
+		initCards();
+	}
+
+	private void initCards() {
+
+		BabysitterCommentParseQueryAdapter mAdapter = new BabysitterCommentParseQueryAdapter(
+				getActivity(), mBabysitterObjectId);
+
+		ListView listView = (ListView) getActivity().findViewById(R.id.list);
+		if (listView != null) {
+			listView.setAdapter(mAdapter);
+		}
+	}
+
 }
