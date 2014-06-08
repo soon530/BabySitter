@@ -1,7 +1,5 @@
 package tw.tasker.babysitter.view.fragment;
 
-//import it.gmariotti.cardslib.demo.R;
-//import it.gmariotti.cardslib.demo.cards.SuggestedCard;
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardHeader;
 import it.gmariotti.cardslib.library.view.CardView;
@@ -14,10 +12,12 @@ import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.BabysitterDetailView;
 import tw.tasker.babysitter.view.activity.BabysitterCommentActivity;
 import tw.tasker.babysitter.view.card.BabysitterCard;
+import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
+import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,13 +25,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
-import android.widget.TextView;
 
 public class BabysitterFragment extends Fragment implements
-		BabysitterDetailView {
+		BabysitterDetailView, OnRefreshListener {
 	protected ScrollView mScrollView;
-
-	protected Card mCardCab;
+	private PullToRefreshLayout mPullToRefreshLayout;
 
 	private String mBabysitterObjectId;
 	private BabysitterDetailPresenter mPresenter;
@@ -61,7 +59,23 @@ public class BabysitterFragment extends Fragment implements
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.demo_fragment_card, container, false);
+		
+		View rootView = inflater.inflate(R.layout.demo_fragment_card, container, false);
+		
+		// Retrieve the PullToRefreshLayout from the content view
+		mPullToRefreshLayout = (PullToRefreshLayout) rootView
+				.findViewById(R.id.carddemo_extra_ptr_layout);
+
+		// Now setup the PullToRefreshLayout
+		ActionBarPullToRefresh.from(getActivity())
+		// Mark All Children as pullable
+				.allChildrenArePullable()
+				// Set the OnRefreshListener
+				.listener(this)
+				// Finally commit the setup to our PullToRefreshLayout
+				.setup(mPullToRefreshLayout);
+		
+		return rootView;
 	}
 
 	@Override
@@ -154,6 +168,7 @@ public class BabysitterFragment extends Fragment implements
 	@Override
 	public void hideProgress() {
 		ProgressBarUtils.hide(getActivity());
+		mPullToRefreshLayout.setRefreshComplete();
 	}
 
 	@Override
@@ -189,5 +204,11 @@ public class BabysitterFragment extends Fragment implements
 		}
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onRefreshStarted(View view) {
+		showProgress();
+		mPresenter.doDetailQuery(mBabysitterObjectId);
 	}
 }
