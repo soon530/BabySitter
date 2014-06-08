@@ -29,7 +29,7 @@
          You can popolate your element with CardHeader#setupInnerViewElements() method -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:id="@+id/text_suggested_card1"
         android:textSize="18sp"
         android:layout_marginLeft="0dp"
