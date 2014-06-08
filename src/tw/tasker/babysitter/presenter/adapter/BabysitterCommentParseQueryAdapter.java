@@ -71,7 +71,8 @@ public class BabysitterCommentParseQueryAdapter extends
 		}
 		
 		GplayCardCustomSource mCard = new GplayCardCustomSource(getContext());
-		
+		mCard.setBabysitterComment(comment);
+		mCard.init();
 		CardView mCardView;
 		mCardView = (CardView) view.findViewById(R.id.carddemo_thumb_customsource);
 		if (mCardView != null) {
