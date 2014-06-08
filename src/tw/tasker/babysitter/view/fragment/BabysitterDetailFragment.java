@@ -283,7 +283,7 @@ public class BabysitterDetailFragment extends Fragment implements
 				container, false);
 
 		mBabysitterCommentList = (ListView) rootView
-				.findViewById(R.id.babysitter_comment_list);
+				.findViewById(R.id.list);
 
 		return rootView;
 	}

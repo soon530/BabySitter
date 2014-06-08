@@ -51,7 +51,6 @@ public class BabyFavoriteParseQueryAdapter extends
 		mCard.init();
 
 		CardView mCardView;
-		// Setup card
 		mCardView = (CardView) view.findViewById(R.id.list_cardId);
 		if (mCardView != null) {
 			// It is important to set recycle value for inner layout elements
@@ -60,39 +59,9 @@ public class BabyFavoriteParseQueryAdapter extends
 
 			// It is important to set recycle value for performance issue
 			mCardView.setRecycle(recycle);
-
-			// Save original swipeable to prevent cardSwipeListener (listView
-			// requires another cardSwipeListener)
-			// boolean origianlSwipeable = mCard.isSwipeable();
-			// mCard.setSwipeable(false);
-
 			mCardView.setCard(mCard);
-
-			// Set originalValue
-			// mCard.setSwipeable(origianlSwipeable);
-
 		}
 
-		/*
-		 * ImageView babyAvator = (ImageView)
-		 * view.findViewById(R.id.baby_avator); TextView babyName = (TextView)
-		 * view.findViewById(R.id.baby_name); TextView babyNote = (TextView)
-		 * view.findViewById(R.id.baby_note); TextView totalFavorite =
-		 * (TextView) view .findViewById(R.id.total_favorite); TextView
-		 * totalRecord = (TextView) view.findViewById(R.id.total_record);
-		 * 
-		 * Baby baby = favorite.getBaby(); String url; if (baby.getPhotoFile()
-		 * != null) { url = baby.getPhotoFile().getUrl(); } else { url =
-		 * "https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-ash3/t1.0-9/q77/s720x720/1966891_782022338479354_124097698_n.jpg"
-		 * ; } imageLoader.displayImage(url, babyAvator, options, null);
-		 * 
-		 * String tag = ""; if (baby.getIsPublic()) { tag = "公開"; } else { tag =
-		 * "私藏"; }
-		 * 
-		 * babyName.setText(baby.getName() + " (" + tag + ")");
-		 * babyNote.setText(baby.getNote()); totalFavorite.setText("最愛：+" +
-		 * baby.getFavorite()); totalRecord.setText("記錄：+5");
-		 */
 		return view;
 	}
 
@@ -103,7 +72,6 @@ public class BabyFavoriteParseQueryAdapter extends
 				query.include("user");
 				query.orderByDescending("createdAt");
 				query.whereEqualTo("user", ParseUser.getCurrentUser());
-				// query.setLimit(20);
 				query.include("baby");
 				return query;
 			}

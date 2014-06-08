@@ -45,7 +45,7 @@ public class MyAdapter extends BaseAdapter {
 
 		if (convertView == null) {
 			// 取得listItem容器 view
-			convertView = myInflater.inflate(R.layout.list_item_babysitter_comment, null);
+			convertView = myInflater.inflate(R.layout.list_item_card, null);
 
 			// 建構listItem內容view
 			viewTag = new ViewTag(

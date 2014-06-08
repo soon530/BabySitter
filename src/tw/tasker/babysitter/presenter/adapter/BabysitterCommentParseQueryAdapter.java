@@ -1,8 +1,11 @@
 package tw.tasker.babysitter.presenter.adapter;
 
+import it.gmariotti.cardslib.library.internal.Card;
+import it.gmariotti.cardslib.library.view.CardView;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabysitterComment;
 import tw.tasker.babysitter.utils.DateTimeUtils;
+import tw.tasker.babysitter.view.card.GplayCardCustomSource;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,13 +62,32 @@ public class BabysitterCommentParseQueryAdapter extends
 	public View getItemView(BabysitterComment comment, View view,
 			ViewGroup parent) {
 
+		boolean recycle = false;
 		if (view == null) {
-			view = View.inflate(getContext(),
-					R.layout.list_item_babysitter_comment, null);
+			recycle = false;
+			view = View.inflate(getContext(), R.layout.list_item_card, null);
+		} else {
+			recycle = true;
+		}
+		
+		GplayCardCustomSource mCard = new GplayCardCustomSource(getContext());
+		
+		CardView mCardView;
+		mCardView = (CardView) view.findViewById(R.id.carddemo_thumb_customsource);
+		if (mCardView != null) {
+			// It is important to set recycle value for inner layout elements
+			mCardView.setForceReplaceInnerLayout(Card.equalsInnerLayout(
+					mCardView.getCard(), mCard));
+
+			// It is important to set recycle value for performance issue
+			mCardView.setRecycle(recycle);
+			mCardView.setCard(mCard);
 		}
 
-		initUI(view);
-		fillDataToUI(comment);
+		
+		
+		//initUI(view);
+		//fillDataToUI(comment);
 
 		return view;
 	};
