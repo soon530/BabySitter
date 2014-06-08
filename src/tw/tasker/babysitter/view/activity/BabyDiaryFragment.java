@@ -7,6 +7,9 @@ import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Baby;
 import tw.tasker.babysitter.presenter.adapter.BabyDiaryParseQueryAdapter;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
+import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
+import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,22 +20,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 
-/**
- * A placeholder fragment containing a simple view.
- */
 public class BabyDiaryFragment extends Fragment implements
-		OnItemClickListener, OnQueryLoadListener<Baby> {
+		OnItemClickListener, OnQueryLoadListener<Baby>, OnRefreshListener {
 	private ParseQueryAdapter<Baby> mAdapter;
 	private GridView mList;
 	private TextView mEmpty;
 	private String mBabysitterObjectId;
+	private PullToRefreshLayout mPullToRefreshLayout;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -86,8 +87,21 @@ public class BabyDiaryFragment extends Fragment implements
 				container, false);
 		mList = (GridView) rootView.findViewById(R.id.list);
 		mList.setOnItemClickListener(this);
-		mEmpty = (TextView) rootView.findViewById(R.id.empty);
-		mList.setEmptyView(mEmpty);
+		//mEmpty = (TextView) rootView.findViewById(R.id.empty);
+		//mList.setEmptyView(mEmpty);
+		
+		// Retrieve the PullToRefreshLayout from the content view
+		mPullToRefreshLayout = (PullToRefreshLayout) rootView
+				.findViewById(R.id.carddemo_extra_ptr_layout);
+
+		// Now setup the PullToRefreshLayout
+		ActionBarPullToRefresh.from(getActivity())
+		// Mark All Children as pullable
+				.allChildrenArePullable()
+				// Set the OnRefreshListener
+				.listener(this)
+				// Finally commit the setup to our PullToRefreshLayout
+				.setup(mPullToRefreshLayout);
 		return rootView;
 	}
 
@@ -134,6 +148,12 @@ public class BabyDiaryFragment extends Fragment implements
 	@Override
 	public void onLoaded(List<Baby> arg0, Exception arg1) {
 		ProgressBarUtils.hide(getActivity());
+		mPullToRefreshLayout.setRefreshComplete();
+	}
+
+	@Override
+	public void onRefreshStarted(View arg0) {
+		mAdapter.loadObjects();
 	}
 
 }
