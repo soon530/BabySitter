@@ -8,10 +8,5 @@
         android:orderInCategory="100"
         android:title="@string/goto_babysittermap_activity"
         app:showAsAction="always"/>
-    <item
-        android:id="@+id/refresh"
-        android:orderInCategory="100"
-        android:title="更新"
-        app:showAsAction="always"/>
 
 </menu>

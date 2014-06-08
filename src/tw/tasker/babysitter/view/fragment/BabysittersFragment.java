@@ -6,6 +6,9 @@ import tw.tasker.babysitter.presenter.impl.BabysitterListPresenterImpl;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.BabysitterListView;
 import tw.tasker.babysitter.view.activity.BabysitterMapActivity;
+import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
+import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,21 +23,12 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
-import fr.castorflex.android.smoothprogressbar.SmoothProgressDrawable.Callbacks;
 
-/**
- * A list fragment representing a list of Items. This fragment also supports
- * tablet devices by allowing list items to be given an 'activated' state upon
- * selection. This helps indicate which item is currently being viewed in a
- * {@link BabysitterDetailFragment}.
- * <p>
- * Activities containing this fragment MUST implement the {@link Callbacks}
- * interface.
- */
 public class BabysittersFragment extends Fragment implements
-		BabysitterListView, OnItemClickListener {
+		BabysitterListView, OnItemClickListener, OnRefreshListener {
 
 	private BabysitterListPresenter mPresenter;
+	private PullToRefreshLayout mPullToRefreshLayout;
 
 	private GridView mList;
 	private TextView mEmpty;
@@ -64,9 +58,6 @@ public class BabysittersFragment extends Fragment implements
 			startActivity(intent);
 			break;
 
-		case R.id.refresh:
-			mPresenter.refresh();
-
 		default:
 			break;
 		}
@@ -84,6 +75,20 @@ public class BabysittersFragment extends Fragment implements
 		mEmpty = (TextView) rootView.findViewById(R.id.empty);
 		mList.setEmptyView(mEmpty);
 
+		// Retrieve the PullToRefreshLayout from the content view
+		mPullToRefreshLayout = (PullToRefreshLayout) rootView
+				.findViewById(R.id.carddemo_extra_ptr_layout);
+
+		// Now setup the PullToRefreshLayout
+		ActionBarPullToRefresh.from(getActivity())
+		// Mark All Children as pullable
+				.allChildrenArePullable()
+				// Set the OnRefreshListener
+				.listener(this)
+				// Finally commit the setup to our PullToRefreshLayout
+				.setup(mPullToRefreshLayout);
+
+		
 		return rootView;
 	}
 
@@ -101,6 +106,7 @@ public class BabysittersFragment extends Fragment implements
 	@Override
 	public void hideProgress() {
 		ProgressBarUtils.hide(getActivity());
+		mPullToRefreshLayout.setRefreshComplete();
 	}
 
 	@Override
@@ -112,5 +118,10 @@ public class BabysittersFragment extends Fragment implements
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		mPresenter.onListItemClick(position);
+	}
+
+	@Override
+	public void onRefreshStarted(View arg0) {
+		mPresenter.refresh();
 	}
 }
