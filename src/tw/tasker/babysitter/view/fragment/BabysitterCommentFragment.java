@@ -1,26 +1,15 @@
-/*
- * ******************************************************************************
- *   Copyright (c) 2013-2014 Gabriele Mariotti.
- *
- *   Licensed under the Apache License, Version 2.0 (the "License");
- *   you may not use this file except in compliance with the License.
- *   You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- *   Unless required by applicable law or agreed to in writing, software
- *   distributed under the License is distributed on an "AS IS" BASIS,
- *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *   See the License for the specific language governing permissions and
- *   limitations under the License.
- *  *****************************************************************************
- */
-
 package tw.tasker.babysitter.view.fragment;
+
+import java.util.List;
 
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.model.data.BabysitterComment;
 import tw.tasker.babysitter.presenter.adapter.BabysitterCommentParseQueryAdapter;
+import tw.tasker.babysitter.utils.ProgressBarUtils;
+import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
+import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -28,13 +17,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-/**
- * List of Google Play cards Example
- * 
- * @author Gabriele Mariotti (gabri.mariotti@gmail.com)
- */
-public class BabysitterCommentFragment extends Fragment {
+import com.parse.ParseQueryAdapter.OnQueryLoadListener;
+
+public class BabysitterCommentFragment extends Fragment implements
+		OnRefreshListener, OnQueryLoadListener<BabysitterComment> {
+
 	private String mBabysitterObjectId;
+	private PullToRefreshLayout mPullToRefreshLayout;
+	private BabysitterCommentParseQueryAdapter mAdapter;
 
 	public static Fragment newInstance(int position) {
 		Fragment fragment = new BabysitterCommentFragment();
@@ -54,7 +44,24 @@ public class BabysitterCommentFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragment_list, container, false);
+
+		View rootView = inflater.inflate(R.layout.fragment_list, container,
+				false);
+
+		// Retrieve the PullToRefreshLayout from the content view
+		mPullToRefreshLayout = (PullToRefreshLayout) rootView
+				.findViewById(R.id.carddemo_extra_ptr_layout);
+
+		// Now setup the PullToRefreshLayout
+		ActionBarPullToRefresh.from(getActivity())
+		// Mark All Children as pullable
+				.allChildrenArePullable()
+				// Set the OnRefreshListener
+				.listener(this)
+				// Finally commit the setup to our PullToRefreshLayout
+				.setup(mPullToRefreshLayout);
+
+		return rootView;
 	}
 
 	@Override
@@ -66,13 +73,29 @@ public class BabysitterCommentFragment extends Fragment {
 
 	private void initCards() {
 
-		BabysitterCommentParseQueryAdapter mAdapter = new BabysitterCommentParseQueryAdapter(
-				getActivity(), mBabysitterObjectId);
-
+		mAdapter = new BabysitterCommentParseQueryAdapter(getActivity(),
+				mBabysitterObjectId);
+		mAdapter.addOnQueryLoadListener(this);
 		ListView listView = (ListView) getActivity().findViewById(R.id.list);
 		if (listView != null) {
 			listView.setAdapter(mAdapter);
 		}
 	}
 
+	@Override
+	public void onLoading() {
+		ProgressBarUtils.show(getActivity());
+	}
+
+	@Override
+	public void onLoaded(List<BabysitterComment> babysitterComment, Exception e) {
+		ProgressBarUtils.hide(getActivity());
+		// Notify PullToRefreshAttacher that the refresh has finished
+		mPullToRefreshLayout.setRefreshComplete();
+	}
+
+	@Override
+	public void onRefreshStarted(View view) {
+		mAdapter.loadObjects();
+	}
 }
