@@ -6,7 +6,7 @@ import it.gmariotti.cardslib.library.internal.CardThumbnail;
 import it.gmariotti.cardslib.library.internal.base.BaseCard;
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.model.data.Baby;
+import tw.tasker.babysitter.model.data.BabyDiary;
 import tw.tasker.babysitter.view.activity.BabyDetailActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -25,7 +25,7 @@ import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 public class BabyGridCard extends Card {
 
 	public int resourceIdThumbnail = -1;
-	private Baby mBaby;
+	private BabyDiary mBaby;
 
 	public BabyGridCard(Context context) {
 		super(context, R.layout.carddemo_gplay_inner_content);
@@ -123,7 +123,7 @@ public class BabyGridCard extends Card {
 		}
 	}
 
-	public void setBaby(Baby baby) {
+	public void setBaby(BabyDiary baby) {
 		mBaby = baby;
 	}
 

@@ -3,7 +3,7 @@ package tw.tasker.babysitter.presenter.adapter;
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.view.CardView;
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.model.data.Baby;
+import tw.tasker.babysitter.model.data.BabyDiary;
 import tw.tasker.babysitter.view.card.BabyGridCard;
 import android.content.Context;
 import android.view.View;
@@ -17,14 +17,14 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
-public class BabyDiaryParseQueryAdapter extends ParseQueryAdapter<Baby> {
+public class BabyDiaryParseQueryAdapter extends ParseQueryAdapter<BabyDiary> {
 
 	public BabyDiaryParseQueryAdapter(Context context, String babysitterObjectId) {
 		super(context, getQueryFactory(babysitterObjectId));
 	}
 
 	@Override
-	public View getItemView(Baby baby, View view, ViewGroup parent) {
+	public View getItemView(BabyDiary baby, View view, ViewGroup parent) {
 		boolean recycle = false;
 		if (view == null) {
 			recycle = false;
@@ -91,10 +91,10 @@ public class BabyDiaryParseQueryAdapter extends ParseQueryAdapter<Baby> {
 */		return view;
 	}
 
-	private static ParseQueryAdapter.QueryFactory<Baby> getQueryFactory(final String babysitterObjectId) {
-		ParseQueryAdapter.QueryFactory<Baby> factory = new ParseQueryAdapter.QueryFactory<Baby>() {
-			public ParseQuery<Baby> create() {
-				ParseQuery<Baby> query = Baby.getQuery();
+	private static ParseQueryAdapter.QueryFactory<BabyDiary> getQueryFactory(final String babysitterObjectId) {
+		ParseQueryAdapter.QueryFactory<BabyDiary> factory = new ParseQueryAdapter.QueryFactory<BabyDiary>() {
+			public ParseQuery<BabyDiary> create() {
+				ParseQuery<BabyDiary> query = BabyDiary.getQuery();
 				query.orderByDescending("createdAt");
 				//query.setLimit(20);
 				//query.include("baby");

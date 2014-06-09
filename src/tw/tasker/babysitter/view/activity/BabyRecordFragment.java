@@ -3,7 +3,7 @@ package tw.tasker.babysitter.view.activity;
 import static tw.tasker.babysitter.utils.LogUtils.LOGD;
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.model.data.Baby;
+import tw.tasker.babysitter.model.data.BabyDiary;
 import tw.tasker.babysitter.model.data.BabyRecord;
 import tw.tasker.babysitter.utils.PictureHelper;
 import android.app.ProgressDialog;
@@ -147,8 +147,8 @@ public class BabyRecordFragment extends Fragment implements
 	}
 
 	private void saveComment() {
-		Baby baby = ParseObject
-				.createWithoutData(Baby.class, mBabyObjectId);
+		BabyDiary baby = ParseObject
+				.createWithoutData(BabyDiary.class, mBabyObjectId);
 
 		BabyRecord babyRecord = new BabyRecord();
 		babyRecord.setBaby(baby);

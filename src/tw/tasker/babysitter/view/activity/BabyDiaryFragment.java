@@ -4,7 +4,7 @@ import java.util.List;
 
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.model.data.Baby;
+import tw.tasker.babysitter.model.data.BabyDiary;
 import tw.tasker.babysitter.presenter.adapter.BabyDiaryParseQueryAdapter;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
@@ -28,8 +28,8 @@ import com.parse.ParseQueryAdapter;
 import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 
 public class BabyDiaryFragment extends Fragment implements
-		OnItemClickListener, OnQueryLoadListener<Baby>, OnRefreshListener {
-	private ParseQueryAdapter<Baby> mAdapter;
+		OnItemClickListener, OnQueryLoadListener<BabyDiary>, OnRefreshListener {
+	private ParseQueryAdapter<BabyDiary> mAdapter;
 	private GridView mList;
 	private TextView mEmpty;
 	private String mBabysitterObjectId;
@@ -121,7 +121,7 @@ public class BabyDiaryFragment extends Fragment implements
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		Baby baby = mAdapter.getItem(position);
+		BabyDiary baby = mAdapter.getItem(position);
 		if (baby.getIsPublic()) {
 
 			seeBabyDetail(baby.getObjectId());
@@ -143,7 +143,7 @@ public class BabyDiaryFragment extends Fragment implements
 	}
 
 	@Override
-	public void onLoaded(List<Baby> arg0, Exception arg1) {
+	public void onLoaded(List<BabyDiary> arg0, Exception arg1) {
 		ProgressBarUtils.hide(getActivity());
 		mPullToRefreshLayout.setRefreshComplete();
 	}

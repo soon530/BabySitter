@@ -1,6 +1,6 @@
 package tw.tasker.babysitter;
 
-import tw.tasker.babysitter.model.data.Baby;
+import tw.tasker.babysitter.model.data.BabyDiary;
 import tw.tasker.babysitter.model.data.BabyRecord;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.BabysitterComment;
@@ -25,7 +25,7 @@ public class MyApplication extends Application {
 		super.onCreate();		
 		ParseObject.registerSubclass(Babysitter.class);
 		ParseObject.registerSubclass(BabysitterComment.class);
-		ParseObject.registerSubclass(Baby.class);
+		ParseObject.registerSubclass(BabyDiary.class);
 		ParseObject.registerSubclass(BabyFavorite.class);
 		ParseObject.registerSubclass(BabysitterFavorite.class);
 		ParseObject.registerSubclass(BabyRecord.class);

@@ -4,7 +4,7 @@ import static tw.tasker.babysitter.utils.LogUtils.LOGD;
 import static tw.tasker.babysitter.utils.LogUtils.LOGE;
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.model.data.Baby;
+import tw.tasker.babysitter.model.data.BabyDiary;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.utils.PictureHelper;
 import android.app.ProgressDialog;
@@ -193,7 +193,7 @@ public class BabyAddFragment extends Fragment {
 				.createWithoutData(Babysitter.class, mBabysitterObjectId);
 
 		
-		Baby baby = new Baby();
+		BabyDiary baby = new BabyDiary();
 		
 		baby.setBabysitter(babysitter);
 		baby.setName(mBabysitterTitle.getText().toString());

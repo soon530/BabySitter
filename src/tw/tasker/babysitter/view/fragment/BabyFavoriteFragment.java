@@ -4,7 +4,7 @@ import java.util.List;
 
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.model.data.Baby;
+import tw.tasker.babysitter.model.data.BabyDiary;
 import tw.tasker.babysitter.model.data.BabyFavorite;
 import tw.tasker.babysitter.presenter.adapter.BabyFavoriteParseQueryAdapter;
 import tw.tasker.babysitter.utils.EndlessScrollListener;
@@ -111,7 +111,7 @@ public class BabyFavoriteFragment extends Fragment implements
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		BabyFavorite favorite = mAdapter.getItem(position);
-		Baby baby = favorite.getBaby();
+		BabyDiary baby = favorite.getBaby();
 		seeBabyDetail(baby.getObjectId());
 	}
 

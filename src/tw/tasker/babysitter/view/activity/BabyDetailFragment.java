@@ -4,7 +4,7 @@ import java.util.List;
 
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.model.data.Baby;
+import tw.tasker.babysitter.model.data.BabyDiary;
 import tw.tasker.babysitter.model.data.BabyFavorite;
 import tw.tasker.babysitter.model.data.BabyRecord;
 import tw.tasker.babysitter.presenter.adapter.BabysitterCommentParseQueryAdapter;
@@ -41,7 +41,7 @@ public class BabyDetailFragment extends Fragment implements
 
 	DisplayImageOptions options;
 	private ImageLoader imageLoader = ImageLoader.getInstance();
-	private Baby mBaby;
+	private BabyDiary mBaby;
 	private BabyFavorite mFavorite;
 	private String mBabyObjectId;
 
@@ -186,11 +186,11 @@ public class BabyDetailFragment extends Fragment implements
 	}
 
 /*	private void doDetailQuery(String objectId) {
-		ParseQuery<Baby> detailQuery = Baby.getQuery();
-		detailQuery.getInBackground(objectId, new GetCallback<Baby>() {
+		ParseQuery<BabyDiary> detailQuery = BabyDiary.getQuery();
+		detailQuery.getInBackground(objectId, new GetCallback<BabyDiary>() {
 
 			@Override
-			public void done(Baby baby, ParseException arg1) {
+			public void done(BabyDiary baby, ParseException arg1) {
 
 				String url;
 				if (baby.getPhotoFile() != null) {

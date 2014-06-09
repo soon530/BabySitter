@@ -16,11 +16,11 @@ public class BabyFavorite extends ParseObject {
 		put("user", user);
 	}
 	
-	public Baby getBaby() {
-		return (Baby) getParseObject("baby");
+	public BabyDiary getBaby() {
+		return (BabyDiary) getParseObject("baby");
 	}
 	
-	public void setBaby(Baby baby) {
+	public void setBaby(BabyDiary baby) {
 		put("baby", baby);
 	}
 	

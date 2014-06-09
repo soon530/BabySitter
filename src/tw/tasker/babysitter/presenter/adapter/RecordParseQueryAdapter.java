@@ -44,7 +44,7 @@ public class RecordParseQueryAdapter extends ParseQueryAdapter<BabyRecord> {
 				ParseQuery<BabyRecord> query = BabyRecord.getQuery();
 				query.orderByDescending("createdAt");
 				//因為資料有點亂掉了，所以有先mark起來
-				//Baby baby = ParseObject.createWithoutData(Baby.class, babyObjectId);
+				//BabyDiary baby = ParseObject.createWithoutData(BabyDiary.class, babyObjectId);
 				//query.whereEqualTo("baby", baby);
 				query.setLimit(20);
 				return query;

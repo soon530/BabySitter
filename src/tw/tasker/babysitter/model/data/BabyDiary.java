@@ -7,7 +7,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 @ParseClassName("BabyDiary")
-public class Baby extends ParseObject {
+public class BabyDiary extends ParseObject {
 
 	public String getName() {
 		String value = getString("name");
@@ -68,8 +68,8 @@ public class Baby extends ParseObject {
 		put("isPublic", value);
 	}
 	
-	public static ParseQuery<Baby> getQuery() {
-		return ParseQuery.getQuery(Baby.class);
+	public static ParseQuery<BabyDiary> getQuery() {
+		return ParseQuery.getQuery(BabyDiary.class);
 	}
 
 }
