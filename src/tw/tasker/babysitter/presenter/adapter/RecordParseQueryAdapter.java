@@ -1,11 +1,10 @@
 package tw.tasker.babysitter.presenter.adapter;
 
-import java.text.SimpleDateFormat;
-
+import it.gmariotti.cardslib.library.internal.Card;
+import it.gmariotti.cardslib.library.view.CardView;
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.model.data.Baby;
 import tw.tasker.babysitter.model.data.BabyRecord;
-import tw.tasker.babysitter.utils.DateTimeUtils;
+import tw.tasker.babysitter.view.card.BabyListCard;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +13,6 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
@@ -31,13 +28,13 @@ public class RecordParseQueryAdapter extends ParseQueryAdapter<BabyRecord> {
 	public RecordParseQueryAdapter(Context context, String babyObejctId) {
 		super(context, getFactory(babyObejctId));
 
-		options = new DisplayImageOptions.Builder()
+/*		options = new DisplayImageOptions.Builder()
 				.showImageOnLoading(R.drawable.ic_launcher)
 				.showImageForEmptyUri(R.drawable.ic_launcher)
 				.showImageOnFail(R.drawable.ic_launcher).cacheInMemory(true)
 				.cacheOnDisc(true).considerExifParams(true)
 				.displayer(new RoundedBitmapDisplayer(20)).build();
-
+*/
 	}
 
 	public static ParseQueryAdapter.QueryFactory<BabyRecord> getFactory(
@@ -46,8 +43,9 @@ public class RecordParseQueryAdapter extends ParseQueryAdapter<BabyRecord> {
 			public ParseQuery<BabyRecord> create() {
 				ParseQuery<BabyRecord> query = BabyRecord.getQuery();
 				query.orderByDescending("createdAt");
-				Baby baby = ParseObject.createWithoutData(Baby.class, babyObjectId);
-				query.whereEqualTo("baby", baby);
+				//因為資料有點亂掉了，所以有先mark起來
+				//Baby baby = ParseObject.createWithoutData(Baby.class, babyObjectId);
+				//query.whereEqualTo("baby", baby);
 				query.setLimit(20);
 				return query;
 			}
@@ -55,27 +53,46 @@ public class RecordParseQueryAdapter extends ParseQueryAdapter<BabyRecord> {
 		return factory;
 	}
 
-	public View getItemView(BabyRecord comment, View view, ViewGroup parent) {
+	public View getItemView(BabyRecord babyRecord, View view, ViewGroup parent) {
 
+		boolean recycle = false;
 		if (view == null) {
-			view = View.inflate(getContext(), R.layout.list_item_baby_record,
-					null);
+			recycle = false;
+			view = View.inflate(getContext(), R.layout.list_item_card, null);
+		} else {
+			recycle = true;
 		}
+		
+		BabyListCard mCard = new BabyListCard(getContext());
+		mCard.setBabyRecord(babyRecord);
+		mCard.init();
+		CardView mCardView;
+		mCardView = (CardView) view.findViewById(R.id.carddemo_thumb_customsource);
+		if (mCardView != null) {
+			// It is important to set recycle value for inner layout elements
+			mCardView.setForceReplaceInnerLayout(Card.equalsInnerLayout(
+					mCardView.getCard(), mCard));
 
-		initUI(view);
-		fillDataToUI(comment);
+			// It is important to set recycle value for performance issue
+			mCardView.setRecycle(recycle);
+			mCardView.setCard(mCard);
+		}
+				
+		//initUI(view);
+		//fillDataToUI(comment);
 
 		return view;
 	};
 
-	private void initUI(View view) {
+/*	private void initUI(View view) {
 		mUserAvator = (ImageView) view.findViewById(R.id.user_avator);
 		mTitle = (TextView) view.findViewById(R.id.baby_record_title);
 		mCreateDate = (TextView) view.findViewById(R.id.create_date);
 		mDescription = (TextView) view.findViewById(R.id.baby_record);
 	}
+*/
 
-	private void fillDataToUI(BabyRecord babyrecord) {
+/*	private void fillDataToUI(BabyRecord babyrecord) {
 		mTitle.setText(babyrecord.getTitle());
 		mDescription.setText(babyrecord.getDescription());
 
@@ -90,7 +107,7 @@ public class RecordParseQueryAdapter extends ParseQueryAdapter<BabyRecord> {
 		}
 		imageLoader.displayImage(url, mUserAvator, options, null);
 	}
-	
+*/	
 	@Override
 	public View getNextPageView(View v, ViewGroup parent) {
 		if (v == null) {

@@ -34,13 +34,13 @@ public class BabysitterCommentParseQueryAdapter extends
 	public BabysitterCommentParseQueryAdapter(Context context, String babysitterObjectId) {
 		super(context, getFactory(babysitterObjectId));
 
-		options = new DisplayImageOptions.Builder()
+/*		options = new DisplayImageOptions.Builder()
 				.showImageOnLoading(R.drawable.ic_launcher)
 				.showImageForEmptyUri(R.drawable.ic_launcher)
 				.showImageOnFail(R.drawable.ic_launcher).cacheInMemory(true)
 				.cacheOnDisc(true).considerExifParams(true)
 				.displayer(new RoundedBitmapDisplayer(20)).build();
-
+*/
 	}
 	
 	public static ParseQueryAdapter.QueryFactory<BabysitterComment> getFactory(
@@ -93,7 +93,7 @@ public class BabysitterCommentParseQueryAdapter extends
 		return view;
 	};
 
-	private void initUI(View view) {
+/*	private void initUI(View view) {
 		babysitterImage = (ImageView) view.findViewById(R.id.user_avator);
 
 		createDate = (TextView) view.findViewById(R.id.create_date);
@@ -107,8 +107,8 @@ public class BabysitterCommentParseQueryAdapter extends
 		babysitterRating = (RatingBar) view
 				.findViewById(R.id.babysitter_rating);
 	}
-
-	private void fillDataToUI(BabysitterComment comment) {
+*/
+/*	private void fillDataToUI(BabysitterComment comment) {
 		babysitterCommentTitle.setText(comment.getTitle());
 		babysitterComment.setText(comment.getComment());
 		babysitterRating.setRating(comment.getRating());
@@ -122,7 +122,7 @@ public class BabysitterCommentParseQueryAdapter extends
 						babysitterImage, options, null);
 
 	}
-	
+*/	
 	@Override
 	public View getNextPageView(View v, ViewGroup parent) {
 		if (v == null) {

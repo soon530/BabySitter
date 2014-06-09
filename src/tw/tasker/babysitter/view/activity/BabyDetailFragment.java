@@ -5,11 +5,15 @@ import java.util.List;
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Baby;
-import tw.tasker.babysitter.model.data.BabyRecord;
 import tw.tasker.babysitter.model.data.BabyFavorite;
+import tw.tasker.babysitter.model.data.BabyRecord;
+import tw.tasker.babysitter.presenter.adapter.BabysitterCommentParseQueryAdapter;
 import tw.tasker.babysitter.presenter.adapter.RecordParseQueryAdapter;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.BabysitterDetailView;
+import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
+import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,30 +22,22 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
-import com.parse.DeleteCallback;
-import com.parse.GetCallback;
-import com.parse.ParseException;
-import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
-import com.parse.ParseUser;
-import com.parse.SaveCallback;
 import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 
 public class BabyDetailFragment extends Fragment implements
 		OnQueryLoadListener<BabyRecord>, BabysitterDetailView,
-		OnClickListener {
+		OnClickListener, OnRefreshListener {
 
 	DisplayImageOptions options;
 	private ImageLoader imageLoader = ImageLoader.getInstance();
@@ -52,22 +48,25 @@ public class BabyDetailFragment extends Fragment implements
 	private ListView mListView;
 	private ImageView mBabyIcon;
 	private Button mBabysitterIcon;
-	private ParseQueryAdapter<BabyRecord> mAdapter;
+	private RecordParseQueryAdapter mAdapter;
 	private View mHeaderView;
 	private TextView mName;
 	private TextView mNote;
 	private CheckBox mFavoriteBaby;
+	
+	private PullToRefreshLayout mPullToRefreshLayout;
+
 
 	public BabyDetailFragment() {
 
-		options = new DisplayImageOptions.Builder()
+/*		options = new DisplayImageOptions.Builder()
 				.showImageOnLoading(R.drawable.ic_launcher)
 				.showImageForEmptyUri(R.drawable.ic_launcher)
 				.showImageOnFail(R.drawable.ic_launcher)
 				.cacheInMemory(true).cacheOnDisc(true)
 				.considerExifParams(true)
 				.displayer(new RoundedBitmapDisplayer(20)).build();
-
+*/
 	}
 
 	@Override
@@ -80,25 +79,88 @@ public class BabyDetailFragment extends Fragment implements
 
 		setHasOptionsMenu(true);
 	}
+	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.add, menu);
+		super.onCreateOptionsMenu(menu, inflater);
+	}
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+		if (id == R.id.action_add) {
+			Bundle bundle = new Bundle();
+			bundle.putString(Config.BABY_OBJECT_ID, mBabyObjectId);
+			Intent intent = new Intent();
+			intent.putExtras(bundle);
+			intent.setClass(getActivity(), BabyRecordActivity.class);
+			startActivity(intent);
+			return true;
+		}
+
+		return super.onOptionsItemSelected(item);
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		mHeaderView = inflater.inflate(
-				R.layout.fragment_baby_detail_header, null);
+//		mHeaderView = inflater.inflate(
+//				R.layout.fragment_baby_detail_header, null);
 
-		initHeadUI();
+//		initHeadUI();
 
 		View rootView = inflater.inflate(R.layout.fragment_list,
 				container, false);
-		mListView = (ListView) rootView
-				.findViewById(R.id.list);
+		mListView = (ListView) rootView.findViewById(R.id.list);
 
+		// Retrieve the PullToRefreshLayout from the content view
+		mPullToRefreshLayout = (PullToRefreshLayout) rootView
+				.findViewById(R.id.carddemo_extra_ptr_layout);
+
+		// Now setup the PullToRefreshLayout
+		ActionBarPullToRefresh.from(getActivity())
+		// Mark All Children as pullable
+				.allChildrenArePullable()
+				// Set the OnRefreshListener
+				.listener(this)
+				// Finally commit the setup to our PullToRefreshLayout
+				.setup(mPullToRefreshLayout);
+		
 		return rootView;
 	}
+	
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
 
-	private void initHeadUI() {
+		initCards();
+	}
+
+	private void initCards() {
+
+		mAdapter = new RecordParseQueryAdapter(getActivity(), mBabyObjectId);
+		mAdapter.addOnQueryLoadListener(this);
+		ListView listView = (ListView) getActivity().findViewById(R.id.list);
+		if (listView != null) {
+			listView.setAdapter(mAdapter);
+		}
+	}
+
+/*	public void doCommentQuery(String babyObjectId) {
+		mAdapter = new RecordParseQueryAdapter(getActivity(), babyObjectId);
+		mAdapter.setAutoload(false);
+		//mAdapter.setPaginationEnabled(false);
+		mAdapter.setObjectsPerPage(5);
+		mAdapter.addOnQueryLoadListener(this);
+		mAdapter.loadObjects();
+	}
+*/
+	
+
+
+/*	private void initHeadUI() {
 		mBabyIcon = (ImageView) mHeaderView.findViewById(R.id.baby_avator);
 
 		mFavoriteBaby = (CheckBox) mHeaderView
@@ -112,18 +174,18 @@ public class BabyDetailFragment extends Fragment implements
 
 		mFavoriteBaby.setOnClickListener(this);
 	}
-
+*/
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 
-		mListView.addHeaderView(mHeaderView);
-		doDetailQuery(mBabyObjectId);
+		//mListView.addHeaderView(mHeaderView);
+		//doDetailQuery(mBabyObjectId);
 		// getFavorite();
 
 	}
 
-	private void doDetailQuery(String objectId) {
+/*	private void doDetailQuery(String objectId) {
 		ParseQuery<Baby> detailQuery = Baby.getQuery();
 		detailQuery.getInBackground(objectId, new GetCallback<Baby>() {
 
@@ -142,13 +204,14 @@ public class BabyDetailFragment extends Fragment implements
 				mName.setText(baby.getName() + baby.getObjectId());
 				mNote.setText(baby.getNote());
 				mBaby = baby;
-				getFavorite();
+				//getFavorite();
 				doCommentQuery(mBabyObjectId);
 			}
 		});
 	}
+*/
 
-	private void getFavorite() {
+/*	private void getFavorite() {
 		ParseQuery<BabyFavorite> favorite_query = BabyFavorite.getQuery();
 
 		favorite_query.whereEqualTo("baby", mBaby);
@@ -169,16 +232,7 @@ public class BabyDetailFragment extends Fragment implements
 			}
 		});
 	}
-
-	public void doCommentQuery(String babyObjectId) {
-		mAdapter = new RecordParseQueryAdapter(getActivity(),
-				babyObjectId);
-		mAdapter.setAutoload(false);
-		//mAdapter.setPaginationEnabled(false);
-		mAdapter.setObjectsPerPage(5);
-		mAdapter.addOnQueryLoadListener(this);
-		mAdapter.loadObjects();
-	}
+*/
 
 	@Override
 	public void onLoading() {
@@ -188,7 +242,7 @@ public class BabyDetailFragment extends Fragment implements
 	@Override
 	public void onLoaded(List<BabyRecord> babysitterComment,
 			Exception e) {
-		mListView.setAdapter(mAdapter);
+		//mListView.setAdapter(mAdapter);
 		hideProgress();
 	}
 
@@ -200,33 +254,9 @@ public class BabyDetailFragment extends Fragment implements
 	@Override
 	public void hideProgress() {
 		ProgressBarUtils.hide(getActivity());
+		mPullToRefreshLayout.setRefreshComplete();
 	}
 
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.baby_detail, menu);
-		super.onCreateOptionsMenu(menu, inflater);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		int id = item.getItemId();
-		if (id == R.id.post_words) {
-			Bundle bundle = new Bundle();
-			bundle.putString(Config.BABY_OBJECT_ID, mBabyObjectId);
-			Intent intent = new Intent();
-			intent.putExtras(bundle);
-			intent.setClass(getActivity(), BabyRecordActivity.class);
-			startActivity(intent);
-			return true;
-		}
-
-		if (id == R.id.refresh) {
-			mAdapter.loadObjects();
-		}
-
-		return super.onOptionsItemSelected(item);
-	}
 
 	@Override
 	public void onClick(View v) {
@@ -241,10 +271,10 @@ public class BabyDetailFragment extends Fragment implements
 		case R.id.favorite_baby:
 			if (mFavoriteBaby.isChecked()) {
 				mFavoriteBaby.setText("已收藏");
-				addFavorite();
+				//addFavorite();
 			} else {
 				mFavoriteBaby.setText("已取消");
-				deleteFavorite();
+				//deleteFavorite();
 			}
 			break;
 		default:
@@ -252,7 +282,12 @@ public class BabyDetailFragment extends Fragment implements
 		}
 	}
 
-	private void addFavorite() {
+	@Override
+	public void onRefreshStarted(View arg0) {
+		mAdapter.loadObjects();
+	}
+
+/*	private void addFavorite() {
 		BabyFavorite favorite = new BabyFavorite();
 		mFavorite = favorite;
 		// favorite.put("baby", mBaby);
@@ -274,8 +309,8 @@ public class BabyDetailFragment extends Fragment implements
 
 		});
 	}
-
-	private void deleteFavorite() {
+*/
+/*	private void deleteFavorite() {
 		mFavorite.deleteInBackground(new DeleteCallback() {
 
 			@Override
@@ -291,5 +326,5 @@ public class BabyDetailFragment extends Fragment implements
 			}
 		});
 	}
-
+*/
 }
