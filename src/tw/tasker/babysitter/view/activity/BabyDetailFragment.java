@@ -1,20 +1,24 @@
 package tw.tasker.babysitter.view.activity;
 
+import static tw.tasker.babysitter.utils.LogUtils.LOGD;
+
 import java.util.List;
 
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabyDiary;
-import tw.tasker.babysitter.model.data.BabyFavorite;
 import tw.tasker.babysitter.model.data.BabyRecord;
-import tw.tasker.babysitter.presenter.adapter.BabysitterCommentParseQueryAdapter;
 import tw.tasker.babysitter.presenter.adapter.RecordParseQueryAdapter;
+import tw.tasker.babysitter.utils.PictureHelper;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.BabysitterDetailView;
+import tw.tasker.babysitter.view.activity.BabyRecordAddFragment.BabyRecordSaveCallback;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -24,49 +28,86 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.parse.ParseQueryAdapter;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 
 public class BabyDetailFragment extends Fragment implements
 		OnQueryLoadListener<BabyRecord>, BabysitterDetailView,
 		OnClickListener, OnRefreshListener {
 
+	public class BabyRecordSaveCallback extends SaveCallback {
+
+		@Override
+		public void done(ParseException e) {
+			if (e == null) {
+				Toast.makeText(getActivity().getApplicationContext(),
+						"upload doen!", Toast.LENGTH_SHORT).show();
+				saveComment();
+			} else {
+				Toast.makeText(getActivity().getApplicationContext(),
+						"Error saving: " + e.getMessage(),
+						Toast.LENGTH_SHORT).show();
+			}
+
+		}
+
+	}
+	
+	private void saveComment() {
+		BabyDiary babyDiary = ParseObject
+				.createWithoutData(BabyDiary.class, mBabyObjectId);
+
+		BabyRecord babyRecord = new BabyRecord();
+		babyRecord.setBaby(babyDiary);
+		babyRecord.setTitle("不解釋..");
+		babyRecord.setDescription("");
+		babyRecord.setPhotoFile(mPictureHelper.getFile());
+		babyRecord.setUser(ParseUser.getCurrentUser());
+
+		babyRecord.saveInBackground(new SaveCallback() {
+
+			@Override
+			public void done(ParseException e) {
+				if (e == null) {
+					Toast.makeText(getActivity().getApplicationContext(),
+							"saving doen!", Toast.LENGTH_SHORT).show();
+				} else {
+					LOGD("vic", e.getMessage());
+					Toast.makeText(getActivity().getApplicationContext(),
+							"Error saving: " + e.getMessage(),
+							Toast.LENGTH_SHORT).show();
+				}
+				mRingProgressDialog.dismiss();
+				
+				mAdapter.loadObjects();
+				//getActivity().finish();
+			}
+
+		});
+	}
+
+	private ProgressDialog mRingProgressDialog;
+	
 	DisplayImageOptions options;
-	private ImageLoader imageLoader = ImageLoader.getInstance();
-	private BabyDiary mBaby;
-	private BabyFavorite mFavorite;
 	private String mBabyObjectId;
 
-	private ListView mListView;
-	private ImageView mBabyIcon;
-	private Button mBabysitterIcon;
 	private RecordParseQueryAdapter mAdapter;
-	private View mHeaderView;
-	private TextView mName;
-	private TextView mNote;
 	private CheckBox mFavoriteBaby;
 	
 	private PullToRefreshLayout mPullToRefreshLayout;
-
+	private ListView mListView;
+	private PictureHelper mPictureHelper;
 
 	public BabyDetailFragment() {
-
-/*		options = new DisplayImageOptions.Builder()
-				.showImageOnLoading(R.drawable.ic_launcher)
-				.showImageForEmptyUri(R.drawable.ic_launcher)
-				.showImageOnFail(R.drawable.ic_launcher)
-				.cacheInMemory(true).cacheOnDisc(true)
-				.considerExifParams(true)
-				.displayer(new RoundedBitmapDisplayer(20)).build();
-*/
+		mPictureHelper = new PictureHelper();
 	}
 
 	@Override
@@ -90,13 +131,17 @@ public class BabyDetailFragment extends Fragment implements
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 		if (id == R.id.action_add) {
-			Bundle bundle = new Bundle();
+			Intent intent_camera = new Intent(
+					android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+			startActivityForResult(intent_camera, 0);
+
+/*			Bundle bundle = new Bundle();
 			bundle.putString(Config.BABY_OBJECT_ID, mBabyObjectId);
 			Intent intent = new Intent();
 			intent.putExtras(bundle);
 			intent.setClass(getActivity(), BabyRecordAddActivity.class);
 			startActivity(intent);
-			return true;
+*/			return true;
 		}
 
 		return super.onOptionsItemSelected(item);
@@ -184,6 +229,33 @@ public class BabyDetailFragment extends Fragment implements
 		// getFavorite();
 
 	}
+	
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode,
+			Intent data) {
+		
+		if (resultCode == BabyRecordAddActivity.RESULT_OK) {
+			mRingProgressDialog = ProgressDialog.show(getActivity(),
+					"請稍等 ...", "資料儲存中...", true);
+
+			// 取出拍照後回傳資料
+			Bundle extras = data.getExtras();
+			// 將資料轉換為圖像格式
+			Bitmap bmp = (Bitmap) extras.get("data");
+
+			mPictureHelper.setBitmap(bmp);
+			mPictureHelper.setSaveCallback(new BabyRecordSaveCallback());
+			mPictureHelper.savePicture();
+
+			// 載入ImageView
+			//mUserAvator.setImageBitmap(bmp);
+		}
+
+		// 覆蓋原來的Activity
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+
 
 /*	private void doDetailQuery(String objectId) {
 		ParseQuery<BabyDiary> detailQuery = BabyDiary.getQuery();
