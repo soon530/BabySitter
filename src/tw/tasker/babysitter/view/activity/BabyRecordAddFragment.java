@@ -28,7 +28,7 @@ import com.parse.SaveCallback;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class BabyRecordFragment extends Fragment implements
+public class BabyRecordAddFragment extends Fragment implements
 		OnClickListener {
 
 	public class BabyRecordSaveCallback extends SaveCallback {
@@ -130,7 +130,7 @@ public class BabyRecordFragment extends Fragment implements
 	@Override
 	public void onActivityResult(int requestCode, int resultCode,
 			Intent data) {
-		if (resultCode == BabyRecordActivity.RESULT_OK) {
+		if (resultCode == BabyRecordAddActivity.RESULT_OK) {
 			// 取出拍照後回傳資料
 			Bundle extras = data.getExtras();
 			// 將資料轉換為圖像格式
@@ -147,11 +147,11 @@ public class BabyRecordFragment extends Fragment implements
 	}
 
 	private void saveComment() {
-		BabyDiary baby = ParseObject
+		BabyDiary babyDiary = ParseObject
 				.createWithoutData(BabyDiary.class, mBabyObjectId);
 
 		BabyRecord babyRecord = new BabyRecord();
-		babyRecord.setBaby(baby);
+		babyRecord.setBaby(babyDiary);
 		babyRecord.setTitle(mTitle.getText().toString());
 		babyRecord.setDescription(mDescription.getText().toString());
 		babyRecord.setPhotoFile(mPictureHelper.getFile());

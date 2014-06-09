@@ -9,7 +9,7 @@ import android.view.MenuItem;
 
 import com.parse.ParseFile;
 
-public class BabyRecordActivity extends ActionBarActivity {
+public class BabyRecordAddActivity extends ActionBarActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +20,7 @@ public class BabyRecordActivity extends ActionBarActivity {
 			Bundle arguments = new Bundle();
 			arguments.putString(Config.BABY_OBJECT_ID, getIntent()
 					.getStringExtra(Config.BABY_OBJECT_ID));
-			BabyRecordFragment fragment = new BabyRecordFragment();
+			BabyRecordAddFragment fragment = new BabyRecordAddFragment();
 			fragment.setArguments(arguments);
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, fragment).commit();

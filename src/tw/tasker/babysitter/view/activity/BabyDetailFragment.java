@@ -94,7 +94,7 @@ public class BabyDetailFragment extends Fragment implements
 			bundle.putString(Config.BABY_OBJECT_ID, mBabyObjectId);
 			Intent intent = new Intent();
 			intent.putExtras(bundle);
-			intent.setClass(getActivity(), BabyRecordActivity.class);
+			intent.setClass(getActivity(), BabyRecordAddActivity.class);
 			startActivity(intent);
 			return true;
 		}

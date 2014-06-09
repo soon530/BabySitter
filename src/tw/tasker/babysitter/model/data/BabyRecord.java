@@ -28,11 +28,11 @@ public class BabyRecord extends ParseObject {
 	}
 
 	public BabyDiary getBaby() {
-		return (BabyDiary) getParseObject("baby");
+		return (BabyDiary) getParseObject("BabyDiary");
 	}
 	
 	public void setBaby(BabyDiary value) {
-		put("baby", value);
+		put("BabyDiary", value);
 	}
 	
 	public ParseUser getUser() {
