@@ -70,10 +70,8 @@ public class BabysittersFragment extends Fragment implements
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_grid,
 				container, false);
-		mList = (GridView) rootView.findViewById(R.id.list);
+		mList = (GridView) rootView.findViewById(R.id.grid);
 		mList.setOnItemClickListener(this);
-		mEmpty = (TextView) rootView.findViewById(R.id.empty);
-		mList.setEmptyView(mEmpty);
 
 		// Retrieve the PullToRefreshLayout from the content view
 		mPullToRefreshLayout = (PullToRefreshLayout) rootView
