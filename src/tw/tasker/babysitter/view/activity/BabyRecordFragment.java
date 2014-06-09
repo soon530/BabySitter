@@ -68,8 +68,8 @@ public class BabyRecordFragment extends Fragment implements
 
 		final BabyRecord babyRecord = new BabyRecord();
 		babyRecord.setBaby(babyDiary);
-		babyRecord.setTitle("不解釋..");
-		babyRecord.setDescription("");
+		babyRecord.setTitle("不解釋...");
+		babyRecord.setDescription("不解釋...");
 		babyRecord.setPhotoFile(mPictureHelper.getFile());
 		babyRecord.setUser(ParseUser.getCurrentUser());
 
@@ -104,6 +104,7 @@ public class BabyRecordFragment extends Fragment implements
 
 			@Override
 			public void done(BabyDiary babyDiary, ParseException e) {
+				babyDiary.setTotalRecord(++mTotalRecord);
 				babyDiary.setBabyRecord(babyRecord);
 				babyDiary.saveInBackground(new SaveCallback() {
 					
@@ -161,6 +162,8 @@ public class BabyRecordFragment extends Fragment implements
 	private ListView mListView;
 	private PictureHelper mPictureHelper;
 
+	private int mTotalRecord;
+
 	public BabyRecordFragment() {
 		mPictureHelper = new PictureHelper();
 	}
@@ -171,8 +174,10 @@ public class BabyRecordFragment extends Fragment implements
 
 		if (getArguments().containsKey(Config.BABY_OBJECT_ID)) {
 			mBabyObjectId = getArguments().getString(Config.BABY_OBJECT_ID);
+			mTotalRecord = getArguments().getInt(Config.TOTAL_RECORD);
 		}
 
+		LOGD("vic", "mTotalRecord=" + mTotalRecord);
 		setHasOptionsMenu(true);
 	}
 	

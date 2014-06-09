@@ -3,6 +3,7 @@ package tw.tasker.babysitter.presenter.adapter;
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.view.CardView;
 import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.model.data.BabyDiary;
 import tw.tasker.babysitter.model.data.BabyRecord;
 import tw.tasker.babysitter.view.card.BabyListCard;
 import android.content.Context;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
@@ -43,9 +45,8 @@ public class RecordParseQueryAdapter extends ParseQueryAdapter<BabyRecord> {
 			public ParseQuery<BabyRecord> create() {
 				ParseQuery<BabyRecord> query = BabyRecord.getQuery();
 				query.orderByDescending("createdAt");
-				//因為資料有點亂掉了，所以有先mark起來
-				//BabyDiary baby = ParseObject.createWithoutData(BabyDiary.class, babyObjectId);
-				//query.whereEqualTo("baby", baby);
+				BabyDiary babyDiary = ParseObject.createWithoutData(BabyDiary.class, babyObjectId);
+				query.whereEqualTo("BabyDiary", babyDiary);
 				query.setLimit(20);
 				return query;
 			}

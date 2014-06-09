@@ -68,6 +68,7 @@ public class BabyGridCard extends Card {
 				Intent intent = new Intent(getContext(),
 						BabyRecordActivity.class);
 				intent.putExtra(Config.BABY_OBJECT_ID, mBabyDiary.getObjectId());
+				intent.putExtra(Config.TOTAL_RECORD, mBabyDiary.getTotalRecord());
 				getContext().startActivity(intent);
 			}
 		});
