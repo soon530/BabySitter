@@ -32,8 +32,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -64,7 +66,7 @@ public class BabyRecordFragment extends Fragment implements
 		BabyDiary babyDiary = ParseObject
 				.createWithoutData(BabyDiary.class, mBabyObjectId);
 
-		BabyRecord babyRecord = new BabyRecord();
+		final BabyRecord babyRecord = new BabyRecord();
 		babyRecord.setBaby(babyDiary);
 		babyRecord.setTitle("不解釋..");
 		babyRecord.setDescription("");
@@ -84,14 +86,68 @@ public class BabyRecordFragment extends Fragment implements
 							"Error saving: " + e.getMessage(),
 							Toast.LENGTH_SHORT).show();
 				}
-				mRingProgressDialog.dismiss();
 				
-				mAdapter.loadObjects();
+				updateBabyDiary(babyRecord);
+				
 				//getActivity().finish();
 			}
 
 		});
 	}
+	
+	
+	private void updateBabyDiary(final BabyRecord babyRecord) {
+		
+		ParseQuery<BabyDiary> query = BabyDiary.getQuery();
+		
+		query.getInBackground(mBabyObjectId, new GetCallback<BabyDiary>() {
+
+			@Override
+			public void done(BabyDiary babyDiary, ParseException e) {
+				babyDiary.setBabyRecord(babyRecord);
+				babyDiary.saveInBackground(new SaveCallback() {
+					
+					@Override
+					public void done(ParseException e) {
+						mRingProgressDialog.dismiss();
+						mAdapter.loadObjects();
+					}
+				});
+			}
+		});
+		
+		//ParseQuery<ParseObject> query = ParseQuery.getQuery("BabyDiary");
+
+/*		query.getInBackground(mBabyObjectId,
+				new GetCallback<ParseObject>() {
+
+					public void done(ParseObject babysitter,
+							ParseException e) {
+						if (e == null) {
+							int r = (int) mBabysitterRating.getRating();
+							babysitter.put("totalRating", mTotalRating + r);
+							babysitter.put("totalComment",
+									mTotalComment + 1);
+							babysitter.saveInBackground(new SaveCallback() {
+
+								@Override
+								public void done(ParseException e) {
+									if (e == null) {
+										mRingProgressDialog.dismiss();
+										getActivity().finish();
+
+									}
+								}
+							});
+
+						}
+					}
+				});
+*/	
+	}
+
+	
+	
 
 	private ProgressDialog mRingProgressDialog;
 	

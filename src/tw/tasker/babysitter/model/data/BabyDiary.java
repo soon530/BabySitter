@@ -1,5 +1,7 @@
 package tw.tasker.babysitter.model.data;
 
+import tw.tasker.babysitter.view.activity.BabyRecordFragment;
+
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -70,6 +72,13 @@ public class BabyDiary extends ParseObject {
 	
 	public static ParseQuery<BabyDiary> getQuery() {
 		return ParseQuery.getQuery(BabyDiary.class);
+	}
+
+	public void setBabyRecord(BabyRecord value) {
+		put("BabyRecord", value);
+	}
+	public BabyRecord getBabyRecord() {
+		return (BabyRecord) getParseObject("BabyRecord");
 	}
 
 }
