@@ -234,7 +234,7 @@ public class BabyDetailFragment extends Fragment implements
 	public void onActivityResult(int requestCode, int resultCode,
 			Intent data) {
 		
-		if (resultCode == BabyDetailActivity.RESULT_OK) {
+		if (resultCode == BabyRecordActivity.RESULT_OK) {
 			mRingProgressDialog = ProgressDialog.show(getActivity(),
 					"請稍等 ...", "資料儲存中...", true);
 

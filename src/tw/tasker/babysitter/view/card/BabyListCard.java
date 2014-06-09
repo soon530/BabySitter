@@ -8,7 +8,7 @@ import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabyRecord;
 import tw.tasker.babysitter.utils.DateTimeUtils;
-import tw.tasker.babysitter.view.activity.BabyDetailActivity;
+import tw.tasker.babysitter.view.activity.BabyRecordActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.MenuItem;
@@ -64,7 +64,7 @@ public class BabyListCard extends Card {
 			@Override
 			public void onClick(Card card, View view) {
 				Intent intent = new Intent(getContext(),
-						BabyDetailActivity.class);
+						BabyRecordActivity.class);
 				intent.putExtra(Config.BABY_OBJECT_ID, mBabyRecord.getObjectId());
 				getContext().startActivity(intent);
 			}

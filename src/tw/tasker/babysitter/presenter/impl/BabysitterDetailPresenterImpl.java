@@ -58,7 +58,7 @@ public class BabysitterDetailPresenterImpl implements BabysitterDetailPresenter,
 		bundle.putString(Config.BABYSITTER_OBJECT_ID, objectId);
 		Intent intent = new Intent();
 		intent.putExtras(bundle);
-		//intent.setClass(mView.getActivity(), BabyDetailActivity.class);
+		//intent.setClass(mView.getActivity(), BabyRecordActivity.class);
 		intent.setClass(mView.getActivity(), BabyDiaryActivity.class);
 		mView.startActivity(intent);
 	}

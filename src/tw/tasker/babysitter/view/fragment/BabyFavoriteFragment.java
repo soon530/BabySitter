@@ -9,7 +9,7 @@ import tw.tasker.babysitter.model.data.BabyFavorite;
 import tw.tasker.babysitter.presenter.adapter.BabyFavoriteParseQueryAdapter;
 import tw.tasker.babysitter.utils.EndlessScrollListener;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
-import tw.tasker.babysitter.view.activity.BabyDetailActivity;
+import tw.tasker.babysitter.view.activity.BabyRecordActivity;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
@@ -120,7 +120,7 @@ public class BabyFavoriteFragment extends Fragment implements
 		bundle.putString(Config.BABY_OBJECT_ID, babyObjectId);
 		Intent intent = new Intent();
 		intent.putExtras(bundle);
-		intent.setClass(getActivity(), BabyDetailActivity.class);
+		intent.setClass(getActivity(), BabyRecordActivity.class);
 		startActivity(intent);
 	}
 

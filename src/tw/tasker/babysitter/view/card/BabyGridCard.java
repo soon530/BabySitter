@@ -7,7 +7,7 @@ import it.gmariotti.cardslib.library.internal.base.BaseCard;
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabyDiary;
-import tw.tasker.babysitter.view.activity.BabyDetailActivity;
+import tw.tasker.babysitter.view.activity.BabyRecordActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.MenuItem;
@@ -63,7 +63,7 @@ public class BabyGridCard extends Card {
 			@Override
 			public void onClick(Card card, View view) {
 				Intent intent = new Intent(getContext(),
-						BabyDetailActivity.class);
+						BabyRecordActivity.class);
 				intent.putExtra(Config.BABY_OBJECT_ID, mBaby.getObjectId());
 				getContext().startActivity(intent);
 			}

@@ -133,7 +133,7 @@ public class BabyDiaryFragment extends Fragment implements
 		bundle.putString(Config.BABY_OBJECT_ID, babyObjectId);
 		Intent intent = new Intent();
 		intent.putExtras(bundle);
-		intent.setClass(getActivity(), BabyDetailActivity.class);
+		intent.setClass(getActivity(), BabyRecordActivity.class);
 		startActivity(intent);
 	}
 
