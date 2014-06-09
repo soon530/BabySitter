@@ -18,12 +18,12 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/action_settings"
+    <item android:id="@+id/card_edit"
         android:title="編輯"
         android:orderInCategory="100"
         android:showAsAction="always" />
 
-    <item android:id="@+id/action_settings2"
+    <item android:id="@+id/card_del"
           android:title="刪除"
           android:orderInCategory="101"
           android:showAsAction="always" />

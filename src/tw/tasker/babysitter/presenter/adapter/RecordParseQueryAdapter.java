@@ -7,6 +7,7 @@ import tw.tasker.babysitter.model.data.BabyDiary;
 import tw.tasker.babysitter.model.data.BabyRecord;
 import tw.tasker.babysitter.view.card.BabyListCard;
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -26,9 +27,11 @@ public class RecordParseQueryAdapter extends ParseQueryAdapter<BabyRecord> {
 
 	DisplayImageOptions options;
 	private ImageLoader imageLoader = ImageLoader.getInstance();
+	private Fragment mFragment;
 
-	public RecordParseQueryAdapter(Context context, String babyObejctId) {
+	public RecordParseQueryAdapter(Context context, String babyObejctId, Fragment fragment) {
 		super(context, getFactory(babyObejctId));
+		mFragment = fragment;
 
 /*		options = new DisplayImageOptions.Builder()
 				.showImageOnLoading(R.drawable.ic_launcher)
@@ -66,6 +69,7 @@ public class RecordParseQueryAdapter extends ParseQueryAdapter<BabyRecord> {
 		
 		BabyListCard mCard = new BabyListCard(getContext());
 		mCard.setBabyRecord(babyRecord);
+		mCard.setFragment(mFragment);
 		mCard.init();
 		CardView mCardView;
 		mCardView = (CardView) view.findViewById(R.id.list_cardId);

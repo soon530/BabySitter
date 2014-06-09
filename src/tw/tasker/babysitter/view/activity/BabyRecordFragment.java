@@ -1,6 +1,8 @@
 package tw.tasker.babysitter.view.activity;
 
 import static tw.tasker.babysitter.utils.LogUtils.LOGD;
+import it.gmariotti.cardslib.library.internal.CardHeader;
+import it.gmariotti.cardslib.library.internal.base.BaseCard;
 
 import java.util.List;
 
@@ -245,7 +247,7 @@ public class BabyRecordFragment extends Fragment implements
 
 	private void initCards() {
 
-		mAdapter = new RecordParseQueryAdapter(getActivity(), mBabyObjectId);
+		mAdapter = new RecordParseQueryAdapter(getActivity(), mBabyObjectId, this);
 		mAdapter.addOnQueryLoadListener(this);
 		ListView listView = (ListView) getActivity().findViewById(R.id.list);
 		if (listView != null) {

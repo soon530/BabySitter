@@ -9,24 +9,28 @@ import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabyRecord;
 import tw.tasker.babysitter.utils.DateTimeUtils;
 import tw.tasker.babysitter.view.activity.BabyRecordActivity;
+import tw.tasker.babysitter.view.fragment.EditDialogFragment;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+import com.parse.DeleteCallback;
+import com.parse.ParseException;
 
 public class BabyListCard extends Card {
 
 	public int resourceIdThumbnail = -1;
 	private BabyRecord mBabyRecord;
+	private Fragment mFragment;
 
 	public BabyListCard(Context context) {
 		super(context, R.layout.carddemo_gplay_inner_content);
@@ -44,8 +48,16 @@ public class BabyListCard extends Card {
 				new CardHeader.OnClickCardHeaderPopupMenuListener() {
 					@Override
 					public void onMenuItemClick(BaseCard card, MenuItem item) {
-						Toast.makeText(getContext(), "Item " + item.getTitle(),
-								Toast.LENGTH_SHORT).show();
+						int id =item.getItemId();
+						switch (id) {
+						case R.id.card_edit:
+							editCard();
+							break;
+						case R.id.card_del:
+							deleteCard();
+						default:
+							break;
+						}
 					}
 				});
 
@@ -67,6 +79,21 @@ public class BabyListCard extends Card {
 						BabyRecordActivity.class);
 				intent.putExtra(Config.BABY_OBJECT_ID, mBabyRecord.getObjectId());
 				getContext().startActivity(intent);
+			}
+		});
+	}
+	private void editCard() {
+		EditDialogFragment newFragment = new EditDialogFragment(mBabyRecord);
+		newFragment.show(mFragment.getFragmentManager(), "edit_dialog");
+	}
+
+	
+	private void deleteCard() {
+		mBabyRecord.deleteInBackground(new DeleteCallback() {
+			
+			@Override
+			public void done(ParseException e) {
+				
 			}
 		});
 	}
@@ -126,5 +153,9 @@ public class BabyListCard extends Card {
 
 	public void setBabyRecord(BabyRecord babyRecord) {
 		mBabyRecord = babyRecord;
+	}
+
+	public void setFragment(Fragment fragment) {
+		mFragment = fragment;
 	}
 }
