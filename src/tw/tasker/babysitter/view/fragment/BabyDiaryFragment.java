@@ -14,6 +14,7 @@ import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -63,13 +64,16 @@ public class BabyDiaryFragment extends Fragment implements
 		
 		switch (id) {
 		case R.id.action_add:
-			Bundle bundle = new Bundle();
+			
+			addBabyDiary();
+			
+/*			Bundle bundle = new Bundle();
 			bundle.putString(Config.BABYSITTER_OBJECT_ID, mBabysitterObjectId);
 			Intent intent = new Intent();
 			intent.putExtras(bundle);
 			intent.setClass(getActivity(), BabyAddActivity.class);
 			startActivity(intent);
-			
+*/			
 			break;
 			
 		default:
@@ -79,6 +83,12 @@ public class BabyDiaryFragment extends Fragment implements
 		return super.onOptionsItemSelected(item);
 	}
 	
+	
+	private void addBabyDiary() {
+		DialogFragment newFragment = new AddDialogFragment(mBabysitterObjectId);
+		newFragment.show(getFragmentManager(), "dialog");
+	}
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
