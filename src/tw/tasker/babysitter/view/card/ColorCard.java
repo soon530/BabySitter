@@ -18,14 +18,13 @@
 
 package tw.tasker.babysitter.view.card;
 
+//import it.gmariotti.cardslib.demo.R;
+import it.gmariotti.cardslib.library.internal.Card;
+import tw.tasker.babysitter.R;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-import tw.tasker.babysitter.R;
-//import it.gmariotti.cardslib.demo.R;
-import it.gmariotti.cardslib.library.internal.Card;
 
 /**
  * Simple Colored card

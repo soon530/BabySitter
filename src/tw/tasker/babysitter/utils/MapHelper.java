@@ -1,7 +1,5 @@
 package tw.tasker.babysitter.utils;
 
-import android.location.Location;
-import android.os.Bundle;
 
 public class MapHelper {
 /*

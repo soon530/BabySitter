@@ -4,7 +4,6 @@ import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.fragment.BabysittersFragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 
 public class BabysittersActivity extends ActionBarActivity {

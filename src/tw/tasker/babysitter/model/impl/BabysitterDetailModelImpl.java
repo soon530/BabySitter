@@ -2,14 +2,12 @@ package tw.tasker.babysitter.model.impl;
 
 import static tw.tasker.babysitter.utils.LogUtils.LOGD;
 import tw.tasker.babysitter.model.BabysitterDetailModel;
-import tw.tasker.babysitter.model.data.BabysitterComment;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.presenter.impl.BabysitterDetailPresenterImpl;
 
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
-import com.parse.ParseQueryAdapter;
 
 public class BabysitterDetailModelImpl extends GetCallback<Babysitter>
 		implements BabysitterDetailModel {

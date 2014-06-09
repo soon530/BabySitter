@@ -1,8 +1,6 @@
 package tw.tasker.babysitter.view.activity;
 
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.R.id;
-import tw.tasker.babysitter.R.layout;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

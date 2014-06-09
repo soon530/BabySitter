@@ -2,7 +2,6 @@ package tw.tasker.babysitter.view.activity;
 
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;

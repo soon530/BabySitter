@@ -1,14 +1,9 @@
 package tw.tasker.babysitter.view.activity;
 
-import com.astuetz.PagerSlidingTabStrip;
-
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
-import tw.tasker.babysitter.view.activity.MyFavoriteActivity.MyPagerAdapter;
-import tw.tasker.babysitter.view.fragment.BabyFavoriteFragment;
 import tw.tasker.babysitter.view.fragment.BabysitterCommentFragment;
-import tw.tasker.babysitter.view.fragment.BabysitterFavoriteFragment;
 import tw.tasker.babysitter.view.fragment.BabysitterFragment;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -18,6 +13,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.TypedValue;
+
+import com.astuetz.PagerSlidingTabStrip;
 
 public class BabysitterActivity extends ActionBarActivity {
 

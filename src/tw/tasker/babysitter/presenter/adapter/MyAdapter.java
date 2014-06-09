@@ -1,9 +1,6 @@
 package tw.tasker.babysitter.presenter.adapter;
 
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.R.drawable;
-import tw.tasker.babysitter.R.id;
-import tw.tasker.babysitter.R.layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

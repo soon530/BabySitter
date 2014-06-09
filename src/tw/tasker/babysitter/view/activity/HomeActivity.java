@@ -2,22 +2,10 @@ package tw.tasker.babysitter.view.activity;
 
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.view.fragment.HomeFragment;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
-
-import com.parse.ParseUser;
 
 public class HomeActivity extends ActionBarActivity {
 	private static final String[] mSearchCondition = new String[] { "附近保母",

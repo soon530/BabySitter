@@ -3,13 +3,11 @@ package tw.tasker.babysitter.utils;
 import static tw.tasker.babysitter.utils.LogUtils.LOGD;
 import static tw.tasker.babysitter.utils.LogUtils.makeLogTag;
 import tw.tasker.babysitter.view.activity.BabysitterMapActivity;
-import android.app.Dialog;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.ErrorDialogFragment;
 import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;

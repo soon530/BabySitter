@@ -3,9 +3,7 @@ package tw.tasker.babysitter.utils;
 import java.io.ByteArrayOutputStream;
 
 import android.graphics.Bitmap;
-import android.widget.Toast;
 
-import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.SaveCallback;
 

@@ -3,13 +3,11 @@ package tw.tasker.babysitter.model.impl;
 import static tw.tasker.babysitter.utils.LogUtils.LOGD;
 import static tw.tasker.babysitter.utils.LogUtils.makeLogTag;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import tw.tasker.babysitter.model.BabysitterMapModel;
 import tw.tasker.babysitter.model.OnFinishedListener;
 import tw.tasker.babysitter.model.data.Babysitter;
-import tw.tasker.babysitter.presenter.impl.BabysitterMapPresenterImpl;
 import android.location.Location;
 
 import com.google.android.gms.maps.model.BitmapDescriptor;

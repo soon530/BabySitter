@@ -1,7 +1,6 @@
 package tw.tasker.babysitter.view.activity;
 
 import static tw.tasker.babysitter.utils.LogUtils.LOGD;
-import static tw.tasker.babysitter.utils.LogUtils.LOGE;
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabyDiary;

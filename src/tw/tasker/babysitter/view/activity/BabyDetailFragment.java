@@ -12,7 +12,6 @@ import tw.tasker.babysitter.presenter.adapter.RecordParseQueryAdapter;
 import tw.tasker.babysitter.utils.PictureHelper;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.BabysitterDetailView;
-import tw.tasker.babysitter.view.activity.BabyRecordAddFragment.BabyRecordSaveCallback;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
@@ -35,9 +34,9 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
-import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 
 public class BabyDetailFragment extends Fragment implements
 		OnQueryLoadListener<BabyRecord>, BabysitterDetailView,
@@ -235,7 +234,7 @@ public class BabyDetailFragment extends Fragment implements
 	public void onActivityResult(int requestCode, int resultCode,
 			Intent data) {
 		
-		if (resultCode == BabyRecordAddActivity.RESULT_OK) {
+		if (resultCode == BabyDetailActivity.RESULT_OK) {
 			mRingProgressDialog = ProgressDialog.show(getActivity(),
 					"請稍等 ...", "資料儲存中...", true);
 
