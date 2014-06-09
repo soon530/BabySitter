@@ -6,7 +6,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-@ParseClassName("Baby")
+@ParseClassName("BabyDiary")
 public class Baby extends ParseObject {
 
 	public String getName() {
@@ -53,11 +53,11 @@ public class Baby extends ParseObject {
 	}
 
 	public void setBabysitter(Babysitter value) {
-		put("babysitter", value);
+		put("Babysitter", value);
 	}
 	
 	public Babysitter getBabysitter() {
-		return (Babysitter) getParseObject("babysitter");
+		return (Babysitter) getParseObject("Babysitter");
 	}
 
 	public boolean getIsPublic() {

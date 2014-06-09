@@ -1,9 +1,11 @@
 package tw.tasker.babysitter.view.activity;
 
 import static tw.tasker.babysitter.utils.LogUtils.LOGD;
+import static tw.tasker.babysitter.utils.LogUtils.LOGE;
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Baby;
+import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.utils.PictureHelper;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -21,10 +23,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -42,6 +46,8 @@ public class BabyAddFragment extends Fragment {
 						"upload doen!", Toast.LENGTH_SHORT).show();
 				saveComment();
 			} else {
+
+				LOGD("vic", "Error saving: " + e.getMessage());
 				Toast.makeText(getActivity().getApplicationContext(),
 						"Error saving: " + e.getMessage(),
 						Toast.LENGTH_SHORT).show();
@@ -83,6 +89,10 @@ public class BabyAddFragment extends Fragment {
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_baby_add,
 				container, false);
+		
+		TextView user_name = (TextView) rootView.findViewById(R.id.user_name);
+		user_name.setText("保母編號" + mBabysitterObjectId);
+		
 
 		mShareType = (Spinner) rootView.findViewById(R.id.share_type);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(
@@ -178,17 +188,23 @@ public class BabyAddFragment extends Fragment {
 	private void saveComment() {
 
 		// ParseObject post = new ParseObject("Comment");
-		Baby post = new Baby();
-		post.put("babysitterId", mBabysitterObjectId);
-		post.put("name", mBabysitterTitle.getText().toString());
-		post.put("note", mBabysitterComment.getText().toString());
-		post.setFavorite(0);
-		post.setPhotoFile(mPictureHelper.getFile());
-		post.setUser(ParseUser.getCurrentUser());
-		post.setIsPublic(mIsPublic);
+		
+		Babysitter babysitter = ParseObject
+				.createWithoutData(Babysitter.class, mBabysitterObjectId);
+
+		
+		Baby baby = new Baby();
+		
+		baby.setBabysitter(babysitter);
+		baby.setName(mBabysitterTitle.getText().toString());
+		baby.setNote(mBabysitterComment.getText().toString());
+		baby.setFavorite(0);
+		baby.setPhotoFile(mPictureHelper.getFile());
+		baby.setUser(ParseUser.getCurrentUser());
+		baby.setIsPublic(mIsPublic);
 
 		// Save the post and return
-		post.saveInBackground(new SaveCallback() {
+		baby.saveInBackground(new SaveCallback() {
 
 			@Override
 			public void done(ParseException e) {

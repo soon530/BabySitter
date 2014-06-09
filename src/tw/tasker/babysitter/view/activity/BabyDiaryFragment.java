@@ -69,9 +69,6 @@ public class BabyDiaryFragment extends Fragment implements
 			startActivity(intent);
 			
 			break;
-
-		case R.id.refresh:
-			mAdapter.loadObjects();
 			
 		default:
 			break;
