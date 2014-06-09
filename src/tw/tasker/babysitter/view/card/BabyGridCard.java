@@ -78,7 +78,9 @@ public class BabyGridCard extends Card {
 
 		TextView title = (TextView) view
 				.findViewById(R.id.carddemo_gplay_main_inner_title);
-		title.setText("成長記錄:5");
+		
+		String totalRecord = "成長記錄：" + mBabyDiary.getTotalRecord(); 
+		title.setText(totalRecord);
 
 		TextView subtitle = (TextView) view
 				.findViewById(R.id.carddemo_gplay_main_inner_subtitle);

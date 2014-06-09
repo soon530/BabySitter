@@ -81,4 +81,12 @@ public class BabyDiary extends ParseObject {
 		return (BabyRecord) getParseObject("BabyRecord");
 	}
 
+	public int getTotalRecord() {
+		return getInt("totalRecord");
+	}
+	
+	public void setTotalRecord(int value) {
+		put("totalRecord", value);
+	}
+
 }
