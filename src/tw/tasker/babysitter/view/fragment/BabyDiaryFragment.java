@@ -1,4 +1,4 @@
-package tw.tasker.babysitter.view.activity;
+package tw.tasker.babysitter.view.fragment;
 
 import java.util.List;
 
@@ -7,6 +7,8 @@ import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabyDiary;
 import tw.tasker.babysitter.presenter.adapter.BabyDiaryParseQueryAdapter;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
+import tw.tasker.babysitter.view.activity.BabyAddActivity;
+import tw.tasker.babysitter.view.activity.BabyRecordActivity;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
