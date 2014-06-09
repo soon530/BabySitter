@@ -7,6 +7,7 @@ import it.gmariotti.cardslib.library.internal.base.BaseCard;
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabyDiary;
+import tw.tasker.babysitter.model.data.BabyRecord;
 import tw.tasker.babysitter.view.activity.BabyRecordActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -25,7 +26,8 @@ import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 public class BabyGridCard extends Card {
 
 	public int resourceIdThumbnail = -1;
-	private BabyDiary mBaby;
+	private BabyDiary mBabyDiary;
+	private BabyRecord mBabyRecord;
 
 	public BabyGridCard(Context context) {
 		super(context, R.layout.carddemo_gplay_inner_content);
@@ -36,9 +38,10 @@ public class BabyGridCard extends Card {
 	}
 
 	public void init() {
+		mBabyRecord = mBabyDiary.getBabyRecord();
 		CardHeader header = new CardHeader(getContext());
 		header.setButtonOverflowVisible(true);
-		header.setTitle(mBaby.getName());
+		header.setTitle(mBabyDiary.getName());
 		header.setPopupMenu(R.menu.popupmain,
 				new CardHeader.OnClickCardHeaderPopupMenuListener() {
 					@Override
@@ -64,7 +67,7 @@ public class BabyGridCard extends Card {
 			public void onClick(Card card, View view) {
 				Intent intent = new Intent(getContext(),
 						BabyRecordActivity.class);
-				intent.putExtra(Config.BABY_OBJECT_ID, mBaby.getObjectId());
+				intent.putExtra(Config.BABY_OBJECT_ID, mBabyDiary.getObjectId());
 				getContext().startActivity(intent);
 			}
 		});
@@ -79,7 +82,14 @@ public class BabyGridCard extends Card {
 
 		TextView subtitle = (TextView) view
 				.findViewById(R.id.carddemo_gplay_main_inner_subtitle);
-		subtitle.setText(mBaby.getNote());
+		
+		String description;
+		if (mBabyRecord == null) {
+			description =mBabyDiary.getNote(); 
+		} else {
+			description = mBabyRecord.getDescription();
+		}
+		subtitle.setText(description);
 
 		RatingBar mRatingBar = (RatingBar) parent
 				.findViewById(R.id.carddemo_gplay_main_inner_ratingBar);
@@ -107,15 +117,14 @@ public class BabyGridCard extends Card {
 		public void setupInnerViewElements(ViewGroup parent, View viewImage) {
 
 			String url;
-			if (mBaby.getPhotoFile() != null) {
-				url = mBaby.getPhotoFile().getUrl();
-			} else {
-				url = "https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-ash3/t1.0-9/q77/s720x720/1966891_782022338479354_124097698_n.jpg";
+			url = "https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-ash3/t1.0-9/q77/s720x720/1966891_782022338479354_124097698_n.jpg";
+			if (mBabyRecord != null) {
+				if (mBabyRecord.getPhotoFile() != null) {
+					url = mBabyRecord.getPhotoFile().getUrl();
+				}
 			}
 
-			
-			imageLoader
-					.displayImage(url, (ImageView) viewImage, options, null);
+			imageLoader.displayImage(url, (ImageView) viewImage, options, null);
 
 			// viewImage.getLayoutParams().width = 196;
 			// viewImage.getLayoutParams().height = 196;
@@ -123,8 +132,8 @@ public class BabyGridCard extends Card {
 		}
 	}
 
-	public void setBaby(BabyDiary baby) {
-		mBaby = baby;
+	public void setBaby(BabyDiary babyDiary) {
+		mBabyDiary = babyDiary;
 	}
 
 }

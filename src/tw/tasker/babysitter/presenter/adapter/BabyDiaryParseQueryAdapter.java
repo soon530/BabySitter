@@ -19,7 +19,7 @@ public class BabyDiaryParseQueryAdapter extends ParseQueryAdapter<BabyDiary> {
 	}
 
 	@Override
-	public View getItemView(BabyDiary baby, View view, ViewGroup parent) {
+	public View getItemView(BabyDiary babyDiary, View view, ViewGroup parent) {
 		boolean recycle = false;
 		if (view == null) {
 			recycle = false;
@@ -29,7 +29,7 @@ public class BabyDiaryParseQueryAdapter extends ParseQueryAdapter<BabyDiary> {
 		}
 		
 		BabyGridCard mCard = new BabyGridCard(getContext());
-		mCard.setBaby(baby);
+		mCard.setBaby(babyDiary);
 		mCard.init();
 
 		CardView mCardView;
@@ -93,6 +93,7 @@ public class BabyDiaryParseQueryAdapter extends ParseQueryAdapter<BabyDiary> {
 				query.orderByDescending("createdAt");
 				//query.setLimit(20);
 				//query.include("baby");
+				query.include("BabyRecord");
 				
 				if (babysitterObjectId != null) {
 					query.whereEqualTo("babysitterId", babysitterObjectId);
