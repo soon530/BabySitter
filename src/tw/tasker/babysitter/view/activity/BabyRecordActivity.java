@@ -18,7 +18,7 @@ public class BabyRecordActivity extends ActionBarActivity {
 			Bundle arguments = new Bundle();
 			arguments.putString(Config.BABY_OBJECT_ID, getIntent()
 					.getStringExtra(Config.BABY_OBJECT_ID));
-			BabyDetailFragment fragment = new BabyDetailFragment();
+			BabyRecordFragment fragment = new BabyRecordFragment();
 			fragment.setArguments(arguments);
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, fragment).commit();

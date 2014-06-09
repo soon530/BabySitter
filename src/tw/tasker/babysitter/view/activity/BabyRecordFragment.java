@@ -38,7 +38,7 @@ import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-public class BabyDetailFragment extends Fragment implements
+public class BabyRecordFragment extends Fragment implements
 		OnQueryLoadListener<BabyRecord>, BabysitterDetailView,
 		OnClickListener, OnRefreshListener {
 
@@ -105,7 +105,7 @@ public class BabyDetailFragment extends Fragment implements
 	private ListView mListView;
 	private PictureHelper mPictureHelper;
 
-	public BabyDetailFragment() {
+	public BabyRecordFragment() {
 		mPictureHelper = new PictureHelper();
 	}
 
