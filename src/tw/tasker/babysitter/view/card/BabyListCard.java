@@ -1,128 +1,131 @@
-/*
- * ******************************************************************************
- *   Copyright (c) 2013-2014 Gabriele Mariotti.
- *
- *   Licensed under the Apache License, Version 2.0 (the "License");
- *   you may not use this file except in compliance with the License.
- *   You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- *   Unless required by applicable law or agreed to in writing, software
- *   distributed under the License is distributed on an "AS IS" BASIS,
- *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *   See the License for the specific language governing permissions and
- *   limitations under the License.
- *  *****************************************************************************
- */
-
 package tw.tasker.babysitter.view.card;
 
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardHeader;
 import it.gmariotti.cardslib.library.internal.CardThumbnail;
 import it.gmariotti.cardslib.library.internal.base.BaseCard;
+import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabyRecord;
+import tw.tasker.babysitter.utils.DateTimeUtils;
+import tw.tasker.babysitter.view.activity.BabyDetailActivity;
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
+import android.content.Intent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-/**
- * This class provides a simple example as Google Play card.
- * The Google maps icon this time is loaded from package manager.
- *
- * @author Gabriele Mariotti (gabri.mariotti@gmail.com), Ronald Ammann (ramdroid.fn@gmail.com)
- */
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+
 public class BabyListCard extends Card {
 
-    private BabyRecord mBabyRecord;
+	public int resourceIdThumbnail = -1;
+	private BabyRecord mBabyRecord;
 
 	public BabyListCard(Context context) {
-        super(context, R.layout.carddemo_gplay_inner_content);
-        //init();
-    }
+		super(context, R.layout.carddemo_gplay_inner_content);
+	}
 
-    public BabyListCard(Context context, int innerLayout) {
-        super(context, innerLayout);
-        //init();
-    }
+	public BabyListCard(Context context, int innerLayout) {
+		super(context, innerLayout);
+	}
 
-    public void init() {
-        CardHeader header = new CardHeader(getContext());
-        header.setButtonOverflowVisible(true);
-        header.setTitle(mBabyRecord.getTitle());
-        header.setPopupMenu(R.menu.popupmain, new CardHeader.OnClickCardHeaderPopupMenuListener() {
-            @Override
-            public void onMenuItemClick(BaseCard card, MenuItem item) {
-                Toast.makeText(getContext(), item.getTitle(), Toast.LENGTH_SHORT).show();
-            }
-        });
+	public void init() {
+		CardHeader header = new CardHeader(getContext());
+		header.setButtonOverflowVisible(true);
+		header.setTitle(mBabyRecord.getTitle());
+		header.setPopupMenu(R.menu.popupmain,
+				new CardHeader.OnClickCardHeaderPopupMenuListener() {
+					@Override
+					public void onMenuItemClick(BaseCard card, MenuItem item) {
+						Toast.makeText(getContext(), "Item " + item.getTitle(),
+								Toast.LENGTH_SHORT).show();
+					}
+				});
 
-        addCardHeader(header);
+		addCardHeader(header);
 
-        CardThumbnail thumbnail = new CardThumbnail(getContext());
-        thumbnail.setCustomSource(new CardThumbnail.CustomSource() {
-            @Override
-            public String getTag() {
-                return "com.google.android.apps.maps";
-            }
+		GplayGridThumb thumbnail = new GplayGridThumb(getContext());
+		thumbnail.setExternalUsage(true);
+		/*
+		 * if (resourceIdThumbnail > -1)
+		 * thumbnail.setDrawableResource(resourceIdThumbnail); else
+		 * thumbnail.setDrawableResource(R.drawable.ic_launcher);
+		 */
+		addCardThumbnail(thumbnail);
 
-            @Override
-            public Bitmap getBitmap() {
-                PackageManager pm = mContext.getPackageManager();
-                Bitmap bitmap = null;
-                try {
-                    bitmap = drawableToBitmap(pm.getApplicationIcon(getTag()));
-                } catch (PackageManager.NameNotFoundException e) {
-                }
-                return bitmap;
-            }
+		setOnClickListener(new OnCardClickListener() {
+			@Override
+			public void onClick(Card card, View view) {
+				Intent intent = new Intent(getContext(),
+						BabyDetailActivity.class);
+				intent.putExtra(Config.BABY_OBJECT_ID, mBabyRecord.getObjectId());
+				getContext().startActivity(intent);
+			}
+		});
+	}
 
-            private Bitmap drawableToBitmap(Drawable drawable) {
-                if (drawable instanceof BitmapDrawable) {
-                    return ((BitmapDrawable) drawable).getBitmap();
-                }
+	@Override
+	public void setupInnerViewElements(ViewGroup parent, View view) {
 
-                Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-                Canvas canvas = new Canvas(bitmap);
-                drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-                drawable.draw(canvas);
+		TextView title = (TextView) view
+				.findViewById(R.id.carddemo_gplay_main_inner_title);
+		title.setText(DateTimeUtils.show(mBabyRecord.getCreatedAt()));
 
-                return bitmap;
-            }
-        });
-        addCardThumbnail(thumbnail);
-    }
+		TextView subtitle = (TextView) view
+				.findViewById(R.id.carddemo_gplay_main_inner_subtitle);
+		subtitle.setText(mBabyRecord.getDescription());
 
-    @Override
-    public void setupInnerViewElements(ViewGroup parent, View view) {
+		RatingBar mRatingBar = (RatingBar) parent
+				.findViewById(R.id.carddemo_gplay_main_inner_ratingBar);
 
-        TextView title = (TextView) view.findViewById(R.id.carddemo_gplay_main_inner_title);
-        title.setText("已托育");
+		mRatingBar.setNumStars(5);
+		mRatingBar.setMax(5);
+		mRatingBar.setStepSize(0.5f);
+		mRatingBar.setRating((float) (Math.random() * (5.0)));
+	}
 
-        TextView subtitle = (TextView) view.findViewById(R.id.carddemo_gplay_main_inner_subtitle);
-        subtitle.setText(mBabyRecord.getDescription());
+	class GplayGridThumb extends CardThumbnail {
+		DisplayImageOptions options;
+		private ImageLoader imageLoader = ImageLoader.getInstance();
 
-        RatingBar mRatingBar = (RatingBar) parent.findViewById(R.id.carddemo_gplay_main_inner_ratingBar);
+		public GplayGridThumb(Context context) {
+			super(context);
 
-        mRatingBar.setNumStars(5);
-        mRatingBar.setMax(5);
-        mRatingBar.setStepSize(0.5f);
-        mRatingBar.setRating(5.0f);
-    }
+			options = new DisplayImageOptions.Builder().cacheInMemory(true)
+					.displayer(new SimpleBitmapDisplayer())
+					.showImageOnFail(R.drawable.ic_launcher).build();
+
+		}
+
+		@Override
+		public void setupInnerViewElements(ViewGroup parent, View viewImage) {
+			viewImage.getLayoutParams().width = 450;
+			viewImage.getLayoutParams().height = 450;
+
+			String url;
+			if (mBabyRecord.getPhotoFile() != null) {
+				url = mBabyRecord.getPhotoFile().getUrl();
+			} else {
+				url = "https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-ash3/t1.0-9/q77/s720x720/1966891_782022338479354_124097698_n.jpg";
+			}
+
+			
+			imageLoader
+					.displayImage(url, (ImageView) viewImage, options, null);
+
+
+		}
+	}
 
 	public void setBabyRecord(BabyRecord babyRecord) {
 		mBabyRecord = babyRecord;
 	}
-
 }

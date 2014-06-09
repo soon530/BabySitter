@@ -58,7 +58,7 @@ public class RecordParseQueryAdapter extends ParseQueryAdapter<BabyRecord> {
 		boolean recycle = false;
 		if (view == null) {
 			recycle = false;
-			view = View.inflate(getContext(), R.layout.list_item_card, null);
+			view = View.inflate(getContext(), R.layout.list_item_baby, null);
 		} else {
 			recycle = true;
 		}
@@ -67,7 +67,7 @@ public class RecordParseQueryAdapter extends ParseQueryAdapter<BabyRecord> {
 		mCard.setBabyRecord(babyRecord);
 		mCard.init();
 		CardView mCardView;
-		mCardView = (CardView) view.findViewById(R.id.carddemo_thumb_customsource);
+		mCardView = (CardView) view.findViewById(R.id.list_cardId);
 		if (mCardView != null) {
 			// It is important to set recycle value for inner layout elements
 			mCardView.setForceReplaceInnerLayout(Card.equalsInnerLayout(
