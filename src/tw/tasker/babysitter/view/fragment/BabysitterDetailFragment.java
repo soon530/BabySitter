@@ -135,57 +135,9 @@ public class BabysitterDetailFragment extends Fragment implements
 
 		mDistanceValue = "10公尺"; // getDistance(bundle);
 
-		options = new DisplayImageOptions.Builder()
-				.showImageOnLoading(R.drawable.ic_launcher)
-				.showImageForEmptyUri(R.drawable.ic_launcher)
-				.showImageOnFail(R.drawable.ic_launcher).cacheInMemory(true)
-				.cacheOnDisc(true).considerExifParams(true)
-				.displayer(new RoundedBitmapDisplayer(20)).build();
-
 		setHasOptionsMenu(true);
 
 	}
-
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.babysitter_detail, menu);
-		super.onCreateOptionsMenu(menu, inflater);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		int id = item.getItemId();
-
-		switch (id) {
-		case android.R.id.home:
-			NavUtils.navigateUpTo(getActivity(), new Intent(getActivity(),
-					BabysittersActivity.class));
-
-			break;
-
-		case R.id.action_comment:
-
-			Intent intent = new Intent();
-
-			Bundle bundle = new Bundle();
-			bundle.putString(Config.BABYSITTER_OBJECT_ID, mBabysitterObjectId);
-			bundle.putInt(Config.TOTAL_RATING, mTotalRating);
-			bundle.putInt(Config.TOTAL_COMMENT, mTotalComment);
-			intent.putExtras(bundle);
-
-			intent.setClass(getActivity(), BabysitterCommentActivity.class);
-			startActivity(intent);
-
-		case R.id.refresh:
-			mPresenter.refresh();
-			
-		default:
-			break;
-		}
-
-		return super.onOptionsItemSelected(item);
-	}
-
 
 	public void fillHeaderUI(Babysitter outline) {
 

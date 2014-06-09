@@ -7,12 +7,17 @@ import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabysitterComment;
 import tw.tasker.babysitter.presenter.adapter.BabysitterCommentParseQueryAdapter;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
+import tw.tasker.babysitter.view.activity.BabysitterCommentActivity;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -39,6 +44,40 @@ public class BabysitterCommentFragment extends Fragment implements
 					Config.BABYSITTER_OBJECT_ID);
 		}
 
+		setHasOptionsMenu(true);
+	}
+
+	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.add, menu);
+		super.onCreateOptionsMenu(menu, inflater);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+
+		switch (id) {
+
+		case R.id.action_add:
+
+			Intent intent = new Intent();
+
+			Bundle bundle = new Bundle();
+			bundle.putString(Config.BABYSITTER_OBJECT_ID, mBabysitterObjectId);
+			//bundle.putInt(Config.TOTAL_RATING, mTotalRating);
+			//bundle.putInt(Config.TOTAL_COMMENT, mTotalComment);
+			intent.putExtras(bundle);
+
+			intent.setClass(getActivity(), BabysitterCommentActivity.class);
+			startActivity(intent);
+			break;
+		default:
+			break;
+		}
+
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override

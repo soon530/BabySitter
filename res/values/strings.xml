@@ -25,7 +25,7 @@
     <!-- BabySitterCommentActivity -->
     <string name="title_activity_babysitter_comment">保母評分</string>
     <string name="goto_babysittercomment_activity">評分</string>
-    <string name="sendto_server">送出</string>
+    <string name="add">新增</string>
 
     <!-- BabyDetailActivity -->
     <string name="title_activity_baby_detail">寶寶明細</string>

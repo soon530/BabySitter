@@ -42,7 +42,7 @@ public class BabysitterCommentActivity extends ActionBarActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.babysitter_comment, menu);
+		getMenuInflater().inflate(R.menu.add, menu);
 		return true;
 	}
 
@@ -52,7 +52,7 @@ public class BabysitterCommentActivity extends ActionBarActivity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_send) {
+		if (id == R.id.action_add) {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

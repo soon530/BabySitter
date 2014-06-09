@@ -4,11 +4,6 @@
     tools:context="tw.tasker.babysitter.view.activity.BabysitterMapActivity" >
 
     <item
-        android:id="@+id/action_comment"
-        android:orderInCategory="100"
-        android:title="@string/goto_babysittercomment_activity"
-        app:showAsAction="always"/>
-    <item
         android:id="@+id/baby_diary"
         android:orderInCategory="100"
         android:title="寶寶日誌"

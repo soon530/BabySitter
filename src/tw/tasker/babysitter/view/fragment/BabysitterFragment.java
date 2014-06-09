@@ -182,20 +182,6 @@ public class BabysitterFragment extends Fragment implements
 		int id = item.getItemId();
 
 		switch (id) {
-
-		case R.id.action_comment:
-
-			Intent intent = new Intent();
-
-			Bundle bundle = new Bundle();
-			bundle.putString(Config.BABYSITTER_OBJECT_ID, mBabysitterObjectId);
-			bundle.putInt(Config.TOTAL_RATING, mTotalRating);
-			bundle.putInt(Config.TOTAL_COMMENT, mTotalComment);
-			intent.putExtras(bundle);
-
-			intent.setClass(getActivity(), BabysitterCommentActivity.class);
-			startActivity(intent);
-			break;
 		case R.id.baby_diary:
 			mPresenter.seeBabyDetail(mBabysitterObjectId);
 			break;
