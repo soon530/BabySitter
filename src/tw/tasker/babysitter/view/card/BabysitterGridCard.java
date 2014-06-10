@@ -7,6 +7,7 @@ import it.gmariotti.cardslib.library.internal.base.BaseCard;
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
+import tw.tasker.babysitter.utils.DisplayUtils;
 import tw.tasker.babysitter.view.activity.BabysitterActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -92,7 +93,7 @@ public class BabysitterGridCard extends Card {
 		mRatingBar.setMax(5);
 		mRatingBar.setStepSize(0.5f);
 
-		float rating = getRatingValue(totalRatingValue, totalComementValue);
+		float rating = DisplayUtils.getRatingValue(totalRatingValue, totalComementValue);
 		mRatingBar.setRating(rating);
 	}
 
@@ -130,13 +131,5 @@ public class BabysitterGridCard extends Card {
 		mBabysitter = babysitter;
 	}
 
-	private float getRatingValue(float totalRating, int totalComment) {
-		float avgRating = 0.0f;
-
-		if (totalComment != 0) {
-			avgRating = totalRating / totalComment;
-		}
-		return avgRating;
-	}
 
 }

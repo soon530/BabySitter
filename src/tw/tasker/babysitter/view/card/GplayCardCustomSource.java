@@ -26,7 +26,7 @@ import it.gmariotti.cardslib.library.internal.CardThumbnail;
 import it.gmariotti.cardslib.library.internal.base.BaseCard;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabysitterComment;
-import tw.tasker.babysitter.utils.DateTimeUtils;
+import tw.tasker.babysitter.utils.DisplayUtils;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -111,7 +111,7 @@ public class GplayCardCustomSource extends Card {
     public void setupInnerViewElements(ViewGroup parent, View view) {
 
         TextView title = (TextView) view.findViewById(R.id.carddemo_gplay_main_inner_title);
-        title.setText(DateTimeUtils.show(mBabysitterComment.getCreatedAt()));
+        title.setText(DisplayUtils.getDateTime(mBabysitterComment.getCreatedAt()));
 
         TextView subtitle = (TextView) view.findViewById(R.id.carddemo_gplay_main_inner_subtitle);
         String name = ParseUser.getCurrentUser().getUsername();

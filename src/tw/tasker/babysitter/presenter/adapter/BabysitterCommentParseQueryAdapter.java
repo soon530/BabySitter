@@ -114,7 +114,7 @@ public class BabysitterCommentParseQueryAdapter extends
 		babysitterComment.setText(comment.getComment());
 		babysitterRating.setRating(comment.getRating());
 
-		String now = DateTimeUtils.show(comment.getCreatedAt());		
+		String now = DisplayUtils.show(comment.getCreatedAt());		
 		createDate.setText(now);
 
 		imageLoader

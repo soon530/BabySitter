@@ -1,19 +1,10 @@
 package tw.tasker.babysitter.view.fragment;
 
-import com.parse.DeleteCallback;
-import com.parse.GetCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
-import com.parse.SaveCallback;
-
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardHeader;
 import it.gmariotti.cardslib.library.view.CardView;
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.model.data.BabyFavorite;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.BabysitterFavorite;
 import tw.tasker.babysitter.presenter.BabysitterDetailPresenter;
@@ -33,8 +24,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
+
+import com.parse.DeleteCallback;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 public class BabysitterFragment extends Fragment implements
 		BabysitterDetailView, OnRefreshListener, OnClickListener {
@@ -44,12 +44,18 @@ public class BabysitterFragment extends Fragment implements
 	private String mBabysitterObjectId;
 	private BabysitterDetailPresenter mPresenter;
 
-	private int mTotalRating;
-	private int mTotalComment;
 
 	private boolean mIsChecked;
 	private MenuItem mFavoriteItem;
 	private BabysitterFavorite mBabysitterFavorite;
+	
+	private LinearLayout mDemo;
+	private CardView mBabysitterCard;
+	private CardView mTelCard;
+	private CardView mEmailCard;
+	private CardView mAddressCard;
+	private CardView mDateCard;
+	private CardView mBabycareCard;
 
 	
 	public static Fragment newInstance(int position) {
@@ -90,6 +96,8 @@ public class BabysitterFragment extends Fragment implements
 				// Finally commit the setup to our PullToRefreshLayout
 				.setup(mPullToRefreshLayout);
 		
+		mDemo = (LinearLayout) rootView.findViewById(R.id.demo);
+		mDemo.setVisibility(View.GONE);
 		return rootView;
 	}
 
@@ -119,18 +127,20 @@ public class BabysitterFragment extends Fragment implements
 	}
 
 	private void initCards(Babysitter babysitter) {
-		initCardSuggested(babysitter);
-		init_card_inner_layout("*電話", babysitter.getTel(),
-				R.id.carddemo_card_inner1);
-		init_card_inner_layout("*郵件", "soon530@gmail.com",
-				R.id.carddemo_card_inner2);
-		init_card_inner_layout("*地址", babysitter.getAddress(),
-				R.id.carddemo_card_inner3);
+		mBabysitterCard = initBasicCard(babysitter);
+		mTelCard = initCard("*電話", babysitter.getTel(), R.id.carddemo_card_inner1);
+		
+		mEmailCard = initCard("*郵件", "soon530@gmail.com", R.id.carddemo_card_inner2);
+		mEmailCard.setVisibility(View.GONE);
+		
+		mAddressCard = initCard("*地址", babysitter.getAddress(), R.id.carddemo_card_inner3);
+		
+		mDateCard = initCard("時段", "全天24hr 臨時保母", R.id.carddemo_card_inner4);
+		
+		mBabycareCard = initCard("*托育", "共" + babysitter.getBabycareCount() + "人", R.id.carddemo_card_inner5);
 
-		init_card_inner_layout("時段", "全天24hr 臨時保母", R.id.carddemo_card_inner4);
-		init_card_inner_layout("*托育", "共" + babysitter.getBabycareCount() + "人",
-				R.id.carddemo_card_inner5);
-
+		mDemo.setVisibility(View.VISIBLE);
+		
 		hideProgress();
 	}
 
@@ -139,7 +149,7 @@ public class BabysitterFragment extends Fragment implements
 	 * 
 	 * @param babysitter
 	 */
-	private void initCardSuggested(Babysitter babysitter) {
+	private CardView initBasicCard(Babysitter babysitter) {
 
 		BabysitterCard card = new BabysitterCard(getActivity());
 		card.setBabysitter(babysitter);
@@ -147,6 +157,7 @@ public class BabysitterFragment extends Fragment implements
 		CardView cardView = (CardView) getActivity().findViewById(
 				R.id.carddemo_suggested);
 		cardView.setCard(card);
+		return cardView;
 	}
 
 	/**
@@ -156,7 +167,7 @@ public class BabysitterFragment extends Fragment implements
 	 * @param descript
 	 * @param title
 	 */
-	private void init_card_inner_layout(String title, String descript,
+	private CardView initCard(String title, String descript,
 			int layou_id) {
 
 		// Create a Card
@@ -178,6 +189,8 @@ public class BabysitterFragment extends Fragment implements
 		CardView cardView = (CardView) getActivity().findViewById(layou_id);
 		cardView.setCard(card);
 		cardView.setOnClickListener(this);
+		
+		return cardView;
 	}
 
 	@Override

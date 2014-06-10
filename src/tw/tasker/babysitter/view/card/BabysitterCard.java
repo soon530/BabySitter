@@ -24,6 +24,7 @@ import it.gmariotti.cardslib.library.internal.CardHeader;
 import it.gmariotti.cardslib.library.internal.CardThumbnail;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
+import tw.tasker.babysitter.utils.DisplayUtils;
 import android.content.Context;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -57,6 +58,7 @@ public class BabysitterCard extends Card {
 
 		// Add a header
 		SuggestedCardHeader header = new SuggestedCardHeader(getContext());
+		header.setBabysitter(mBabysitter);
 		addCardHeader(header);
 
 		// Set click listener
@@ -108,8 +110,14 @@ public class BabysitterCard extends Card {
 
 class SuggestedCardHeader extends CardHeader {
 
+	private Babysitter mBabysitter;
+
 	public SuggestedCardHeader(Context context) {
 		this(context, R.layout.carddemo_suggested_header_inner);
+	}
+
+	public void setBabysitter(Babysitter babysitter) {
+		mBabysitter = babysitter;		
 	}
 
 	public SuggestedCardHeader(Context context, int innerLayout) {
@@ -124,7 +132,11 @@ class SuggestedCardHeader extends CardHeader {
 					.findViewById(R.id.text_suggested_card1);
 
 			if (textView != null) {
-				textView.setText("保母");
+				
+				float totalRating = mBabysitter.getTotalRating();
+				int totalComment = mBabysitter.getTotalComment();
+				float avgRating = DisplayUtils.getRatingValue(totalRating, totalComment);
+				textView.setText("總分 [ " + avgRating + " ] 分, 共有 [ " + totalComment + " ] 則評論");
 			}
 		}
 	}

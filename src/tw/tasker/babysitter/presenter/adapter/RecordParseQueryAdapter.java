@@ -101,7 +101,7 @@ public class RecordParseQueryAdapter extends ParseQueryAdapter<BabyRecord> {
 		mTitle.setText(babyrecord.getTitle());
 		mDescription.setText(babyrecord.getDescription());
 
-		String now = DateTimeUtils.show(babyrecord.getCreatedAt());
+		String now = DisplayUtils.show(babyrecord.getCreatedAt());
 		mCreateDate.setText(now);
 
 		String url;
