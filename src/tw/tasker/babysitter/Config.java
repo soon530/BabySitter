@@ -7,4 +7,6 @@ public class Config {
 	public static final String TOTAL_COMMENT = "totalComent";
 	
 	public static final String TOTAL_RECORD = "totalRecord";
+	
+	public static final int OBJECTS_PER_PAGE = 7;
 }

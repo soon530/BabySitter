@@ -82,7 +82,7 @@ public class BabysitterFavoriteFragment extends Fragment implements
 		mAdapter = new BabysitterFavoriteParseQueryAdapter(getActivity());
 		mAdapter.setAutoload(false);
 		// mAdapter.setPaginationEnabled(false);
-		mAdapter.setObjectsPerPage(6);
+		mAdapter.setObjectsPerPage(Config.OBJECTS_PER_PAGE);
 		mAdapter.addOnQueryLoadListener(this);
 		mList.setAdapter(mAdapter);
 		mAdapter.loadObjects();

@@ -90,7 +90,7 @@ public class BabyFavoriteFragment extends Fragment implements
 	public void doListQuery() {
 		mAdapter = new BabyFavoriteParseQueryAdapter(getActivity());
 		//mAdapter.setAutoload(true);
-		mAdapter.setObjectsPerPage(6);
+		mAdapter.setObjectsPerPage(Config.OBJECTS_PER_PAGE);
 		mAdapter.addOnQueryLoadListener(this);
 		mList.setAdapter(mAdapter);
 		mAdapter.loadObjects();

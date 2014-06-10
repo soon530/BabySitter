@@ -267,6 +267,7 @@ public class BabyRecordFragment extends Fragment implements
 	private void initCards() {
 
 		mAdapter = new RecordParseQueryAdapter(getActivity(), mBabyObjectId, this);
+		mAdapter.setObjectsPerPage(Config.OBJECTS_PER_PAGE);
 		mAdapter.addOnQueryLoadListener(this);
 		ListView listView = (ListView) getActivity().findViewById(R.id.list);
 		if (listView != null) {

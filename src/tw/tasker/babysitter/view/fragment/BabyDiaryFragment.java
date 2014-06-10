@@ -122,7 +122,7 @@ public class BabyDiaryFragment extends Fragment implements
 	public void doListQuery() {
 		mAdapter = new BabyDiaryParseQueryAdapter(getActivity(), mBabysitterObjectId);
 		mAdapter.setAutoload(false);
-		mAdapter.setObjectsPerPage(5);
+		mAdapter.setObjectsPerPage(Config.OBJECTS_PER_PAGE);
 		//mAdapter.setPaginationEnabled(false);
 		mList.setAdapter(mAdapter);
 		mAdapter.loadObjects();
