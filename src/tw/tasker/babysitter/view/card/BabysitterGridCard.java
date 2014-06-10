@@ -37,9 +37,9 @@ public class BabysitterGridCard extends Card {
 
 	public void init() {
 		CardHeader header = new CardHeader(getContext());
-		header.setButtonOverflowVisible(true);
+		header.setButtonOverflowVisible(false);
 		header.setTitle(mBabysitter.getName());
-		header.setPopupMenu(R.menu.popupmain,
+/*		header.setPopupMenu(R.menu.popupmain,
 				new CardHeader.OnClickCardHeaderPopupMenuListener() {
 					@Override
 					public void onMenuItemClick(BaseCard card, MenuItem item) {
@@ -47,7 +47,7 @@ public class BabysitterGridCard extends Card {
 								Toast.LENGTH_SHORT).show();
 					}
 				});
-
+*/
 		addCardHeader(header);
 
 		GplayGridThumb thumbnail = new GplayGridThumb(getContext());
