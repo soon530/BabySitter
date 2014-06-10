@@ -18,13 +18,16 @@
   ~  *****************************************************************************
 -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginLeft="0dp" >
+    android:layout_height="60dp"
+    android:layout_marginLeft="3dp"
+    android:orientation="vertical" >
 
-<!--     <RatingBar
+    <!--
+         <RatingBar
         android:id="@+id/carddemo_gplay_main_inner_ratingBar"
         style="@style/carddemo_myapps_main_inner_ratingbar"
         android:layout_width="wrap_content"
@@ -33,25 +36,25 @@
         android:layout_marginLeft="5dp"
         android:numStars="5"
         android:stepSize="1.0" />
+    -->
 
     <TextView
         android:id="@+id/carddemo_gplay_main_inner_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:text="測試一下.."
         android:textColor="@android:color/holo_green_light"
         android:textSize="12sp"
         tools:ignore="NewApi" />
 
     <TextView
         android:id="@+id/carddemo_gplay_main_inner_subtitle"
-        android:layout_width="match_parent"
+        android:layout_width="500dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"
         android:layout_marginLeft="5dp"
+        android:text="測試一下.."
         android:textColor="#BBB"
-        android:textSize="12sp" />
- -->
-</RelativeLayout>
+        android:textSize="13sp" />
+
+</LinearLayout>

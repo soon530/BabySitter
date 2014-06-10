@@ -25,6 +25,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.parse.DeleteCallback;
 import com.parse.ParseException;
+import com.parse.ParseUser;
 
 public class BabyListCard extends Card {
 
@@ -33,7 +34,7 @@ public class BabyListCard extends Card {
 	private Fragment mFragment;
 
 	public BabyListCard(Context context) {
-		super(context, R.layout.carddemo_gplay_inner_content);
+		super(context, R.layout.baby_list_card_inner_content);
 	}
 
 	public BabyListCard(Context context, int innerLayout) {
@@ -107,16 +108,18 @@ public class BabyListCard extends Card {
 
 		TextView subtitle = (TextView) view
 				.findViewById(R.id.carddemo_gplay_main_inner_subtitle);
-		subtitle.setText(mBabyRecord.getDescription());
+		
+		String name = ParseUser.getCurrentUser().getUsername();
+		subtitle.setText(name + ":說" + mBabyRecord.getDescription());
 
-		RatingBar mRatingBar = (RatingBar) parent
+/*		RatingBar mRatingBar = (RatingBar) parent
 				.findViewById(R.id.carddemo_gplay_main_inner_ratingBar);
 
 		mRatingBar.setNumStars(5);
 		mRatingBar.setMax(5);
 		mRatingBar.setStepSize(0.5f);
 		mRatingBar.setRating((float) (Math.random() * (5.0)));
-	}
+*/	}
 
 	class GplayGridThumb extends CardThumbnail {
 		DisplayImageOptions options;
