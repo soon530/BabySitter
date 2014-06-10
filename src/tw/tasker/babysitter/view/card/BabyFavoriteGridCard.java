@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+import com.parse.ParseUser;
 
 public class BabyFavoriteGridCard extends Card {
 
@@ -32,7 +33,7 @@ public class BabyFavoriteGridCard extends Card {
 	private BabyFavorite mBabyFavorite;
 
 	public BabyFavoriteGridCard(Context context) {
-		super(context, R.layout.carddemo_gplay_inner_content);
+		super(context, R.layout.baby_grid_card_inner_content);
 	}
 
 	public BabyFavoriteGridCard(Context context, int innerLayout) {
@@ -49,7 +50,7 @@ public class BabyFavoriteGridCard extends Card {
 				new CardHeader.OnClickCardHeaderPopupMenuListener() {
 					@Override
 					public void onMenuItemClick(BaseCard card, MenuItem item) {
-						Toast.makeText(getContext(), "Item " + item.getTitle(),
+						Toast.makeText(getContext(), "[" + item.getTitle() + "] 功能正在趕工中..",
 								Toast.LENGTH_SHORT).show();
 					}
 				});
@@ -93,18 +94,20 @@ public class BabyFavoriteGridCard extends Card {
 		if (mBabyRecord == null) {
 			description =mBabyDiary.getNote(); 
 		} else {
-			description = mBabyRecord.getDescription();
+			String name = ParseUser.getCurrentUser().getUsername();
+			description = name + "說:" + mBabyRecord.getTitle();
+		
 		}
 		subtitle.setText(description);
 
-		RatingBar mRatingBar = (RatingBar) parent
+/*		RatingBar mRatingBar = (RatingBar) parent
 				.findViewById(R.id.carddemo_gplay_main_inner_ratingBar);
 
 		mRatingBar.setNumStars(5);
 		mRatingBar.setMax(5);
 		mRatingBar.setStepSize(0.5f);
 		mRatingBar.setRating((float) (Math.random() * (5.0)));
-	}
+*/	}
 
 	class GplayGridThumb extends CardThumbnail {
 		DisplayImageOptions options;

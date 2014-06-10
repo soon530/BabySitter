@@ -15,7 +15,7 @@
             android:layout_centerVertical="true"
             android:layout_marginTop="10dp"
             android:ems="10"
-            android:hint="範例：張小包 吃飯" >
+            android:hint="範例：終於睡了." >
 
             <requestFocus />
         </EditText>
@@ -27,7 +27,7 @@
             android:layout_centerVertical="true"
             android:layout_marginTop="10dp"
             android:ems="10"
-            android:hint="範例：終於可以自己吃飯了" >
+            android:hint="範例：今天終於可以乖乖睡覺了" >
 
             <requestFocus />
         </EditText>

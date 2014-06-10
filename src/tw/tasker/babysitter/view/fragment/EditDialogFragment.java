@@ -34,12 +34,12 @@ public class EditDialogFragment extends DialogFragment {
 		mTitle = (EditText) entryView.findViewById(R.id.title);
 		mDescription = (EditText) entryView.findViewById(R.id.description);
 		
-		mTitle.setHint(mBabyRecord.getTitle());
-		mDescription.setHint(mBabyRecord.getDescription());
+		mTitle.setText(mBabyRecord.getTitle());
+		mDescription.setText(mBabyRecord.getDescription());
         
         return new AlertDialog.Builder(getActivity())
             .setIconAttribute(android.R.attr.alertDialogIcon)
-            .setTitle("新增寶寶日誌")
+            .setTitle("編輯成長記錄")
             .setView(entryView)
             .setPositiveButton("確定", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {
