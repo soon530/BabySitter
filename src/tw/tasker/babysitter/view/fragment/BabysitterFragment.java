@@ -1,11 +1,21 @@
 package tw.tasker.babysitter.view.fragment;
 
+import com.parse.DeleteCallback;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
+
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardHeader;
 import it.gmariotti.cardslib.library.view.CardView;
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.model.data.BabyFavorite;
 import tw.tasker.babysitter.model.data.Babysitter;
+import tw.tasker.babysitter.model.data.BabysitterFavorite;
 import tw.tasker.babysitter.presenter.BabysitterDetailPresenter;
 import tw.tasker.babysitter.presenter.impl.BabysitterDetailPresenterImpl;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
@@ -21,11 +31,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 public class BabysitterFragment extends Fragment implements
-		BabysitterDetailView, OnRefreshListener {
+		BabysitterDetailView, OnRefreshListener, OnClickListener {
 	protected ScrollView mScrollView;
 	private PullToRefreshLayout mPullToRefreshLayout;
 
@@ -35,6 +47,11 @@ public class BabysitterFragment extends Fragment implements
 	private int mTotalRating;
 	private int mTotalComment;
 
+	private boolean mIsChecked;
+	private MenuItem mFavoriteItem;
+	private BabysitterFavorite mBabysitterFavorite;
+
+	
 	public static Fragment newInstance(int position) {
 		BabysitterFragment fragment = new BabysitterFragment();
 		return fragment;
@@ -99,15 +116,15 @@ public class BabysitterFragment extends Fragment implements
 
 	private void initCards(Babysitter babysitter) {
 		initCardSuggested(babysitter);
-		init_card_inner_layout("電話", babysitter.getTel(),
+		init_card_inner_layout("*電話", babysitter.getTel(),
 				R.id.carddemo_card_inner1);
-		init_card_inner_layout("郵件", "soon530@gmail.com",
+		init_card_inner_layout("*郵件", "soon530@gmail.com",
 				R.id.carddemo_card_inner2);
-		init_card_inner_layout("地址", babysitter.getAddress(),
+		init_card_inner_layout("*地址", babysitter.getAddress(),
 				R.id.carddemo_card_inner3);
 
 		init_card_inner_layout("時段", "全天24hr 臨時保母", R.id.carddemo_card_inner4);
-		init_card_inner_layout("托育", "共" + babysitter.getBabycareCount() + "人",
+		init_card_inner_layout("*托育", "共" + babysitter.getBabycareCount() + "人",
 				R.id.carddemo_card_inner5);
 
 		hideProgress();
@@ -156,6 +173,7 @@ public class BabysitterFragment extends Fragment implements
 		// Set card in the cardView
 		CardView cardView = (CardView) getActivity().findViewById(layou_id);
 		cardView.setCard(card);
+		cardView.setOnClickListener(this);
 	}
 
 	@Override
@@ -172,6 +190,8 @@ public class BabysitterFragment extends Fragment implements
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		inflater.inflate(R.menu.babysitter_detail, menu);
+		mFavoriteItem = menu.findItem(R.id.action_favorite);
+		getFavorite();
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
@@ -180,8 +200,16 @@ public class BabysitterFragment extends Fragment implements
 		int id = item.getItemId();
 
 		switch (id) {
-		case R.id.baby_diary:
-			mPresenter.seeBabyDetail(mBabysitterObjectId);
+		case R.id.action_favorite:
+			if (mIsChecked) {
+				item.setTitle("未收藏");
+				deleteFavorite();
+			} else {
+				item.setTitle("已收藏");
+				addFavorite();
+			}
+			mIsChecked = !mIsChecked;
+
 			break;
 		default:
 			break;
@@ -195,4 +223,97 @@ public class BabysitterFragment extends Fragment implements
 		showProgress();
 		mPresenter.doDetailQuery(mBabysitterObjectId);
 	}
+	
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.direction:
+			//mPresenter.doDirections(mTargetLat, mTargetLng);
+			break;
+		case R.id.carddemo_card_inner5:
+			mPresenter.seeBabyDetail(mBabysitterObjectId);
+
+			break;
+/*		case R.id.call_icon:
+			mPresenter.makePhoneCall(mPhone.getText().toString());
+			break;
+			
+		case R.id.favorite_babysitter:
+			if (mFavoriteBabysitter.isChecked()) {
+				mFavoriteBabysitter.setText("已收藏");
+				addFavorite();
+			} else {
+				mFavoriteBabysitter.setText("已取消");
+				deleteFavorite();
+			}
+			break;
+*/		default:
+			break;
+		}
+	}
+	
+	private void getFavorite() {
+		Babysitter babysitter = ParseObject.createWithoutData(Babysitter.class, mBabysitterObjectId);
+		ParseQuery<BabysitterFavorite> favorite_query = BabysitterFavorite.getQuery();
+
+		favorite_query.whereEqualTo("Babysitter", babysitter);
+		favorite_query.whereEqualTo("user", ParseUser.getCurrentUser());
+		favorite_query.getFirstInBackground(new GetCallback<BabysitterFavorite>() {
+
+			@Override
+			public void done(BabysitterFavorite babysitterFavorite, ParseException e) {
+				if (babysitterFavorite == null) {
+					mIsChecked = false;
+					mFavoriteItem.setTitle("未收藏");
+				} else {
+					mIsChecked = true;
+					mFavoriteItem.setTitle("已收藏");
+					mBabysitterFavorite = babysitterFavorite;
+				}
+			}
+		});
+	}
+
+	private void addFavorite() {
+		Babysitter babysitter = ParseObject.createWithoutData(Babysitter.class, mBabysitterObjectId);
+
+		BabysitterFavorite babysitterfavorite = new BabysitterFavorite();
+		mBabysitterFavorite = babysitterfavorite;
+		// favorite.put("baby", mBaby);
+		babysitterfavorite.setBabysitter(babysitter);
+		babysitterfavorite.put("user", ParseUser.getCurrentUser());
+		babysitterfavorite.saveInBackground(new SaveCallback() {
+			@Override
+			public void done(ParseException e) {
+				if (e == null) {
+					// Toast.makeText(getActivity().getApplicationContext(),
+					// "saving doen!", Toast.LENGTH_SHORT).show();
+				} else {
+					Toast.makeText(getActivity().getApplicationContext(),
+							"Error saving: " + e.getMessage(),
+							Toast.LENGTH_SHORT).show();
+				}
+			}
+
+		});
+	}
+
+	private void deleteFavorite() {
+		mBabysitterFavorite.deleteInBackground(new DeleteCallback() {
+
+			@Override
+			public void done(ParseException e) {
+				if (e == null) {
+					// Toast.makeText(getActivity().getApplicationContext(),
+					// "deleting doen!", Toast.LENGTH_SHORT).show();
+				} else {
+					Toast.makeText(getActivity().getApplicationContext(),
+							"Error saving: " + e.getMessage(),
+							Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
+	}
+
+
 }

@@ -4,9 +4,9 @@
     tools:context="tw.tasker.babysitter.view.activity.BabysitterMapActivity" >
 
     <item
-        android:id="@+id/baby_diary"
+        android:id="@+id/action_favorite"
         android:orderInCategory="100"
-        android:title="寶寶日誌"
+        android:title="未收藏"
         app:showAsAction="always"/>
 
 </menu>

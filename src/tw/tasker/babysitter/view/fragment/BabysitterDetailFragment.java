@@ -153,32 +153,11 @@ public class BabysitterDetailFragment extends Fragment implements
 		mCallIcon.setOnClickListener(this);
 		
 		mBabysitter = outline;
-		getFavorite();
+		//getFavorite();
 		mPresenter.doCommentQuery(mBabysitterObjectId);
 	}
 	
 	
-	private void getFavorite() {
-		ParseQuery<BabysitterFavorite> favorite_query = BabysitterFavorite.getQuery();
-
-		favorite_query.whereEqualTo("babysitter", mBabysitter);
-		favorite_query.whereEqualTo("user", ParseUser.getCurrentUser());
-
-		favorite_query.getFirstInBackground(new GetCallback<BabysitterFavorite>() {
-
-			@Override
-			public void done(BabysitterFavorite favorite, ParseException e) {
-				if (favorite == null) {
-					mFavoriteBabysitter.setChecked(false);
-					mFavoriteBabysitter.setText("已取消");
-				} else {
-					mFavoriteBabysitter.setChecked(true);
-					mFavoriteBabysitter.setText("已收藏");
-					mFavorite = favorite;
-				}
-			}
-		});
-	}
 
 
 	@Override
@@ -282,10 +261,10 @@ public class BabysitterDetailFragment extends Fragment implements
 		case R.id.favorite_babysitter:
 			if (mFavoriteBabysitter.isChecked()) {
 				mFavoriteBabysitter.setText("已收藏");
-				addFavorite();
+				//addFavorite();
 			} else {
 				mFavoriteBabysitter.setText("已取消");
-				deleteFavorite();
+				//deleteFavorite();
 			}
 			break;
 		default:
@@ -293,45 +272,6 @@ public class BabysitterDetailFragment extends Fragment implements
 		}
 	}
 	
-	private void addFavorite() {
-		BabysitterFavorite favorite = new BabysitterFavorite();
-		mFavorite = favorite;
-		// favorite.put("baby", mBaby);
-		favorite.setBaby(mBabysitter);
-
-		favorite.put("user", ParseUser.getCurrentUser());
-		favorite.saveInBackground(new SaveCallback() {
-			@Override
-			public void done(ParseException e) {
-				if (e == null) {
-					// Toast.makeText(getActivity().getApplicationContext(),
-					// "saving doen!", Toast.LENGTH_SHORT).show();
-				} else {
-					Toast.makeText(getActivity().getApplicationContext(),
-							"Error saving: " + e.getMessage(),
-							Toast.LENGTH_SHORT).show();
-				}
-			}
-
-		});
-	}
-
-	private void deleteFavorite() {
-		mFavorite.deleteInBackground(new DeleteCallback() {
-
-			@Override
-			public void done(ParseException e) {
-				if (e == null) {
-					// Toast.makeText(getActivity().getApplicationContext(),
-					// "deleting doen!", Toast.LENGTH_SHORT).show();
-				} else {
-					Toast.makeText(getActivity().getApplicationContext(),
-							"Error saving: " + e.getMessage(),
-							Toast.LENGTH_SHORT).show();
-				}
-			}
-		});
-	}
 
 
 	@Override

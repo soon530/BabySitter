@@ -17,11 +17,11 @@ public class BabysitterFavorite extends ParseObject {
 	}
 	
 	public Babysitter getBabysitter() {
-		return (Babysitter) getParseObject("babysitter");
+		return (Babysitter) getParseObject("Babysitter");
 	}
 	
-	public void setBaby(Babysitter babysitter) {
-		put("babysitter", babysitter);
+	public void setBabysitter(Babysitter babysitter) {
+		put("Babysitter", babysitter);
 	}
 	
 	public static ParseQuery<BabysitterFavorite> getQuery() {

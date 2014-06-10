@@ -4,11 +4,13 @@ import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.view.CardView;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabyDiary;
+import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.view.card.BabyGridCard;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
@@ -96,7 +98,8 @@ public class BabyDiaryParseQueryAdapter extends ParseQueryAdapter<BabyDiary> {
 				query.include("BabyRecord");
 				
 				if (babysitterObjectId != null) {
-					query.whereEqualTo("babysitterId", babysitterObjectId);
+					Babysitter babysitter = ParseObject.createWithoutData(Babysitter.class, babysitterObjectId);
+					query.whereEqualTo("Babysitter", babysitter);
 				}
 				
 				return query;
