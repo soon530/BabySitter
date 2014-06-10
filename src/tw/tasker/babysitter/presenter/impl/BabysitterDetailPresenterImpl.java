@@ -32,7 +32,7 @@ public class BabysitterDetailPresenterImpl implements BabysitterDetailPresenter,
 	}
 
 	@Override
-	public void doDirections(String targetLat, String targetLng) {
+	public void doDirections(double targetLat, double targetLng) {
 		Intent intent;
 
 		// String currentLattitude = "22.635725";

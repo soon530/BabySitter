@@ -31,6 +31,7 @@ import android.widget.Toast;
 import com.parse.DeleteCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -56,6 +57,7 @@ public class BabysitterFragment extends Fragment implements
 	private CardView mAddressCard;
 	private CardView mDateCard;
 	private CardView mBabycareCard;
+	private Babysitter mBabysitter;
 
 	
 	public static Fragment newInstance(int position) {
@@ -128,27 +130,43 @@ public class BabysitterFragment extends Fragment implements
 
 	private void initCards(Babysitter babysitter) {
 		mBabysitterCard = initBasicCard(babysitter);
-		mTelCard = initCard("*電話", babysitter.getTel(), R.id.carddemo_card_inner1);
+		mTelCard = initCard("*電話", babysitter.getTel(), R.id.tel_card);
 		
-		mEmailCard = initCard("*郵件", "soon530@gmail.com", R.id.carddemo_card_inner2);
+		mEmailCard = initCard("*郵件", "soon530@gmail.com", R.id.email_card);
 		mEmailCard.setVisibility(View.GONE);
 		
-		mAddressCard = initCard("*地址", babysitter.getAddress(), R.id.carddemo_card_inner3);
+		mAddressCard = initCard("*地址", babysitter.getAddress(), R.id.address_card);
 		
-		mDateCard = initCard("時段", "全天24hr 臨時保母", R.id.carddemo_card_inner4);
+		mDateCard = initCard("時段", "全天24hr 臨時保母", R.id.date_card);
 		
-		mBabycareCard = initCard("*托育", "共" + babysitter.getBabycareCount() + "人", R.id.carddemo_card_inner5);
+		mBabycareCard = initCard("*托育", "共" + babysitter.getBabycareCount() + "人", R.id.babycare_card);
 
 		mDemo.setVisibility(View.VISIBLE);
+		
+		mBabysitter = babysitter;
 		
 		hideProgress();
 	}
 
-	/**
-	 * This method builds a suggested card example
-	 * 
-	 * @param babysitter
-	 */
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.address_card:
+			ParseGeoPoint location = mBabysitter.getLocation();
+			mPresenter.doDirections(location.getLatitude(), location.getLongitude());
+			break;
+		case R.id.babycare_card:
+			mPresenter.seeBabyDetail(mBabysitterObjectId);
+			break;
+		case R.id.tel_card:
+			mPresenter.makePhoneCall(mBabysitter.getTel());
+			break;
+		default:
+			break;
+		}
+	}
+
+	
 	private CardView initBasicCard(Babysitter babysitter) {
 
 		BabysitterCard card = new BabysitterCard(getActivity());
@@ -160,13 +178,6 @@ public class BabysitterFragment extends Fragment implements
 		return cardView;
 	}
 
-	/**
-	 * This method builds a simple card with a custom inner layout
-	 * 
-	 * @param layou_id
-	 * @param descript
-	 * @param title
-	 */
 	private CardView initCard(String title, String descript,
 			int layou_id) {
 
@@ -241,33 +252,6 @@ public class BabysitterFragment extends Fragment implements
 		mPresenter.doDetailQuery(mBabysitterObjectId);
 	}
 	
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.direction:
-			//mPresenter.doDirections(mTargetLat, mTargetLng);
-			break;
-		case R.id.carddemo_card_inner5:
-			mPresenter.seeBabyDetail(mBabysitterObjectId);
-
-			break;
-/*		case R.id.call_icon:
-			mPresenter.makePhoneCall(mPhone.getText().toString());
-			break;
-			
-		case R.id.favorite_babysitter:
-			if (mFavoriteBabysitter.isChecked()) {
-				mFavoriteBabysitter.setText("已收藏");
-				addFavorite();
-			} else {
-				mFavoriteBabysitter.setText("已取消");
-				deleteFavorite();
-			}
-			break;
-*/		default:
-			break;
-		}
-	}
 	
 	private void getFavorite() {
 		Babysitter babysitter = ParseObject.createWithoutData(Babysitter.class, mBabysitterObjectId);

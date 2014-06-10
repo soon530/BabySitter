@@ -20,112 +20,118 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/demo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
-    android:id="@+id/demo">
+    android:orientation="vertical" >
+
     <uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/carddemo_extra_ptr_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
-    
-    <ScrollView
-        android:id="@+id/card_scrollview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
 
-        <LinearLayout
+        <ScrollView
+            android:id="@+id/card_scrollview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" >
+            android:layout_height="match_parent" >
 
-            <!-- 基本資料 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
 
-<!--             <TextView
+                <!-- 基本資料 -->
+
+
+                <!--
+                 <TextView
                 style="@style/AppTheme.TitleText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/demo_section_card_title" />
- -->
-            <it.gmariotti.cardslib.library.view.CardView
-                android:id="@+id/carddemo_suggested"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_marginTop="12dp"
-                card:card_layout_resourceID="@layout/carddemo_suggested_layout" />
+                -->
 
-            <!-- 聯絡方式 -->
+                <it.gmariotti.cardslib.library.view.CardView
+                    android:id="@+id/carddemo_suggested"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginTop="12dp"
+                    card:card_layout_resourceID="@layout/carddemo_suggested_layout" />
 
-            <TextView
-                style="@style/AppTheme.TitleText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="聯絡方式" />
+                <!-- 聯絡方式 -->
 
-            <!-- 聯絡電話 -->
+                <TextView
+                    style="@style/AppTheme.TitleText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="聯絡方式" />
 
-            <it.gmariotti.cardslib.library.view.CardView
-                android:id="@+id/carddemo_card_inner1"
-                android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_marginTop="1dp" />
+                <!-- 聯絡電話 -->
 
-            <!-- Email -->
+                <it.gmariotti.cardslib.library.view.CardView
+                    android:id="@+id/tel_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginTop="1dp" />
 
-            <it.gmariotti.cardslib.library.view.CardView
-                android:id="@+id/carddemo_card_inner2"
-                android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_marginTop="1dp" />
+                <!-- Email -->
 
-            <!-- 托育服務地址 -->
+                <it.gmariotti.cardslib.library.view.CardView
+                    android:id="@+id/email_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginTop="1dp" />
 
-            <it.gmariotti.cardslib.library.view.CardView
-                android:id="@+id/carddemo_card_inner3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_marginTop="1dp" />
+                <!-- 托育服務地址 -->
 
-            <!-- 托育現況 -->
+                <it.gmariotti.cardslib.library.view.CardView
+                    android:id="@+id/address_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginTop="1dp" />
 
-            <TextView
-                style="@style/AppTheme.TitleText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="托育現況" />
+                <!-- 托育現況 -->
 
-            <!-- 時段 -->
+                <TextView
+                    style="@style/AppTheme.TitleText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="托育現況" />
 
-            <it.gmariotti.cardslib.library.view.CardView
-                android:id="@+id/carddemo_card_inner4"
-                android:layout_width="match_parent"
-                android:layout_height="72dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_marginTop="1dp" />
+                <!-- 托育 -->
 
-            <!-- 托育 -->
+                <it.gmariotti.cardslib.library.view.CardView
+                    android:id="@+id/babycare_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginTop="1dp" />
 
-            <it.gmariotti.cardslib.library.view.CardView
-                android:id="@+id/carddemo_card_inner5"
-                android:layout_width="match_parent"
-                android:layout_height="72dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_marginTop="1dp" />
+                <!-- 時段 -->
 
-            <!-- 所屬保母系統 -->
+                <it.gmariotti.cardslib.library.view.CardView
+                    android:id="@+id/date_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginTop="1dp" />
 
-<!--             <TextView
+                <!-- 所屬保母系統 -->
+
+
+                <!--
+                 <TextView
                 android:id="@+id/carddemo_card3_text"
                 style="@style/AppTheme.TitleText"
                 android:layout_width="match_parent"
@@ -139,14 +145,14 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:layout_marginTop="12dp" />
- -->
-            <!-- Empty view -->
+                -->
+                <!-- Empty view -->
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="15dp" />
-        </LinearLayout>
-    </ScrollView>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp" />
+            </LinearLayout>
+        </ScrollView>
     </uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout>
-    
+
 </LinearLayout>

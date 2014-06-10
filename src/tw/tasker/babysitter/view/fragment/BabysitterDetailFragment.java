@@ -235,7 +235,7 @@ public class BabysitterDetailFragment extends Fragment implements
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.direction:
-			mPresenter.doDirections(mTargetLat, mTargetLng);
+			//mPresenter.doDirections(mTargetLat, mTargetLng);
 			break;
 		case R.id.baby_avator:
 

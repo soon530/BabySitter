@@ -1,7 +1,7 @@
 package tw.tasker.babysitter.presenter;
 
 public interface BabysitterDetailPresenter {
-	void doDirections(String targetLat, String targetLng);
+	void doDirections(double targetLat, double targetLng);
 
 	void seeBabyDetail(String string);
 
