@@ -1,18 +1,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="tw.tasker.babysitter.view.activity.BabyRecordActivity" >
+    tools:context="tw.tasker.babysitter.view.activity.BabysitterCommentActivity" >
 
     <item
-        android:id="@+id/post_words"
+        android:id="@+id/action_add"
         android:orderInCategory="100"
-        android:title="@string/post_words"
+        android:title="@string/add"
         app:showAsAction="always"/>
+    <item
+        android:id="@+id/action_favorite"
+        android:orderInCategory="100"
+        android:title="未收藏"
+        app:showAsAction="always" />
 
-        <item
-        android:id="@+id/refresh"
-        android:orderInCategory="100"
-        android:title="更新"
-        app:showAsAction="always"/>
-    
 </menu>

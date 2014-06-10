@@ -4,9 +4,9 @@
     tools:context="tw.tasker.babysitter.view.activity.BabysitterMapActivity" >
 
     <item
-        android:id="@+id/action_list"
+        android:id="@+id/action_map"
         android:orderInCategory="100"
-        android:title="@string/goto_babysitterlist_activity"
+        android:title="地圖"
         app:showAsAction="always"/>
 
 </menu>

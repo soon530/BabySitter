@@ -189,7 +189,7 @@ public class BabysitterFragment extends Fragment implements
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.babysitter_detail, menu);
+		inflater.inflate(R.menu.favorite, menu);
 		mFavoriteItem = menu.findItem(R.id.action_favorite);
 		getFavorite();
 		super.onCreateOptionsMenu(menu, inflater);

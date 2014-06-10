@@ -187,7 +187,7 @@ public class BabyRecordFragment extends Fragment implements
 	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.add, menu);
+		inflater.inflate(R.menu.add_favorite, menu);
 		mFavoriteItem = menu.findItem(R.id.action_favorite);
 		getFavorite();
 		super.onCreateOptionsMenu(menu, inflater);

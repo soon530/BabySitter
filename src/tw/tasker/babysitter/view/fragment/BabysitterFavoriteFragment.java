@@ -48,28 +48,6 @@ public class BabysitterFavoriteFragment extends Fragment implements
 	}
 
 	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.favorite_babysitter, menu);
-		super.onCreateOptionsMenu(menu, inflater);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		int id = item.getItemId();
-
-		switch (id) {
-		case R.id.refresh:
-			mAdapter.loadObjects();
-			break;
-
-		default:
-			break;
-		}
-
-		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_grid,

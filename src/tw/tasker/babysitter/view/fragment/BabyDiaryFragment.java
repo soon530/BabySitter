@@ -53,7 +53,7 @@ public class BabyDiaryFragment extends Fragment implements
 	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.baby_diary, menu);
+		inflater.inflate(R.menu.add, menu);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 	

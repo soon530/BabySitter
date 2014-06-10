@@ -42,7 +42,7 @@ public class BabysittersFragment extends Fragment implements
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.babysitter_list, menu);
+		inflater.inflate(R.menu.babysitter_map, menu);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
