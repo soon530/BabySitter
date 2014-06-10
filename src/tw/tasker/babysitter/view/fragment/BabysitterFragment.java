@@ -111,6 +111,10 @@ public class BabysitterFragment extends Fragment implements
 
 	// call back
 	public void fillHeaderUI(Babysitter outline) {
+		// TODO 進到[保母明細]馬上退出會掛掉，回頭在review架構
+		if (getActivity() == null) {
+			return;
+		}
 		initCards(outline);
 	}
 
