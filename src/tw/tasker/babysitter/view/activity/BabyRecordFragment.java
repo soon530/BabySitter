@@ -1,14 +1,13 @@
 package tw.tasker.babysitter.view.activity;
 
 import static tw.tasker.babysitter.utils.LogUtils.LOGD;
-import it.gmariotti.cardslib.library.internal.CardHeader;
-import it.gmariotti.cardslib.library.internal.base.BaseCard;
 
 import java.util.List;
 
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabyDiary;
+import tw.tasker.babysitter.model.data.BabyFavorite;
 import tw.tasker.babysitter.model.data.BabyRecord;
 import tw.tasker.babysitter.presenter.adapter.RecordParseQueryAdapter;
 import tw.tasker.babysitter.utils.PictureHelper;
@@ -27,13 +26,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.parse.DeleteCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -44,7 +42,7 @@ import com.parse.SaveCallback;
 
 public class BabyRecordFragment extends Fragment implements
 		OnQueryLoadListener<BabyRecord>, BabysitterDetailView,
-		OnClickListener, OnRefreshListener {
+		OnRefreshListener {
 
 	public class BabyRecordSaveCallback extends SaveCallback {
 
@@ -158,13 +156,17 @@ public class BabyRecordFragment extends Fragment implements
 	private String mBabyObjectId;
 
 	private RecordParseQueryAdapter mAdapter;
-	private CheckBox mFavoriteBaby;
+	//private CheckBox mFavoriteBaby;
 	
 	private PullToRefreshLayout mPullToRefreshLayout;
 	private ListView mListView;
 	private PictureHelper mPictureHelper;
 
 	private int mTotalRecord;
+
+	private boolean mIsChecked;
+	private MenuItem mFavoriteItem;
+	private BabyFavorite mBabyFavorite;
 
 	public BabyRecordFragment() {
 		mPictureHelper = new PictureHelper();
@@ -186,13 +188,17 @@ public class BabyRecordFragment extends Fragment implements
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		inflater.inflate(R.menu.add, menu);
+		mFavoriteItem = menu.findItem(R.id.action_favorite);
+		getFavorite();
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
-		if (id == R.id.action_add) {
+		
+		switch (id) {
+		case R.id.action_add:
 			Intent intent_camera = new Intent(
 					android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 			startActivityForResult(intent_camera, 0);
@@ -203,9 +209,22 @@ public class BabyRecordFragment extends Fragment implements
 			intent.putExtras(bundle);
 			intent.setClass(getActivity(), BabyRecordAddActivity.class);
 			startActivity(intent);
-*/			return true;
-		}
+*/			
+			break;
 
+		case R.id.action_favorite:
+			if (mIsChecked) {
+				item.setTitle("未收藏");
+				deleteFavorite();
+			} else {
+				item.setTitle("已收藏");
+				addFavorite();
+			}
+			mIsChecked = !mIsChecked;
+			break;
+		default:
+			break;
+		}
 		return super.onOptionsItemSelected(item);
 	}
 	
@@ -345,28 +364,27 @@ public class BabyRecordFragment extends Fragment implements
 	}
 */
 
-/*	private void getFavorite() {
+	private void getFavorite() {
+		BabyDiary babyDiary = ParseObject.createWithoutData(BabyDiary.class, mBabyObjectId);
 		ParseQuery<BabyFavorite> favorite_query = BabyFavorite.getQuery();
 
-		favorite_query.whereEqualTo("baby", mBaby);
+		favorite_query.whereEqualTo("BabyDiary", babyDiary);
 		favorite_query.whereEqualTo("user", ParseUser.getCurrentUser());
-
 		favorite_query.getFirstInBackground(new GetCallback<BabyFavorite>() {
-
 			@Override
-			public void done(BabyFavorite favorite, ParseException e) {
-				if (favorite == null) {
-					mFavoriteBaby.setChecked(false);
-					mFavoriteBaby.setText("已取消");
+			public void done(BabyFavorite babyFavorite, ParseException e) {
+				if (babyFavorite == null) {
+					mIsChecked = false;
+					mFavoriteItem.setTitle("未收藏");
 				} else {
-					mFavoriteBaby.setChecked(true);
-					mFavoriteBaby.setText("已收藏");
-					mFavorite = favorite;
+					mIsChecked = true;
+					mFavoriteItem.setTitle("已收藏");
+					mBabyFavorite = babyFavorite;
 				}
 			}
 		});
 	}
-*/
+
 
 	@Override
 	public void onLoading() {
@@ -392,43 +410,20 @@ public class BabyRecordFragment extends Fragment implements
 	}
 
 
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.babysitter_icon:
-			Intent intent = new Intent();
-			intent.setClass(getActivity().getApplicationContext(),
-					BabysitterActivity.class);
-			startActivity(intent);
-
-			break;
-		case R.id.favorite_baby:
-			if (mFavoriteBaby.isChecked()) {
-				mFavoriteBaby.setText("已收藏");
-				//addFavorite();
-			} else {
-				mFavoriteBaby.setText("已取消");
-				//deleteFavorite();
-			}
-			break;
-		default:
-			break;
-		}
-	}
 
 	@Override
 	public void onRefreshStarted(View arg0) {
 		mAdapter.loadObjects();
 	}
 
-/*	private void addFavorite() {
-		BabyFavorite favorite = new BabyFavorite();
-		mFavorite = favorite;
-		// favorite.put("baby", mBaby);
-		favorite.setBaby(mBaby);
-
-		favorite.put("user", ParseUser.getCurrentUser());
-		favorite.saveInBackground(new SaveCallback() {
+	private void addFavorite() {
+		BabyDiary babyDiary = ParseObject.createWithoutData(BabyDiary.class, mBabyObjectId);
+		BabyFavorite babyFavorite = new BabyFavorite();
+		mBabyFavorite = babyFavorite;
+		babyFavorite.setBabyDiary(babyDiary);
+		babyFavorite.setUser(ParseUser.getCurrentUser());
+		
+		babyFavorite.saveInBackground(new SaveCallback() {
 			@Override
 			public void done(ParseException e) {
 				if (e == null) {
@@ -443,9 +438,9 @@ public class BabyRecordFragment extends Fragment implements
 
 		});
 	}
-*/
-/*	private void deleteFavorite() {
-		mFavorite.deleteInBackground(new DeleteCallback() {
+
+	private void deleteFavorite() {
+		mBabyFavorite.deleteInBackground(new DeleteCallback() {
 
 			@Override
 			public void done(ParseException e) {
@@ -460,5 +455,4 @@ public class BabyRecordFragment extends Fragment implements
 			}
 		});
 	}
-*/
 }

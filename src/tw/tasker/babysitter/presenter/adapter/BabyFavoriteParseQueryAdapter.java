@@ -33,7 +33,7 @@ public class BabyFavoriteParseQueryAdapter extends
 			recycle = true;
 		}
 
-		BabyDiary baby = favorite.getBaby();
+		BabyDiary baby = favorite.getBabyDiary();
 
 		BabyGridCard mCard = new BabyGridCard(getContext());
 		mCard.setBaby(baby);
@@ -61,7 +61,8 @@ public class BabyFavoriteParseQueryAdapter extends
 				query.include("user");
 				query.orderByDescending("createdAt");
 				query.whereEqualTo("user", ParseUser.getCurrentUser());
-				query.include("baby");
+				query.include("BabyDiary");
+				//query.include("BabyRecord");
 				return query;
 			}
 		};

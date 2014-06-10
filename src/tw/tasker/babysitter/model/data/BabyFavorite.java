@@ -16,12 +16,12 @@ public class BabyFavorite extends ParseObject {
 		put("user", user);
 	}
 	
-	public BabyDiary getBaby() {
-		return (BabyDiary) getParseObject("baby");
+	public BabyDiary getBabyDiary() {
+		return (BabyDiary) getParseObject("BabyDiary");
 	}
 	
-	public void setBaby(BabyDiary baby) {
-		put("baby", baby);
+	public void setBabyDiary(BabyDiary baby) {
+		put("BabyDiary", baby);
 	}
 	
 	public static ParseQuery<BabyFavorite> getQuery() {

@@ -111,7 +111,7 @@ public class BabyFavoriteFragment extends Fragment implements
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		BabyFavorite favorite = mAdapter.getItem(position);
-		BabyDiary baby = favorite.getBaby();
+		BabyDiary baby = favorite.getBabyDiary();
 		seeBabyDetail(baby.getObjectId());
 	}
 
