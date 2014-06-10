@@ -59,7 +59,7 @@ import com.parse.SaveCallback;
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(
 					R.layout.fragment_babysitter_comment, container, false);
-
+			/*
 			mBabysitterTitle = (EditText) rootView
 					.findViewById(R.id.babysitter_comment_title);
 			mBabysitterComment = (EditText) rootView
@@ -69,7 +69,7 @@ import com.parse.SaveCallback;
 
 			mPostCommnet = (Button) rootView.findViewById(R.id.post_comment);
 			mPostCommnet.setOnClickListener(this);
-
+*/
 			return rootView;
 		}
 

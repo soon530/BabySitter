@@ -13,6 +13,7 @@ import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -62,7 +63,7 @@ public class BabysitterCommentFragment extends Fragment implements
 
 		case R.id.action_add:
 
-			Intent intent = new Intent();
+/*			Intent intent = new Intent();
 
 			Bundle bundle = new Bundle();
 			bundle.putString(Config.BABYSITTER_OBJECT_ID, mBabysitterObjectId);
@@ -72,12 +73,20 @@ public class BabysitterCommentFragment extends Fragment implements
 
 			intent.setClass(getActivity(), BabysitterCommentActivity.class);
 			startActivity(intent);
+*/			
+			addBabysitterComment();
+			
 			break;
 		default:
 			break;
 		}
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	private void addBabysitterComment() {
+		DialogFragment newFragment = new AddCommentDialogFragment(mBabysitterObjectId);
+		newFragment.show(getFragmentManager(), "dialog");		
 	}
 
 	@Override

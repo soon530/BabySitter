@@ -73,7 +73,7 @@ public class BabysitterGridCard extends Card {
 
 	@Override
 	public void setupInnerViewElements(ViewGroup parent, View view) {
-		int totalRatingValue = mBabysitter.getTotalRating();
+		float totalRatingValue = mBabysitter.getTotalRating();
 		int totalComementValue = mBabysitter.getTotalComment();
 
 		TextView title = (TextView) view
@@ -130,7 +130,7 @@ public class BabysitterGridCard extends Card {
 		mBabysitter = babysitter;
 	}
 
-	private float getRatingValue(int totalRating, int totalComment) {
+	private float getRatingValue(float totalRating, int totalComment) {
 		float avgRating = 0.0f;
 
 		if (totalComment != 0) {

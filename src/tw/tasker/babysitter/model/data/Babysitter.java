@@ -52,12 +52,13 @@ public class Babysitter extends ParseObject {
 		put("text", value);
 	}
 	
-	public int getTotalRating() {
-		int value = getInt("totalRating");
+	public float getTotalRating() {
+		Number rating = getNumber("totalRating");
+		float value = rating.floatValue();
 		return value;
 	}
 	
-	public void setTotalRating(int value) {
+	public void setTotalRating(float value) {
 		put("totalRating", value);
 	}
 	

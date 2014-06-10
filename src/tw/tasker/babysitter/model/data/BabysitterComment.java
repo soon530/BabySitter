@@ -6,15 +6,16 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-@ParseClassName("Comment")
+@ParseClassName("BabysitterComment")
 public class BabysitterComment extends ParseObject {
 
-	public int getRating() {
-		int value = getInt("rating");
+	public float getRating() {
+		Number rating = getNumber("rating");
+		float value = rating.floatValue();
 		return value;
 	}
-	
-	public void setRating(int value) {
+
+	public void setRating(float value) {
 		put("rating", value);
 	}
 
@@ -26,13 +27,14 @@ public class BabysitterComment extends ParseObject {
 	public void setTitle(String value) {
 		put("title", value);
 	}
-	public String getComment() {
-		String value = getString("comment");
+
+	public String getDescription() {
+		String value = getString("description");
 		return value;
 	}
 
-	public void setComment(String value) {
-		put("comment", value);
+	public void setDescription(String value) {
+		put("description", value);
 	}
 
 	public ParseUser getUser() {
@@ -42,17 +44,15 @@ public class BabysitterComment extends ParseObject {
 	public void setUser(ParseUser value) {
 		put("user", value);
 	}
-	
-	public ParseFile getPhotoFile() {
-		return getParseFile("photo");
+
+	public Babysitter getBabysitter() {
+		return (Babysitter) getParseObject("Babysitter");
 	}
 
-	public void setPhotoFile(ParseFile file) {
-		put("photo", file);
+	public void setBabysitter(Babysitter value) {
+		put("Babysitter", value);
 	}
 
-	
-	
 	public static ParseQuery<BabysitterComment> getQuery() {
 		return ParseQuery.getQuery(BabysitterComment.class);
 	}

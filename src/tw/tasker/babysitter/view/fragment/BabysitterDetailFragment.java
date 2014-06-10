@@ -137,8 +137,8 @@ public class BabysitterDetailFragment extends Fragment implements
 		mBabysitterName.setText(mName);
 		mBabysitterAddress.setText(mAddress);
 
-		mTotalRating = outline.getTotalRating();
-		mTotalComment = outline.getTotalComment();
+		//mTotalRating = outline.getTotalRating();
+		//mTotalComment = outline.getTotalComment();
 
 		int rating = 0;
 		try {

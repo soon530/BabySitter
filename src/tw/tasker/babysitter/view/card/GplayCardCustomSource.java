@@ -18,12 +18,15 @@
 
 package tw.tasker.babysitter.view.card;
 
+import com.parse.ParseUser;
+
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardHeader;
 import it.gmariotti.cardslib.library.internal.CardThumbnail;
 import it.gmariotti.cardslib.library.internal.base.BaseCard;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabysitterComment;
+import tw.tasker.babysitter.utils.DateTimeUtils;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -48,7 +51,7 @@ public class GplayCardCustomSource extends Card {
     private BabysitterComment mBabysitterComment;
 
 	public GplayCardCustomSource(Context context) {
-        super(context, R.layout.carddemo_gplay_inner_content);
+        super(context, R.layout.babysitter_list_card_inner_content);
         //init();
     }
 
@@ -64,7 +67,7 @@ public class GplayCardCustomSource extends Card {
         header.setPopupMenu(R.menu.popupmain, new CardHeader.OnClickCardHeaderPopupMenuListener() {
             @Override
             public void onMenuItemClick(BaseCard card, MenuItem item) {
-                Toast.makeText(getContext(), item.getTitle(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "[" + item.getTitle() + "] 功能正在趕工中.." , Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -74,7 +77,7 @@ public class GplayCardCustomSource extends Card {
         thumbnail.setCustomSource(new CardThumbnail.CustomSource() {
             @Override
             public String getTag() {
-                return "com.google.android.apps.maps";
+                return "tw.tasker.babysitter";
             }
 
             @Override
@@ -108,10 +111,11 @@ public class GplayCardCustomSource extends Card {
     public void setupInnerViewElements(ViewGroup parent, View view) {
 
         TextView title = (TextView) view.findViewById(R.id.carddemo_gplay_main_inner_title);
-        title.setText("已托育");
+        title.setText(DateTimeUtils.show(mBabysitterComment.getCreatedAt()));
 
         TextView subtitle = (TextView) view.findViewById(R.id.carddemo_gplay_main_inner_subtitle);
-        subtitle.setText(mBabysitterComment.getComment());
+        String name = ParseUser.getCurrentUser().getUsername();
+        subtitle.setText(name + "說:" + mBabysitterComment.getDescription());
 
         RatingBar mRatingBar = (RatingBar) parent.findViewById(R.id.carddemo_gplay_main_inner_ratingBar);
 

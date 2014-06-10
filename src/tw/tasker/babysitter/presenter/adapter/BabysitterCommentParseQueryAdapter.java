@@ -3,6 +3,7 @@ package tw.tasker.babysitter.presenter.adapter;
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.view.CardView;
 import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.BabysitterComment;
 import tw.tasker.babysitter.view.card.GplayCardCustomSource;
 import android.content.Context;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
@@ -48,7 +50,8 @@ public class BabysitterCommentParseQueryAdapter extends
 				ParseQuery<BabysitterComment> query = BabysitterComment
 						.getQuery();
 				query.orderByDescending("createdAt");
-				query.whereEqualTo("babysitterId", babysitterObjectId);
+				Babysitter babysitter = ParseObject.createWithoutData(Babysitter.class, babysitterObjectId);
+				query.whereEqualTo("Babysitter", babysitter);
 				//query.setLimit(20);
 				return query;
 			}
