@@ -28,4 +28,12 @@ public class BabyFavorite extends ParseObject {
 		return ParseQuery.getQuery(BabyFavorite.class);
 	}
 
+	public void setBabyRecord(BabyRecord babyRecord) {
+		put("BabyRecord", babyRecord);
+	}
+	
+	public BabyRecord getBabyRecord() {
+		return (BabyRecord) getParseObject("BabyRecord");
+	}
+
 }

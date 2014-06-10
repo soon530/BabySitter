@@ -5,6 +5,7 @@ import it.gmariotti.cardslib.library.view.CardView;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabyDiary;
 import tw.tasker.babysitter.model.data.BabyFavorite;
+import tw.tasker.babysitter.view.card.BabyFavoriteGridCard;
 import tw.tasker.babysitter.view.card.BabyGridCard;
 import android.content.Context;
 import android.view.View;
@@ -33,10 +34,10 @@ public class BabyFavoriteParseQueryAdapter extends
 			recycle = true;
 		}
 
-		BabyDiary baby = favorite.getBabyDiary();
+		//BabyDiary baby = favorite.getBabyDiary();
 
-		BabyGridCard mCard = new BabyGridCard(getContext());
-		mCard.setBaby(baby);
+		BabyFavoriteGridCard mCard = new BabyFavoriteGridCard(getContext());
+		mCard.setBabyFavorite(favorite);
 		mCard.init();
 
 		CardView mCardView;
@@ -62,7 +63,7 @@ public class BabyFavoriteParseQueryAdapter extends
 				query.orderByDescending("createdAt");
 				query.whereEqualTo("user", ParseUser.getCurrentUser());
 				query.include("BabyDiary");
-				//query.include("BabyRecord");
+				query.include("BabyRecord");
 				return query;
 			}
 		};

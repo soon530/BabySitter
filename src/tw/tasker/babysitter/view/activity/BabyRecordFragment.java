@@ -421,6 +421,11 @@ public class BabyRecordFragment extends Fragment implements
 		BabyFavorite babyFavorite = new BabyFavorite();
 		mBabyFavorite = babyFavorite;
 		babyFavorite.setBabyDiary(babyDiary);
+		/* TODO 
+		 * WorkAround 因為在[我的收藏]沒辦法有效的透過BabyDiary裡的BabyRecord取得資料，
+		 * 所以在存[寶寶收藏]的時候，也把BabyRecord存到BabyFavorite裡去
+		 */		
+		babyFavorite.setBabyRecord(mAdapter.getItem(0));
 		babyFavorite.setUser(ParseUser.getCurrentUser());
 		
 		babyFavorite.saveInBackground(new SaveCallback() {
