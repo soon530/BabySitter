@@ -88,7 +88,8 @@ public class AddCommentDialogFragment extends DialogFragment {
 					/*
 					 * Toast.makeText(getActivity().getApplicationContext(),
 					 * "saving doen!", Toast.LENGTH_SHORT).show();
-					 */updateBabysitter();
+					 */
+					//updateBabysitter();
 				} else {
 					LOGD("vic", e.getMessage());
 					/*
