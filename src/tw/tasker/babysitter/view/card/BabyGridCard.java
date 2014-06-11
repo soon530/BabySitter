@@ -45,8 +45,7 @@ public class BabyGridCard extends Card {
 				new CardHeader.OnClickCardHeaderPopupMenuListener() {
 					@Override
 					public void onMenuItemClick(BaseCard card, MenuItem item) {
-						Toast.makeText(getContext(), "Item " + item.getTitle(),
-								Toast.LENGTH_SHORT).show();
+						Toast.makeText(getContext(), "[" + item.getTitle() + "] 功能正在趕工中..",Toast.LENGTH_SHORT).show();
 					}
 				});
 
