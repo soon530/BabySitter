@@ -14,7 +14,9 @@ import android.widget.EditText;
 
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 public class EditDialogFragment extends DialogFragment {
 	private ProgressDialog mRingProgressDialog;
@@ -67,7 +69,10 @@ public class EditDialogFragment extends DialogFragment {
 			@Override
 			public void done(BabyRecord babyRecord, ParseException e) {
 				babyRecord.setTitle(mTitle.getText().toString());
-				babyRecord.setDescription(mDescription.getText().toString());
+				
+				String name = ParseUser.getCurrentUser().getUsername();
+				
+				babyRecord.setDescription(name + "說: " + mDescription.getText().toString());
 				
 				try {
 					babyRecord.save();

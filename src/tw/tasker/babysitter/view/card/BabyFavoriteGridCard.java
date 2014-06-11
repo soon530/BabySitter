@@ -16,14 +16,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
-import com.parse.ParseUser;
 
 public class BabyFavoriteGridCard extends Card {
 
@@ -94,8 +92,7 @@ public class BabyFavoriteGridCard extends Card {
 		if (mBabyRecord == null) {
 			description =mBabyDiary.getNote(); 
 		} else {
-			String name = ParseUser.getCurrentUser().getUsername();
-			description = name + "說:" + mBabyRecord.getTitle();
+			description = mBabyRecord.getTitle();
 		
 		}
 		subtitle.setText(description);

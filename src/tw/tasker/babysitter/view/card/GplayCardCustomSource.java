@@ -18,8 +18,6 @@
 
 package tw.tasker.babysitter.view.card;
 
-import com.parse.ParseUser;
-
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardHeader;
 import it.gmariotti.cardslib.library.internal.CardThumbnail;
@@ -114,8 +112,7 @@ public class GplayCardCustomSource extends Card {
         title.setText(DisplayUtils.getDateTime(mBabysitterComment.getCreatedAt()));
 
         TextView subtitle = (TextView) view.findViewById(R.id.carddemo_gplay_main_inner_subtitle);
-        String name = ParseUser.getCurrentUser().getUsername();
-        subtitle.setText(name + "說:" + mBabysitterComment.getDescription());
+        subtitle.setText(mBabysitterComment.getDescription());
 
         RatingBar mRatingBar = (RatingBar) parent.findViewById(R.id.carddemo_gplay_main_inner_ratingBar);
 

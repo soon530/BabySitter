@@ -71,8 +71,8 @@ public class SignUpActivity extends Activity {
 
         // Set up a progress dialog
         final ProgressDialog dlg = new ProgressDialog(SignUpActivity.this);
-        dlg.setTitle("Please wait.");
-        dlg.setMessage("Signing up.  Please wait.");
+        dlg.setTitle("註冊中");
+        dlg.setMessage("請稍候...");
         dlg.show();
 
         // Set up a new Parse user
@@ -87,7 +87,7 @@ public class SignUpActivity extends Activity {
             dlg.dismiss();
             if (e != null) {
               // Show the error message
-              Toast.makeText(SignUpActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+              Toast.makeText(SignUpActivity.this, "註冊錯誤!" /*e.getMessage()*/, Toast.LENGTH_LONG).show();
             } else {
               // Start an intent for the dispatch activity
               Intent intent = new Intent(SignUpActivity.this, DispatchActivity.class);

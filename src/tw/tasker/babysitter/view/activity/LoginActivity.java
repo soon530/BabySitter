@@ -60,8 +60,8 @@ public class LoginActivity extends Activity {
 
         // Set up a progress dialog
         final ProgressDialog dlg = new ProgressDialog(LoginActivity.this);
-        dlg.setTitle("Please wait.");
-        dlg.setMessage("Logging in.  Please wait.");
+        dlg.setTitle("登入中");
+        dlg.setMessage("請稍候...");
         dlg.show();
         // Call the Parse login method
         ParseUser.logInInBackground(usernameView.getText().toString(), passwordView.getText()
@@ -72,7 +72,7 @@ public class LoginActivity extends Activity {
             dlg.dismiss();
             if (e != null) {
               // Show the error message
-              Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+              Toast.makeText(LoginActivity.this, "登入錯誤!" /*e.getMessage()*/, Toast.LENGTH_LONG).show();
             } else {
               // Start an intent for the dispatch activity
               Intent intent = new Intent(LoginActivity.this, DispatchActivity.class);

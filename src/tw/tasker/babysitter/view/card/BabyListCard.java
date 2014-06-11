@@ -17,7 +17,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -25,7 +24,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.parse.DeleteCallback;
 import com.parse.ParseException;
-import com.parse.ParseUser;
 
 public class BabyListCard extends Card {
 
@@ -109,8 +107,7 @@ public class BabyListCard extends Card {
 		TextView subtitle = (TextView) view
 				.findViewById(R.id.carddemo_gplay_main_inner_subtitle);
 		
-		String name = ParseUser.getCurrentUser().getUsername();
-		subtitle.setText(name + ":說" + mBabyRecord.getDescription());
+		subtitle.setText(mBabyRecord.getDescription());
 
 /*		RatingBar mRatingBar = (RatingBar) parent
 				.findViewById(R.id.carddemo_gplay_main_inner_ratingBar);

@@ -69,7 +69,8 @@ public class BabyRecordFragment extends Fragment implements
 		final BabyRecord babyRecord = new BabyRecord();
 		babyRecord.setBaby(babyDiary);
 		babyRecord.setTitle("不解釋...");
-		babyRecord.setDescription("不解釋...");
+		String name = ParseUser.getCurrentUser().getUsername() + "說: ";
+		babyRecord.setDescription(name + "不解釋...");
 		babyRecord.setPhotoFile(mPictureHelper.getFile());
 		babyRecord.setUser(ParseUser.getCurrentUser());
 
