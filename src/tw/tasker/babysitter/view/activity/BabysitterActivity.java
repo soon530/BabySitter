@@ -30,9 +30,6 @@ public class BabysitterActivity extends ActionBarActivity {
 		ProgressBarUtils.init(this);
 
 		setContentView(R.layout.activity_page);
-
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-
 		if (savedInstanceState == null) {
 			arguments = new Bundle();
 			arguments.putString(
