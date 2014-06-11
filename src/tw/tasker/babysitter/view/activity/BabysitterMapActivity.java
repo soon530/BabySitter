@@ -112,7 +112,7 @@ public class BabysitterMapActivity extends ActionBarActivity implements
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.babysitter_map, menu);
+		getMenuInflater().inflate(R.menu.babysitter_list, menu);
 		return true;
 	}
 
