@@ -22,6 +22,7 @@ package tw.tasker.babysitter.view.card;
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardHeader;
 import it.gmariotti.cardslib.library.internal.CardThumbnail;
+import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.utils.DisplayUtils;
@@ -143,17 +144,17 @@ class SuggestedCardHeader extends CardHeader {
 }
 
 class SuggestedCardThumb extends CardThumbnail {
-	private DisplayImageOptions options;
+	//private DisplayImageOptions options;
 	private ImageLoader imageLoader = ImageLoader.getInstance();
 	private Babysitter mBabysitter;
 
 	public SuggestedCardThumb(Context context, Babysitter babysitter) {
 		super(context);
 
-		options = new DisplayImageOptions.Builder().cacheInMemory(true)
+/*		options = new DisplayImageOptions.Builder().cacheInMemory(true)
 				.displayer(new SimpleBitmapDisplayer())
 				.showImageOnFail(R.drawable.ic_launcher).build();
-		
+*/		
 		mBabysitter = babysitter;
 	}
 
@@ -187,7 +188,7 @@ class SuggestedCardThumb extends CardThumbnail {
 			url = "http://cwisweb.sfaa.gov.tw/" + mBabysitter.getImageUrl();
 			// }
 
-			imageLoader.displayImage(url, (ImageView) viewImage, options, null);
+			imageLoader.displayImage(url, (ImageView) viewImage, Config.OPTIONS, null);
 		}
 	}
 }

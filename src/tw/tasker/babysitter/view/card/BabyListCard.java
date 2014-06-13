@@ -119,16 +119,16 @@ public class BabyListCard extends Card {
 */	}
 
 	class GplayGridThumb extends CardThumbnail {
-		DisplayImageOptions options;
+		//DisplayImageOptions options;
 		private ImageLoader imageLoader = ImageLoader.getInstance();
 
 		public GplayGridThumb(Context context) {
 			super(context);
 
-			options = new DisplayImageOptions.Builder().cacheInMemory(true)
+/*			options = new DisplayImageOptions.Builder().cacheInMemory(true)
 					.displayer(new SimpleBitmapDisplayer())
 					.showImageOnFail(R.drawable.ic_launcher).build();
-
+*/
 		}
 
 		@Override
@@ -145,7 +145,7 @@ public class BabyListCard extends Card {
 
 			
 			imageLoader
-					.displayImage(url, (ImageView) viewImage, options, null);
+					.displayImage(url, (ImageView) viewImage, Config.OPTIONS, null);
 
 
 		}

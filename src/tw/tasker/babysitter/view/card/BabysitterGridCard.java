@@ -98,16 +98,20 @@ public class BabysitterGridCard extends Card {
 	}
 
 	class GplayGridThumb extends CardThumbnail {
-		private DisplayImageOptions options;
+		//private DisplayImageOptions options;
 		private ImageLoader imageLoader = ImageLoader.getInstance();
 
 		public GplayGridThumb(Context context) {
 			super(context);
 
-			options = new DisplayImageOptions.Builder().cacheInMemory(true)
+/*			options = new DisplayImageOptions.Builder()
+					.cacheInMemory(true)
+					.cacheOnDisc(true)
 					.displayer(new SimpleBitmapDisplayer())
-					.showImageOnFail(R.drawable.ic_launcher).build();
-
+					.showImageOnFail(R.drawable.ic_launcher)
+					.showImageOnLoading(R.drawable.ic_action_name)
+					.build();
+*/
 		}
 
 		@Override
@@ -120,7 +124,7 @@ public class BabysitterGridCard extends Card {
 			url = "http://cwisweb.sfaa.gov.tw/" + mBabysitter.getImageUrl();
 			// }
 
-			imageLoader.displayImage(url, (ImageView) viewImage, options, null);
+			imageLoader.displayImage(url, (ImageView) viewImage, Config.OPTIONS, null);
 
 			// viewImage.getLayoutParams().width = 196;
 			// viewImage.getLayoutParams().height = 196;
