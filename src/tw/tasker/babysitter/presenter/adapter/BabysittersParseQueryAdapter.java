@@ -51,6 +51,7 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 		ParseQueryAdapter.QueryFactory<Babysitter> factory = new ParseQueryAdapter.QueryFactory<Babysitter>() {
 			public ParseQuery<Babysitter> create() {
 				ParseQuery<Babysitter> query = Babysitter.getQuery();
+				query.fromLocalDatastore();
 				query.orderByDescending("createdAt");
 				return query;
 			}
