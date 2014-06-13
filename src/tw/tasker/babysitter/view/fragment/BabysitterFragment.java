@@ -130,16 +130,16 @@ public class BabysitterFragment extends Fragment implements
 
 	private void initCards(Babysitter babysitter) {
 		mBabysitterCard = initBasicCard(babysitter);
-		mTelCard = initCard("*電話", babysitter.getTel(), R.id.tel_card);
+		mTelCard = initCard("*電話", babysitter.getTel().replace(": ", ":").replace(" ", "\n"), R.id.tel_card);
 		
 		mEmailCard = initCard("*郵件", "soon530@gmail.com", R.id.email_card);
 		mEmailCard.setVisibility(View.GONE);
 		
 		mAddressCard = initCard("*地址", babysitter.getAddress(), R.id.address_card);
 		
-		mDateCard = initCard("時段", "全天24hr 臨時保母", R.id.date_card);
+		mDateCard = initCard("時段", babysitter.getBabycareTime(), R.id.date_card);
 		
-		mBabycareCard = initCard("*托育", "共" + babysitter.getBabycareCount() + "人", R.id.babycare_card);
+		mBabycareCard = initCard("*托育", babysitter.getBabycareCount() , R.id.babycare_card);
 
 		mDemo.setVisibility(View.VISIBLE);
 		

@@ -9,47 +9,83 @@ import com.parse.ParseUser;
 @ParseClassName("Babysitter")
 public class Babysitter extends ParseObject {
 
-	public int getBabycareCount() {
-		int value = getInt("babycare_count");
+	public String getImageUrl() {
+		String value = getString("imageUrl");
 		return value;
 	}
-	
-	public void setBabycareCount(int value) {
-		put("babycare_count", value);
+	public void setImageUrl(String value) {
+		put("imageUrl", value);
 	}
 
 	public String getName() {
 		String value = getString("name");
 		return value;
 	}
-
 	public void setName(String value) {
 		put("name", value);
 	}
 
-	public ParseUser getUser() {
-		return getParseUser("user");
+	public String getSex() {
+		String value = getString("sex");
+		return value;
+	}
+	public void setSex(String value) {
+		put("sex", value);
 	}
 
-	public void setUser(ParseUser value) {
-		put("user", value);
+	public String getAge() {
+		String value = getString("age");
+		return value;
+	}
+	public void setAge(String value) {
+		put("age", value);
 	}
 
-	public ParseGeoPoint getLocation() {
-		return getParseGeoPoint("location");
+	public String getEducation() {
+		String value = getString("education");
+		return value;
 	}
-
-	public void setLocation(ParseGeoPoint value) {
-		put("location", value);
+	public void setEducation(String value) {
+		put("education", value);
+	}
+	
+	public String getTel() {
+		String value = getString("tel");
+		return value;
+	}
+	public void setTel(String value) {
+		put("tel", value);
 	}
 
 	public String getAddress() {
 		String value = getString("address");
 		return value;
 	}
-
 	public void setAddress(String value) {
-		put("text", value);
+		put("address", value);
+	}
+
+	public ParseGeoPoint getLocation() {
+		return getParseGeoPoint("location");
+	}
+	public void setLocation(ParseGeoPoint value) {
+		put("location", value);
+	}
+
+	public String getBabycareCount() {
+		String value = getString("babycareCount");
+		return value;
+	}
+	public void setBabycareCount(String value) {
+		put("babycareCount", value);
+	}
+
+	public String getBabycareTime() {
+		String value = getString("babycareTime");
+		return value;
+	}
+	public void setBabycareTime(String value) {
+		put("babycareTime", value);
 	}
 	
 	public float getTotalRating() {
@@ -57,7 +93,6 @@ public class Babysitter extends ParseObject {
 		float value = rating.floatValue();
 		return value;
 	}
-	
 	public void setTotalRating(float value) {
 		put("totalRating", value);
 	}
@@ -66,20 +101,17 @@ public class Babysitter extends ParseObject {
 		int value = getInt("totalComment");
 		return value;
 	}
-	
 	public void setTotalComment(int value) {
 		put("totalComment", value);
 	}
-	
-	public String getTel() {
-		String value = getString("tel");
-		return value;
+
+	public ParseUser getUser() {
+		return getParseUser("user");
 	}
-	
-	public void setTel(String value) {
-		put("tel", value);
+	public void setUser(ParseUser value) {
+		put("user", value);
 	}
-	
+
 	public static ParseQuery<Babysitter> getQuery() {
 		return ParseQuery.getQuery(Babysitter.class);
 	}

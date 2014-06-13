@@ -113,10 +113,11 @@ public class BabysitterGridCard extends Card {
 		@Override
 		public void setupInnerViewElements(ViewGroup parent, View viewImage) {
 			String url;
-			// if (babysitter.getPhotoFile() != null) {
-			// url = babysitter.getPhotoFile().getUrl();
-			// } else {
-			url = "http://cwisweb.sfaa.gov.tw/babysitterFiles/20140315134959_0822R167.jpg";
+			//if (mBabysitter.getImageUrl().equals("../img/photo_mother_no.jpg")) {
+			 //url = "";
+			 //} else {
+			//url = "http://cwisweb.sfaa.gov.tw/babysitterFiles/20140315134959_0822R167.jpg";
+			url = "http://cwisweb.sfaa.gov.tw/" + mBabysitter.getImageUrl();
 			// }
 
 			imageLoader.displayImage(url, (ImageView) viewImage, options, null);

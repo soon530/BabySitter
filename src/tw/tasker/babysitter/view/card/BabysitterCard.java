@@ -71,7 +71,7 @@ public class BabysitterCard extends Card {
 		});
 */
 		// Add thumbnail
-		CardThumbnail thumb = new SuggestedCardThumb(getContext());
+		CardThumbnail thumb = new SuggestedCardThumb(getContext(), mBabysitter);
 		thumb.setExternalUsage(true);
 		addCardThumbnail(thumb);
 	}
@@ -93,13 +93,13 @@ public class BabysitterCard extends Card {
 				title.setText("姓名:" + mBabysitter.getName());
 
 			if (member != null)
-				member.setText("性別:女");
+				member.setText("性別:" + mBabysitter.getSex());
 
 			if (subtitle != null)
-				subtitle.setText("年齡:40");
+				subtitle.setText("年齡:" + mBabysitter.getAge());
 
 			if (community != null)
-				community.setText("教育:研究所");
+				community.setText("教育:" + mBabysitter.getEducation());
 		}
 	}
 
@@ -145,13 +145,16 @@ class SuggestedCardHeader extends CardHeader {
 class SuggestedCardThumb extends CardThumbnail {
 	private DisplayImageOptions options;
 	private ImageLoader imageLoader = ImageLoader.getInstance();
+	private Babysitter mBabysitter;
 
-	public SuggestedCardThumb(Context context) {
+	public SuggestedCardThumb(Context context, Babysitter babysitter) {
 		super(context);
 
 		options = new DisplayImageOptions.Builder().cacheInMemory(true)
 				.displayer(new SimpleBitmapDisplayer())
 				.showImageOnFail(R.drawable.ic_launcher).build();
+		
+		mBabysitter = babysitter;
 	}
 
 	@Override
@@ -181,7 +184,7 @@ class SuggestedCardThumb extends CardThumbnail {
 			// if (babysitter.getPhotoFile() != null) {
 			// url = babysitter.getPhotoFile().getUrl();
 			// } else {
-			url = "http://cwisweb.sfaa.gov.tw/babysitterFiles/20140315134959_0822R167.jpg";
+			url = "http://cwisweb.sfaa.gov.tw/" + mBabysitter.getImageUrl();
 			// }
 
 			imageLoader.displayImage(url, (ImageView) viewImage, options, null);

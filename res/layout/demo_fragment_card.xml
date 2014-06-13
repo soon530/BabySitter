@@ -74,7 +74,7 @@
                 <it.gmariotti.cardslib.library.view.CardView
                     android:id="@+id/tel_card"
                     android:layout_width="match_parent"
-                    android:layout_height="65dp"
+                    android:layout_height="85dp"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
                     android:layout_marginTop="1dp" />
@@ -94,7 +94,7 @@
                 <it.gmariotti.cardslib.library.view.CardView
                     android:id="@+id/address_card"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="85dp"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
                     android:layout_marginTop="1dp" />
@@ -112,7 +112,7 @@
                 <it.gmariotti.cardslib.library.view.CardView
                     android:id="@+id/babycare_card"
                     android:layout_width="match_parent"
-                    android:layout_height="72dp"
+                    android:layout_height="85dp"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
                     android:layout_marginTop="1dp" />
@@ -122,7 +122,7 @@
                 <it.gmariotti.cardslib.library.view.CardView
                     android:id="@+id/date_card"
                     android:layout_width="match_parent"
-                    android:layout_height="72dp"
+                    android:layout_height="85dp"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
                     android:layout_marginTop="1dp" />
