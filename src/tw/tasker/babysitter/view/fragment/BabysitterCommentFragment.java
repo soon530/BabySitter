@@ -48,6 +48,12 @@ public class BabysitterCommentFragment extends BaseFragment implements
 		}
 
 	}
+	
+	@Override
+	protected Boolean loadGridView() {
+		return false;
+	}
+	
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -95,7 +101,7 @@ public class BabysitterCommentFragment extends BaseFragment implements
 
 	@Override
 	public void onLoading() {
-		ProgressBarUtils.show(getActivity());
+		showLoading();
 	}
 
 	@Override
@@ -106,8 +112,7 @@ public class BabysitterCommentFragment extends BaseFragment implements
 			LogUtils.LOGD("vic", "babysitterComments pin size:" + babysitterComments.size());
 		}
 */		
-		ProgressBarUtils.hide(getActivity());
-		mPullToRefreshLayout.setRefreshComplete();
+		hideLoading();
 	}
 
 	@Override

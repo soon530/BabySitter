@@ -33,55 +33,13 @@ import com.parse.ParseObject;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 
-public class BabyFavoriteFragment extends Fragment implements
+public class BabyFavoriteFragment extends BaseFragment implements
 		OnItemClickListener, OnQueryLoadListener<BabyFavorite>, OnRefreshListener {
 	private ParseQueryAdapter<BabyFavorite> mAdapter;
-	private GridView mList;
-	private TextView mEmpty;
-    PullToRefreshLayout mPullToRefreshLayout;
 
 	public static Fragment newInstance(int position) {
 		BabyFavoriteFragment fragment = new BabyFavoriteFragment();
 		return fragment;
-	}
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
-		setHasOptionsMenu(true);
-	}
-
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_grid,
-				container, false);
-
-		mList = (GridView) rootView.findViewById(R.id.grid);
-		mList.setOnItemClickListener(this);
-		mList.setOnScrollListener(new EndlessScrollListener(6) {
-			
-			@Override
-			public void onLoadMore(int page, int totalItemsCount) {
-				mAdapter.loadNextPage();
-			}
-		});
-		
-        // Retrieve the PullToRefreshLayout from the content view
-        mPullToRefreshLayout = (PullToRefreshLayout) rootView.findViewById(R.id.carddemo_extra_ptr_layout);
-
-        // Now setup the PullToRefreshLayout
-        ActionBarPullToRefresh.from(getActivity())
-                // Mark All Children as pullable
-                .allChildrenArePullable()
-                // Set the OnRefreshListener
-                .listener(this)
-                // Finally commit the setup to our PullToRefreshLayout
-                .setup(mPullToRefreshLayout);
-
-		
-		return rootView;
 	}
 
 	@Override
@@ -92,11 +50,9 @@ public class BabyFavoriteFragment extends Fragment implements
 
 	public void doListQuery() {
 		mAdapter = new BabyFavoriteParseQueryAdapter(getActivity());
-		//mAdapter.setAutoload(true);
 		mAdapter.setObjectsPerPage(Config.OBJECTS_PER_PAGE);
 		mAdapter.addOnQueryLoadListener(this);
-		mList.setAdapter(mAdapter);
-		//mAdapter.loadObjects();
+		mGridView.setAdapter(mAdapter);
 	}
 
 	@Override
@@ -118,7 +74,7 @@ public class BabyFavoriteFragment extends Fragment implements
 
 	@Override
 	public void onLoading() {
-		ProgressBarUtils.show(getActivity());
+		showLoading();
 	}
 
 	@Override
@@ -128,9 +84,7 @@ public class BabyFavoriteFragment extends Fragment implements
 			LogUtils.LOGD("vic", "babyFavorites pin size:" + babyFavorites.size());
 		}
 */
-		ProgressBarUtils.hide(getActivity());
-        // Notify PullToRefreshAttacher that the refresh has finished
-        mPullToRefreshLayout.setRefreshComplete();
+		hideLoading();
 	}
 
 	@Override

@@ -32,48 +32,15 @@ import com.parse.ParseObject;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 
-public class BabysitterFavoriteFragment extends Fragment implements
+public class BabysitterFavoriteFragment extends BaseFragment implements
 		OnItemClickListener, OnQueryLoadListener<BabysitterFavorite>, OnRefreshListener {
 	private ParseQueryAdapter<BabysitterFavorite> mAdapter;
-	private GridView mList;
-	private TextView mEmpty;
-	private PullToRefreshLayout mPullToRefreshLayout;
 
 	public static Fragment newInstance(int position) {
 		BabysitterFavoriteFragment fragment = new BabysitterFavoriteFragment();
 		return fragment;
 	}
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setHasOptionsMenu(true);
-	}
-
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_grid,
-				container, false);
-
-		mList = (GridView) rootView.findViewById(R.id.grid);
-		mList.setOnItemClickListener(this);
-
-		// Retrieve the PullToRefreshLayout from the content view
-		mPullToRefreshLayout = (PullToRefreshLayout) rootView
-				.findViewById(R.id.carddemo_extra_ptr_layout);
-
-		// Now setup the PullToRefreshLayout
-		ActionBarPullToRefresh.from(getActivity())
-		// Mark All Children as pullable
-				.allChildrenArePullable()
-				// Set the OnRefreshListener
-				.listener(this)
-				// Finally commit the setup to our PullToRefreshLayout
-				.setup(mPullToRefreshLayout);
-
-		return rootView;
-	}
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -83,17 +50,14 @@ public class BabysitterFavoriteFragment extends Fragment implements
 
 	public void doListQuery() {
 		mAdapter = new BabysitterFavoriteParseQueryAdapter(getActivity());
-		mAdapter.setAutoload(false);
-		// mAdapter.setPaginationEnabled(false);
 		mAdapter.setObjectsPerPage(Config.OBJECTS_PER_PAGE);
 		mAdapter.addOnQueryLoadListener(this);
-		mList.setAdapter(mAdapter);
-		mAdapter.loadObjects();
+		mGridView.setAdapter(mAdapter);
 	}
 
 	@Override
 	public void onLoading() {
-		ProgressBarUtils.show(getActivity());
+		showLoading();
 	}
 
 	@Override
@@ -104,8 +68,7 @@ public class BabysitterFavoriteFragment extends Fragment implements
 			LogUtils.LOGD("vic", "babysitterFavorites pin size:" + babysitterFavorites.size());
 		}
 */
-		ProgressBarUtils.hide(getActivity());
-		mPullToRefreshLayout.setRefreshComplete();
+		hideLoading();
 	}
 
 	@Override

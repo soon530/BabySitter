@@ -10,31 +10,25 @@ import tw.tasker.babysitter.model.data.BabyDiary;
 import tw.tasker.babysitter.model.data.BabyFavorite;
 import tw.tasker.babysitter.model.data.BabyRecord;
 import tw.tasker.babysitter.presenter.adapter.RecordParseQueryAdapter;
-import tw.tasker.babysitter.utils.DisplayUtils;
-import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.utils.PictureHelper;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.BabysitterDetailView;
-import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
+import tw.tasker.babysitter.view.fragment.BaseFragment;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.parse.DeleteCallback;
-import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -43,9 +37,8 @@ import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-public class BabyRecordFragment extends Fragment implements
-		OnQueryLoadListener<BabyRecord>, BabysitterDetailView,
-		OnRefreshListener {
+public class BabyRecordFragment extends BaseFragment implements
+		OnQueryLoadListener<BabyRecord> {
 
 	public class BabyRecordSaveCallback extends SaveCallback {
 
@@ -160,14 +153,10 @@ public class BabyRecordFragment extends Fragment implements
 
 	private ProgressDialog mRingProgressDialog;
 	
-	DisplayImageOptions options;
 	private String mBabyObjectId;
 
 	private RecordParseQueryAdapter mAdapter;
-	//private CheckBox mFavoriteBaby;
 	
-	private PullToRefreshLayout mPullToRefreshLayout;
-	private ListView mListView;
 	private PictureHelper mPictureHelper;
 
 	private int mTotalRecord;
@@ -189,8 +178,11 @@ public class BabyRecordFragment extends Fragment implements
 			mTotalRecord = getArguments().getInt(Config.TOTAL_RECORD);
 		}
 
-		LOGD("vic", "mTotalRecord=" + mTotalRecord);
-		setHasOptionsMenu(true);
+	}
+	
+	@Override
+	protected Boolean loadGridView() {
+		return false;
 	}
 	
 	@Override
@@ -216,14 +208,6 @@ public class BabyRecordFragment extends Fragment implements
 				//Toast.makeText(getActivity(), "新增[成長記錄]需開啟網路...", Toast.LENGTH_SHORT).show();
 			//}
 			
-
-/*			Bundle bundle = new Bundle();
-			bundle.putString(Config.BABY_OBJECT_ID, mBabyObjectId);
-			Intent intent = new Intent();
-			intent.putExtras(bundle);
-			intent.setClass(getActivity(), BabyRecordAddActivity.class);
-			startActivity(intent);
-*/			
 			break;
 
 		case R.id.action_favorite:
@@ -242,91 +226,22 @@ public class BabyRecordFragment extends Fragment implements
 		return super.onOptionsItemSelected(item);
 	}
 	
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-
-//		mHeaderView = inflater.inflate(
-//				R.layout.fragment_baby_detail_header, null);
-
-//		initHeadUI();
-
-		View rootView = inflater.inflate(R.layout.fragment_list,
-				container, false);
-		mListView = (ListView) rootView.findViewById(R.id.list);
-
-		// Retrieve the PullToRefreshLayout from the content view
-		mPullToRefreshLayout = (PullToRefreshLayout) rootView
-				.findViewById(R.id.carddemo_extra_ptr_layout);
-
-		// Now setup the PullToRefreshLayout
-		ActionBarPullToRefresh.from(getActivity())
-		// Mark All Children as pullable
-				.allChildrenArePullable()
-				// Set the OnRefreshListener
-				.listener(this)
-				// Finally commit the setup to our PullToRefreshLayout
-				.setup(mPullToRefreshLayout);
-		
-		return rootView;
-	}
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		initCards();
+		doListQuery();
 	}
 
-	private void initCards() {
+	private void doListQuery() {
 
 		mAdapter = new RecordParseQueryAdapter(getActivity(), mBabyObjectId, this);
 		mAdapter.setObjectsPerPage(Config.OBJECTS_PER_PAGE);
 		mAdapter.addOnQueryLoadListener(this);
-		ListView listView = (ListView) getActivity().findViewById(R.id.list);
-		if (listView != null) {
-			listView.setAdapter(mAdapter);
-		}
+		mListView.setAdapter(mAdapter);
 	}
 
-/*	public void doCommentQuery(String babyObjectId) {
-		mAdapter = new RecordParseQueryAdapter(getActivity(), babyObjectId);
-		mAdapter.setAutoload(false);
-		//mAdapter.setPaginationEnabled(false);
-		mAdapter.setObjectsPerPage(5);
-		mAdapter.addOnQueryLoadListener(this);
-		mAdapter.loadObjects();
-	}
-*/
-	
-
-
-/*	private void initHeadUI() {
-		mBabyIcon = (ImageView) mHeaderView.findViewById(R.id.baby_avator);
-
-		mFavoriteBaby = (CheckBox) mHeaderView
-				.findViewById(R.id.favorite_baby);
-
-		mBabysitterIcon = (Button) mHeaderView
-				.findViewById(R.id.babysitter_icon);
-
-		mName = (TextView) mHeaderView.findViewById(R.id.name);
-		mNote = (TextView) mHeaderView.findViewById(R.id.desciption);
-
-		mFavoriteBaby.setOnClickListener(this);
-	}
-*/
-	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-
-		//mListView.addHeaderView(mHeaderView);
-		//doDetailQuery(mBabyObjectId);
-		// getFavorite();
-
-	}
-	
-	
 	@Override
 	public void onActivityResult(int requestCode, int resultCode,
 			Intent data) {
@@ -343,41 +258,11 @@ public class BabyRecordFragment extends Fragment implements
 			mPictureHelper.setBitmap(bmp);
 			mPictureHelper.setSaveCallback(new BabyRecordSaveCallback());
 			mPictureHelper.savePicture();
-
-			// 載入ImageView
-			//mUserAvator.setImageBitmap(bmp);
 		}
 
 		// 覆蓋原來的Activity
 		super.onActivityResult(requestCode, resultCode, data);
 	}
-
-
-/*	private void doDetailQuery(String objectId) {
-		ParseQuery<BabyDiary> detailQuery = BabyDiary.getQuery();
-		detailQuery.getInBackground(objectId, new GetCallback<BabyDiary>() {
-
-			@Override
-			public void done(BabyDiary baby, ParseException arg1) {
-
-				String url;
-				if (baby.getPhotoFile() != null) {
-					url = baby.getPhotoFile().getUrl();
-				} else {
-					url = "https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-ash3/t1.0-9/q77/s720x720/1966891_782022338479354_124097698_n.jpg";
-				}
-
-				imageLoader.displayImage(url, mBabyIcon, options, null);
-
-				mName.setText(baby.getName() + baby.getObjectId());
-				mNote.setText(baby.getNote());
-				mBaby = baby;
-				//getFavorite();
-				doCommentQuery(mBabyObjectId);
-			}
-		});
-	}
-*/
 
 	private void getFavorite() {
 		BabyDiary babyDiary = ParseObject.createWithoutData(BabyDiary.class, mBabyObjectId);
@@ -408,7 +293,7 @@ public class BabyRecordFragment extends Fragment implements
 
 	@Override
 	public void onLoading() {
-		showProgress();
+		showLoading();
 	}
 
 	@Override
@@ -419,22 +304,9 @@ public class BabyRecordFragment extends Fragment implements
 			ParseObject.pinAllInBackground(babyRecords);
 		}
 */
-		//mListView.setAdapter(mAdapter);
-		hideProgress();
+		
+		hideLoading();
 	}
-
-	@Override
-	public void showProgress() {
-		ProgressBarUtils.show(getActivity());
-	}
-
-	@Override
-	public void hideProgress() {
-		ProgressBarUtils.hide(getActivity());
-		mPullToRefreshLayout.setRefreshComplete();
-	}
-
-
 
 	@Override
 	public void onRefreshStarted(View arg0) {

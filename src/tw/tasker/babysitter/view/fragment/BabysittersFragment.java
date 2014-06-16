@@ -55,13 +55,6 @@ public class BabysittersFragment extends BaseFragment implements
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		loadGridView();
-		return super.onCreateView(inflater, container, savedInstanceState);
-	}
-
-	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		mPresenter.onCreate();
@@ -69,13 +62,12 @@ public class BabysittersFragment extends BaseFragment implements
 
 	@Override
 	public void showProgress() {
-		ProgressBarUtils.show(getActivity());
+		showLoading();
 	}
 
 	@Override
 	public void hideProgress() {
-		ProgressBarUtils.hide(getActivity());
-		mPullToRefreshLayout.setRefreshComplete();
+		hideLoading();
 	}
 
 	@Override

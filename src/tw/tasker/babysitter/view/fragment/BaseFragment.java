@@ -1,6 +1,7 @@
 package tw.tasker.babysitter.view.fragment;
 
 import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.utils.ProgressBarUtils;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
@@ -17,29 +18,25 @@ import android.widget.TextView;
 
 public class BaseFragment extends Fragment implements OnRefreshListener, OnItemClickListener {
 	protected PullToRefreshLayout mPullToRefreshLayout;
-
 	protected GridView mGridView;
 	protected ListView mListView;
 	protected TextView mEmpty;
-
-	private boolean mIsGridView;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
-		mIsGridView = false;
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		return loadGridView(inflater, container);
+		return loadView(inflater, container);
 	}
 	
-	public View loadGridView(LayoutInflater inflater, ViewGroup container) {
+	private View loadView(LayoutInflater inflater, ViewGroup container) {
 		View rootView = null;
-		if (mIsGridView) {
+		if (loadGridView()) {
 			rootView = inflater.inflate(R.layout.fragment_grid, container, false);
 			mGridView = (GridView) rootView.findViewById(R.id.grid);
 			mGridView.setOnItemClickListener(this);
@@ -65,16 +62,36 @@ public class BaseFragment extends Fragment implements OnRefreshListener, OnItemC
 		return rootView;
 	}
 
-	protected void loadGridView() {
-		mIsGridView = true;
+	protected Boolean loadGridView() {
+		return true;
 	}
 	
 	@Override
-	public void onRefreshStarted(View arg0) {
+	public void onRefreshStarted(View view) {
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 	}
+	
+	protected void showLoading() {
+		ProgressBarUtils.show(getActivity());
+	}
+	
+	protected void hideLoading() {
+		ProgressBarUtils.hide(getActivity());
+		mPullToRefreshLayout.setRefreshComplete();
+	}
+	
+	/*		
+	mList.setOnScrollListener(new EndlessScrollListener(6) {
+	
+	@Override
+	public void onLoadMore(int page, int totalItemsCount) {
+		mAdapter.loadNextPage();
+	}
+	});
+	 */		
+
 }

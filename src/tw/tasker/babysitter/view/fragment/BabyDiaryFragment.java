@@ -35,13 +35,10 @@ import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 
-public class BabyDiaryFragment extends Fragment implements
-		OnItemClickListener, OnQueryLoadListener<BabyDiary>, OnRefreshListener {
+public class BabyDiaryFragment extends BaseFragment implements
+		OnQueryLoadListener<BabyDiary> {
 	private ParseQueryAdapter<BabyDiary> mAdapter;
-	private GridView mList;
-	private TextView mEmpty;
 	private String mBabysitterObjectId;
-	private PullToRefreshLayout mPullToRefreshLayout;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -52,9 +49,9 @@ public class BabyDiaryFragment extends Fragment implements
 					.getString(Config.BABYSITTER_OBJECT_ID);
 		}
 		
-		if (mBabysitterObjectId != null) {
-			setHasOptionsMenu(true);
-		}
+		//if (mBabysitterObjectId != null) {
+		//	setHasOptionsMenu(true);
+		//}
 	}
 	
 	@Override
@@ -69,16 +66,7 @@ public class BabyDiaryFragment extends Fragment implements
 		
 		switch (id) {
 		case R.id.action_add:
-			
 			addBabyDiary();
-			
-/*			Bundle bundle = new Bundle();
-			bundle.putString(Config.BABYSITTER_OBJECT_ID, mBabysitterObjectId);
-			Intent intent = new Intent();
-			intent.putExtras(bundle);
-			intent.setClass(getActivity(), BabyAddActivity.class);
-			startActivity(intent);
-*/			
 			break;
 			
 		default:
@@ -88,35 +76,9 @@ public class BabyDiaryFragment extends Fragment implements
 		return super.onOptionsItemSelected(item);
 	}
 	
-	
 	private void addBabyDiary() {
 		DialogFragment newFragment = new AddDialogFragment(mBabysitterObjectId);
 		newFragment.show(getFragmentManager(), "dialog");
-	}
-
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_grid,
-				container, false);
-		mList = (GridView) rootView.findViewById(R.id.grid);
-		mList.setOnItemClickListener(this);
-		//mEmpty = (TextView) rootView.findViewById(R.id.empty);
-		//mList.setEmptyView(mEmpty);
-		
-		// Retrieve the PullToRefreshLayout from the content view
-		mPullToRefreshLayout = (PullToRefreshLayout) rootView
-				.findViewById(R.id.carddemo_extra_ptr_layout);
-
-		// Now setup the PullToRefreshLayout
-		ActionBarPullToRefresh.from(getActivity())
-		// Mark All Children as pullable
-				.allChildrenArePullable()
-				// Set the OnRefreshListener
-				.listener(this)
-				// Finally commit the setup to our PullToRefreshLayout
-				.setup(mPullToRefreshLayout);
-		return rootView;
 	}
 
 	@Override
@@ -127,12 +89,9 @@ public class BabyDiaryFragment extends Fragment implements
 
 	public void doListQuery() {
 		mAdapter = new BabyDiaryParseQueryAdapter(getActivity(), mBabysitterObjectId);
-//		mAdapter.setAutoload(false);
 		mAdapter.setObjectsPerPage(Config.OBJECTS_PER_PAGE);
-		//mAdapter.setPaginationEnabled(false);
-		mList.setAdapter(mAdapter);
-	//	mAdapter.loadObjects();
 		mAdapter.addOnQueryLoadListener(this);
+		mGridView.setAdapter(mAdapter);
 	}
 
 	@Override
@@ -140,7 +99,6 @@ public class BabyDiaryFragment extends Fragment implements
 			long id) {
 		BabyDiary baby = mAdapter.getItem(position);
 		if (baby.getIsPublic()) {
-
 			seeBabyDetail(baby.getObjectId());
 		}
 	}
@@ -156,7 +114,7 @@ public class BabyDiaryFragment extends Fragment implements
 
 	@Override
 	public void onLoading() {
-		ProgressBarUtils.show(getActivity());
+		showLoading();
 	}
 
 	@Override
@@ -165,13 +123,11 @@ public class BabyDiaryFragment extends Fragment implements
 			ParseObject.pinAllInBackground(babyDiaries);
 		}
 */		
-		ProgressBarUtils.hide(getActivity());
-		mPullToRefreshLayout.setRefreshComplete();
+		hideLoading();
 	}
 
 	@Override
 	public void onRefreshStarted(View arg0) {
 		mAdapter.loadObjects();
 	}
-
 }
