@@ -6,12 +6,8 @@ import tw.tasker.babysitter.presenter.impl.BabysittersPresenterImpl;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.BabysitterListView;
 import tw.tasker.babysitter.view.activity.BabysitterMapActivity;
-import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
-import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
-import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,19 +15,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
-import android.widget.TextView;
 
-public class BabysittersFragment extends Fragment implements
-		BabysitterListView, OnItemClickListener, OnRefreshListener {
+public class BabysittersFragment extends BaseFragment implements
+		BabysitterListView  {
 
 	private BabysitterListPresenter mPresenter;
-	private PullToRefreshLayout mPullToRefreshLayout;
-
-	private GridView mList;
-	private TextView mEmpty;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -68,26 +57,8 @@ public class BabysittersFragment extends Fragment implements
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_grid,
-				container, false);
-		mList = (GridView) rootView.findViewById(R.id.grid);
-		mList.setOnItemClickListener(this);
-
-		// Retrieve the PullToRefreshLayout from the content view
-		mPullToRefreshLayout = (PullToRefreshLayout) rootView
-				.findViewById(R.id.carddemo_extra_ptr_layout);
-
-		// Now setup the PullToRefreshLayout
-		ActionBarPullToRefresh.from(getActivity())
-		// Mark All Children as pullable
-				.allChildrenArePullable()
-				// Set the OnRefreshListener
-				.listener(this)
-				// Finally commit the setup to our PullToRefreshLayout
-				.setup(mPullToRefreshLayout);
-
-		
-		return rootView;
+		loadGridView();
+		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 
 	@Override
@@ -109,7 +80,7 @@ public class BabysittersFragment extends Fragment implements
 
 	@Override
 	public void setAdapter(BaseAdapter adapter) {
-		mList.setAdapter(adapter);
+		mGridView.setAdapter(adapter);
 	}
 
 	@Override
