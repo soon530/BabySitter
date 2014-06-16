@@ -2,7 +2,7 @@ package tw.tasker.babysitter.view.fragment;
 
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.presenter.BabysitterListPresenter;
-import tw.tasker.babysitter.presenter.impl.BabysitterListPresenterImpl;
+import tw.tasker.babysitter.presenter.impl.BabysittersPresenterImpl;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.BabysitterListView;
 import tw.tasker.babysitter.view.activity.BabysitterMapActivity;
@@ -37,7 +37,7 @@ public class BabysittersFragment extends Fragment implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
-		mPresenter = new BabysitterListPresenterImpl(this);
+		mPresenter = new BabysittersPresenterImpl(this);
 	}
 
 	@Override

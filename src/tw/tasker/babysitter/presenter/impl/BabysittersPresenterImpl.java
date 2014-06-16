@@ -23,14 +23,14 @@ import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 
-public class BabysitterListPresenterImpl implements BabysitterListPresenter,
+public class BabysittersPresenterImpl implements BabysitterListPresenter,
 		OnQueryLoadListener<Babysitter> {
 
 	private BabysittersFragment mView;
 	private BabysitterListModel mModel;
 	private ParseQueryAdapter<Babysitter> mAdapter;
 
-	public BabysitterListPresenterImpl(
+	public BabysittersPresenterImpl(
 			BabysittersFragment babysitterListFragment) {
 		mView = babysitterListFragment;
 		mModel = new BabysitterListModelImpl(this);
