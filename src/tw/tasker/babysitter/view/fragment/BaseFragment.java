@@ -27,6 +27,7 @@ public class BaseFragment extends Fragment implements OnRefreshListener, OnItemC
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(true);
 		mIsGridView = false;
 	}
 
@@ -37,12 +38,13 @@ public class BaseFragment extends Fragment implements OnRefreshListener, OnItemC
 	}
 	
 	public View loadGridView(LayoutInflater inflater, ViewGroup container) {
-		View rootView = inflater.inflate(R.layout.fragment_grid,
-				container, false);
+		View rootView = null;
 		if (mIsGridView) {
+			rootView = inflater.inflate(R.layout.fragment_grid, container, false);
 			mGridView = (GridView) rootView.findViewById(R.id.grid);
 			mGridView.setOnItemClickListener(this);
 		}else{
+			rootView = inflater.inflate(R.layout.fragment_list, container, false);
 			mListView = (ListView) rootView.findViewById(R.id.list);
 			mListView.setOnItemClickListener(this);
 		}

@@ -28,11 +28,10 @@ import android.widget.ListView;
 import com.parse.ParseObject;
 import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 
-public class BabysitterCommentFragment extends Fragment implements
+public class BabysitterCommentFragment extends BaseFragment implements
 		OnRefreshListener, OnQueryLoadListener<BabysitterComment> {
 
 	private String mBabysitterObjectId;
-	private PullToRefreshLayout mPullToRefreshLayout;
 	private BabysitterCommentParseQueryAdapter mAdapter;
 
 	public static Fragment newInstance(int position) {
@@ -48,10 +47,8 @@ public class BabysitterCommentFragment extends Fragment implements
 					Config.BABYSITTER_OBJECT_ID);
 		}
 
-		setHasOptionsMenu(true);
 	}
 
-	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		inflater.inflate(R.menu.add, menu);
@@ -65,20 +62,7 @@ public class BabysitterCommentFragment extends Fragment implements
 		switch (id) {
 
 		case R.id.action_add:
-
-/*			Intent intent = new Intent();
-
-			Bundle bundle = new Bundle();
-			bundle.putString(Config.BABYSITTER_OBJECT_ID, mBabysitterObjectId);
-			//bundle.putInt(Config.TOTAL_RATING, mTotalRating);
-			//bundle.putInt(Config.TOTAL_COMMENT, mTotalComment);
-			intent.putExtras(bundle);
-
-			intent.setClass(getActivity(), BabysitterCommentActivity.class);
-			startActivity(intent);
-*/			
 			addBabysitterComment();
-			
 			break;
 		default:
 			break;
@@ -93,44 +77,20 @@ public class BabysitterCommentFragment extends Fragment implements
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-
-		View rootView = inflater.inflate(R.layout.fragment_list, container,
-				false);
-
-		// Retrieve the PullToRefreshLayout from the content view
-		mPullToRefreshLayout = (PullToRefreshLayout) rootView
-				.findViewById(R.id.carddemo_extra_ptr_layout);
-
-		// Now setup the PullToRefreshLayout
-		ActionBarPullToRefresh.from(getActivity())
-		// Mark All Children as pullable
-				.allChildrenArePullable()
-				// Set the OnRefreshListener
-				.listener(this)
-				// Finally commit the setup to our PullToRefreshLayout
-				.setup(mPullToRefreshLayout);
-
-		return rootView;
-	}
-
-	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		initCards();
+		doListQuery();
 	}
 
-	private void initCards() {
+	private void doListQuery() {
 
 		mAdapter = new BabysitterCommentParseQueryAdapter(getActivity(),
 				mBabysitterObjectId);
 		mAdapter.addOnQueryLoadListener(this);
-		ListView listView = (ListView) getActivity().findViewById(R.id.list);
-		if (listView != null) {
-			listView.setAdapter(mAdapter);
-		}
+		mAdapter.setObjectsPerPage(Config.OBJECTS_PER_PAGE);
+		mListView.setAdapter(mAdapter);
+		
 	}
 
 	@Override
@@ -147,7 +107,6 @@ public class BabysitterCommentFragment extends Fragment implements
 		}
 */		
 		ProgressBarUtils.hide(getActivity());
-		// Notify PullToRefreshAttacher that the refresh has finished
 		mPullToRefreshLayout.setRefreshComplete();
 	}
 
