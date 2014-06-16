@@ -4,6 +4,7 @@ import static tw.tasker.babysitter.utils.LogUtils.LOGD;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.BabysitterComment;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -14,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RatingBar;
-
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -29,6 +29,10 @@ public class AddCommentDialogFragment extends DialogFragment {
 	private EditText mDescription;
 	private RatingBar mRating;
 
+	public AddCommentDialogFragment() {
+		
+	}
+	
 	public AddCommentDialogFragment(String babysitterObjectId) {
 		mBabysitterObjectId = babysitterObjectId;
 	}
@@ -70,7 +74,7 @@ public class AddCommentDialogFragment extends DialogFragment {
 		Babysitter babysitter = ParseObject.createWithoutData(Babysitter.class,
 				mBabysitterObjectId);
 
-		BabysitterComment babysitterComment = new BabysitterComment();
+		final BabysitterComment babysitterComment = new BabysitterComment();
 		babysitterComment.setBabysitter(babysitter);
 		babysitterComment.setRating(mRating.getRating());
 		babysitterComment.setTitle(mTitle.getText().toString());
@@ -83,6 +87,9 @@ public class AddCommentDialogFragment extends DialogFragment {
 			@Override
 			public void done(ParseException e) {
 				if (e == null) {
+					
+					LOGD("vic", "時間"+babysitterComment.getCreatedAt());
+					
 					// setResult(RESULT_OK);
 					// finish();
 					/*
@@ -106,7 +113,7 @@ public class AddCommentDialogFragment extends DialogFragment {
 	private void updateBabysitter() {
 
 		ParseQuery<Babysitter> query = Babysitter.getQuery();
-
+		query.fromLocalDatastore();
 		query.getInBackground(mBabysitterObjectId,
 				new GetCallback<Babysitter>() {
 					public void done(Babysitter babysitter, ParseException e) {
@@ -117,7 +124,7 @@ public class AddCommentDialogFragment extends DialogFragment {
 
 						babysitter.put("totalRating", totalRating);
 						babysitter.put("totalComment", totalComment);
-						babysitter.saveInBackground(new SaveCallback() {
+						babysitter.pinInBackground(new SaveCallback() {
 
 							@Override
 							public void done(ParseException e) {

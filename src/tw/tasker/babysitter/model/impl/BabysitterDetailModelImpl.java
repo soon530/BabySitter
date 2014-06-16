@@ -23,6 +23,7 @@ public class BabysitterDetailModelImpl extends GetCallback<Babysitter>
 	public void doDetailQuery(String objectId) {
 		LOGD("vic", "objectId" + objectId);
 		ParseQuery<Babysitter> detailQuery = Babysitter.getQuery();
+		//detailQuery.fromLocalDatastore();
 		detailQuery.getInBackground(objectId, this);
 	}
 

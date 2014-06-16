@@ -6,6 +6,8 @@ import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabysitterComment;
 import tw.tasker.babysitter.presenter.adapter.BabysitterCommentParseQueryAdapter;
+import tw.tasker.babysitter.utils.DisplayUtils;
+import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.activity.BabysitterCommentActivity;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
@@ -23,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.parse.ParseObject;
 import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 
 public class BabysitterCommentFragment extends Fragment implements
@@ -136,7 +139,13 @@ public class BabysitterCommentFragment extends Fragment implements
 	}
 
 	@Override
-	public void onLoaded(List<BabysitterComment> babysitterComment, Exception e) {
+	public void onLoaded(List<BabysitterComment> babysitterComments, Exception e) {
+		
+/*		if (DisplayUtils.hasNetwork(getActivity())) {
+			ParseObject.pinAllInBackground(babysitterComments);
+			LogUtils.LOGD("vic", "babysitterComments pin size:" + babysitterComments.size());
+		}
+*/		
 		ProgressBarUtils.hide(getActivity());
 		// Notify PullToRefreshAttacher that the refresh has finished
 		mPullToRefreshLayout.setRefreshComplete();

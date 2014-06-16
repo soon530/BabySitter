@@ -4,6 +4,8 @@ import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.view.CardView;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
+import tw.tasker.babysitter.utils.DisplayUtils;
+import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.view.card.BabysitterGridCard;
 import android.content.Context;
 import android.view.View;
@@ -15,7 +17,7 @@ import com.parse.ParseQueryAdapter;
 public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> {
 
 	public BabysittersParseQueryAdapter(Context context) {
-		super(context, getQueryFactory());
+		super(context, getQueryFactory(context));
 	}
 
 	@Override
@@ -47,13 +49,16 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 		return view;
 	}
 
-	private static ParseQueryAdapter.QueryFactory<Babysitter> getQueryFactory() {
+	private static ParseQueryAdapter.QueryFactory<Babysitter> getQueryFactory(final Context context) {
 		ParseQueryAdapter.QueryFactory<Babysitter> factory = new ParseQueryAdapter.QueryFactory<Babysitter>() {
 			public ParseQuery<Babysitter> create() {
 				ParseQuery<Babysitter> query = Babysitter.getQuery();
-				query.fromLocalDatastore();
 				query.orderByDescending("createdAt");
-				return query;
+/*				if (!DisplayUtils.hasNetwork(context)) {
+					LogUtils.LOGD("vic", "babysitters fromLocalDatastore()");
+					query.fromLocalDatastore();
+				}
+*/				return query;
 			}
 		};
 		return factory;

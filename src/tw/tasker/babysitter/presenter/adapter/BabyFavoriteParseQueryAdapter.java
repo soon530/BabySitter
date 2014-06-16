@@ -5,6 +5,8 @@ import it.gmariotti.cardslib.library.view.CardView;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabyDiary;
 import tw.tasker.babysitter.model.data.BabyFavorite;
+import tw.tasker.babysitter.utils.DisplayUtils;
+import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.view.card.BabyFavoriteGridCard;
 import tw.tasker.babysitter.view.card.BabyGridCard;
 import android.content.Context;
@@ -19,7 +21,7 @@ public class BabyFavoriteParseQueryAdapter extends
 		ParseQueryAdapter<BabyFavorite> {
 
 	public BabyFavoriteParseQueryAdapter(Context context) {
-		super(context, getQueryFactory());
+		super(context, getQueryFactory(context));
 
 	}
 
@@ -55,7 +57,7 @@ public class BabyFavoriteParseQueryAdapter extends
 		return view;
 	}
 
-	private static ParseQueryAdapter.QueryFactory<BabyFavorite> getQueryFactory() {
+	private static ParseQueryAdapter.QueryFactory<BabyFavorite> getQueryFactory(final Context context) {
 		ParseQueryAdapter.QueryFactory<BabyFavorite> factory = new ParseQueryAdapter.QueryFactory<BabyFavorite>() {
 			public ParseQuery<BabyFavorite> create() {
 				ParseQuery<BabyFavorite> query = BabyFavorite.getQuery();
@@ -64,7 +66,11 @@ public class BabyFavoriteParseQueryAdapter extends
 				query.whereEqualTo("user", ParseUser.getCurrentUser());
 				query.include("BabyDiary");
 				query.include("BabyRecord");
-				return query;
+				
+/*				if (!DisplayUtils.hasNetwork(context)) {
+					query.fromLocalDatastore();
+				}
+*/				return query;
 			}
 		};
 		return factory;

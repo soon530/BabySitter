@@ -10,6 +10,8 @@ import tw.tasker.babysitter.model.data.BabyDiary;
 import tw.tasker.babysitter.model.data.BabyFavorite;
 import tw.tasker.babysitter.model.data.BabyRecord;
 import tw.tasker.babysitter.presenter.adapter.RecordParseQueryAdapter;
+import tw.tasker.babysitter.utils.DisplayUtils;
+import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.utils.PictureHelper;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.BabysitterDetailView;
@@ -32,6 +34,7 @@ import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.parse.DeleteCallback;
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -101,6 +104,10 @@ public class BabyRecordFragment extends Fragment implements
 		
 		ParseQuery<BabyDiary> query = BabyDiary.getQuery();
 		
+/*		if (!DisplayUtils.hasNetwork(getActivity())) {
+			query.fromLocalDatastore();
+		}
+*/		
 		query.getInBackground(mBabyObjectId, new GetCallback<BabyDiary>() {
 
 			@Override
@@ -200,9 +207,15 @@ public class BabyRecordFragment extends Fragment implements
 		
 		switch (id) {
 		case R.id.action_add:
-			Intent intent_camera = new Intent(
-					android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-			startActivityForResult(intent_camera, 0);
+			
+			//if (DisplayUtils.hasNetwork(getActivity())) {
+				Intent intent_camera = new Intent(
+						android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+				startActivityForResult(intent_camera, 0);
+			//}else {
+				//Toast.makeText(getActivity(), "新增[成長記錄]需開啟網路...", Toast.LENGTH_SHORT).show();
+			//}
+			
 
 /*			Bundle bundle = new Bundle();
 			bundle.putString(Config.BABY_OBJECT_ID, mBabyObjectId);
@@ -372,6 +385,11 @@ public class BabyRecordFragment extends Fragment implements
 
 		favorite_query.whereEqualTo("BabyDiary", babyDiary);
 		favorite_query.whereEqualTo("user", ParseUser.getCurrentUser());
+		
+/*		if (!DisplayUtils.hasNetwork(getActivity())) {
+			favorite_query.fromLocalDatastore();
+		}
+*/		
 		favorite_query.getFirstInBackground(new GetCallback<BabyFavorite>() {
 			@Override
 			public void done(BabyFavorite babyFavorite, ParseException e) {
@@ -394,8 +412,13 @@ public class BabyRecordFragment extends Fragment implements
 	}
 
 	@Override
-	public void onLoaded(List<BabyRecord> babysitterComment,
+	public void onLoaded(List<BabyRecord> babyRecords,
 			Exception e) {
+		
+/*		if (DisplayUtils.hasNetwork(getActivity())) {
+			ParseObject.pinAllInBackground(babyRecords);
+		}
+*/
 		//mListView.setAdapter(mAdapter);
 		hideProgress();
 	}

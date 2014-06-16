@@ -16,6 +16,5 @@ public class BabysittersActivity extends ActionBarActivity {
 		BabysittersFragment fragment = new BabysittersFragment();
 		getSupportFragmentManager().beginTransaction()
 				.add(R.id.container, fragment).commit();
-
 	}
 }

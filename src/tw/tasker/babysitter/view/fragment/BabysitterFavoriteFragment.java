@@ -7,6 +7,8 @@ import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.BabysitterFavorite;
 import tw.tasker.babysitter.presenter.adapter.BabysitterFavoriteParseQueryAdapter;
+import tw.tasker.babysitter.utils.DisplayUtils;
+import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.activity.BabysitterActivity;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
@@ -26,6 +28,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import com.parse.ParseObject;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 
@@ -94,7 +97,13 @@ public class BabysitterFavoriteFragment extends Fragment implements
 	}
 
 	@Override
-	public void onLoaded(List<BabysitterFavorite> arg0, Exception arg1) {
+	public void onLoaded(List<BabysitterFavorite> babysitterFavorites, Exception arg1) {
+
+/*		if (DisplayUtils.hasNetwork(getActivity())) {
+			ParseObject.pinAllInBackground(babysitterFavorites);
+			LogUtils.LOGD("vic", "babysitterFavorites pin size:" + babysitterFavorites.size());
+		}
+*/
 		ProgressBarUtils.hide(getActivity());
 		mPullToRefreshLayout.setRefreshComplete();
 	}

@@ -6,6 +6,8 @@ import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabyDiary;
 import tw.tasker.babysitter.presenter.adapter.BabyDiaryParseQueryAdapter;
+import tw.tasker.babysitter.utils.DisplayUtils;
+import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.activity.BabyRecordActivity;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
@@ -26,6 +28,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 
@@ -121,11 +127,11 @@ public class BabyDiaryFragment extends Fragment implements
 
 	public void doListQuery() {
 		mAdapter = new BabyDiaryParseQueryAdapter(getActivity(), mBabysitterObjectId);
-		mAdapter.setAutoload(false);
+//		mAdapter.setAutoload(false);
 		mAdapter.setObjectsPerPage(Config.OBJECTS_PER_PAGE);
 		//mAdapter.setPaginationEnabled(false);
 		mList.setAdapter(mAdapter);
-		mAdapter.loadObjects();
+	//	mAdapter.loadObjects();
 		mAdapter.addOnQueryLoadListener(this);
 	}
 
@@ -154,7 +160,11 @@ public class BabyDiaryFragment extends Fragment implements
 	}
 
 	@Override
-	public void onLoaded(List<BabyDiary> arg0, Exception arg1) {
+	public void onLoaded(List<BabyDiary> babyDiaries, Exception arg1) {
+/*		if (DisplayUtils.hasNetwork(getActivity())) {
+			ParseObject.pinAllInBackground(babyDiaries);
+		}
+*/		
 		ProgressBarUtils.hide(getActivity());
 		mPullToRefreshLayout.setRefreshComplete();
 	}

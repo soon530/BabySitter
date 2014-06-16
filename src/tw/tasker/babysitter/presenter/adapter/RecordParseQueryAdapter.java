@@ -5,6 +5,7 @@ import it.gmariotti.cardslib.library.view.CardView;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabyDiary;
 import tw.tasker.babysitter.model.data.BabyRecord;
+import tw.tasker.babysitter.utils.DisplayUtils;
 import tw.tasker.babysitter.view.card.BabyListCard;
 import android.content.Context;
 import android.support.v4.app.Fragment;
@@ -30,7 +31,7 @@ public class RecordParseQueryAdapter extends ParseQueryAdapter<BabyRecord> {
 	private Fragment mFragment;
 
 	public RecordParseQueryAdapter(Context context, String babyObejctId, Fragment fragment) {
-		super(context, getFactory(babyObejctId));
+		super(context, getFactory(babyObejctId, context));
 		mFragment = fragment;
 
 /*		options = new DisplayImageOptions.Builder()
@@ -43,7 +44,7 @@ public class RecordParseQueryAdapter extends ParseQueryAdapter<BabyRecord> {
 	}
 
 	public static ParseQueryAdapter.QueryFactory<BabyRecord> getFactory(
-			final String babyObjectId) {
+			final String babyObjectId, final Context context) {
 		ParseQueryAdapter.QueryFactory<BabyRecord> factory = new ParseQueryAdapter.QueryFactory<BabyRecord>() {
 			public ParseQuery<BabyRecord> create() {
 				ParseQuery<BabyRecord> query = BabyRecord.getQuery();
@@ -51,7 +52,10 @@ public class RecordParseQueryAdapter extends ParseQueryAdapter<BabyRecord> {
 				BabyDiary babyDiary = ParseObject.createWithoutData(BabyDiary.class, babyObjectId);
 				query.whereEqualTo("BabyDiary", babyDiary);
 				query.setLimit(20);
-				return query;
+/*				if(!DisplayUtils.hasNetwork(context)) {
+					query.fromLocalDatastore();
+				}
+*/				return query;
 			}
 		};
 		return factory;

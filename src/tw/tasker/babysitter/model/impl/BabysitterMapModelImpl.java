@@ -45,9 +45,10 @@ public class BabysitterMapModelImpl extends FindCallback<Babysitter>
 		// mapQuery.include("user");
 		mapQuery.orderByDescending("createdAt");
 		mapQuery.setLimit(MAX_POST_SEARCH_RESULTS);
-
+		// mapQuery.fromLocalDatastore();
 		// Kick off the query in the background
 		mapQuery.findInBackground(this);
+		
 	}
 
 	/*

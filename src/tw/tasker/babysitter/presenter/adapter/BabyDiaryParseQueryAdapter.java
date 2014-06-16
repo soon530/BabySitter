@@ -5,6 +5,7 @@ import it.gmariotti.cardslib.library.view.CardView;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabyDiary;
 import tw.tasker.babysitter.model.data.Babysitter;
+import tw.tasker.babysitter.utils.DisplayUtils;
 import tw.tasker.babysitter.view.card.BabyGridCard;
 import android.content.Context;
 import android.view.View;
@@ -17,7 +18,7 @@ import com.parse.ParseQueryAdapter;
 public class BabyDiaryParseQueryAdapter extends ParseQueryAdapter<BabyDiary> {
 
 	public BabyDiaryParseQueryAdapter(Context context, String babysitterObjectId) {
-		super(context, getQueryFactory(babysitterObjectId));
+		super(context, getQueryFactory(babysitterObjectId, context));
 	}
 
 	@Override
@@ -88,7 +89,7 @@ public class BabyDiaryParseQueryAdapter extends ParseQueryAdapter<BabyDiary> {
 */		return view;
 	}
 
-	private static ParseQueryAdapter.QueryFactory<BabyDiary> getQueryFactory(final String babysitterObjectId) {
+	private static ParseQueryAdapter.QueryFactory<BabyDiary> getQueryFactory(final String babysitterObjectId, final Context context) {
 		ParseQueryAdapter.QueryFactory<BabyDiary> factory = new ParseQueryAdapter.QueryFactory<BabyDiary>() {
 			public ParseQuery<BabyDiary> create() {
 				ParseQuery<BabyDiary> query = BabyDiary.getQuery();
@@ -96,12 +97,15 @@ public class BabyDiaryParseQueryAdapter extends ParseQueryAdapter<BabyDiary> {
 				//query.setLimit(20);
 				//query.include("baby");
 				query.include("BabyRecord");
-				
-				if (babysitterObjectId != null) {
+/*				if (babysitterObjectId != null) {
 					Babysitter babysitter = ParseObject.createWithoutData(Babysitter.class, babysitterObjectId);
 					query.whereEqualTo("Babysitter", babysitter);
 				}
-				
+*/				
+/*				if (!DisplayUtils.hasNetwork(context)) {
+					query.fromLocalDatastore();
+				}
+*/				
 				return query;
 			}
 		};

@@ -7,7 +7,9 @@ import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabyDiary;
 import tw.tasker.babysitter.model.data.BabyFavorite;
 import tw.tasker.babysitter.presenter.adapter.BabyFavoriteParseQueryAdapter;
+import tw.tasker.babysitter.utils.DisplayUtils;
 import tw.tasker.babysitter.utils.EndlessScrollListener;
+import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.activity.BabyRecordActivity;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
@@ -27,6 +29,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import com.parse.ParseObject;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 
@@ -93,7 +96,7 @@ public class BabyFavoriteFragment extends Fragment implements
 		mAdapter.setObjectsPerPage(Config.OBJECTS_PER_PAGE);
 		mAdapter.addOnQueryLoadListener(this);
 		mList.setAdapter(mAdapter);
-		mAdapter.loadObjects();
+		//mAdapter.loadObjects();
 	}
 
 	@Override
@@ -119,7 +122,12 @@ public class BabyFavoriteFragment extends Fragment implements
 	}
 
 	@Override
-	public void onLoaded(List<BabyFavorite> favorite, Exception e) {
+	public void onLoaded(List<BabyFavorite> babyFavorites, Exception e) {
+/*		if (DisplayUtils.hasNetwork(getActivity())) {
+			ParseObject.pinAllInBackground(babyFavorites);
+			LogUtils.LOGD("vic", "babyFavorites pin size:" + babyFavorites.size());
+		}
+*/
 		ProgressBarUtils.hide(getActivity());
         // Notify PullToRefreshAttacher that the refresh has finished
         mPullToRefreshLayout.setRefreshComplete();

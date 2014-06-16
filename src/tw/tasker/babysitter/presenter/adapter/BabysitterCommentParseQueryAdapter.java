@@ -5,6 +5,8 @@ import it.gmariotti.cardslib.library.view.CardView;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.BabysitterComment;
+import tw.tasker.babysitter.utils.DisplayUtils;
+import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.view.card.GplayCardCustomSource;
 import android.content.Context;
 import android.view.View;
@@ -32,8 +34,7 @@ public class BabysitterCommentParseQueryAdapter extends
 	private TextView createDate;
 
 	public BabysitterCommentParseQueryAdapter(Context context, String babysitterObjectId) {
-		super(context, getFactory(babysitterObjectId));
-
+		super(context, getFactory(babysitterObjectId, context));
 /*		options = new DisplayImageOptions.Builder()
 				.showImageOnLoading(R.drawable.ic_launcher)
 				.showImageForEmptyUri(R.drawable.ic_launcher)
@@ -44,7 +45,7 @@ public class BabysitterCommentParseQueryAdapter extends
 	}
 	
 	public static ParseQueryAdapter.QueryFactory<BabysitterComment> getFactory(
-			final String babysitterObjectId) {
+			final String babysitterObjectId, final Context context ) {
 		ParseQueryAdapter.QueryFactory<BabysitterComment> factory = new ParseQueryAdapter.QueryFactory<BabysitterComment>() {
 			public ParseQuery<BabysitterComment> create() {
 				ParseQuery<BabysitterComment> query = BabysitterComment
@@ -53,7 +54,11 @@ public class BabysitterCommentParseQueryAdapter extends
 				Babysitter babysitter = ParseObject.createWithoutData(Babysitter.class, babysitterObjectId);
 				query.whereEqualTo("Babysitter", babysitter);
 				//query.setLimit(20);
-				return query;
+/*				if (!DisplayUtils.hasNetwork(context)) {
+					query.fromLocalDatastore();
+					LogUtils.LOGD("vic", "babysitter comment fromLocalDatastore()");
+				}
+*/				return query;
 			}
 		};
 		return factory;

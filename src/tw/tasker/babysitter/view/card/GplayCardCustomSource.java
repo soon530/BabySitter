@@ -109,8 +109,10 @@ public class GplayCardCustomSource extends Card {
     public void setupInnerViewElements(ViewGroup parent, View view) {
 
         TextView title = (TextView) view.findViewById(R.id.carddemo_gplay_main_inner_title);
-        title.setText(DisplayUtils.getDateTime(mBabysitterComment.getCreatedAt()));
-
+        if (mBabysitterComment.getCreatedAt() != null) {
+        	title.setText(DisplayUtils.getDateTime(mBabysitterComment.getCreatedAt()));
+        }
+        
         TextView subtitle = (TextView) view.findViewById(R.id.carddemo_gplay_main_inner_subtitle);
         subtitle.setText(mBabysitterComment.getDescription());
 

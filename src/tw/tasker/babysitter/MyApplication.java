@@ -30,7 +30,7 @@ public class MyApplication extends Application {
 		ParseObject.registerSubclass(BabysitterFavorite.class);
 		ParseObject.registerSubclass(BabyRecord.class);
 
-	    Parse.enableLocalDatastore(this);
+	    //Parse.enableLocalDatastore(this);
 		Parse.initialize(this, APPLICATION_ID, CLIENT_KEY);
 
 		initImageLoader(getApplicationContext());

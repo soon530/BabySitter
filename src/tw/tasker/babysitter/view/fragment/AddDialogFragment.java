@@ -4,6 +4,7 @@ import static tw.tasker.babysitter.utils.LogUtils.LOGD;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabyDiary;
 import tw.tasker.babysitter.model.data.Babysitter;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -18,7 +19,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
@@ -30,6 +30,9 @@ public class AddDialogFragment extends DialogFragment {
 	private ProgressDialog mRingProgressDialog;
 	private EditText mName;
 	private String mBabysitterObjectId;
+
+	public AddDialogFragment() {
+	}
 
 	public AddDialogFragment(String babysitterObjectId) {
 		mBabysitterObjectId = babysitterObjectId;
