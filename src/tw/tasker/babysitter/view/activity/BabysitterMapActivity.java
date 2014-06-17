@@ -10,6 +10,7 @@ import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.presenter.BabysitterMapPresenter;
 import tw.tasker.babysitter.presenter.impl.BabysitterMapPresenterImpl;
+import tw.tasker.babysitter.utils.ProgressBarUtils;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
@@ -34,8 +35,9 @@ public class BabysitterMapActivity extends ActionBarActivity implements
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		ProgressBarUtils.init(this);
+		ProgressBarUtils.show(this);
 		setContentView(R.layout.fragment_search_babysitter_map);
-
 		mPresneter = new BabysitterMapPresenterImpl(this);
 		setUpMapIfNeeded();
 		if (mMap != null) {
@@ -75,6 +77,8 @@ public class BabysitterMapActivity extends ActionBarActivity implements
 			items.add(new BabysitterItem(babysitter));
 		}
 		mClusterManager.addItems(items);
+		
+		ProgressBarUtils.hide(this);
 	}
 	
 	@Override
