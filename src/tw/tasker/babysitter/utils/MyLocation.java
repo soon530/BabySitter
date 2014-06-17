@@ -55,6 +55,13 @@ public class MyLocation implements ConnectionCallbacks,
 	@Override
 	public void onConnected(Bundle connectionHint) {
 		mCurrentLocation = getLocation();
+		
+		if (mCurrentLocation == null) {
+			mCurrentLocation = new Location("taiwan");
+			mCurrentLocation.setLatitude(24.386836);
+			mCurrentLocation.setLongitude(121.138203);
+		}
+		
 		updateZoom();
 	}
 
@@ -70,6 +77,10 @@ public class MyLocation implements ConnectionCallbacks,
 	}
 
 	private void updateZoom() {
+		if (mCurrentLocation == null)
+			return;
+		
+		
 		double latitude = mCurrentLocation.getLatitude();
 		double longitude = mCurrentLocation.getLongitude();
 		LatLng myLatLng = new LatLng(latitude, longitude);
