@@ -1,44 +1,37 @@
 package tw.tasker.babysitter.view.activity;
 
-import static tw.tasker.babysitter.utils.LogUtils.LOGD;
 import static tw.tasker.babysitter.utils.LogUtils.makeLogTag;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.presenter.BabysitterMapPresenter;
-import tw.tasker.babysitter.presenter.adapter.MyInfoWindowAdapter;
 import tw.tasker.babysitter.presenter.impl.BabysitterMapPresenterImpl;
-import tw.tasker.babysitter.view.BabysitterMapView;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMapLoadedCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.clustering.ClusterManager;
 
 public class BabysitterMapActivity extends ActionBarActivity implements
-		OnInfoWindowClickListener, BabysitterMapView, OnMapLoadedCallback {
+		OnInfoWindowClickListener, OnMapLoadedCallback {
 	private static final String TAG = makeLogTag(BabysitterMapActivity.class);
 
 	private GoogleMap mMap;
 	private BabysitterMapPresenter mPresneter;
 	private HashMap<String, Babysitter> map_model= new HashMap<String, Babysitter>();
+    private ClusterManager<BabysitterItem> mClusterManager;
+
 	
-	@Override
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_search_babysitter_map);
@@ -48,7 +41,9 @@ public class BabysitterMapActivity extends ActionBarActivity implements
 		if (mMap != null) {
 			mMap.setOnMapLoadedCallback(this);
 			mMap.setOnInfoWindowClickListener(this);
-			mMap.setInfoWindowAdapter(new MyInfoWindowAdapter(this, map_model));
+		
+			mClusterManager = new ClusterManager<BabysitterItem>(this, mMap);
+			mClusterManager.setRenderer(new BabysitterRenderer(this, mMap, mClusterManager, map_model));
 		}
 	}
 
@@ -67,62 +62,21 @@ public class BabysitterMapActivity extends ActionBarActivity implements
 		mPresneter.onMapLoaded();
 	}
 
-	@Override
 	public void showMyLocation(LatLngBounds latLngBounds) {
-		CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(
-				latLngBounds, 5);
-		mMap.animateCamera(cameraUpdate);
+		//CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(latLngBounds, 5);
+		//mMap.animateCamera(cameraUpdate);
 		mMap.setMyLocationEnabled(true);
 	}
 
-	@Override
-	public void showMarkers(List<MarkerOptions> markerOptions) {
-		for (MarkerOptions maker : markerOptions) {
-			mMap.addMarker(maker);
-		}
-	}
-	
-	public void AddMarkers(List<Babysitter> outlines) {
-		for (Babysitter outline : outlines) {
-
-			MarkerOptions markerOpts = getOutlineMarkerOptions(outline);
-			Marker mark = mMap.addMarker(markerOpts);
-			map_model.put(mark.getId(), outline);
-		}
+	public void AddMarkers(List<Babysitter> babysitters) {
+		ArrayList<BabysitterItem> items = new ArrayList<BabysitterItem>();
 		
+		for (Babysitter babysitter : babysitters) {
+			items.add(new BabysitterItem(babysitter));
+		}
+		mClusterManager.addItems(items);
 	}
 	
-	private MarkerOptions getOutlineMarkerOptions(Babysitter outline) {
-		double lat = outline.getLocation().getLatitude();
-		double lng = outline.getLocation().getLongitude();
-		LOGD(TAG, "outline" + outline.getName() + ",lat" + lat + ",lng" + lng);
-
-		LatLng latLng = new LatLng(lat, lng);
-
-		MarkerOptions markerOpts = new MarkerOptions();
-		markerOpts.position(latLng);
-		markerOpts.title(outline.getObjectId());
-		markerOpts.snippet("保母：" + outline.getName() + "\n已托育："
-				+ outline.getBabycareCount());
-		BitmapDescriptor icon = BitmapDescriptorFactory
-				.defaultMarker(BitmapDescriptorFactory.HUE_RED);
-		markerOpts.icon(icon);
-		return markerOpts;
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.babysitter_list, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		int id = item.getItemId();
-		mPresneter.onOptionsItemSelected(id);
-		return super.onOptionsItemSelected(item);
-	}
-
 	@Override
 	public void onInfoWindowClick(Marker marker) {
 		mPresneter.onInfoWindowClick(marker);
