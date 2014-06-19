@@ -78,22 +78,22 @@ public class HomeFragment extends Fragment implements OnCardClickListener {
                 case 0:
                     card.setBackgroundResourceId(R.drawable.demo_card_selector_color5);
                     card.setTitle("附近保母");
-                    card.setDescription("更有效率，快速定位找出你附近的保母");
+                    card.setDescription("更有效率，定位搜尋快速找出您附近的保母");
                     break;
                 case 1:
                     card.setBackgroundResourceId(R.drawable.demo_card_selector_color4);
                     card.setTitle("寶寶日記");
-                    card.setDescription("更有樂趣，看看人家的寶寶怎麼成長的");
+                    card.setDescription("更有樂趣，記錄寶寶成長分享您生命中的愛");
                     break;
                 case 2:
                     card.setBackgroundResourceId(R.drawable.demo_card_selector_color3);
                     card.setTitle("我的收藏");
-                    card.setDescription("更有品味，收集有興趣的保母及寶寶日記");
+                    card.setDescription("更有品味，收集您感興趣的保母及寶寶日記");
                     break;
                 case 3:
                     card.setBackgroundResourceId(R.drawable.demo_card_selector_color2);
                     card.setTitle("登出帳號");
-                    card.setDescription("更多安全，登出後只可搜尋無法留言");
+                    card.setDescription("更有保障，登出後任何人都無法使用您的功能");
                     break;
                 case 4:
                     card.setBackgroundResourceId(R.drawable.demo_card_selector_color1);
