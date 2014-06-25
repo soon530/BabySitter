@@ -113,7 +113,7 @@ public class AddCommentDialogFragment extends DialogFragment {
 	private void updateBabysitter() {
 
 		ParseQuery<Babysitter> query = Babysitter.getQuery();
-		query.fromLocalDatastore();
+		//query.fromLocalDatastore();
 		query.getInBackground(mBabysitterObjectId,
 				new GetCallback<Babysitter>() {
 					public void done(Babysitter babysitter, ParseException e) {
@@ -124,7 +124,7 @@ public class AddCommentDialogFragment extends DialogFragment {
 
 						babysitter.put("totalRating", totalRating);
 						babysitter.put("totalComment", totalComment);
-						babysitter.pinInBackground(new SaveCallback() {
+						babysitter.saveInBackground(new SaveCallback() {
 
 							@Override
 							public void done(ParseException e) {
