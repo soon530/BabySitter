@@ -22,6 +22,9 @@ package tw.tasker.babysitter.view.card;
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardHeader;
 import it.gmariotti.cardslib.library.internal.CardThumbnail;
+
+import java.text.DecimalFormat;
+
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
@@ -33,9 +36,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 
 /**
  * @author Gabriele Mariotti (gabri.mariotti@gmail.com)
@@ -137,7 +138,7 @@ class SuggestedCardHeader extends CardHeader {
 				float totalRating = mBabysitter.getTotalRating();
 				int totalComment = mBabysitter.getTotalComment();
 				float avgRating = DisplayUtils.getRatingValue(totalRating, totalComment);
-				textView.setText("總分 [ " + avgRating + " ] 分, 共有 [ " + totalComment + " ] 則評論");
+				textView.setText("平均 [ " + new DecimalFormat("#.0").format(avgRating) + " ] 分, 共有 [ " + totalComment + " ] 則評論");
 			}
 		}
 	}
