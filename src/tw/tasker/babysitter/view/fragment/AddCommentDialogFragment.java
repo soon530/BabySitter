@@ -4,6 +4,7 @@ import static tw.tasker.babysitter.utils.LogUtils.LOGD;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.BabysitterComment;
+import tw.tasker.babysitter.presenter.adapter.BabysitterCommentParseQueryAdapter;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -15,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RatingBar;
+
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -28,13 +30,15 @@ public class AddCommentDialogFragment extends DialogFragment {
 	private String mBabysitterObjectId;
 	private EditText mDescription;
 	private RatingBar mRating;
+	private BabysitterCommentParseQueryAdapter mAdapter;
 
 	public AddCommentDialogFragment() {
 		
 	}
 	
-	public AddCommentDialogFragment(String babysitterObjectId) {
+	public AddCommentDialogFragment(String babysitterObjectId, BabysitterCommentParseQueryAdapter adapter) {
 		mBabysitterObjectId = babysitterObjectId;
+		mAdapter = adapter;
 	}
 
 	@Override
@@ -58,7 +62,7 @@ public class AddCommentDialogFragment extends DialogFragment {
 
 						saveComment();
 						updateBabysitter();
-						mRingProgressDialog.dismiss();
+						//mRingProgressDialog.dismiss();
 
 					}
 				})
@@ -128,6 +132,8 @@ public class AddCommentDialogFragment extends DialogFragment {
 
 							@Override
 							public void done(ParseException e) {
+								mAdapter.loadObjects();
+								mRingProgressDialog.dismiss();
 								// getActivity().finish();
 							}
 						});

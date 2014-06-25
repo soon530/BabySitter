@@ -78,7 +78,7 @@ public class BabysitterCommentFragment extends BaseFragment implements
 	}
 
 	private void addBabysitterComment() {
-		DialogFragment newFragment = new AddCommentDialogFragment(mBabysitterObjectId);
+		DialogFragment newFragment = new AddCommentDialogFragment(mBabysitterObjectId, mAdapter);
 		newFragment.show(getFragmentManager(), "dialog");		
 	}
 
