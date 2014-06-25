@@ -9,13 +9,16 @@ import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.BabysitterFavorite;
 import tw.tasker.babysitter.presenter.BabysitterDetailPresenter;
 import tw.tasker.babysitter.presenter.impl.BabysitterDetailPresenterImpl;
+import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.BabysitterDetailView;
 import tw.tasker.babysitter.view.card.BabysitterCard;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -159,11 +162,37 @@ public class BabysitterFragment extends Fragment implements
 			mPresenter.seeBabyDetail(mBabysitterObjectId);
 			break;
 		case R.id.tel_card:
-			mPresenter.makePhoneCall(mBabysitter.getTel());
+			
+			String[] phones = mBabysitter.getTel().replace("(日):", "").replace("手機: ", "").split(" ");
+			LogUtils.LOGD("vic", "phones" + mBabysitter.getTel());
+			for (String phone : phones) {
+				LogUtils.LOGD("vic", "phone" + phone);
+			}
+			
+			if (phones.length == 1)
+				mPresenter.makePhoneCall(phones[0]);
+			else
+				showBabysitterPhone(phones);
+			
 			break;
 		default:
 			break;
 		}
+	}
+
+	private void showBabysitterPhone(final String[] phones) {
+		DialogFragment newFragment = new ListDialogFragment(phones, new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				
+				String phone = phones[which];
+				mPresenter.makePhoneCall(phone);
+				
+			}
+		});
+		
+		newFragment.show(getFragmentManager(), "dialog");		
 	}
 
 	
