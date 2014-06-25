@@ -12,6 +12,7 @@ import tw.tasker.babysitter.presenter.BabysitterMapPresenter;
 import tw.tasker.babysitter.presenter.impl.BabysitterMapPresenterImpl;
 import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
@@ -36,13 +37,19 @@ public class BabysitterMapActivity extends ActionBarActivity implements
 	private GoogleMap mMap;
 	private BabysitterMapPresenter mPresneter;
     private ClusterManager<BabysitterItem> mClusterManager;
+	private ProgressDialog mRingProgressDialog;
 
 	
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		ProgressBarUtils.init(this);
+		//ProgressBarUtils.init(this);
+	    //setProgressBarVisibility(true);
+		
 		setContentView(R.layout.fragment_search_babysitter_map);
+		mRingProgressDialog = ProgressDialog.show(
+				this, "請稍等 ...", "資料準備中...", true);
+
 		mPresneter = new BabysitterMapPresenterImpl(this);
 		setUpMapIfNeeded();
 		if (mMap != null) {
@@ -105,7 +112,8 @@ public class BabysitterMapActivity extends ActionBarActivity implements
 		//TODO 先預設抓高雄
 		showMyLocation(null);
 		
-		ProgressBarUtils.hide(this);
+		//ProgressBarUtils.hide(this);
+		mRingProgressDialog.dismiss();
 	}
 	
 	@Override
