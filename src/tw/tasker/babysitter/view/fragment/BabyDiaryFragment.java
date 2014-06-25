@@ -97,9 +97,9 @@ public class BabyDiaryFragment extends BaseFragment implements
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		BabyDiary baby = mAdapter.getItem(position);
-		if (baby.getIsPublic()) {
-			seeBabyDetail(baby.getObjectId());
+		BabyDiary babyDiary = mAdapter.getItem(position);
+		if (babyDiary.getIsPublic()) {
+			seeBabyDetail(babyDiary.getObjectId());
 		}
 	}
 
