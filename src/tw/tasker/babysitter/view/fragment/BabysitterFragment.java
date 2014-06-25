@@ -260,7 +260,7 @@ public class BabysitterFragment extends Fragment implements
 		favorite_query.whereEqualTo("Babysitter", babysitter);
 		favorite_query.whereEqualTo("user", ParseUser.getCurrentUser());
 		
-		favorite_query.fromLocalDatastore();
+		//favorite_query.fromLocalDatastore();
 		
 		favorite_query.getFirstInBackground(new GetCallback<BabysitterFavorite>() {
 
