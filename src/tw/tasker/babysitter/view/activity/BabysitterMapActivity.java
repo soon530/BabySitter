@@ -10,17 +10,24 @@ import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.presenter.BabysitterMapPresenter;
 import tw.tasker.babysitter.presenter.impl.BabysitterMapPresenterImpl;
+import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnCameraChangeListener;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMapLoadedCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.maps.android.clustering.ClusterManager;
+import com.parse.ParseGeoPoint;
 
 public class BabysitterMapActivity extends ActionBarActivity implements
 		OnInfoWindowClickListener, OnMapLoadedCallback {
@@ -28,7 +35,6 @@ public class BabysitterMapActivity extends ActionBarActivity implements
 
 	private GoogleMap mMap;
 	private BabysitterMapPresenter mPresneter;
-	private HashMap<String, Babysitter> map_model= new HashMap<String, Babysitter>();
     private ClusterManager<BabysitterItem> mClusterManager;
 
 	
@@ -36,17 +42,32 @@ public class BabysitterMapActivity extends ActionBarActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		ProgressBarUtils.init(this);
-		ProgressBarUtils.show(this);
 		setContentView(R.layout.fragment_search_babysitter_map);
 		mPresneter = new BabysitterMapPresenterImpl(this);
 		setUpMapIfNeeded();
 		if (mMap != null) {
 			mMap.setOnMapLoadedCallback(this);
-			mMap.setOnInfoWindowClickListener(this);
+			//mMap.setOnInfoWindowClickListener(this);
 		
 			mClusterManager = new ClusterManager<BabysitterItem>(this, mMap);
-			mClusterManager.setRenderer(new BabysitterRenderer(this, mMap, mClusterManager, map_model));
-		}
+			mClusterManager.setRenderer(new BabysitterRenderer(this, mMap, mClusterManager));
+			
+/*			mMap.setOnCameraChangeListener(new OnCameraChangeListener() {
+				
+				@Override
+				public void onCameraChange(CameraPosition position) {
+					
+					LatLngBounds latLngBounds = mMap.getProjection().getVisibleRegion().latLngBounds;
+					LatLng northeast = latLngBounds.northeast;
+					LatLng southwest =latLngBounds.southwest;
+					LatLng center = latLngBounds.getCenter();
+					
+					LogUtils.LOGD("vic", "northeast["+northeast.latitude+"]["+northeast.longitude+"] "
+									+ "- center["+center.latitude+"]["+center.longitude+"] "
+									+ "- southwest["+southwest.latitude+"]["+southwest.longitude+"]");
+				}
+			});
+*/		}
 	}
 
 	private void setUpMapIfNeeded() {
@@ -66,24 +87,30 @@ public class BabysitterMapActivity extends ActionBarActivity implements
 
 	public void showMyLocation(LatLngBounds latLngBounds) {
 		//CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(latLngBounds, 5);
-		//mMap.animateCamera(cameraUpdate);
+		
+		LatLng latLng = new LatLng(22.885127, 120.589881);
+		CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 9);
+		mMap.animateCamera(cameraUpdate);
 		mMap.setMyLocationEnabled(true);
 	}
 
-	public void AddMarkers(List<Babysitter> babysitters) {
+	public void AddMarkers(List<Babysitter> babysitters, ParseGeoPoint myPoint) {
 		ArrayList<BabysitterItem> items = new ArrayList<BabysitterItem>();
 		
 		for (Babysitter babysitter : babysitters) {
-			items.add(new BabysitterItem(babysitter));
+			items.add(new BabysitterItem(babysitter, myPoint));
 		}
 		mClusterManager.addItems(items);
+		
+		//TODO 先預設抓高雄
+		showMyLocation(null);
 		
 		ProgressBarUtils.hide(this);
 	}
 	
 	@Override
 	public void onInfoWindowClick(Marker marker) {
-		mPresneter.onInfoWindowClick(marker);
+		//mPresneter.onInfoWindowClick(marker);
 	}
 
 	@Override

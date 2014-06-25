@@ -3,7 +3,9 @@ package tw.tasker.babysitter.view.card;
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardHeader;
 import it.gmariotti.cardslib.library.internal.CardThumbnail;
-import it.gmariotti.cardslib.library.internal.base.BaseCard;
+
+import java.text.DecimalFormat;
+
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
@@ -11,21 +13,17 @@ import tw.tasker.babysitter.utils.DisplayUtils;
 import tw.tasker.babysitter.view.activity.BabysitterActivity;
 import android.content.Context;
 import android.content.Intent;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 
 public class BabysitterGridCard extends Card {
 
-	private int resourceIdThumbnail = -1;
+	//private int resourceIdThumbnail = -1;
 	private Babysitter mBabysitter;
 
 	public BabysitterGridCard(Context context) {
@@ -39,6 +37,8 @@ public class BabysitterGridCard extends Card {
 	public void init() {
 		CardHeader header = new CardHeader(getContext());
 		header.setButtonOverflowVisible(false);
+		
+		
 		header.setTitle(mBabysitter.getName());
 /*		header.setPopupMenu(R.menu.popupmain,
 				new CardHeader.OnClickCardHeaderPopupMenuListener() {
@@ -84,7 +84,18 @@ public class BabysitterGridCard extends Card {
 
 		TextView subtitle = (TextView) view
 				.findViewById(R.id.carddemo_gplay_main_inner_subtitle);
-		subtitle.setText(mBabysitter.getAddress());
+		
+		float distance = mBabysitter.getDistance(); 
+		DecimalFormat decimalFormat =  new DecimalFormat("#.0");
+		
+		String show = "";
+		if (distance > 0.0f && distance < 1.0f) { 
+			show = " ["+ decimalFormat.format(distance * 1000) +"公尺]";
+		} else {
+			show = " ["+ decimalFormat.format(distance) + "公里]";
+		}
+
+		subtitle.setText(mBabysitter.getAddress() + show);
 
 		RatingBar mRatingBar = (RatingBar) parent
 				.findViewById(R.id.carddemo_gplay_main_inner_ratingBar);
@@ -135,6 +146,4 @@ public class BabysitterGridCard extends Card {
 	public void setBabysitter(Babysitter babysitter) {
 		mBabysitter = babysitter;
 	}
-
-
 }

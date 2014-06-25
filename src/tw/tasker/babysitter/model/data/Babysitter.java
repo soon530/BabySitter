@@ -8,7 +8,8 @@ import com.parse.ParseUser;
 
 @ParseClassName("Babysitter")
 public class Babysitter extends ParseObject {
-
+	private float mDistance;
+	
 	public String getImageUrl() {
 		String value = getString("imageUrl");
 		return value;
@@ -110,6 +111,13 @@ public class Babysitter extends ParseObject {
 	}
 	public void setUser(ParseUser value) {
 		put("user", value);
+	}
+	
+	public float getDistance() {
+		return mDistance;
+	}
+	public void setDistance(float distance) {
+		mDistance = distance;
 	}
 
 	public static ParseQuery<Babysitter> getQuery() {

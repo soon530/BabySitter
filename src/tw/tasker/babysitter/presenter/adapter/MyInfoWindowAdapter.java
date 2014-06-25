@@ -20,10 +20,10 @@ public class MyInfoWindowAdapter implements InfoWindowAdapter {
 	private Context mContext;
 	private LayoutInflater mLayoutinflater;
 
-	public MyInfoWindowAdapter(Context context, HashMap<String, Babysitter> map_model) {
+	public MyInfoWindowAdapter(Context context, HashMap<String, Babysitter> mapModel) {
 		mLayoutinflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE );
 		mContext = context;
-		mMapModel = map_model;
+		mMapModel = mapModel;
 	}
 
 	@Override
