@@ -21,7 +21,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/card_thumbnail_image"
     android:scaleType="centerCrop"
-    android:layout_width="150dp"
+    android:layout_width="match_parent"
     android:layout_height="150dp"
     style="@style/card_thumbnail_image"/>
 

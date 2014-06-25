@@ -13,6 +13,7 @@ import tw.tasker.babysitter.view.fragment.EditDialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -133,20 +134,38 @@ public class BabyListCard extends Card {
 
 		@Override
 		public void setupInnerViewElements(ViewGroup parent, View viewImage) {
-			viewImage.getLayoutParams().width = 450;
-			viewImage.getLayoutParams().height = 450;
+			// 暫時先用程式控制，有空在回頭過來看..
+			if (viewImage != null) {
 
-			String url;
-			if (mBabyRecord.getPhotoFile() != null) {
-				url = mBabyRecord.getPhotoFile().getUrl();
-			} else {
-				url = "https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-ash3/t1.0-9/q77/s720x720/1966891_782022338479354_124097698_n.jpg";
-			}
+				if (parent != null && parent.getResources() != null) {
+					DisplayMetrics metrics = parent.getResources()
+							.getDisplayMetrics();
 
+					int base = 300;
+
+					if (metrics != null) {
+						//viewImage.getLayoutParams().width = (int) (base * metrics.density);
+						viewImage.getLayoutParams().height = (int) (base * metrics.density);
+					} else {
+						//viewImage.getLayoutParams().width = 450;
+						viewImage.getLayoutParams().height = base;
+					}
+				}
 			
-			imageLoader
-					.displayImage(url, (ImageView) viewImage, Config.OPTIONS, null);
+				String url;
+				if (mBabyRecord.getPhotoFile() != null) {
+					url = mBabyRecord.getPhotoFile().getUrl();
+				} else {
+					url = "https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-ash3/t1.0-9/q77/s720x720/1966891_782022338479354_124097698_n.jpg";
+				}
 
+				
+				imageLoader
+						.displayImage(url, (ImageView) viewImage, Config.OPTIONS, null);
+			}
+			
+			//viewImage.getLayoutParams().width = 450;
+			//viewImage.getLayoutParams().height = 450;
 
 		}
 	}
