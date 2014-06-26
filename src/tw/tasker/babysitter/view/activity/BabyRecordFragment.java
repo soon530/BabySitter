@@ -10,6 +10,7 @@ import tw.tasker.babysitter.model.data.BabyDiary;
 import tw.tasker.babysitter.model.data.BabyFavorite;
 import tw.tasker.babysitter.model.data.BabyRecord;
 import tw.tasker.babysitter.presenter.adapter.RecordParseQueryAdapter;
+import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.utils.PictureHelper;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.BabysitterDetailView;
@@ -65,7 +66,7 @@ public class BabyRecordFragment extends BaseFragment implements
 		final BabyRecord babyRecord = new BabyRecord();
 		babyRecord.setBaby(babyDiary);
 		babyRecord.setTitle("不解釋...");
-		String name = ParseUser.getCurrentUser().getUsername() + "說: ";
+		String name = "";// ParseUser.getCurrentUser().getUsername() + "說: ";
 		babyRecord.setDescription(name + "不解釋...");
 		babyRecord.setPhotoFile(mPictureHelper.getFile());
 		babyRecord.setUser(ParseUser.getCurrentUser());
@@ -278,6 +279,11 @@ public class BabyRecordFragment extends BaseFragment implements
 		favorite_query.getFirstInBackground(new GetCallback<BabyFavorite>() {
 			@Override
 			public void done(BabyFavorite babyFavorite, ParseException e) {
+				
+				if (e != null) {
+					LogUtils.LOGD("vic", e.getMessage());
+				}
+				
 				if (babyFavorite == null) {
 					mIsChecked = false;
 					mFavoriteItem.setTitle("未收藏");
