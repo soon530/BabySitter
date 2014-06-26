@@ -25,6 +25,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.parse.DeleteCallback;
 import com.parse.ParseException;
+import com.parse.ParseUser;
 
 public class BabyListCard extends Card {
 
@@ -41,9 +42,14 @@ public class BabyListCard extends Card {
 	}
 
 	public void init() {
+		String currenUser = ParseUser.getCurrentUser().getUsername(); 
+		String recordUser = mBabyRecord.getUser().getUsername();
+		
 		CardHeader header = new CardHeader(getContext());
 		header.setButtonOverflowVisible(true);
-		header.setTitle(mBabyRecord.getTitle());
+		header.setTitle(recordUser + ":說" + mBabyRecord.getTitle());
+				
+		if (currenUser.equals(recordUser)) {
 		header.setPopupMenu(R.menu.popupmain,
 				new CardHeader.OnClickCardHeaderPopupMenuListener() {
 					@Override
@@ -61,6 +67,7 @@ public class BabyListCard extends Card {
 					}
 				});
 
+		}
 		addCardHeader(header);
 
 		GplayGridThumb thumbnail = new GplayGridThumb(getContext());
