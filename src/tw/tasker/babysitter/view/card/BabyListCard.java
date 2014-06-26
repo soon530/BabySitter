@@ -7,11 +7,11 @@ import it.gmariotti.cardslib.library.internal.base.BaseCard;
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabyRecord;
+import tw.tasker.babysitter.presenter.adapter.RecordParseQueryAdapter;
 import tw.tasker.babysitter.utils.DisplayUtils;
-import tw.tasker.babysitter.view.activity.BabyRecordActivity;
 import tw.tasker.babysitter.view.fragment.EditDialogFragment;
+import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
@@ -20,9 +20,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.parse.DeleteCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -32,6 +30,8 @@ public class BabyListCard extends Card {
 	public int resourceIdThumbnail = -1;
 	private BabyRecord mBabyRecord;
 	private Fragment mFragment;
+	private RecordParseQueryAdapter mAdapter;
+	private ProgressDialog mRingProgressDialog;
 
 	public BabyListCard(Context context) {
 		super(context, R.layout.baby_list_card_inner_content);
@@ -47,7 +47,7 @@ public class BabyListCard extends Card {
 		
 		CardHeader header = new CardHeader(getContext());
 		header.setButtonOverflowVisible(true);
-		header.setTitle(recordUser + ":說" + mBabyRecord.getTitle());
+		header.setTitle(recordUser + "說:" + mBabyRecord.getTitle());
 				
 		if (currenUser.equals(recordUser)) {
 		header.setPopupMenu(R.menu.popupmain,
@@ -79,7 +79,7 @@ public class BabyListCard extends Card {
 		 */
 		addCardThumbnail(thumbnail);
 
-		setOnClickListener(new OnCardClickListener() {
+/*		setOnClickListener(new OnCardClickListener() {
 			@Override
 			public void onClick(Card card, View view) {
 				Intent intent = new Intent(getContext(),
@@ -88,19 +88,24 @@ public class BabyListCard extends Card {
 				getContext().startActivity(intent);
 			}
 		});
+*/		
 	}
 	private void editCard() {
-		EditDialogFragment newFragment = new EditDialogFragment(mBabyRecord);
+		EditDialogFragment newFragment = new EditDialogFragment(mBabyRecord, mAdapter);
 		newFragment.show(mFragment.getFragmentManager(), "edit_dialog");
 	}
 
 	
 	private void deleteCard() {
+		mRingProgressDialog = ProgressDialog.show(mFragment.getActivity(),
+		"請稍等 ...", "資料刪除中...", true);
+
 		mBabyRecord.deleteInBackground(new DeleteCallback() {
 			
 			@Override
 			public void done(ParseException e) {
-				
+				mAdapter.loadObjects();
+				mRingProgressDialog.dismiss();
 			}
 		});
 	}
@@ -184,4 +189,9 @@ public class BabyListCard extends Card {
 	public void setFragment(Fragment fragment) {
 		mFragment = fragment;
 	}
+
+	public void setAdapter(RecordParseQueryAdapter adapter) {
+		mAdapter = adapter;
+	}
+	
 }

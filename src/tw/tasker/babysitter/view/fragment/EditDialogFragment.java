@@ -2,6 +2,7 @@ package tw.tasker.babysitter.view.fragment;
 
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabyRecord;
+import tw.tasker.babysitter.presenter.adapter.RecordParseQueryAdapter;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -23,9 +24,11 @@ public class EditDialogFragment extends DialogFragment {
 	private EditText mTitle;
 	private EditText mDescription;
 	private BabyRecord mBabyRecord;
+	private RecordParseQueryAdapter mAdapter;
 
-	public EditDialogFragment(BabyRecord babyRecord) {
+	public EditDialogFragment(BabyRecord babyRecord, RecordParseQueryAdapter adapter) {
 		mBabyRecord = babyRecord;
+		mAdapter = adapter;
 	}
 
 	@Override
@@ -79,6 +82,7 @@ public class EditDialogFragment extends DialogFragment {
 				} catch (ParseException exception) {
 					exception.printStackTrace();
 				}
+				mAdapter.loadObjects();
 				mRingProgressDialog.dismiss();
 			}
 		});
