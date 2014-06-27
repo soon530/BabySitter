@@ -138,7 +138,7 @@ class SuggestedCardHeader extends CardHeader {
 				float totalRating = mBabysitter.getTotalRating();
 				int totalComment = mBabysitter.getTotalComment();
 				float avgRating = DisplayUtils.getRatingValue(totalRating, totalComment);
-				textView.setText("平均 [ " + new DecimalFormat("#.0").format(avgRating) + " ] 分, 共有 [ " + totalComment + " ] 則評論");
+				textView.setText("平均 [ " + new DecimalFormat("0.#").format(avgRating) + " ] 分, 共有 [ " + totalComment + " ] 則評論");
 			}
 		}
 	}
