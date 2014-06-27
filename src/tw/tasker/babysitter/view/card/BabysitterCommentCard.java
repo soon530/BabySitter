@@ -23,11 +23,11 @@ import it.gmariotti.cardslib.library.internal.CardHeader;
 import it.gmariotti.cardslib.library.internal.CardThumbnail;
 import it.gmariotti.cardslib.library.internal.base.BaseCard;
 import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.BabysitterComment;
 import tw.tasker.babysitter.presenter.adapter.BabysitterCommentParseQueryAdapter;
 import tw.tasker.babysitter.utils.DisplayUtils;
 import tw.tasker.babysitter.view.fragment.BabysitterCommentEditDialogFragment;
-import tw.tasker.babysitter.view.fragment.EditDialogFragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -43,7 +43,9 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.parse.DeleteCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 /**
@@ -89,6 +91,7 @@ public class BabysitterCommentCard extends Card {
 					break;
 				case R.id.card_del:
 					deleteCard();
+					updateBabysitter();
 				default:
 					break;
 				}
@@ -149,6 +152,21 @@ public class BabysitterCommentCard extends Card {
 			}
 		});
 	}
+	
+	private void updateBabysitter() {
+		ParseQuery<Babysitter> query = Babysitter.getQuery();
+		String babysitterObjectId = mBabysitterComment.getBabysitter().getObjectId(); 
+		query.getInBackground(babysitterObjectId, new GetCallback<Babysitter>() {
+			
+			@Override
+			public void done(Babysitter babysitter, ParseException e) {
+				babysitter.increment("totalComment", -1);
+				babysitter.increment("totalRating", -mBabysitterComment.getRating());
+				babysitter.saveInBackground();
+			}
+		});
+	}
+
 
 
     @Override
