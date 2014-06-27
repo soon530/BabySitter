@@ -106,7 +106,8 @@ public class BabyRecordFragment extends BaseFragment implements
 
 			@Override
 			public void done(BabyDiary babyDiary, ParseException e) {
-				babyDiary.setTotalRecord(++mTotalRecord);
+				//babyDiary.setTotalRecord(++mTotalRecord);
+				babyDiary.increment("totalRecord", 1);
 				babyDiary.setBabyRecord(babyRecord);
 				babyDiary.saveInBackground(new SaveCallback() {
 					
