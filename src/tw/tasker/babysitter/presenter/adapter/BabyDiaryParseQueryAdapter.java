@@ -69,15 +69,14 @@ public class BabyDiaryParseQueryAdapter extends ParseQueryAdapter<BabyDiary> {
 		ParseQueryAdapter.QueryFactory<BabyDiary> factory = new ParseQueryAdapter.QueryFactory<BabyDiary>() {
 			public ParseQuery<BabyDiary> create() {
 				ParseQuery<BabyDiary> query = BabyDiary.getQuery();
-				query.orderByDescending("createdAt");
-				//query.include("baby");
 				query.include("BabyRecord");
-				
+				query.include("user");
 				// 如果是從保母點過來的[寶寶日記]
 				if (babysitterObjectId != null) {
 					Babysitter babysitter = ParseObject.createWithoutData(Babysitter.class, babysitterObjectId);
 					query.whereEqualTo("Babysitter", babysitter);
 				}
+				query.orderByDescending("createdAt");
 				
 /*				if (!DisplayUtils.hasNetwork(context)) {
 					query.fromLocalDatastore();

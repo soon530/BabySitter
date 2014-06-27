@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.parse.DeleteCallback;
 import com.parse.ParseException;
+import com.parse.ParseUser;
 
 public class BabyGridCard extends Card {
 
@@ -43,10 +44,15 @@ public class BabyGridCard extends Card {
 	}
 
 	public void init() {
+		String currenUser = ParseUser.getCurrentUser().getUsername(); 
+		String recordUser = mBabyDiary.getUser().getUsername();
+
 		mBabyRecord = mBabyDiary.getBabyRecord();
 		CardHeader header = new CardHeader(getContext());
 		header.setButtonOverflowVisible(true);
 		header.setTitle(mBabyDiary.getName());
+		
+		if (currenUser.equals(recordUser)) {
 		header.setPopupMenu(R.menu.popupmain,
 				new CardHeader.OnClickCardHeaderPopupMenuListener() {
 					@Override
@@ -64,7 +70,7 @@ public class BabyGridCard extends Card {
 						}
 					}
 				});
-
+		}
 		addCardHeader(header);
 
 		GplayGridThumb thumbnail = new GplayGridThumb(getContext());
