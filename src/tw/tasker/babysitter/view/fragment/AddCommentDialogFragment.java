@@ -93,7 +93,7 @@ public class AddCommentDialogFragment extends DialogFragment {
 			public void done(ParseException e) {
 				if (e == null) {
 					
-					LOGD("vic", "時間"+babysitterComment.getCreatedAt());
+					//LOGD("vic", "時間"+babysitterComment.getCreatedAt());
 					
 					// setResult(RESULT_OK);
 					// finish();
@@ -110,6 +110,9 @@ public class AddCommentDialogFragment extends DialogFragment {
 					 * Toast.LENGTH_SHORT).show();
 					 */
 				}
+							
+				mAdapter.loadObjects();
+				mRingProgressDialog.dismiss();
 			}
 
 		});
@@ -122,22 +125,24 @@ public class AddCommentDialogFragment extends DialogFragment {
 		query.getInBackground(mBabysitterObjectId,
 				new GetCallback<Babysitter>() {
 					public void done(Babysitter babysitter, ParseException e) {
+						babysitter.increment("totalComment", 1);
+						babysitter.increment("totalRating", mRating.getRating());
+						babysitter.saveInBackground();
 
-						float totalRating = babysitter.getTotalRating()
-								+ mRating.getRating();
-						int totalComment = babysitter.getTotalComment() + 1;
+						
+						
+						//float totalRating = babysitter.getTotalRating() + mRating.getRating();
+						//int totalComment = babysitter.getTotalComment() + 1;
 
-						babysitter.put("totalRating", totalRating);
-						babysitter.put("totalComment", totalComment);
-						babysitter.saveInBackground(new SaveCallback() {
+						//babysitter.put("totalRating", totalRating);
+						//babysitter.put("totalComment", totalComment);
+						//babysitter.saveInBackground(new SaveCallback() {
 
-							@Override
-							public void done(ParseException e) {
-								mAdapter.loadObjects();
-								mRingProgressDialog.dismiss();
+							//@Override
+							//public void done(ParseException e) {
 								// getActivity().finish();
-							}
-						});
+							//}
+						//});
 
 					}
 				});
