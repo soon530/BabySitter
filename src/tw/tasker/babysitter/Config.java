@@ -11,7 +11,7 @@ public class Config {
 	
 	public static final String TOTAL_RECORD = "totalRecord";
 	
-	public static final int OBJECTS_PER_PAGE = 7;
+	public static final int OBJECTS_PER_PAGE = 20;
 
 	public static final DisplayImageOptions OPTIONS 
 	= new DisplayImageOptions.Builder()
