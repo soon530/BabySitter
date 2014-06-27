@@ -167,8 +167,6 @@ public class BabysitterCommentCard extends Card {
 		});
 	}
 
-
-
     @Override
     public void setupInnerViewElements(ViewGroup parent, View view) {
 

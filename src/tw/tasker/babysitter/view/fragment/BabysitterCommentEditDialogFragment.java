@@ -2,8 +2,10 @@ package tw.tasker.babysitter.view.fragment;
 
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabyRecord;
+import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.BabysitterComment;
 import tw.tasker.babysitter.presenter.adapter.BabysitterCommentParseQueryAdapter;
+import tw.tasker.babysitter.utils.LogUtils;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -55,7 +57,8 @@ public class BabysitterCommentEditDialogFragment extends DialogFragment {
     				mRingProgressDialog = ProgressDialog.show(getActivity(),
 					"請稍等 ...", "資料儲存中...", true);
 
-                	updateBabyDiary();
+                	updateBabysitterComment();
+                	updateBabysitter();
                 }
             })
             .setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -67,7 +70,7 @@ public class BabysitterCommentEditDialogFragment extends DialogFragment {
             .create();
 	}
 
-	private void updateBabyDiary() {
+	private void updateBabysitterComment() {
 
 		
 		ParseQuery<BabysitterComment> query = BabysitterComment.getQuery();
@@ -94,5 +97,24 @@ public class BabysitterCommentEditDialogFragment extends DialogFragment {
 		});
 		
 	}
+	
+	private void updateBabysitter() {
+		float oldRating = mBabysitterComment.getRating();
+		float newRating = mRating.getRating();
+		final float nowRating = newRating - oldRating;
+		LogUtils.LOGD("vic", "oldRating="+oldRating+", newRating="+newRating+", nowRating="+nowRating);
+		
+		ParseQuery<Babysitter> query = Babysitter.getQuery();
+		String babysitterObjectId = mBabysitterComment.getBabysitter().getObjectId(); 
+		query.getInBackground(babysitterObjectId, new GetCallback<Babysitter>() {
+			
+			@Override
+			public void done(Babysitter babysitter, ParseException e) {
+				babysitter.increment("totalRating", nowRating);
+				babysitter.saveInBackground();
+			}
+		});
+	}
+
 
 }
