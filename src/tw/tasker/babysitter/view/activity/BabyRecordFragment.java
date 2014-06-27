@@ -47,7 +47,7 @@ public class BabyRecordFragment extends BaseFragment implements
 		public void done(ParseException e) {
 			if (e == null) {
 				Toast.makeText(getActivity().getApplicationContext(),
-						"upload doen!", Toast.LENGTH_SHORT).show();
+						"照片已上傳，成長記錄寫入中...", Toast.LENGTH_SHORT).show();
 				saveComment();
 			} else {
 				Toast.makeText(getActivity().getApplicationContext(),
@@ -77,7 +77,7 @@ public class BabyRecordFragment extends BaseFragment implements
 			public void done(ParseException e) {
 				if (e == null) {
 					Toast.makeText(getActivity().getApplicationContext(),
-							"saving doen!", Toast.LENGTH_SHORT).show();
+							"成長記錄寫入完畢。", Toast.LENGTH_SHORT).show();
 				} else {
 					LOGD("vic", e.getMessage());
 					Toast.makeText(getActivity().getApplicationContext(),
