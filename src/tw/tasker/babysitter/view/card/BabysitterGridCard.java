@@ -86,7 +86,7 @@ public class BabysitterGridCard extends Card {
 				.findViewById(R.id.carddemo_gplay_main_inner_subtitle);
 		
 		float distance = mBabysitter.getDistance(); 
-		DecimalFormat decimalFormat =  new DecimalFormat("#.0");
+		DecimalFormat decimalFormat =  new DecimalFormat("0.#");
 		
 		String show = "";
 		if (distance > 0.0f && distance < 1.0f) { 
