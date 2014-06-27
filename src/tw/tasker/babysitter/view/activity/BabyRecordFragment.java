@@ -9,6 +9,7 @@ import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabyDiary;
 import tw.tasker.babysitter.model.data.BabyFavorite;
 import tw.tasker.babysitter.model.data.BabyRecord;
+import tw.tasker.babysitter.presenter.adapter.BabyFavoriteParseQueryAdapter;
 import tw.tasker.babysitter.presenter.adapter.BabyRecordParseQueryAdapter;
 import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.utils.PictureHelper;
@@ -75,6 +76,12 @@ public class BabyRecordFragment extends BaseFragment implements
 
 			@Override
 			public void done(ParseException e) {
+
+				updateBabyDiary(babyRecord);
+				
+/*				if (mIsChecked)
+					updateBabyFavorite(babyRecord);
+*/				
 				if (e == null) {
 					Toast.makeText(getActivity().getApplicationContext(),
 							"成長記錄寫入完畢。", Toast.LENGTH_SHORT).show();
@@ -85,7 +92,8 @@ public class BabyRecordFragment extends BaseFragment implements
 							Toast.LENGTH_SHORT).show();
 				}
 				
-				updateBabyDiary(babyRecord);
+				mRingProgressDialog.dismiss();
+				mAdapter.loadObjects();
 				
 				//getActivity().finish();
 			}
@@ -113,44 +121,28 @@ public class BabyRecordFragment extends BaseFragment implements
 					
 					@Override
 					public void done(ParseException e) {
-						mRingProgressDialog.dismiss();
-						mAdapter.loadObjects();
 					}
 				});
+				
+				
 			}
 		});
-		
-		//ParseQuery<ParseObject> query = ParseQuery.getQuery("BabyDiary");
-
-/*		query.getInBackground(mBabyObjectId,
-				new GetCallback<ParseObject>() {
-
-					public void done(ParseObject babysitter,
-							ParseException e) {
-						if (e == null) {
-							int r = (int) mBabysitterRating.getRating();
-							babysitter.put("totalRating", mTotalRating + r);
-							babysitter.put("totalComment",
-									mTotalComment + 1);
-							babysitter.saveInBackground(new SaveCallback() {
-
-								@Override
-								public void done(ParseException e) {
-									if (e == null) {
-										mRingProgressDialog.dismiss();
-										getActivity().finish();
-
-									}
-								}
-							});
-
-						}
-					}
-				});
-*/	
 	}
 
-	
+/*	private void updateBabyFavorite(final BabyRecord babyRecord) {
+		BabyDiary babyDiary = ParseObject.createWithoutData(BabyDiary.class, mBabyObjectId);
+		ParseQuery<BabyFavorite> query = BabyFavorite.getQuery();
+		query.whereEqualTo("BabyDiary", babyDiary);
+		query.getFirstInBackground(new GetCallback<BabyFavorite>() {
+			
+			@Override
+			public void done(BabyFavorite babyFavorite, ParseException e) {
+				babyFavorite.setBabyRecord(babyRecord);
+				babyFavorite.saveInBackground();
+			}
+		});
+	}
+*/
 	
 
 	private ProgressDialog mRingProgressDialog;
@@ -263,6 +255,7 @@ public class BabyRecordFragment extends BaseFragment implements
 		}
 
 		// 覆蓋原來的Activity
+		
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
@@ -329,7 +322,7 @@ public class BabyRecordFragment extends BaseFragment implements
 		 * WorkAround 因為在[我的收藏]沒辦法有效的透過BabyDiary裡的BabyRecord取得資料，
 		 * 所以在存[寶寶收藏]的時候，也把BabyRecord存到BabyFavorite裡去
 		 */		
-		babyFavorite.setBabyRecord(mAdapter.getItem(0));
+		//babyFavorite.setBabyRecord(mAdapter.getItem(0));
 		babyFavorite.setUser(ParseUser.getCurrentUser());
 		
 		babyFavorite.saveInBackground(new SaveCallback() {

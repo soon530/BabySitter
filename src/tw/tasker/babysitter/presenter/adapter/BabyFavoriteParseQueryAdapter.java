@@ -58,10 +58,11 @@ public class BabyFavoriteParseQueryAdapter extends
 			public ParseQuery<BabyFavorite> create() {
 				ParseQuery<BabyFavorite> query = BabyFavorite.getQuery();
 				query.include("user");
+				query.include("BabyDiary");
+				query.include("BabyDiary.BabyRecord");
+				//query.include("BabyRecord");
 				query.orderByDescending("createdAt");
 				query.whereEqualTo("user", ParseUser.getCurrentUser());
-				query.include("BabyDiary");
-				query.include("BabyRecord");
 				
 /*				if (!DisplayUtils.hasNetwork(context)) {
 					query.fromLocalDatastore();

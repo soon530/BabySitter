@@ -40,7 +40,7 @@ public class BabyFavoriteGridCard extends Card {
 
 	public void init() {
 		mBabyDiary = mBabyFavorite.getBabyDiary();
-		mBabyRecord = mBabyFavorite.getBabyRecord();
+		mBabyRecord = mBabyFavorite.getBabyDiary().getBabyRecord();
 		CardHeader header = new CardHeader(getContext());
 		header.setButtonOverflowVisible(true);
 		header.setTitle(mBabyDiary.getName());
