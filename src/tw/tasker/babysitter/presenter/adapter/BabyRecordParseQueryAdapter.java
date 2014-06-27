@@ -10,8 +10,6 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.parse.ParseObject;
@@ -19,10 +17,6 @@ import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
 public class BabyRecordParseQueryAdapter extends ParseQueryAdapter<BabyRecord> {
-	ImageView mUserAvator;
-	TextView mTitle;
-	TextView mDescription;
-
 	DisplayImageOptions options;
 	private Fragment mFragment;
 
@@ -76,9 +70,9 @@ public class BabyRecordParseQueryAdapter extends ParseQueryAdapter<BabyRecord> {
 			mCardView.setRecycle(recycle);
 			mCardView.setCard(mCard);
 		}
-						return view;
+		return view;
 	};
-
+	
 	@Override
 	public View getNextPageView(View v, ViewGroup parent) {
 		if (v == null) {

@@ -10,6 +10,7 @@ import tw.tasker.babysitter.model.data.BabyDiary;
 import tw.tasker.babysitter.model.data.BabyRecord;
 import tw.tasker.babysitter.presenter.adapter.BabyRecordParseQueryAdapter;
 import tw.tasker.babysitter.utils.DisplayUtils;
+import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.view.fragment.EditDialogFragment;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -121,6 +122,13 @@ public class BabyListCard extends Card {
 			
 			@Override
 			public void done(BabyDiary babyDiary, ParseException e) {
+				
+				if (mAdapter.getItem(0).equals(mBabyRecord)) {
+					LogUtils.LOGD("vic", "update 2nd card to BabyDiary!");
+					
+					babyDiary.setBabyRecord(mAdapter.getItem(1));
+				}
+				
 				babyDiary.increment("totalRecord", -1);
 				babyDiary.saveInBackground();
 			}
@@ -209,6 +217,6 @@ public class BabyListCard extends Card {
 
 	public void setAdapter(BabyRecordParseQueryAdapter adapter) {
 		mAdapter = adapter;
-	}
+	}	
 	
 }
