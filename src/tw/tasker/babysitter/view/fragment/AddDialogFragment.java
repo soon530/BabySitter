@@ -19,8 +19,10 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -30,12 +32,14 @@ public class AddDialogFragment extends DialogFragment {
 	private ProgressDialog mRingProgressDialog;
 	private EditText mName;
 	private String mBabysitterObjectId;
+	private ParseQueryAdapter<BabyDiary> mAdapter;
 
 	public AddDialogFragment() {
 	}
 
-	public AddDialogFragment(String babysitterObjectId) {
+	public AddDialogFragment(String babysitterObjectId, ParseQueryAdapter<BabyDiary> adapter) {
 		mBabysitterObjectId = babysitterObjectId;
+		mAdapter = adapter;
 	}
 
 	@Override
@@ -132,6 +136,7 @@ public class AddDialogFragment extends DialogFragment {
 							"Error saving: " + e.getMessage(),
 							Toast.LENGTH_SHORT).show();
 */				}
+				mAdapter.loadObjects();
 				mRingProgressDialog.dismiss();
 				//getActivity().finish();
 			}
