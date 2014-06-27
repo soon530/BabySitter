@@ -72,10 +72,7 @@ public class EditDialogFragment extends DialogFragment {
 			@Override
 			public void done(BabyRecord babyRecord, ParseException e) {
 				babyRecord.setTitle(mTitle.getText().toString());
-				
-				String name = ParseUser.getCurrentUser().getUsername();
-				
-				babyRecord.setDescription(name + "說: " + mDescription.getText().toString());
+				babyRecord.setDescription(mDescription.getText().toString());
 				
 				try {
 					babyRecord.save();
