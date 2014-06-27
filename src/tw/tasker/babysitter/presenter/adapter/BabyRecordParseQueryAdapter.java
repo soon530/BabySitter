@@ -33,7 +33,6 @@ public class BabyRecordParseQueryAdapter extends ParseQueryAdapter<BabyRecord> {
 				query.orderByDescending("createdAt");
 				BabyDiary babyDiary = ParseObject.createWithoutData(BabyDiary.class, babyObjectId);
 				query.whereEqualTo("BabyDiary", babyDiary);
-				query.setLimit(20);
 				query.include("user");
 /*				if(!DisplayUtils.hasNetwork(context)) {
 					query.fromLocalDatastore();
