@@ -133,16 +133,16 @@ public class BabysitterFragment extends Fragment implements
 
 	private void initCards(Babysitter babysitter) {
 		mBabysitterCard = initBasicCard(babysitter);
-		mTelCard = initCard("*電話", babysitter.getTel().replace(": ", ":").replace(" ", "\n"), R.id.tel_card);
+		mTelCard = initCard("電話 (可點選)", babysitter.getTel().replace(": ", ":").replace(" ", "\n"), R.id.tel_card);
 		
-		mEmailCard = initCard("*郵件", "soon530@gmail.com", R.id.email_card);
+		mEmailCard = initCard("郵件 (可點選)", "soon530@gmail.com", R.id.email_card);
 		mEmailCard.setVisibility(View.GONE);
 		
-		mAddressCard = initCard("*地址", babysitter.getAddress(), R.id.address_card);
+		mAddressCard = initCard("地址 (可點選)", babysitter.getAddress(), R.id.address_card);
 		
 		mDateCard = initCard("時段", babysitter.getBabycareTime(), R.id.date_card);
 		
-		mBabycareCard = initCard("*托育", babysitter.getBabycareCount() , R.id.babycare_card);
+		mBabycareCard = initCard("托育 (可點選)", babysitter.getBabycareCount() , R.id.babycare_card);
 
 		mDemo.setVisibility(View.VISIBLE);
 		
@@ -156,7 +156,7 @@ public class BabysitterFragment extends Fragment implements
 		switch (v.getId()) {
 		case R.id.address_card:
 			ParseGeoPoint location = mBabysitter.getLocation();
-			mPresenter.doDirections(location.getLatitude(), location.getLongitude());
+			mPresenter.doDirections(location.getLatitude(), location.getLongitude(), mBabysitter.getAddress());
 			break;
 		case R.id.babycare_card:
 			mPresenter.seeBabyDetail(mBabysitterObjectId);

@@ -32,7 +32,7 @@ public class BabysitterDetailPresenterImpl implements BabysitterDetailPresenter,
 	}
 
 	@Override
-	public void doDirections(double targetLat, double targetLng) {
+	public void doDirections(double targetLat, double targetLng, String addr) {
 		Intent intent;
 
 		// String currentLattitude = "22.635725";
@@ -43,7 +43,7 @@ public class BabysitterDetailPresenterImpl implements BabysitterDetailPresenter,
 		// "http://maps.google.com/maps?saddr="+currentLattitude+","+currentLongitude+"&daddr="+targetLat+","+targetLang;
 		// String url =
 		// "http://maps.google.com/maps?saddr="+mSlat+","+mSlng+"&daddr="+mDlat+","+mDlng;
-		String url = "geo:0,0?q=" + targetLat + "," + targetLng;
+		String url = "geo:0,0?q=" + targetLat + "," + targetLng + "("+addr+")";
 
 		intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(url));
 		intent.setClassName("com.google.android.apps.maps",
