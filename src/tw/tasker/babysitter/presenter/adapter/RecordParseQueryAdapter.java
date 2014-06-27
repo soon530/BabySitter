@@ -52,6 +52,7 @@ public class RecordParseQueryAdapter extends ParseQueryAdapter<BabyRecord> {
 				BabyDiary babyDiary = ParseObject.createWithoutData(BabyDiary.class, babyObjectId);
 				query.whereEqualTo("BabyDiary", babyDiary);
 				query.setLimit(20);
+				query.include("user");
 /*				if(!DisplayUtils.hasNetwork(context)) {
 					query.fromLocalDatastore();
 				}
@@ -74,6 +75,7 @@ public class RecordParseQueryAdapter extends ParseQueryAdapter<BabyRecord> {
 		BabyListCard mCard = new BabyListCard(getContext());
 		mCard.setBabyRecord(babyRecord);
 		mCard.setFragment(mFragment);
+		mCard.setAdapter(this);
 		mCard.init();
 		CardView mCardView;
 		mCardView = (CardView) view.findViewById(R.id.list_cardId);
