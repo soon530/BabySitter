@@ -49,7 +49,7 @@ public class AddDialogFragment extends DialogFragment {
         
         return new AlertDialog.Builder(getActivity())
             .setIconAttribute(android.R.attr.alertDialogIcon)
-            .setTitle("新增寶寶日誌")
+            .setTitle("新增寶寶日記")
             .setView(entryView)
             .setPositiveButton("確定", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {

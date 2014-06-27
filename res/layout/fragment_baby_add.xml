@@ -22,7 +22,7 @@
             android:layout_centerVertical="true"
             android:layout_marginTop="10dp"
             android:ems="10"
-            android:hint="範例：張小包 吃飯日誌" >
+            android:hint="範例：張小包 愛讀書" >
 
             <requestFocus />
         </EditText>
