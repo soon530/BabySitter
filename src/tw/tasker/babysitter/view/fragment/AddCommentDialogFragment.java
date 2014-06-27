@@ -82,9 +82,10 @@ public class AddCommentDialogFragment extends DialogFragment {
 		babysitterComment.setBabysitter(babysitter);
 		babysitterComment.setRating(mRating.getRating());
 		babysitterComment.setTitle(mTitle.getText().toString());
+		babysitterComment.setUser(ParseUser.getCurrentUser());
 		
-		String name = ParseUser.getCurrentUser().getUsername() + "說: ";
-		babysitterComment.setDescription(name + mDescription.getText().toString());
+		//String name = ParseUser.getCurrentUser().getUsername() + "說: ";
+		babysitterComment.setDescription(mDescription.getText().toString());
 
 		babysitterComment.saveInBackground(new SaveCallback() {
 

@@ -5,10 +5,9 @@ import it.gmariotti.cardslib.library.view.CardView;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.BabysitterComment;
-import tw.tasker.babysitter.utils.DisplayUtils;
-import tw.tasker.babysitter.utils.LogUtils;
-import tw.tasker.babysitter.view.card.GplayCardCustomSource;
+import tw.tasker.babysitter.view.card.BabysitterCommentCard;
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -32,9 +31,12 @@ public class BabysitterCommentParseQueryAdapter extends
 	DisplayImageOptions options;
 	private ImageLoader imageLoader = ImageLoader.getInstance();
 	private TextView createDate;
+	private Fragment mFragment;
 
-	public BabysitterCommentParseQueryAdapter(Context context, String babysitterObjectId) {
+	public BabysitterCommentParseQueryAdapter(Context context, String babysitterObjectId, Fragment fragment) {
 		super(context, getFactory(babysitterObjectId, context));
+		mFragment = fragment;
+		
 /*		options = new DisplayImageOptions.Builder()
 				.showImageOnLoading(R.drawable.ic_launcher)
 				.showImageForEmptyUri(R.drawable.ic_launcher)
@@ -51,6 +53,7 @@ public class BabysitterCommentParseQueryAdapter extends
 				ParseQuery<BabysitterComment> query = BabysitterComment
 						.getQuery();
 				query.orderByDescending("createdAt");
+				query.include("user");
 				Babysitter babysitter = ParseObject.createWithoutData(Babysitter.class, babysitterObjectId);
 				query.whereEqualTo("Babysitter", babysitter);
 				//query.setLimit(20);
@@ -76,8 +79,10 @@ public class BabysitterCommentParseQueryAdapter extends
 			recycle = true;
 		}
 		
-		GplayCardCustomSource mCard = new GplayCardCustomSource(getContext());
+		BabysitterCommentCard mCard = new BabysitterCommentCard(getContext());
 		mCard.setBabysitterComment(comment);
+		mCard.setFragment(mFragment);
+		mCard.setAdapter(this);
 		mCard.init();
 		CardView mCardView;
 		mCardView = (CardView) view.findViewById(R.id.carddemo_thumb_customsource);

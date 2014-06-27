@@ -24,19 +24,27 @@ import it.gmariotti.cardslib.library.internal.CardThumbnail;
 import it.gmariotti.cardslib.library.internal.base.BaseCard;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabysitterComment;
+import tw.tasker.babysitter.presenter.adapter.BabysitterCommentParseQueryAdapter;
 import tw.tasker.babysitter.utils.DisplayUtils;
+import tw.tasker.babysitter.view.fragment.BabysitterCommentEditDialogFragment;
+import tw.tasker.babysitter.view.fragment.EditDialogFragment;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.v4.app.Fragment;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.parse.DeleteCallback;
+import com.parse.ParseException;
+import com.parse.ParseUser;
 
 /**
  * This class provides a simple example as Google Play card.
@@ -44,31 +52,49 @@ import android.widget.Toast;
  *
  * @author Gabriele Mariotti (gabri.mariotti@gmail.com), Ronald Ammann (ramdroid.fn@gmail.com)
  */
-public class GplayCardCustomSource extends Card {
+public class BabysitterCommentCard extends Card {
 
     private BabysitterComment mBabysitterComment;
+	private BabysitterCommentParseQueryAdapter mAdapter;
+	private Fragment mFragment;
+	private ProgressDialog mRingProgressDialog;
 
-	public GplayCardCustomSource(Context context) {
+	public BabysitterCommentCard(Context context) {
         super(context, R.layout.babysitter_list_card_inner_content);
         //init();
     }
 
-    public GplayCardCustomSource(Context context, int innerLayout) {
+    public BabysitterCommentCard(Context context, int innerLayout) {
         super(context, innerLayout);
         //init();
     }
 
     public void init() {
+		String currenUser = ParseUser.getCurrentUser().getUsername(); 
+		String commentUser = mBabysitterComment.getUser().getUsername();
+
         CardHeader header = new CardHeader(getContext());
         header.setButtonOverflowVisible(true);
-        header.setTitle(mBabysitterComment.getTitle());
+        header.setTitle(commentUser + "說：" +mBabysitterComment.getTitle());
+        
+		if (currenUser.equals(commentUser)) {
+
         header.setPopupMenu(R.menu.popupmain, new CardHeader.OnClickCardHeaderPopupMenuListener() {
             @Override
             public void onMenuItemClick(BaseCard card, MenuItem item) {
-                Toast.makeText(getContext(), "[" + item.getTitle() + "] 功能正在趕工中.." , Toast.LENGTH_SHORT).show();
+				int id =item.getItemId();
+				switch (id) {
+				case R.id.card_edit:
+					editCard();
+					break;
+				case R.id.card_del:
+					deleteCard();
+				default:
+					break;
+				}
             }
         });
-
+		}
         addCardHeader(header);
 
         CardThumbnail thumbnail = new CardThumbnail(getContext());
@@ -104,6 +130,26 @@ public class GplayCardCustomSource extends Card {
         });
         addCardThumbnail(thumbnail);
     }
+    
+	private void editCard() {
+		BabysitterCommentEditDialogFragment newFragment = new BabysitterCommentEditDialogFragment(mBabysitterComment, mAdapter);
+		newFragment.show(mFragment.getFragmentManager(), "edit_dialog");
+	}
+
+	private void deleteCard() {
+		mRingProgressDialog = ProgressDialog.show(mFragment.getActivity(),
+		"請稍等 ...", "資料刪除中...", true);
+
+		mBabysitterComment.deleteInBackground(new DeleteCallback() {
+			
+			@Override
+			public void done(ParseException e) {
+				mAdapter.loadObjects();
+				mRingProgressDialog.dismiss();
+			}
+		});
+	}
+
 
     @Override
     public void setupInnerViewElements(ViewGroup parent, View view) {
@@ -126,6 +172,15 @@ public class GplayCardCustomSource extends Card {
 
 	public void setBabysitterComment(BabysitterComment comment) {
 		mBabysitterComment = comment;
+	}
+
+	public void setFragment(Fragment fragment) {
+		mFragment = fragment;
+	}
+
+	public void setAdapter(
+			BabysitterCommentParseQueryAdapter adapter) {
+		mAdapter = adapter;
 	}
 
 

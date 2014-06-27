@@ -91,8 +91,7 @@ public class BabysitterCommentFragment extends BaseFragment implements
 
 	private void doListQuery() {
 
-		mAdapter = new BabysitterCommentParseQueryAdapter(getActivity(),
-				mBabysitterObjectId);
+		mAdapter = new BabysitterCommentParseQueryAdapter(getActivity(), mBabysitterObjectId, this);
 		mAdapter.addOnQueryLoadListener(this);
 		mAdapter.setObjectsPerPage(Config.OBJECTS_PER_PAGE);
 		mListView.setAdapter(mAdapter);
