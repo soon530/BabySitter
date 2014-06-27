@@ -7,6 +7,7 @@ import tw.tasker.babysitter.model.data.BabyDiary;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.view.card.BabyGridCard;
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -16,8 +17,11 @@ import com.parse.ParseQueryAdapter;
 
 public class BabyDiaryParseQueryAdapter extends ParseQueryAdapter<BabyDiary> {
 
-	public BabyDiaryParseQueryAdapter(Context context, String babysitterObjectId) {
+	private Fragment mFragment;
+
+	public BabyDiaryParseQueryAdapter(Context context, String babysitterObjectId, Fragment fragment) {
 		super(context, getQueryFactory(babysitterObjectId, context));
+		mFragment = fragment;
 	}
 
 	@Override
@@ -32,6 +36,8 @@ public class BabyDiaryParseQueryAdapter extends ParseQueryAdapter<BabyDiary> {
 		
 		BabyGridCard mCard = new BabyGridCard(getContext());
 		mCard.setBaby(babyDiary);
+		mCard.setFragment(mFragment);
+		mCard.setAdapter(this);
 		mCard.init();
 
 		CardView mCardView;

@@ -8,25 +8,31 @@ import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabyDiary;
 import tw.tasker.babysitter.model.data.BabyRecord;
+import tw.tasker.babysitter.presenter.adapter.BabyDiaryParseQueryAdapter;
 import tw.tasker.babysitter.view.activity.BabyRecordActivity;
+import tw.tasker.babysitter.view.fragment.BabyDiaryEditDialogFragment;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+import com.parse.DeleteCallback;
+import com.parse.ParseException;
 
 public class BabyGridCard extends Card {
 
 	public int resourceIdThumbnail = -1;
 	private BabyDiary mBabyDiary;
 	private BabyRecord mBabyRecord;
+	private Fragment mFragment;
+	private BabyDiaryParseQueryAdapter mAdapter;
+	private ProgressDialog mRingProgressDialog;
 
 	public BabyGridCard(Context context) {
 		super(context, R.layout.baby_grid_card_inner_content);
@@ -45,7 +51,17 @@ public class BabyGridCard extends Card {
 				new CardHeader.OnClickCardHeaderPopupMenuListener() {
 					@Override
 					public void onMenuItemClick(BaseCard card, MenuItem item) {
-						Toast.makeText(getContext(), "[" + item.getTitle() + "] 功能正在趕工中..",Toast.LENGTH_SHORT).show();
+						int id =item.getItemId();
+						switch (id) {
+						case R.id.card_edit:
+							editCard();
+							break;
+						case R.id.card_del:
+							deleteCard();
+							//updateBabyDiary();
+						default:
+							break;
+						}
 					}
 				});
 
@@ -71,6 +87,27 @@ public class BabyGridCard extends Card {
 			}
 		});
 	}
+
+	
+	private void editCard() {
+		BabyDiaryEditDialogFragment newFragment = new BabyDiaryEditDialogFragment(mBabyDiary, mAdapter);
+		newFragment.show(mFragment.getFragmentManager(), "edit_dialog");
+	}
+	
+	private void deleteCard() {
+		mRingProgressDialog = ProgressDialog.show(mFragment.getActivity(),
+		"請稍等 ...", "資料刪除中...", true);
+
+		mBabyDiary.deleteInBackground(new DeleteCallback() {
+			
+			@Override
+			public void done(ParseException e) {
+				mAdapter.loadObjects();
+				mRingProgressDialog.dismiss();
+			}
+		});
+	}
+
 
 	@Override
 	public void setupInnerViewElements(ViewGroup parent, View view) {
@@ -142,6 +179,14 @@ public class BabyGridCard extends Card {
 
 	public void setBaby(BabyDiary babyDiary) {
 		mBabyDiary = babyDiary;
+	}
+
+	public void setFragment(Fragment fragment) {
+		mFragment = fragment;
+	}
+
+	public void setAdapter(BabyDiaryParseQueryAdapter adapter) {
+		mAdapter = adapter;
 	}
 
 }

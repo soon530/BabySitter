@@ -88,7 +88,7 @@ public class BabyDiaryFragment extends BaseFragment implements
 	}
 
 	public void doListQuery() {
-		mAdapter = new BabyDiaryParseQueryAdapter(getActivity(), mBabysitterObjectId);
+		mAdapter = new BabyDiaryParseQueryAdapter(getActivity(), mBabysitterObjectId, this);
 		mAdapter.setObjectsPerPage(Config.OBJECTS_PER_PAGE);
 		mAdapter.addOnQueryLoadListener(this);
 		mGridView.setAdapter(mAdapter);
