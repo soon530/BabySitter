@@ -6,6 +6,7 @@ import it.gmariotti.cardslib.library.internal.CardThumbnail;
 import it.gmariotti.cardslib.library.internal.base.BaseCard;
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.model.data.BabyDiary;
 import tw.tasker.babysitter.model.data.BabyRecord;
 import tw.tasker.babysitter.presenter.adapter.BabyRecordParseQueryAdapter;
 import tw.tasker.babysitter.utils.DisplayUtils;
@@ -22,7 +23,9 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.parse.DeleteCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 public class BabyListCard extends Card {
@@ -61,6 +64,7 @@ public class BabyListCard extends Card {
 							break;
 						case R.id.card_del:
 							deleteCard();
+							updateBabyDiary();
 						default:
 							break;
 						}
@@ -106,6 +110,19 @@ public class BabyListCard extends Card {
 			public void done(ParseException e) {
 				mAdapter.loadObjects();
 				mRingProgressDialog.dismiss();
+			}
+		});
+	}
+	
+	private void updateBabyDiary() {
+		ParseQuery<BabyDiary> query = BabyDiary.getQuery();
+		String babyDiaryObjectId = mBabyRecord.getBaby().getObjectId(); 
+		query.getInBackground(babyDiaryObjectId, new GetCallback<BabyDiary>() {
+			
+			@Override
+			public void done(BabyDiary babyDiary, ParseException e) {
+				babyDiary.increment("totalRecord", -1);
+				babyDiary.saveInBackground();
 			}
 		});
 	}
