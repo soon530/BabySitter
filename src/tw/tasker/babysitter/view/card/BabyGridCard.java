@@ -78,8 +78,14 @@ public class BabyGridCard extends Card {
 		TextView title = (TextView) view
 				.findViewById(R.id.carddemo_gplay_main_inner_title);
 		
-		String totalRecord = "成長記錄：" + mBabyDiary.getTotalRecord(); 
-		title.setText(totalRecord);
+		String totalRecord = "成長記錄：" + mBabyDiary.getTotalRecord();
+		Boolean isPublic = mBabyDiary.getIsPublic();
+		String privateOrPublic = "  (私藏)";
+		if (isPublic) {
+			privateOrPublic = "  (公開)";
+		}
+		
+		title.setText(totalRecord + privateOrPublic);
 
 		TextView subtitle = (TextView) view
 				.findViewById(R.id.carddemo_gplay_main_inner_subtitle);
