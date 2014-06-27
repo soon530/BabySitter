@@ -7,7 +7,7 @@ import it.gmariotti.cardslib.library.internal.base.BaseCard;
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabyRecord;
-import tw.tasker.babysitter.presenter.adapter.RecordParseQueryAdapter;
+import tw.tasker.babysitter.presenter.adapter.BabyRecordParseQueryAdapter;
 import tw.tasker.babysitter.utils.DisplayUtils;
 import tw.tasker.babysitter.view.fragment.EditDialogFragment;
 import android.app.ProgressDialog;
@@ -30,7 +30,7 @@ public class BabyListCard extends Card {
 	public int resourceIdThumbnail = -1;
 	private BabyRecord mBabyRecord;
 	private Fragment mFragment;
-	private RecordParseQueryAdapter mAdapter;
+	private BabyRecordParseQueryAdapter mAdapter;
 	private ProgressDialog mRingProgressDialog;
 
 	public BabyListCard(Context context) {
@@ -190,7 +190,7 @@ public class BabyListCard extends Card {
 		mFragment = fragment;
 	}
 
-	public void setAdapter(RecordParseQueryAdapter adapter) {
+	public void setAdapter(BabyRecordParseQueryAdapter adapter) {
 		mAdapter = adapter;
 	}
 	

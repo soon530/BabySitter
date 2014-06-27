@@ -2,7 +2,7 @@ package tw.tasker.babysitter.view.fragment;
 
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabyRecord;
-import tw.tasker.babysitter.presenter.adapter.RecordParseQueryAdapter;
+import tw.tasker.babysitter.presenter.adapter.BabyRecordParseQueryAdapter;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -24,9 +24,9 @@ public class EditDialogFragment extends DialogFragment {
 	private EditText mTitle;
 	private EditText mDescription;
 	private BabyRecord mBabyRecord;
-	private RecordParseQueryAdapter mAdapter;
+	private BabyRecordParseQueryAdapter mAdapter;
 
-	public EditDialogFragment(BabyRecord babyRecord, RecordParseQueryAdapter adapter) {
+	public EditDialogFragment(BabyRecord babyRecord, BabyRecordParseQueryAdapter adapter) {
 		mBabyRecord = babyRecord;
 		mAdapter = adapter;
 	}

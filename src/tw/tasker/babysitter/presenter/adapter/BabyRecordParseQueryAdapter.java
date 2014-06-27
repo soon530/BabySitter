@@ -20,7 +20,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
-public class RecordParseQueryAdapter extends ParseQueryAdapter<BabyRecord> {
+public class BabyRecordParseQueryAdapter extends ParseQueryAdapter<BabyRecord> {
 	ImageView mUserAvator;
 	TextView mTitle;
 	TextView mDescription;
@@ -30,7 +30,7 @@ public class RecordParseQueryAdapter extends ParseQueryAdapter<BabyRecord> {
 	private ImageLoader imageLoader = ImageLoader.getInstance();
 	private Fragment mFragment;
 
-	public RecordParseQueryAdapter(Context context, String babyObejctId, Fragment fragment) {
+	public BabyRecordParseQueryAdapter(Context context, String babyObejctId, Fragment fragment) {
 		super(context, getFactory(babyObejctId, context));
 		mFragment = fragment;
 

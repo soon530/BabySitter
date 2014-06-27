@@ -9,7 +9,7 @@ import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabyDiary;
 import tw.tasker.babysitter.model.data.BabyFavorite;
 import tw.tasker.babysitter.model.data.BabyRecord;
-import tw.tasker.babysitter.presenter.adapter.RecordParseQueryAdapter;
+import tw.tasker.babysitter.presenter.adapter.BabyRecordParseQueryAdapter;
 import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.utils.PictureHelper;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
@@ -156,7 +156,7 @@ public class BabyRecordFragment extends BaseFragment implements
 	
 	private String mBabyObjectId;
 
-	private RecordParseQueryAdapter mAdapter;
+	private BabyRecordParseQueryAdapter mAdapter;
 	
 	private PictureHelper mPictureHelper;
 
@@ -237,7 +237,7 @@ public class BabyRecordFragment extends BaseFragment implements
 
 	private void doListQuery() {
 
-		mAdapter = new RecordParseQueryAdapter(getActivity(), mBabyObjectId, this);
+		mAdapter = new BabyRecordParseQueryAdapter(getActivity(), mBabyObjectId, this);
 		mAdapter.setObjectsPerPage(Config.OBJECTS_PER_PAGE);
 		mAdapter.addOnQueryLoadListener(this);
 		mListView.setAdapter(mAdapter);
