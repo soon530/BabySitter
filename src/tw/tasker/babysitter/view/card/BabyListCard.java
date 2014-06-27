@@ -123,7 +123,7 @@ public class BabyListCard extends Card {
 			@Override
 			public void done(BabyDiary babyDiary, ParseException e) {
 				
-				if (mAdapter.getItem(0).equals(mBabyRecord)) {
+				if ( mAdapter.getCount() >=2 && mAdapter.getItem(0).equals(mBabyRecord)) {
 					LogUtils.LOGD("vic", "update 2nd card to BabyDiary!");
 					
 					babyDiary.setBabyRecord(mAdapter.getItem(1));
