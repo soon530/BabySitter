@@ -58,4 +58,13 @@
         android:text="@string/slogan"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
+    <TextView
+        android:id="@+id/TextView01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:text="托育人員(保母)登記管理資訊網"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
 </RelativeLayout>
