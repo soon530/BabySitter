@@ -5,7 +5,6 @@ import it.gmariotti.cardslib.library.view.CardView;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.BabysitterFavorite;
-import tw.tasker.babysitter.utils.DisplayUtils;
 import tw.tasker.babysitter.view.card.BabysitterGridCard;
 import android.content.Context;
 import android.view.View;
@@ -63,10 +62,9 @@ public class BabysitterFavoriteParseQueryAdapter extends
 				ParseQuery<BabysitterFavorite> query = BabysitterFavorite
 						.getQuery();
 				query.include("user");
-				query.orderByDescending("createdAt");
-				query.whereEqualTo("user", ParseUser.getCurrentUser());
-				//query.setLimit(20);
 				query.include("Babysitter");
+				query.whereEqualTo("user", ParseUser.getCurrentUser());
+				query.orderByDescending("createdAt");
 				
 /*				if (!DisplayUtils.hasNetwork(context)) {
 					query.fromLocalDatastore();

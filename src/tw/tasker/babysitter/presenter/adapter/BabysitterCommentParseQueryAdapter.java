@@ -10,12 +10,7 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RatingBar;
-import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
@@ -23,27 +18,11 @@ import com.parse.ParseQueryAdapter;
 public class BabysitterCommentParseQueryAdapter extends
 		ParseQueryAdapter<BabysitterComment> {
 
-	ImageView babysitterImage;
-	TextView babysitterCommentTitle;
-	TextView babysitterComment;
-	RatingBar babysitterRating;
-
-	DisplayImageOptions options;
-	private ImageLoader imageLoader = ImageLoader.getInstance();
-	private TextView createDate;
 	private Fragment mFragment;
 
 	public BabysitterCommentParseQueryAdapter(Context context, String babysitterObjectId, Fragment fragment) {
 		super(context, getFactory(babysitterObjectId, context));
 		mFragment = fragment;
-		
-/*		options = new DisplayImageOptions.Builder()
-				.showImageOnLoading(R.drawable.ic_launcher)
-				.showImageForEmptyUri(R.drawable.ic_launcher)
-				.showImageOnFail(R.drawable.ic_launcher).cacheInMemory(true)
-				.cacheOnDisc(true).considerExifParams(true)
-				.displayer(new RoundedBitmapDisplayer(20)).build();
-*/
 	}
 	
 	public static ParseQueryAdapter.QueryFactory<BabysitterComment> getFactory(
@@ -56,7 +35,6 @@ public class BabysitterCommentParseQueryAdapter extends
 				query.include("user");
 				Babysitter babysitter = ParseObject.createWithoutData(Babysitter.class, babysitterObjectId);
 				query.whereEqualTo("Babysitter", babysitter);
-				//query.setLimit(20);
 /*				if (!DisplayUtils.hasNetwork(context)) {
 					query.fromLocalDatastore();
 					LogUtils.LOGD("vic", "babysitter comment fromLocalDatastore()");
@@ -95,45 +73,9 @@ public class BabysitterCommentParseQueryAdapter extends
 			mCardView.setRecycle(recycle);
 			mCardView.setCard(mCard);
 		}
-
-		
-		
-		//initUI(view);
-		//fillDataToUI(comment);
-
 		return view;
 	};
 
-/*	private void initUI(View view) {
-		babysitterImage = (ImageView) view.findViewById(R.id.user_avator);
-
-		createDate = (TextView) view.findViewById(R.id.create_date);
-
-		babysitterCommentTitle = (TextView) view
-				.findViewById(R.id.babysitter_comment_title);
-
-		babysitterComment = (TextView) view
-				.findViewById(R.id.babysitter_comment);
-
-		babysitterRating = (RatingBar) view
-				.findViewById(R.id.babysitter_rating);
-	}
-*/
-/*	private void fillDataToUI(BabysitterComment comment) {
-		babysitterCommentTitle.setText(comment.getTitle());
-		babysitterComment.setText(comment.getComment());
-		babysitterRating.setRating(comment.getRating());
-
-		String now = DisplayUtils.show(comment.getCreatedAt());		
-		createDate.setText(now);
-
-		imageLoader
-				.displayImage(
-						"https://lh3.googleusercontent.com/-3ett5vaAVZc/AAAAAAAAAAI/AAAAAAAACSQ/BUns79OwRrI/s120-c/photo.jpg",
-						babysitterImage, options, null);
-
-	}
-*/	
 	@Override
 	public View getNextPageView(View v, ViewGroup parent) {
 		if (v == null) {
@@ -142,7 +84,4 @@ public class BabysitterCommentParseQueryAdapter extends
 
 		return v;
 	}
-	
-	
-
 }

@@ -4,8 +4,6 @@ import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.view.CardView;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
-import tw.tasker.babysitter.utils.DisplayUtils;
-import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.view.card.BabysitterGridCard;
 import android.content.Context;
 import android.view.View;

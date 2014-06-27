@@ -5,7 +5,6 @@ import it.gmariotti.cardslib.library.view.CardView;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabyDiary;
 import tw.tasker.babysitter.model.data.Babysitter;
-import tw.tasker.babysitter.utils.DisplayUtils;
 import tw.tasker.babysitter.view.card.BabyGridCard;
 import android.content.Context;
 import android.view.View;
@@ -57,36 +56,7 @@ public class BabyDiaryParseQueryAdapter extends ParseQueryAdapter<BabyDiary> {
 			// mCard.setSwipeable(origianlSwipeable);
 
 		}
-
-		
-		
-/*		ImageView babyAvator = (ImageView) view.findViewById(R.id.baby_avator);
-		TextView babyName = (TextView) view.findViewById(R.id.baby_name);
-		TextView babyNote = (TextView) view.findViewById(R.id.baby_note);
-		TextView totalFavorite = (TextView) view
-				.findViewById(R.id.total_favorite);
-		TextView totalRecord = (TextView) view.findViewById(R.id.total_record);
-
-		String url;
-		if (baby.getPhotoFile() != null) {
-			url = baby.getPhotoFile().getUrl();
-		} else {
-			url = "https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-ash3/t1.0-9/q77/s720x720/1966891_782022338479354_124097698_n.jpg";
-		}
-		imageLoader.displayImage(url, babyAvator, options, null);
-
-		String tag = "";
-		if (baby.getIsPublic()) {
-			tag = "公開";
-		} else {
-			tag = "私藏";
-		}
-
-		babyName.setText(baby.getName() + " (" + tag + ")");
-		babyNote.setText(baby.getNote());
-		totalFavorite.setText("最愛：+" + baby.getFavorite());
-		totalRecord.setText("記錄：+5");
-*/		return view;
+		return view;
 	}
 
 	private static ParseQueryAdapter.QueryFactory<BabyDiary> getQueryFactory(final String babysitterObjectId, final Context context) {
@@ -94,14 +64,15 @@ public class BabyDiaryParseQueryAdapter extends ParseQueryAdapter<BabyDiary> {
 			public ParseQuery<BabyDiary> create() {
 				ParseQuery<BabyDiary> query = BabyDiary.getQuery();
 				query.orderByDescending("createdAt");
-				//query.setLimit(20);
 				//query.include("baby");
 				query.include("BabyRecord");
-/*				if (babysitterObjectId != null) {
+				
+				// 如果是從保母點過來的[寶寶日記]
+				if (babysitterObjectId != null) {
 					Babysitter babysitter = ParseObject.createWithoutData(Babysitter.class, babysitterObjectId);
 					query.whereEqualTo("Babysitter", babysitter);
 				}
-*/				
+				
 /*				if (!DisplayUtils.hasNetwork(context)) {
 					query.fromLocalDatastore();
 				}
