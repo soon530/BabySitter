@@ -53,7 +53,7 @@ public class BabyGridCard extends Card {
 		header.setTitle(mBabyDiary.getName());
 		
 		if (currenUser.equals(recordUser)) {
-		header.setPopupMenu(R.menu.popupmain,
+		header.setPopupMenu(R.menu.popup_edit,
 				new CardHeader.OnClickCardHeaderPopupMenuListener() {
 					@Override
 					public void onMenuItemClick(BaseCard card, MenuItem item) {

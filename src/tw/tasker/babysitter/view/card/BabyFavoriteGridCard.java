@@ -50,7 +50,7 @@ public class BabyFavoriteGridCard extends Card {
 		CardHeader header = new CardHeader(getContext());
 		header.setButtonOverflowVisible(true);
 		header.setTitle(mBabyDiary.getName());
-		header.setPopupMenu(R.menu.popupmain,
+		header.setPopupMenu(R.menu.popup_edit,
 				new CardHeader.OnClickCardHeaderPopupMenuListener() {
 					@Override
 					public void onMenuItemClick(BaseCard card, MenuItem item) {
