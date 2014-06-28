@@ -2,7 +2,8 @@ package tw.tasker.babysitter.utils;
 
 import static tw.tasker.babysitter.utils.LogUtils.LOGD;
 import static tw.tasker.babysitter.utils.LogUtils.makeLogTag;
-import tw.tasker.babysitter.view.activity.BabysitterMapActivity;
+import tw.tasker.babysitter.view.activity.GetLocation;
+import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,7 @@ import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListe
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.parse.ParseGeoPoint;
 
 public class MyLocation implements ConnectionCallbacks,
 		OnConnectionFailedListener {
@@ -31,8 +33,10 @@ public class MyLocation implements ConnectionCallbacks,
 
 	private LocationClient mLocationClient;
 	private Location mCurrentLocation;
-	private BabysitterMapActivity mMapAcivity;
+	private Context mContext;
 	private LatLngBounds mBounds;
+
+	private GetLocation mGetLocation;
 
 	public LatLngBounds getmBounds() {
 		return mBounds;
@@ -42,8 +46,9 @@ public class MyLocation implements ConnectionCallbacks,
 		return mCurrentLocation;
 	}
 
-	public MyLocation(BabysitterMapActivity mapActivity) {
-		mMapAcivity = mapActivity;
+	public MyLocation(Context mapActivity, GetLocation getLocation) {
+		mContext = mapActivity;
+		mGetLocation = getLocation;
 		mLocationClient = new LocationClient(mapActivity, this, this);
 		connect();
 	}
@@ -58,11 +63,18 @@ public class MyLocation implements ConnectionCallbacks,
 		
 		if (mCurrentLocation == null) {
 			mCurrentLocation = new Location("taiwan");
-			mCurrentLocation.setLatitude(24.386836);
-			mCurrentLocation.setLongitude(121.138203);
+			mCurrentLocation.setLatitude(22.885127);
+			mCurrentLocation.setLongitude(120.589881);
 		}
 		
-		updateZoom();
+		if (mGetLocation != null) {
+			double latitude = mCurrentLocation.getLatitude();
+			double longitude = mCurrentLocation.getLongitude();
+			ParseGeoPoint parseGeoPoint = new ParseGeoPoint(latitude, longitude);
+			mGetLocation.done(parseGeoPoint);
+		}
+		
+		//updateZoom();
 	}
 
 	private Location getLocation() {
@@ -121,7 +133,7 @@ public class MyLocation implements ConnectionCallbacks,
 	private boolean servicesConnected() {
 		// Check that Google Play services is available
 		int resultCode = GooglePlayServicesUtil
-				.isGooglePlayServicesAvailable(mMapAcivity);
+				.isGooglePlayServicesAvailable(mContext);
 
 		// If Google Play services is available
 		if (ConnectionResult.SUCCESS == resultCode) {
@@ -132,11 +144,11 @@ public class MyLocation implements ConnectionCallbacks,
 			// Display an error dialog
 
 			// Dialog dialog = GooglePlayServicesUtil.getErrorDialog(resultCode,
-			// mMapAcivity, 0);
+			// mContext, 0);
 			// if (dialog != null) {
 			// ErrorDialogFragment errorFragment = new ErrorDialogFragment();
 			// errorFragment.setDialog(dialog);
-			// errorFragment.show(mMapAcivity.getSupportFragmentManager(),
+			// errorFragment.show(mContext.getSupportFragmentManager(),
 			// "tasker");
 			// }
 

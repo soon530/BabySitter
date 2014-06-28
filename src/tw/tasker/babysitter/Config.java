@@ -2,6 +2,7 @@ package tw.tasker.babysitter;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+import com.parse.ParseGeoPoint;
 
 public class Config {
 	public static final String BABYSITTER_OBJECT_ID = "babysitterObjectId";
@@ -21,5 +22,12 @@ public class Config {
 	.showImageOnFail(R.drawable.ic_launcher)
 	.showImageOnLoading(R.drawable.ic_action_name)
 	.build();
+	
+	public static final double LAT = 22.885127;
+	public static final double LNG = 120.589881;
+	
+	public static ParseGeoPoint MY_LOCATION;
+	
+	public static final int MAX_POST_SEARCH_DISTANCE = 50;
 
 }
