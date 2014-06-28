@@ -5,6 +5,7 @@ import it.gmariotti.cardslib.library.internal.CardHeader;
 import it.gmariotti.cardslib.library.view.CardView;
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.model.data.BabyRecord;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.BabysitterFavorite;
 import tw.tasker.babysitter.presenter.BabysitterDetailPresenter;
@@ -16,6 +17,7 @@ import tw.tasker.babysitter.view.card.BabysitterCard;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -61,6 +63,7 @@ public class BabysitterFragment extends Fragment implements
 	private CardView mDateCard;
 	private CardView mBabycareCard;
 	private Babysitter mBabysitter;
+	private ProgressDialog mRingProgressDialog;
 
 	
 	public static Fragment newInstance(int position) {
@@ -308,6 +311,9 @@ public class BabysitterFragment extends Fragment implements
 	}
 
 	private void addFavorite() {
+		mRingProgressDialog = ProgressDialog.show(getActivity(),
+		"請稍等 ...", "加入收藏中...", true);
+
 		Babysitter babysitter = ParseObject.createWithoutData(Babysitter.class, mBabysitterObjectId);
 
 		BabysitterFavorite babysitterfavorite = new BabysitterFavorite();
@@ -326,12 +332,31 @@ public class BabysitterFragment extends Fragment implements
 							"Error saving: " + e.getMessage(),
 							Toast.LENGTH_SHORT).show();
 				}
+				
+				mRingProgressDialog.dismiss();
 			}
 
 		});
 	}
+	
+/*	private void updateBabysitter() {
+
+		ParseQuery<Babysitter> query = Babysitter.getQuery();
+		//query.fromLocalDatastore();
+		query.getInBackground(mBabysitterObjectId,
+				new GetCallback<Babysitter>() {
+					public void done(Babysitter babysitter, ParseException e) {
+						babysitter.increment("totalFavorite", 1);
+						babysitter.saveInBackground();
+					}
+				});
+	}
+*/
 
 	private void deleteFavorite() {
+		mRingProgressDialog = ProgressDialog.show(getActivity(),
+		"請稍等 ...", "取消收藏中...", true);
+
 		mBabysitterFavorite.deleteInBackground(new DeleteCallback() {
 
 			@Override
@@ -344,6 +369,7 @@ public class BabysitterFragment extends Fragment implements
 							"Error saving: " + e.getMessage(),
 							Toast.LENGTH_SHORT).show();
 				}
+				mRingProgressDialog.dismiss();
 			}
 		});
 	}

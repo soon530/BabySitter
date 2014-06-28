@@ -314,15 +314,13 @@ public class BabyRecordFragment extends BaseFragment implements
 	}
 
 	private void addFavorite() {
+		mRingProgressDialog = ProgressDialog.show(getActivity(),
+		"請稍等 ...", "加入收藏中...", true);
+
 		BabyDiary babyDiary = ParseObject.createWithoutData(BabyDiary.class, mBabyObjectId);
 		BabyFavorite babyFavorite = new BabyFavorite();
 		mBabyFavorite = babyFavorite;
 		babyFavorite.setBabyDiary(babyDiary);
-		/* TODO 
-		 * WorkAround 因為在[我的收藏]沒辦法有效的透過BabyDiary裡的BabyRecord取得資料，
-		 * 所以在存[寶寶收藏]的時候，也把BabyRecord存到BabyFavorite裡去
-		 */		
-		//babyFavorite.setBabyRecord(mAdapter.getItem(0));
 		babyFavorite.setUser(ParseUser.getCurrentUser());
 		
 		babyFavorite.saveInBackground(new SaveCallback() {
@@ -336,12 +334,16 @@ public class BabyRecordFragment extends BaseFragment implements
 							"Error saving: " + e.getMessage(),
 							Toast.LENGTH_SHORT).show();
 				}
+				mRingProgressDialog.dismiss();
 			}
 
 		});
 	}
 
 	private void deleteFavorite() {
+		mRingProgressDialog = ProgressDialog.show(getActivity(),
+		"請稍等 ...", "取消收藏中...", true);
+
 		mBabyFavorite.deleteInBackground(new DeleteCallback() {
 
 			@Override
@@ -354,6 +356,7 @@ public class BabyRecordFragment extends BaseFragment implements
 							"Error saving: " + e.getMessage(),
 							Toast.LENGTH_SHORT).show();
 				}
+				mRingProgressDialog.dismiss();
 			}
 		});
 	}
