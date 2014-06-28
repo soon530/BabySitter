@@ -2,6 +2,7 @@ package tw.tasker.babysitter.presenter.adapter;
 
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.view.CardView;
+import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.BabysitterFavorite;
@@ -34,6 +35,10 @@ public class BabysitterFavoriteParseQueryAdapter extends
 		}
 
 		Babysitter babysitter = favorite.getBabysitter();
+		
+		// 加入距離計算公式
+        float distance = (float) babysitter.getLocation().distanceInKilometersTo(Config.MY_LOCATION);
+        babysitter.setDistance(distance);
 
 		BabysitterGridCard mCard = new BabysitterGridCard(getContext());
 		mCard.setBabysitter(babysitter);
