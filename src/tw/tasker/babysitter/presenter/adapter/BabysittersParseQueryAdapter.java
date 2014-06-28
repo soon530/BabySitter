@@ -2,6 +2,7 @@ package tw.tasker.babysitter.presenter.adapter;
 
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.view.CardView;
+import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.view.card.BabysitterGridCard;
@@ -28,7 +29,10 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 		} else {
 			recycle = true;
 		}
-
+		
+        float distance = (float) babysitter.getLocation().distanceInKilometersTo(Config.MY_LOCATION);
+        babysitter.setDistance(distance);
+        
 		BabysitterGridCard mCard = new BabysitterGridCard(getContext());
 		mCard.setBabysitter(babysitter);
 		mCard.init();
@@ -51,7 +55,8 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 		ParseQueryAdapter.QueryFactory<Babysitter> factory = new ParseQueryAdapter.QueryFactory<Babysitter>() {
 			public ParseQuery<Babysitter> create() {
 				ParseQuery<Babysitter> query = Babysitter.getQuery();
-				query.orderByDescending("createdAt");
+				query.whereNear("location", Config.MY_LOCATION);
+				
 /*				if (!DisplayUtils.hasNetwork(context)) {
 					LogUtils.LOGD("vic", "babysitters fromLocalDatastore()");
 					query.fromLocalDatastore();
