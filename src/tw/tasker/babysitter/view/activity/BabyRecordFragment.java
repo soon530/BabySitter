@@ -208,9 +208,11 @@ public class BabyRecordFragment extends BaseFragment implements
 			if (mIsChecked) {
 				item.setTitle("未收藏");
 				deleteFavorite();
+				addBabyDiaryTotalFavorite(-1);
 			} else {
 				item.setTitle("已收藏");
 				addFavorite();
+				addBabyDiaryTotalFavorite(1);
 			}
 			mIsChecked = !mIsChecked;
 			break;
@@ -340,6 +342,19 @@ public class BabyRecordFragment extends BaseFragment implements
 		});
 	}
 
+	private void addBabyDiaryTotalFavorite(final int value) {
+		ParseQuery<BabyDiary> query = BabyDiary.getQuery();
+		query.getInBackground(mBabyObjectId, new GetCallback<BabyDiary>() {
+
+			@Override
+			public void done(BabyDiary babyDiary, ParseException e) {
+				babyDiary.increment("totalFavorite", value);
+				babyDiary.saveInBackground();
+			}
+		});
+	}
+
+	
 	private void deleteFavorite() {
 		mRingProgressDialog = ProgressDialog.show(getActivity(),
 		"請稍等 ...", "取消收藏中...", true);

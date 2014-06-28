@@ -84,9 +84,16 @@ public class BabyDiary extends ParseObject {
 	public int getTotalRecord() {
 		return getInt("totalRecord");
 	}
-	
 	public void setTotalRecord(int value) {
 		put("totalRecord", value);
 	}
+
+	public int getTotalFavorite() {
+		return getInt("totalFavorite");
+	}
+	public void setTotalFavorite(int value) {
+		put("totalFavorite", value);
+	}
+
 
 }
