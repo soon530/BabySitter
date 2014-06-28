@@ -9,19 +9,22 @@ import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabyDiary;
 import tw.tasker.babysitter.model.data.BabyFavorite;
 import tw.tasker.babysitter.model.data.BabyRecord;
+import tw.tasker.babysitter.presenter.adapter.BabyFavoriteParseQueryAdapter;
 import tw.tasker.babysitter.view.activity.BabyRecordActivity;
+import tw.tasker.babysitter.view.fragment.BabyFavoriteEditDialogFragment;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+import com.parse.DeleteCallback;
+import com.parse.ParseException;
 
 public class BabyFavoriteGridCard extends Card {
 
@@ -29,6 +32,9 @@ public class BabyFavoriteGridCard extends Card {
 	private BabyDiary mBabyDiary;
 	private BabyRecord mBabyRecord;
 	private BabyFavorite mBabyFavorite;
+	private BabyFavoriteParseQueryAdapter mAdapter;
+	private Fragment mFragment;
+	private ProgressDialog mRingProgressDialog;
 
 	public BabyFavoriteGridCard(Context context) {
 		super(context, R.layout.baby_grid_card_inner_content);
@@ -48,8 +54,17 @@ public class BabyFavoriteGridCard extends Card {
 				new CardHeader.OnClickCardHeaderPopupMenuListener() {
 					@Override
 					public void onMenuItemClick(BaseCard card, MenuItem item) {
-						Toast.makeText(getContext(), "[" + item.getTitle() + "] 功能正在趕工中..",
-								Toast.LENGTH_SHORT).show();
+						int id =item.getItemId();
+						switch (id) {
+						case R.id.card_edit:
+							editCard();
+							break;
+						case R.id.card_del:
+							deleteCard();
+							//updateBabyDiary();
+						default:
+							break;
+						}
 					}
 				});
 
@@ -76,14 +91,41 @@ public class BabyFavoriteGridCard extends Card {
 		});
 	}
 
+	private void editCard() {
+		BabyFavoriteEditDialogFragment newFragment = new BabyFavoriteEditDialogFragment(mBabyDiary, mAdapter);
+		newFragment.show(mFragment.getFragmentManager(), "edit_dialog");
+	}
+	
+	private void deleteCard() {
+		mRingProgressDialog = ProgressDialog.show(mFragment.getActivity(),
+		"請稍等 ...", "資料刪除中...", true);
+
+		mBabyDiary.deleteInBackground(new DeleteCallback() {
+			
+			@Override
+			public void done(ParseException e) {
+				mAdapter.loadObjects();
+				mRingProgressDialog.dismiss();
+			}
+		});
+	}
+
 	@Override
 	public void setupInnerViewElements(ViewGroup parent, View view) {
 
 		TextView title = (TextView) view
 				.findViewById(R.id.carddemo_gplay_main_inner_title);
 		
-		String totalRecord = "成長記錄：" + mBabyDiary.getTotalRecord(); 
-		title.setText(totalRecord);
+		String totalRecord = "記錄" + mBabyDiary.getTotalRecord(); 
+		String totalFavorite = "收藏" + mBabyDiary.getTotalFavorite();
+
+		Boolean isPublic = mBabyDiary.getIsPublic();
+		String privateOrPublic = "  (私藏)";
+		if (isPublic) {
+			privateOrPublic = "  (公開)";
+		}
+		
+		title.setText(totalRecord + " " + totalFavorite + privateOrPublic);
 
 		TextView subtitle = (TextView) view
 				.findViewById(R.id.carddemo_gplay_main_inner_subtitle);
@@ -140,6 +182,14 @@ public class BabyFavoriteGridCard extends Card {
 
 	public void setBabyFavorite(BabyFavorite favorite) {
 		mBabyFavorite = favorite;
+	}
+
+	public void setAdapter(BabyFavoriteParseQueryAdapter adapter) {
+		mAdapter = adapter;
+	}
+
+	public void setFragment(Fragment fragment) {
+		mFragment = fragment;
 	}
 
 }

@@ -49,7 +49,7 @@ public class BabyFavoriteFragment extends BaseFragment implements
 	}
 
 	public void doListQuery() {
-		mAdapter = new BabyFavoriteParseQueryAdapter(getActivity());
+		mAdapter = new BabyFavoriteParseQueryAdapter(getActivity(), this);
 		mAdapter.setObjectsPerPage(Config.OBJECTS_PER_PAGE);
 		mAdapter.addOnQueryLoadListener(this);
 		mGridView.setAdapter(mAdapter);

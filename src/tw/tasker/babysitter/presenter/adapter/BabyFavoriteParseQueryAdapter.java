@@ -5,7 +5,9 @@ import it.gmariotti.cardslib.library.view.CardView;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabyFavorite;
 import tw.tasker.babysitter.view.card.BabyFavoriteGridCard;
+import tw.tasker.babysitter.view.fragment.BabyFavoriteFragment;
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -16,9 +18,11 @@ import com.parse.ParseUser;
 public class BabyFavoriteParseQueryAdapter extends
 		ParseQueryAdapter<BabyFavorite> {
 
-	public BabyFavoriteParseQueryAdapter(Context context) {
-		super(context, getQueryFactory(context));
+	private Fragment mFragment;
 
+	public BabyFavoriteParseQueryAdapter(Context context, Fragment fragment) {
+		super(context, getQueryFactory(context));
+		mFragment = fragment;
 	}
 
 	@Override
@@ -36,6 +40,8 @@ public class BabyFavoriteParseQueryAdapter extends
 
 		BabyFavoriteGridCard mCard = new BabyFavoriteGridCard(getContext());
 		mCard.setBabyFavorite(favorite);
+		mCard.setFragment(mFragment);
+		mCard.setAdapter(this);
 		mCard.init();
 
 		CardView mCardView;
