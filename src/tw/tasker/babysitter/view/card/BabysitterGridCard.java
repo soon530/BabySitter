@@ -50,7 +50,7 @@ public class BabysitterGridCard extends Card {
 */
 		addCardHeader(header);
 
-		GplayGridThumb thumbnail = new GplayGridThumb(getContext());
+		BabysitterGridThumb thumbnail = new BabysitterGridThumb(getContext());
 		thumbnail.setExternalUsage(true);
 		/*
 		 * if (resourceIdThumbnail > -1)
@@ -108,11 +108,11 @@ public class BabysitterGridCard extends Card {
 		mRatingBar.setRating(rating);
 	}
 
-	class GplayGridThumb extends CardThumbnail {
+	class BabysitterGridThumb extends CardThumbnail {
 		//private DisplayImageOptions options;
 		private ImageLoader imageLoader = ImageLoader.getInstance();
 
-		public GplayGridThumb(Context context) {
+		public BabysitterGridThumb(Context context) {
 			super(context);
 
 /*			options = new DisplayImageOptions.Builder()
