@@ -18,7 +18,7 @@ public class BabysitterItem implements ClusterItem {
         float distance = (float) babysitter.getLocation().distanceInKilometersTo(myPoint);
         babysitter.setDistance(distance);
         mBabysitter = babysitter;
-		LogUtils.LOGD("vic", babysitter.getName() + ", 距離:" + distance);
+		//LogUtils.LOGD("vic", babysitter.getName() + ", 距離:" + distance);
 
     }
 

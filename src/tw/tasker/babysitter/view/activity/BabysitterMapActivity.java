@@ -3,15 +3,13 @@ package tw.tasker.babysitter.view.activity;
 import static tw.tasker.babysitter.utils.LogUtils.makeLogTag;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
+import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.presenter.BabysitterMapPresenter;
 import tw.tasker.babysitter.presenter.impl.BabysitterMapPresenterImpl;
-import tw.tasker.babysitter.utils.LogUtils;
-import tw.tasker.babysitter.utils.ProgressBarUtils;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -19,11 +17,9 @@ import android.support.v7.app.ActionBarActivity;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMap.OnCameraChangeListener;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMapLoadedCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -95,7 +91,7 @@ public class BabysitterMapActivity extends ActionBarActivity implements
 	public void showMyLocation(LatLngBounds latLngBounds) {
 		//CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(latLngBounds, 5);
 		
-		LatLng latLng = new LatLng(22.885127, 120.589881);
+		LatLng latLng = new LatLng(Config.LAT, Config.LNG);
 		CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 9);
 		mMap.animateCamera(cameraUpdate);
 		mMap.setMyLocationEnabled(true);
