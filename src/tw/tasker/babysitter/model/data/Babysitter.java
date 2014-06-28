@@ -119,6 +119,13 @@ public class Babysitter extends ParseObject {
 	public void setDistance(float distance) {
 		mDistance = distance;
 	}
+	
+	public int getTotalFavorite() {
+		return getInt("totalFavorite");
+	}
+	public void setTotalFavorite(int value) {
+		put("totalFavorite", value);
+	}
 
 	public static ParseQuery<Babysitter> getQuery() {
 		return ParseQuery.getQuery(Babysitter.class);

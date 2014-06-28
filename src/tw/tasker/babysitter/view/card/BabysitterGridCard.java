@@ -38,7 +38,6 @@ public class BabysitterGridCard extends Card {
 		CardHeader header = new CardHeader(getContext());
 		header.setButtonOverflowVisible(false);
 		
-		
 		header.setTitle(mBabysitter.getName());
 /*		header.setPopupMenu(R.menu.popupmain,
 				new CardHeader.OnClickCardHeaderPopupMenuListener() {
@@ -76,11 +75,12 @@ public class BabysitterGridCard extends Card {
 	public void setupInnerViewElements(ViewGroup parent, View view) {
 		float totalRatingValue = mBabysitter.getTotalRating();
 		int totalComementValue = mBabysitter.getTotalComment();
+		int totalFavorite = mBabysitter.getTotalFavorite();
 
 		TextView title = (TextView) view
 				.findViewById(R.id.carddemo_gplay_main_inner_title);
 
-		title.setText("保母評論:" + String.valueOf(totalComementValue));
+		title.setText("評論" + String.valueOf(totalComementValue) + " 收藏" + String.valueOf(totalFavorite));
 
 		TextView subtitle = (TextView) view
 				.findViewById(R.id.carddemo_gplay_main_inner_subtitle);

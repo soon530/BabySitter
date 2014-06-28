@@ -264,9 +264,11 @@ public class BabysitterFragment extends Fragment implements
 			if (mIsChecked) {
 				item.setTitle("未收藏");
 				deleteFavorite();
+				deleteBabysitter();
 			} else {
 				item.setTitle("已收藏");
 				addFavorite();
+				addBabysitter();
 			}
 			mIsChecked = !mIsChecked;
 
@@ -339,7 +341,7 @@ public class BabysitterFragment extends Fragment implements
 		});
 	}
 	
-/*	private void updateBabysitter() {
+	private void addBabysitter() {
 
 		ParseQuery<Babysitter> query = Babysitter.getQuery();
 		//query.fromLocalDatastore();
@@ -351,7 +353,6 @@ public class BabysitterFragment extends Fragment implements
 					}
 				});
 	}
-*/
 
 	private void deleteFavorite() {
 		mRingProgressDialog = ProgressDialog.show(getActivity(),
@@ -373,6 +374,20 @@ public class BabysitterFragment extends Fragment implements
 			}
 		});
 	}
+	
+	private void deleteBabysitter() {
+
+		ParseQuery<Babysitter> query = Babysitter.getQuery();
+		//query.fromLocalDatastore();
+		query.getInBackground(mBabysitterObjectId,
+				new GetCallback<Babysitter>() {
+					public void done(Babysitter babysitter, ParseException e) {
+						babysitter.increment("totalFavorite", -1);
+						babysitter.saveInBackground();
+					}
+				});
+	}
+
 
 
 }
