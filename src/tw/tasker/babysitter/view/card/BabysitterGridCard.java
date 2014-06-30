@@ -20,11 +20,13 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
 
 public class BabysitterGridCard extends Card {
 
 	//private int resourceIdThumbnail = -1;
 	private Babysitter mBabysitter;
+	private ImageLoadingListener mListener;
 
 	public BabysitterGridCard(Context context) {
 		super(context, R.layout.carddemo_gplay_inner_content);
@@ -135,7 +137,7 @@ public class BabysitterGridCard extends Card {
 			url = "http://cwisweb.sfaa.gov.tw/" + mBabysitter.getImageUrl();
 			// }
 
-			imageLoader.displayImage(url, (ImageView) viewImage, Config.OPTIONS, null);
+			imageLoader.displayImage(url, (ImageView) viewImage, Config.OPTIONS, mListener);
 
 			// viewImage.getLayoutParams().width = 196;
 			// viewImage.getLayoutParams().height = 196;
@@ -145,5 +147,9 @@ public class BabysitterGridCard extends Card {
 
 	public void setBabysitter(Babysitter babysitter) {
 		mBabysitter = babysitter;
+	}
+
+	public void setListener(ImageLoadingListener imageLoadingListener) {
+		mListener = imageLoadingListener;
 	}
 }

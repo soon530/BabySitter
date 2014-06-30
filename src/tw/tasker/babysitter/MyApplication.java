@@ -54,6 +54,7 @@ public class MyApplication extends Application {
         .memoryCache(new LruMemoryCache(2 * 1024 * 1024))
         .defaultDisplayImageOptions(DisplayImageOptions.createSimple())
         .writeDebugLogs()
+        .denyCacheImageMultipleSizesInMemory()
         .build();
 
 		

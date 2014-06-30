@@ -6,13 +6,17 @@ import java.util.HashMap;
 
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
+import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.view.card.BabysitterGridCard;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.model.Marker;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
 
 public class MyInfoWindowAdapter implements InfoWindowAdapter {
 
@@ -29,11 +33,40 @@ public class MyInfoWindowAdapter implements InfoWindowAdapter {
 	@Override
 	public View getInfoContents(Marker marker) {
 
+		final Marker markerShowingInfoWindow = marker;
 		View view = mLayoutinflater.inflate(R.layout.list_item_map, null);
 
 		Babysitter babysitter = mMapModel.get(marker.getId());
 		BabysitterGridCard mCard = new BabysitterGridCard(mContext);
 		mCard.setBabysitter(babysitter);
+		mCard.setListener(new ImageLoadingListener() {
+			
+			@Override
+			public void onLoadingStarted(String arg0, View arg1) {
+				
+			}
+			
+			@Override
+			public void onLoadingFailed(String arg0, View arg1, FailReason arg2) {
+				
+			}
+			
+			@Override
+			public void onLoadingComplete(String arg0, View arg1, Bitmap arg2) {
+				if (markerShowingInfoWindow != null && markerShowingInfoWindow.isInfoWindowShown()) {
+
+				    markerShowingInfoWindow.hideInfoWindow();
+				    markerShowingInfoWindow.showInfoWindow();
+				    //LogUtils.LOGD("vic", "this pic is ok!");
+
+				}			
+			}
+			
+			@Override
+			public void onLoadingCancelled(String arg0, View arg1) {
+				
+			}
+		});
 		mCard.init();
 
 		CardView mCardView;
