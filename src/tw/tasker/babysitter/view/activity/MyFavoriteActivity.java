@@ -68,7 +68,8 @@ public class MyFavoriteActivity extends FragmentActivity {
 		return true;
 	}
 */
-	@Override
+
+/*	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		switch (item.getItemId()) {
@@ -76,7 +77,7 @@ public class MyFavoriteActivity extends FragmentActivity {
 
 		return super.onOptionsItemSelected(item);
 	}
-
+*/
 	public class MyPagerAdapter extends FragmentPagerAdapter {
 
 		private final String[] TITLES = { "保母收藏", "寶寶收藏"};
