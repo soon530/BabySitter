@@ -37,8 +37,18 @@ import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 
 public class BabyDiaryFragment extends BaseFragment implements
 		OnQueryLoadListener<BabyDiary> {
+	private int mPosition;
 	private ParseQueryAdapter<BabyDiary> mAdapter;
 	private String mBabysitterObjectId;
+
+	public BabyDiaryFragment(int position) {
+		mPosition = position;
+	}
+
+	public static Fragment newInstance(int position) {
+		BabyDiaryFragment fragment = new BabyDiaryFragment(position);
+		return fragment;
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -88,7 +98,7 @@ public class BabyDiaryFragment extends BaseFragment implements
 	}
 
 	public void doListQuery() {
-		mAdapter = new BabyDiaryParseQueryAdapter(getActivity(), mBabysitterObjectId, this);
+		mAdapter = new BabyDiaryParseQueryAdapter(getActivity(), mBabysitterObjectId, this, mPosition);
 		mAdapter.setObjectsPerPage(Config.OBJECTS_PER_PAGE);
 		mAdapter.addOnQueryLoadListener(this);
 		mGridView.setAdapter(mAdapter);

@@ -14,13 +14,14 @@ import android.view.ViewGroup;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
+import com.parse.ParseUser;
 
 public class BabyDiaryParseQueryAdapter extends ParseQueryAdapter<BabyDiary> {
 
 	private Fragment mFragment;
 
-	public BabyDiaryParseQueryAdapter(Context context, String babysitterObjectId, Fragment fragment) {
-		super(context, getQueryFactory(babysitterObjectId, context));
+	public BabyDiaryParseQueryAdapter(Context context, String babysitterObjectId, Fragment fragment, int position) {
+		super(context, getQueryFactory(babysitterObjectId, context, position));
 		mFragment = fragment;
 	}
 
@@ -65,12 +66,20 @@ public class BabyDiaryParseQueryAdapter extends ParseQueryAdapter<BabyDiary> {
 		return view;
 	}
 
-	private static ParseQueryAdapter.QueryFactory<BabyDiary> getQueryFactory(final String babysitterObjectId, final Context context) {
+	private static ParseQueryAdapter.QueryFactory<BabyDiary> getQueryFactory(final String babysitterObjectId, final Context context,final int position) {
 		ParseQueryAdapter.QueryFactory<BabyDiary> factory = new ParseQueryAdapter.QueryFactory<BabyDiary>() {
 			public ParseQuery<BabyDiary> create() {
 				ParseQuery<BabyDiary> query = BabyDiary.getQuery();
 				query.include("BabyRecord");
 				query.include("user");
+				
+				if (position == 0) {
+					query.whereEqualTo("isPublic", true);
+				} else {
+					query.whereEqualTo("isPublic", false);
+					query.whereEqualTo("user", ParseUser.getCurrentUser());
+				}
+				
 				// 如果是從保母點過來的[寶寶日記]
 				if (babysitterObjectId != null) {
 					Babysitter babysitter = ParseObject.createWithoutData(Babysitter.class, babysitterObjectId);
