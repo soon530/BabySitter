@@ -76,7 +76,8 @@ public class BabyDiaryParseQueryAdapter extends ParseQueryAdapter<BabyDiary> {
 					Babysitter babysitter = ParseObject.createWithoutData(Babysitter.class, babysitterObjectId);
 					query.whereEqualTo("Babysitter", babysitter);
 				}
-				query.orderByDescending("createdAt");
+				query.orderByDescending("totalRecord");
+				//query.addDescendingOrder("createdAt");
 				
 /*				if (!DisplayUtils.hasNetwork(context)) {
 					query.fromLocalDatastore();
