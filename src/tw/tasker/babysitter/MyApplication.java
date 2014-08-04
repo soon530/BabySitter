@@ -6,6 +6,7 @@ import tw.tasker.babysitter.model.data.BabyRecord;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.BabysitterComment;
 import tw.tasker.babysitter.model.data.BabysitterFavorite;
+import tw.tasker.babysitter.model.data.City;
 import android.app.Application;
 import android.content.Context;
 
@@ -29,6 +30,7 @@ public class MyApplication extends Application {
 		ParseObject.registerSubclass(BabyFavorite.class);
 		ParseObject.registerSubclass(BabysitterFavorite.class);
 		ParseObject.registerSubclass(BabyRecord.class);
+		ParseObject.registerSubclass(City.class);
 
 	    //Parse.enableLocalDatastore(this);
 		Parse.initialize(this, APPLICATION_ID, CLIENT_KEY);
@@ -53,7 +55,7 @@ public class MyApplication extends Application {
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
         .memoryCache(new LruMemoryCache(2 * 1024 * 1024))
         .defaultDisplayImageOptions(DisplayImageOptions.createSimple())
-        .writeDebugLogs()
+        //.writeDebugLogs()
         .denyCacheImageMultipleSizesInMemory()
         .build();
 

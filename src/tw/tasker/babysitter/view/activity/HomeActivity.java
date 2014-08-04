@@ -1,5 +1,8 @@
 package tw.tasker.babysitter.view.activity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.utils.LogUtils;
@@ -42,10 +45,11 @@ public class HomeActivity extends ActionBarActivity {
 				@Override
 				public void done(ParseGeoPoint parseGeoPoint) {
 					Config.MY_LOCATION= parseGeoPoint;
-					LogUtils.LOGD("vic", "get my location at ("+parseGeoPoint.getLatitude()+","+parseGeoPoint.getLongitude()+")");
+					//Config.MY_LOCATION = Config.MY_TEST_LOCATION;
+					//LogUtils.LOGD("vic", "get my location at ("+parseGeoPoint.getLatitude()+","+parseGeoPoint.getLongitude()+")");
 				}
+
 			});
 		//}
-		
 	}
 }
