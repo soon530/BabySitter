@@ -23,7 +23,7 @@ public class BabyDiaryActivity extends ActionBarActivity {
 	private PagerSlidingTabStrip tabs;
 	private ViewPager pager;
 	private MyPagerAdapter adapter;
-	private int currentColor = Color.parseColor("#A966CC"); //0xFF666666;
+	private int currentColor = Color.parseColor("#33B4E4"); //0xFF666666;
 	private Bundle arguments;
 
 	@Override
