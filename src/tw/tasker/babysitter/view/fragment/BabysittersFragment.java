@@ -8,6 +8,7 @@ import tw.tasker.babysitter.view.BabysitterListView;
 import tw.tasker.babysitter.view.activity.BabysitterMapActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +22,16 @@ public class BabysittersFragment extends BaseFragment implements
 		BabysitterListView  {
 
 	private BabysitterListPresenter mPresenter;
+	public int mPosition;
+
+	public BabysittersFragment(int position) {
+		mPosition = position;
+	}
+
+	public static Fragment newInstance(int position) {
+		BabysittersFragment fragment = new BabysittersFragment(position);
+		return fragment;
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

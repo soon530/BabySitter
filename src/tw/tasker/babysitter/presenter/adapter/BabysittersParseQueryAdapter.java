@@ -15,8 +15,8 @@ import com.parse.ParseQueryAdapter;
 
 public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> {
 
-	public BabysittersParseQueryAdapter(Context context) {
-		super(context, getQueryFactory(context));
+	public BabysittersParseQueryAdapter(Context context, int position) {
+		super(context, getQueryFactory(context, position));
 	}
 
 	@Override
@@ -51,10 +51,13 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 		return view;
 	}
 
-	private static ParseQueryAdapter.QueryFactory<Babysitter> getQueryFactory(final Context context) {
+	private static ParseQueryAdapter.QueryFactory<Babysitter> getQueryFactory(final Context context, final int position) {
 		ParseQueryAdapter.QueryFactory<Babysitter> factory = new ParseQueryAdapter.QueryFactory<Babysitter>() {
 			public ParseQuery<Babysitter> create() {
 				ParseQuery<Babysitter> query = Babysitter.getQuery();
+				if (position == 1) { //臨時保母
+					query.whereContains("babycareTime", "臨時");
+				}
 				query.whereNear("location", Config.MY_LOCATION);
 				
 /*				if (!DisplayUtils.hasNetwork(context)) {
