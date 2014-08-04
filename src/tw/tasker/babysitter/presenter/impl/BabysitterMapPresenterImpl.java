@@ -36,11 +36,10 @@ public class BabysitterMapPresenterImpl extends FindCallback<Babysitter> impleme
 	}
 
 	public void doMapQuery() {
-
 		ParseQuery<Babysitter> mapQuery = Babysitter.getQuery();
 		mapQuery.whereWithinKilometers("location", Config.MY_LOCATION, Config.MAX_POST_SEARCH_DISTANCE);
 		mapQuery.findInBackground(this);
-		// mapQuery.fromLocalDatastore();
+		//mapQuery.fromLocalDatastore();
 		//mapQuery.whereWithinGeoBox(key, southwest, northeast)
 	}
 

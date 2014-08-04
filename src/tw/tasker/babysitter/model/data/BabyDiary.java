@@ -1,7 +1,5 @@
 package tw.tasker.babysitter.model.data;
 
-import tw.tasker.babysitter.view.activity.BabyRecordFragment;
-
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
