@@ -8,8 +8,10 @@ import java.util.List;
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
+import tw.tasker.babysitter.model.data.City;
 import tw.tasker.babysitter.presenter.BabysitterMapPresenter;
 import tw.tasker.babysitter.presenter.impl.BabysitterMapPresenterImpl;
+import tw.tasker.babysitter.utils.LogUtils;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -24,7 +26,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.maps.android.clustering.ClusterManager;
+import com.parse.GetCallback;
+import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseQuery;
 
 public class BabysitterMapActivity extends ActionBarActivity implements
 		OnInfoWindowClickListener, OnMapLoadedCallback {
@@ -88,10 +93,10 @@ public class BabysitterMapActivity extends ActionBarActivity implements
 		mPresneter.onMapLoaded();
 	}
 
-	public void showMyLocation(LatLngBounds latLngBounds) {
+	public void showMyLocation(double lat, double lng/*LatLngBounds latLngBounds*/) {
 		//CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(latLngBounds, 5);
 		
-		LatLng latLng = new LatLng(Config.LAT, Config.LNG);
+		LatLng latLng = new LatLng(lat, lng);
 		CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 9);
 		mMap.animateCamera(cameraUpdate);
 		mMap.setMyLocationEnabled(true);
@@ -105,13 +110,31 @@ public class BabysitterMapActivity extends ActionBarActivity implements
 		}
 		mClusterManager.addItems(items);
 		
+		
+		getCity();
+		
 		//TODO 先預設抓高雄
-		showMyLocation(null);
+		//showMyLocation(null);
 		
 		//ProgressBarUtils.hide(this);
-		mRingProgressDialog.dismiss();
 	}
 	
+	private void getCity() {
+		ParseQuery<City> mapQuery = City.getQuery();
+		mapQuery.whereNear("location", Config.MY_LOCATION);
+		mapQuery.getFirstInBackground(new GetCallback<City>() {
+			
+			@Override
+			public void done(City city, ParseException e) {
+				
+				ParseGeoPoint point = city.getLocation();
+				showMyLocation(point.getLatitude(), point.getLongitude());
+				LogUtils.LOGD("vic", "city=" + city.getName());
+				mRingProgressDialog.dismiss();
+			}
+		});
+	}
+
 	@Override
 	public void onInfoWindowClick(Marker marker) {
 		//mPresneter.onInfoWindowClick(marker);
