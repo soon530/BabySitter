@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="tw.tasker.babysitter"
-    android:versionCode="1"
-    android:versionName="Babysitter-v1.0.0-alpha" >
+    android:versionCode="2"
+    android:versionName="Babysitter-v1.0.1-alpha" >
 
     <uses-sdk
         android:minSdkVersion="11"
@@ -32,7 +32,7 @@
         android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyDNF4K0rL0-JwnmfiIGS0usY4o9f6-l7rg" />
+            android:value="AIzaSyCLzUxrhoPiXZVBxFiicvuUy9fbvzQ4h0c" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
