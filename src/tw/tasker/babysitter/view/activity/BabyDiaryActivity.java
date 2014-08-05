@@ -1,5 +1,8 @@
 package tw.tasker.babysitter.view.activity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
@@ -15,6 +18,7 @@ import android.util.TypedValue;
 import android.view.MenuItem;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.parse.ParseAnalytics;
 
 public class BabyDiaryActivity extends ActionBarActivity {
 
@@ -52,6 +56,11 @@ public class BabyDiaryActivity extends ActionBarActivity {
 		tabs.setIndicatorColor(currentColor);
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
+		Map<String, String> dimensions = new HashMap<String, String>();
+		dimensions.put("menu", "babyDiary");
+		ParseAnalytics.trackEvent("home", dimensions);
+
 	}
 	
 	@Override

@@ -16,6 +16,9 @@
 
 package tw.tasker.babysitter.view.activity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.fragment.BabyFavoriteFragment;
@@ -31,6 +34,7 @@ import android.util.TypedValue;
 import android.view.MenuItem;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.parse.ParseAnalytics;
 
 public class MyFavoriteActivity extends FragmentActivity {
 
@@ -58,9 +62,11 @@ public class MyFavoriteActivity extends FragmentActivity {
 		tabs.setIndicatorColor(currentColor);
 		
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
+		Map<String, String> dimensions = new HashMap<String, String>();
+		dimensions.put("menu", "myFavorite");
+		ParseAnalytics.trackEvent("home", dimensions);
 	}
-	
-	
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {

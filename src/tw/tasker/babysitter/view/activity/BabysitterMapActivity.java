@@ -3,7 +3,9 @@ package tw.tasker.babysitter.view.activity;
 import static tw.tasker.babysitter.utils.LogUtils.makeLogTag;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
@@ -27,6 +29,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.maps.android.clustering.ClusterManager;
 import com.parse.GetCallback;
+import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
@@ -49,6 +52,11 @@ public class BabysitterMapActivity extends ActionBarActivity implements
 		
 		setContentView(R.layout.fragment_search_babysitter_map);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+
+		Map<String, String> dimensions = new HashMap<String, String>();
+		dimensions.put("menu", "map");
+		ParseAnalytics.trackEvent("home", dimensions);
+
 		mRingProgressDialog = ProgressDialog.show(
 				this, "請稍等 ...", "資料準備中...", true);
 
