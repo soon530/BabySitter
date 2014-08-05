@@ -1,12 +1,7 @@
 package tw.tasker.babysitter.view.activity;
 
-import com.astuetz.PagerSlidingTabStrip;
-
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
-import tw.tasker.babysitter.view.activity.BabysitterActivity.MyPagerAdapter;
-import tw.tasker.babysitter.view.fragment.BabysitterCommentFragment;
-import tw.tasker.babysitter.view.fragment.BabysitterFragment;
 import tw.tasker.babysitter.view.fragment.BabysittersFragment;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,6 +11,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.TypedValue;
+import android.view.MenuItem;
+
+import com.astuetz.PagerSlidingTabStrip;
 
 public class BabysittersActivity extends ActionBarActivity {
 
@@ -42,10 +40,27 @@ public class BabysittersActivity extends ActionBarActivity {
 		tabs.setViewPager(pager);
 		tabs.setIndicatorColor(currentColor);
 
-		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+
 		//BabysittersFragment fragment = new BabysittersFragment();
 //		getSupportFragmentManager().beginTransaction()
 //				.add(R.id.container, fragment).commit();
+	}
+		
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+
+		switch (id) {
+		case android.R.id.home:
+			finish();
+			break;
+
+		default:
+			break;
+		}
+
+		return super.onOptionsItemSelected(item);
 	}
 	
 	public class MyPagerAdapter extends FragmentPagerAdapter {

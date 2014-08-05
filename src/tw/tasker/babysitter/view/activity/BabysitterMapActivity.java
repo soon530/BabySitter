@@ -15,6 +15,7 @@ import tw.tasker.babysitter.utils.LogUtils;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.MenuItem;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -23,7 +24,6 @@ import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMapLoadedCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.maps.android.clustering.ClusterManager;
 import com.parse.GetCallback;
@@ -48,6 +48,7 @@ public class BabysitterMapActivity extends ActionBarActivity implements
 	    //setProgressBarVisibility(true);
 		
 		setContentView(R.layout.fragment_search_babysitter_map);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		mRingProgressDialog = ProgressDialog.show(
 				this, "請稍等 ...", "資料準備中...", true);
 
@@ -78,6 +79,21 @@ public class BabysitterMapActivity extends ActionBarActivity implements
 */		}
 	}
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+
+		switch (id) {
+		case android.R.id.home:
+			finish();
+			break;
+
+		default:
+			break;
+		}
+    	return super.onOptionsItemSelected(item);
+    }
+    
 	private void setUpMapIfNeeded() {
 		// Do a null check to confirm that we have not already instantiated the
 		// map.

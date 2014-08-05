@@ -28,7 +28,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.TypedValue;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import com.astuetz.PagerSlidingTabStrip;
@@ -57,27 +56,29 @@ public class MyFavoriteActivity extends FragmentActivity {
 
 		tabs.setViewPager(pager);
 		tabs.setIndicatorColor(currentColor);
+		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 	
 	
 
-/*	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.main, menu);
-
-		return true;
-	}
-*/
-
-/*	@Override
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
-		switch (item.getItemId()) {
+		int id = item.getItemId();
+
+		switch (id) {
+		case android.R.id.home:
+			finish();
+			break;
+
+		default:
+			break;
 		}
 
 		return super.onOptionsItemSelected(item);
 	}
-*/
+
 	public class MyPagerAdapter extends FragmentPagerAdapter {
 
 		private final String[] TITLES = { "保母收藏", "寶寶收藏"};

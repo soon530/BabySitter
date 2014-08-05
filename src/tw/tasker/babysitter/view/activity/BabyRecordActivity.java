@@ -5,6 +5,7 @@ import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.MenuItem;
 
 public class BabyRecordActivity extends ActionBarActivity {
 
@@ -13,7 +14,7 @@ public class BabyRecordActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		ProgressBarUtils.init(this);
 		setContentView(R.layout.activity_container);
-
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		if (savedInstanceState == null) {
 			Bundle arguments = new Bundle();
 			arguments.putString(Config.BABY_OBJECT_ID, getIntent()
@@ -26,5 +27,20 @@ public class BabyRecordActivity extends ActionBarActivity {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, fragment).commit();
 		}
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+
+		switch (id) {
+		case android.R.id.home:
+			finish();
+			break;
+
+		default:
+			break;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 }
