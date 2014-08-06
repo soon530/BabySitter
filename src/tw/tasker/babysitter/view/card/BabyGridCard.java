@@ -44,7 +44,11 @@ public class BabyGridCard extends Card {
 	}
 
 	public void init() {
-		String currenUser = ParseUser.getCurrentUser().getUsername(); 
+		String currenUser = "";
+		if (ParseUser.getCurrentUser() != null) {
+			currenUser = ParseUser.getCurrentUser().getUsername();
+		}
+		
 		String recordUser = mBabyDiary.getUser().getUsername();
 
 		mBabyRecord = mBabyDiary.getBabyRecord();

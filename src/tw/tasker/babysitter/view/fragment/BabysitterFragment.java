@@ -12,12 +12,14 @@ import tw.tasker.babysitter.presenter.impl.BabysitterDetailPresenterImpl;
 import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.BabysitterDetailView;
+import tw.tasker.babysitter.view.activity.DispatchActivity;
 import tw.tasker.babysitter.view.card.BabysitterCard;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -260,17 +262,28 @@ public class BabysitterFragment extends Fragment implements
 
 		switch (id) {
 		case R.id.action_favorite:
-			if (mIsChecked) {
-				item.setTitle("未收藏");
-				deleteFavorite();
-				deleteBabysitter();
-			} else {
-				item.setTitle("已收藏");
-				addFavorite();
-				addBabysitter();
-			}
-			mIsChecked = !mIsChecked;
+			
+		    if (ParseUser.getCurrentUser() == null) { //沒有登入的
+				Intent intent = new Intent();
+				// Start and intent for the dispatch activity
+				intent.setClass(getActivity(), DispatchActivity.class);
+//				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+//						| Intent.FLAG_ACTIVITY_NEW_TASK);
+				startActivity(intent);
+		    } else { // 有登入的話
+		    
+				if (mIsChecked) {
+					item.setTitle("未收藏");
+					deleteFavorite();
+					deleteBabysitter();
+				} else {
+					item.setTitle("已收藏");
+					addFavorite();
+					addBabysitter();
+				}
+				mIsChecked = !mIsChecked;
 
+		    }
 			break;
 		default:
 			break;

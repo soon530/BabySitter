@@ -72,7 +72,11 @@ public class BabysitterCommentCard extends Card {
     }
 
     public void init() {
-		String currenUser = ParseUser.getCurrentUser().getUsername(); 
+		String currenUser = "";
+		if (ParseUser.getCurrentUser() != null) {
+			currenUser = ParseUser.getCurrentUser().getUsername();
+		}
+		
 		String commentUser = mBabysitterComment.getUser().getUsername();
 
         CardHeader header = new CardHeader(getContext());

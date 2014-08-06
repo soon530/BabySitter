@@ -193,6 +193,15 @@ public class BabyRecordFragment extends BaseFragment implements
 		
 		switch (id) {
 		case R.id.action_add:
+			if (ParseUser.getCurrentUser() == null) { // 沒有登入
+				Intent intent = new Intent();
+				// Start and intent for the dispatch activity
+				intent.setClass(getActivity(), DispatchActivity.class);
+//				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+//						| Intent.FLAG_ACTIVITY_NEW_TASK);
+				startActivity(intent);
+			} else { // 有登入
+
 			
 			//if (DisplayUtils.hasNetwork(getActivity())) {
 				Intent intent_camera = new Intent(
@@ -201,20 +210,30 @@ public class BabyRecordFragment extends BaseFragment implements
 			//}else {
 				//Toast.makeText(getActivity(), "新增[成長記錄]需開啟網路...", Toast.LENGTH_SHORT).show();
 			//}
-			
+			}
 			break;
 
 		case R.id.action_favorite:
-			if (mIsChecked) {
-				item.setTitle("未收藏");
-				deleteFavorite();
-				addBabyDiaryTotalFavorite(-1);
-			} else {
-				item.setTitle("已收藏");
-				addFavorite();
-				addBabyDiaryTotalFavorite(1);
+			if (ParseUser.getCurrentUser() == null) { // 沒有登入
+				Intent intent = new Intent();
+				// Start and intent for the dispatch activity
+				intent.setClass(getActivity(), DispatchActivity.class);
+//				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+//						| Intent.FLAG_ACTIVITY_NEW_TASK);
+				startActivity(intent);
+			} else { // 有登入
+
+				if (mIsChecked) {
+					item.setTitle("未收藏");
+					deleteFavorite();
+					addBabyDiaryTotalFavorite(-1);
+				} else {
+					item.setTitle("已收藏");
+					addFavorite();
+					addBabyDiaryTotalFavorite(1);
+				}
+				mIsChecked = !mIsChecked;
 			}
-			mIsChecked = !mIsChecked;
 			break;
 		default:
 			break;

@@ -33,5 +33,14 @@ public class SignUpOrLogInActivity extends Activity {
         startActivity(new Intent(SignUpOrLogInActivity.this, SignUpActivity.class));
       }
     });
+
+    // Sign up button click handler
+    ((Button) findViewById(R.id.go)).setOnClickListener(new OnClickListener() {
+      public void onClick(View v) {
+        // Starts an intent for the sign up activity
+        startActivity(new Intent(SignUpOrLogInActivity.this, HomeActivity.class));
+      }
+    });
+
   }
 }

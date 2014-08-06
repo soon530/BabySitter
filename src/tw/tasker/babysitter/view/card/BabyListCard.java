@@ -46,7 +46,11 @@ public class BabyListCard extends Card {
 	}
 
 	public void init() {
-		String currenUser = ParseUser.getCurrentUser().getUsername(); 
+		String currenUser = "";
+		if (ParseUser.getCurrentUser() != null) {
+			currenUser = ParseUser.getCurrentUser().getUsername();
+		}
+		
 		String recordUser = mBabyRecord.getUser().getUsername();
 		
 		CardHeader header = new CardHeader(getContext());

@@ -103,8 +103,15 @@ public class HomeFragment extends Fragment implements OnCardClickListener {
 				break;
 			case 3:
 				card.setBackgroundResourceId(R.drawable.demo_card_selector_color2);
-				card.setTitle("登出帳號");
-				card.setDescription("更有保障，登出後任何人都無法使用您的功能");
+				
+			    if (ParseUser.getCurrentUser() == null) { //沒有登入的
+			    	card.setTitle("登入帳號");			    	
+					card.setDescription("更多功能，登入後可收藏保母及幫保母評分");
+			    } else {
+			    	card.setTitle("登出帳號");
+					card.setDescription("更有保障，登出後任何人都無法使用您的功能");
+			    }
+				
 				break;
 			case 4:
 				card.setBackgroundResourceId(R.drawable.demo_card_selector_color1);
@@ -136,20 +143,47 @@ public class HomeFragment extends Fragment implements OnCardClickListener {
 			break;
 
 		case 1:
-			intent = new Intent();
-			intent.setClass(getActivity(), BabyDiaryActivity.class);
-			startActivity(intent);
+		    
+//			if (ParseUser.getCurrentUser() == null) { //沒有登入
+//				intent = new Intent();
+//				// Start and intent for the dispatch activity
+//				intent.setClass(getActivity(), DispatchActivity.class);
+//				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+//						| Intent.FLAG_ACTIVITY_NEW_TASK);
+//				startActivity(intent);
+//
+//		    } else { // 有登入
+				intent = new Intent();
+				intent.setClass(getActivity(), BabyDiaryActivity.class);
+				startActivity(intent);
+//		    }			
+			
 			break;
 
 		case 2:
-			intent = new Intent();
-			intent.setClass(getActivity(), MyFavoriteActivity.class);
-			startActivity(intent);
+		    if (ParseUser.getCurrentUser() == null) { //沒有登入
+				intent = new Intent();
+				// Start and intent for the dispatch activity
+				intent.setClass(getActivity(), DispatchActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+						| Intent.FLAG_ACTIVITY_NEW_TASK);
+				startActivity(intent);
+
+		    } else { // 有登入
+
+				intent = new Intent();
+				intent.setClass(getActivity(), MyFavoriteActivity.class);
+				startActivity(intent);
+		    }
 			break;
 
 		case 3:
-			// Call the Parse log out method
-			ParseUser.logOut();
+		    if (ParseUser.getCurrentUser() == null) { //沒有登入
+		    } else { // 有登入
+		    	// Call the Parse log out method
+		    	ParseUser.logOut();		    	
+		    }
+			
 			intent = new Intent();
 			// Start and intent for the dispatch activity
 			intent.setClass(getActivity(), DispatchActivity.class);
