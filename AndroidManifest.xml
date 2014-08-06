@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="tw.tasker.babysitter"
-    android:versionCode="2"
-    android:versionName="Babysitter-v1.0.1-alpha" >
+    android:versionCode="3"
+    android:versionName="Babysitter-v1.0.2" >
 
     <uses-sdk
         android:minSdkVersion="11"
