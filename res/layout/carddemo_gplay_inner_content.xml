@@ -52,6 +52,8 @@
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="5dp"
         android:textColor="#BBB"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+		android:maxLines="2"
+ 	/>
 
 </RelativeLayout>
