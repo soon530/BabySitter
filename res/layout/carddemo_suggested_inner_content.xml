@@ -16,42 +16,48 @@
   ~   See the License for the specific language governing permissions and
   ~   limitations under the License.
   ~  *****************************************************************************
-  -->
+-->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:paddingLeft="10dp"
-              android:gravity="center_vertical"
-              android:minHeight="150dp"
-              android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:minHeight="150dp"
+    android:orientation="vertical"
+    android:paddingLeft="10dp" >
+
+    <TextView
+        android:id="@+id/carddemo_suggested_number"
+        style="@style/carddemo_suggested_text_bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/carddemo_suggested_title"
         style="@style/carddemo_suggested_text_bold"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp" />
 
     <TextView
         android:id="@+id/carddemo_suggested_memeber"
-        android:paddingTop="5dp"
         style="@style/carddemo_suggested_text_bold"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp" />
 
     <TextView
         android:id="@+id/carddemo_suggested_subtitle"
         style="@style/carddemo_suggested_text_bold"
-        android:paddingTop="5dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp" />
 
     <TextView
         android:id="@+id/carddemo_suggested_community"
-        android:paddingTop="5dp"
         style="@style/carddemo_suggested_text_bold"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp" />
 
 </LinearLayout>

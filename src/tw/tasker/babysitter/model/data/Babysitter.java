@@ -18,6 +18,14 @@ public class Babysitter extends ParseObject {
 		put("imageUrl", value);
 	}
 
+	public String getBabysitterNumber() {
+		String value = getString("babysitterNumber");
+		return value;
+	}
+	public void setBabysitterNumber(String value) {
+		put("babysitterNumber", value);
+	}
+
 	public String getName() {
 		String value = getString("name");
 		return value;

@@ -82,6 +82,8 @@ public class BabysitterCard extends Card {
 	public void setupInnerViewElements(ViewGroup parent, View view) {
 
 		if (view != null) {
+			TextView number = (TextView) view
+					.findViewById(R.id.carddemo_suggested_number);
 			TextView title = (TextView) view
 					.findViewById(R.id.carddemo_suggested_title);
 			TextView member = (TextView) view
@@ -90,6 +92,9 @@ public class BabysitterCard extends Card {
 					.findViewById(R.id.carddemo_suggested_subtitle);
 			TextView community = (TextView) view
 					.findViewById(R.id.carddemo_suggested_community);
+
+			if (number != null)
+				number.setText("編號:" + mBabysitter.getBabysitterNumber());
 
 			if (title != null)
 				title.setText("姓名:" + mBabysitter.getName());
