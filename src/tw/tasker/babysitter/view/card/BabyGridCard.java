@@ -1,5 +1,7 @@
 package tw.tasker.babysitter.view.card;
 
+import java.text.DecimalFormat;
+
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardHeader;
 import it.gmariotti.cardslib.library.internal.CardThumbnail;
@@ -8,7 +10,9 @@ import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.BabyDiary;
 import tw.tasker.babysitter.model.data.BabyRecord;
+import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.presenter.adapter.BabyDiaryParseQueryAdapter;
+import tw.tasker.babysitter.utils.DisplayUtils;
 import tw.tasker.babysitter.view.activity.BabyRecordActivity;
 import tw.tasker.babysitter.view.fragment.BabyDiaryEditDialogFragment;
 import android.app.ProgressDialog;
@@ -52,9 +56,9 @@ public class BabyGridCard extends Card {
 		String recordUser = mBabyDiary.getUser().getUsername();
 
 		mBabyRecord = mBabyDiary.getBabyRecord();
-		CardHeader header = new CardHeader(getContext());
+		CardHeader header = new BabyGridCardHeader(getContext());
 		header.setButtonOverflowVisible(true);
-		header.setTitle(mBabyDiary.getName());
+		//header.setTitle(mBabyDiary.getName());
 		
 		if (currenUser.equals(recordUser)) {
 		header.setPopupMenu(R.menu.popup_edit,
@@ -156,6 +160,34 @@ public class BabyGridCard extends Card {
 		mRatingBar.setRating((float) (Math.random() * (5.0)));
 */	}
 
+	
+	class BabyGridCardHeader extends CardHeader {
+
+
+		public BabyGridCardHeader(Context context) {
+			this(context, R.layout.inner_base_header);
+		}
+
+		public BabyGridCardHeader(Context context, int innerLayout) {
+			super(context, innerLayout);
+		}
+
+		@Override
+		public void setupInnerViewElements(ViewGroup parent, View view) {
+
+			if (view != null) {
+				TextView textView = (TextView) view
+						.findViewById(R.id.card_header_inner_simple_title);
+
+				if (textView != null) {
+					textView.setText(mBabyDiary.getName());
+				}
+			}
+		}
+	}
+
+	
+	
 	class GplayGridThumb extends CardThumbnail {
 		//DisplayImageOptions options;
 		private ImageLoader imageLoader = ImageLoader.getInstance();
