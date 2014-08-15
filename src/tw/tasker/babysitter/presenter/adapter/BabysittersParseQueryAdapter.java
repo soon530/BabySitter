@@ -5,6 +5,7 @@ import it.gmariotti.cardslib.library.view.CardView;
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
+import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.view.card.BabysitterGridCard;
 import android.content.Context;
 import android.view.View;
@@ -55,10 +56,24 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 		ParseQueryAdapter.QueryFactory<Babysitter> factory = new ParseQueryAdapter.QueryFactory<Babysitter>() {
 			public ParseQuery<Babysitter> create() {
 				ParseQuery<Babysitter> query = Babysitter.getQuery();
-				if (position == 1) { //臨時保母
+
+				switch (position) {
+				case 0:
+					query.whereNear("location", Config.MY_LOCATION);
+					break;
+				case 1: //臨時保母
 					query.whereContains("babycareTime", "臨時");
+					query.whereNear("location", Config.MY_LOCATION);
+					break;
+				case 2:
+					String keyword = Config.keyWord;
+					keyword = keyword.replace("台", "臺");
+					query.whereContains("address", keyword);
+					break;
+				default:
+					break;
 				}
-				query.whereNear("location", Config.MY_LOCATION);
+				
 				
 /*				if (!DisplayUtils.hasNetwork(context)) {
 					LogUtils.LOGD("vic", "babysitters fromLocalDatastore()");

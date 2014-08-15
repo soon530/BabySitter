@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
@@ -11,6 +12,7 @@ import tw.tasker.babysitter.view.fragment.BabysittersFragment;
 import android.app.SearchManager;
 import android.app.SearchableInfo;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -113,9 +115,13 @@ public class BabysittersActivity extends ActionBarActivity implements SearchView
 	@Override
 	public boolean onQueryTextSubmit(String text) {
 
-		LogUtils.LOGD("vic", "input =" + text);
+		Config.keyWord = text;
 		
-		return false;
+		Intent intent = new Intent();
+		intent.setClass(this, SearchActivity.class);
+		startActivity(intent);
+		
+		return true;
 	}
 	
     protected boolean isAlwaysExpanded() {
