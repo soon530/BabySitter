@@ -76,13 +76,18 @@ public class BabysittersActivity extends ActionBarActivity implements SearchView
 		MenuItem searchItem = menu.findItem(R.id.action_search);
 		mSearchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         mSearchView.setOnQueryTextListener(this);
-		//setupSearchView(searchItem);
+		setupSearchView(searchItem);
 		return super.onCreateOptionsMenu(menu);
 	}
 
 	private void setupSearchView(MenuItem searchItem) {
-
-        if (isAlwaysExpanded()) {
+		mSearchView.setQueryHint("地址 EX.松山區");
+        //mSearchView.setSubmitButtonEnabled(true);
+        //mSearchView.setIconifiedByDefault(true);
+        //mSearchView.setQueryRefinementEnabled(true);
+		
+		
+/*        if (isAlwaysExpanded()) {
             mSearchView.setIconifiedByDefault(false);
         } else {
             searchItem.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM
@@ -104,7 +109,7 @@ public class BabysittersActivity extends ActionBarActivity implements SearchView
         }
 
         mSearchView.setOnQueryTextListener(this);
-    }
+*/    }
 
 	@Override
 	public boolean onQueryTextChange(String arg0) {
