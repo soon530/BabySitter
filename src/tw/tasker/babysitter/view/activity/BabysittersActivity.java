@@ -1,30 +1,40 @@
 package tw.tasker.babysitter.view.activity;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.fragment.BabysittersFragment;
+import android.app.SearchManager;
+import android.app.SearchableInfo;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.SearchView;
 import android.util.TypedValue;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.parse.ParseAnalytics;
 
-public class BabysittersActivity extends ActionBarActivity {
+public class BabysittersActivity extends ActionBarActivity implements SearchView.OnQueryTextListener {
 
 	private PagerSlidingTabStrip tabs;
 	private ViewPager pager;
 	private MyPagerAdapter adapter;
-	private int currentColor = Color.parseColor("#FF4343"); //0xFF666666;
+	private int currentColor = Color.parseColor("#FF4343"); // 0xFF666666;
+	private SearchView mSearchView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +48,9 @@ public class BabysittersActivity extends ActionBarActivity {
 
 		pager.setAdapter(adapter);
 
-		final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics());
+		final int pageMargin = (int) TypedValue.applyDimension(
+				TypedValue.COMPLEX_UNIT_DIP, 4, getResources()
+						.getDisplayMetrics());
 		pager.setPageMargin(pageMargin);
 
 		tabs.setViewPager(pager);
@@ -49,12 +61,68 @@ public class BabysittersActivity extends ActionBarActivity {
 		Map<String, String> dimensions = new HashMap<String, String>();
 		dimensions.put("menu", "babysitters");
 		ParseAnalytics.trackEvent("home", dimensions);
-		
-		//BabysittersFragment fragment = new BabysittersFragment();
-//		getSupportFragmentManager().beginTransaction()
-//				.add(R.id.container, fragment).commit();
+
+		// BabysittersFragment fragment = new BabysittersFragment();
+		// getSupportFragmentManager().beginTransaction()
+		// .add(R.id.container, fragment).commit();
 	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.babysitter_search, menu);
+		MenuItem searchItem = menu.findItem(R.id.action_search);
+		mSearchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        mSearchView.setOnQueryTextListener(this);
+		//setupSearchView(searchItem);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	private void setupSearchView(MenuItem searchItem) {
+
+        if (isAlwaysExpanded()) {
+            mSearchView.setIconifiedByDefault(false);
+        } else {
+            searchItem.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM
+                    | MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+        }
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        if (searchManager != null) {
+            List<SearchableInfo> searchables = searchManager.getSearchablesInGlobalSearch();
+
+            SearchableInfo info = searchManager.getSearchableInfo(getComponentName());
+            for (SearchableInfo inf : searchables) {
+                if (inf.getSuggestAuthority() != null
+                        && inf.getSuggestAuthority().startsWith("applications")) {
+                    info = inf;
+                }
+            }
+            mSearchView.setSearchableInfo(info);
+        }
+
+        mSearchView.setOnQueryTextListener(this);
+    }
+
+	@Override
+	public boolean onQueryTextChange(String arg0) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean onQueryTextSubmit(String text) {
+
+		LogUtils.LOGD("vic", "input =" + text);
 		
+		return false;
+	}
+	
+    protected boolean isAlwaysExpanded() {
+        return false;
+    }
+
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
@@ -70,10 +138,10 @@ public class BabysittersActivity extends ActionBarActivity {
 
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 	public class MyPagerAdapter extends FragmentPagerAdapter {
 
-		private final String[] TITLES = { "所有保母", "臨時保母"};
+		private final String[] TITLES = { "所有保母", "臨時保母" };
 
 		public MyPagerAdapter(FragmentManager fm) {
 			super(fm);
@@ -91,7 +159,7 @@ public class BabysittersActivity extends ActionBarActivity {
 
 		@Override
 		public Fragment getItem(int position) {
-			
+
 			Fragment fragment = null;
 			switch (position) {
 			case 0:
@@ -99,13 +167,13 @@ public class BabysittersActivity extends ActionBarActivity {
 				break;
 
 			case 1:
-				fragment = BabysittersFragment.newInstance(position);				
+				fragment = BabysittersFragment.newInstance(position);
 				break;
 
 			default:
 				break;
 			}
-			
+
 			return fragment;
 		}
 	}
