@@ -130,15 +130,15 @@ public class BabysitterGridCard extends Card {
 		public void setupInnerViewElements(ViewGroup parent, View viewImage) {
 			String parseUrl = mBabysitter.getImageUrl();
 
-			if (parseUrl.equals("../img/photo_mother_no.jpg")) {
-				((ImageView) viewImage)
-						.setImageResource(R.drawable.photo_mother_no);
-			} else {
+//			if (parseUrl.equals("../img/photo_mother_no.jpg")) {
+//				((ImageView) viewImage)
+//						.setImageResource(R.drawable.photo_mother_no);
+//			} else {
 				String url;
 				url = "http://cwisweb.sfaa.gov.tw/" + mBabysitter.getImageUrl();
 				imageLoader.displayImage(url, (ImageView) viewImage,
 						Config.OPTIONS, mListener);
-			}
+//			}
 			// viewImage.getLayoutParams().width = 196;
 			// viewImage.getLayoutParams().height = 196;
 		}
