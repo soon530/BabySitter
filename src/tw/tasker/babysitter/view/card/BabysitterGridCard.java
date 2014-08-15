@@ -24,7 +24,7 @@ import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
 
 public class BabysitterGridCard extends Card {
 
-	//private int resourceIdThumbnail = -1;
+	// private int resourceIdThumbnail = -1;
 	private Babysitter mBabysitter;
 	private ImageLoadingListener mListener;
 
@@ -39,17 +39,16 @@ public class BabysitterGridCard extends Card {
 	public void init() {
 		CardHeader header = new CardHeader(getContext());
 		header.setButtonOverflowVisible(false);
-		
+
 		header.setTitle(mBabysitter.getName());
-/*		header.setPopupMenu(R.menu.popupmain,
-				new CardHeader.OnClickCardHeaderPopupMenuListener() {
-					@Override
-					public void onMenuItemClick(BaseCard card, MenuItem item) {
-						Toast.makeText(getContext(), "Item " + item.getTitle(),
-								Toast.LENGTH_SHORT).show();
-					}
-				});
-*/
+		/*
+		 * header.setPopupMenu(R.menu.popupmain, new
+		 * CardHeader.OnClickCardHeaderPopupMenuListener() {
+		 * 
+		 * @Override public void onMenuItemClick(BaseCard card, MenuItem item) {
+		 * Toast.makeText(getContext(), "Item " + item.getTitle(),
+		 * Toast.LENGTH_SHORT).show(); } });
+		 */
 		addCardHeader(header);
 
 		BabysitterGridThumb thumbnail = new BabysitterGridThumb(getContext());
@@ -82,19 +81,20 @@ public class BabysitterGridCard extends Card {
 		TextView title = (TextView) view
 				.findViewById(R.id.carddemo_gplay_main_inner_title);
 
-		title.setText("評論" + String.valueOf(totalComementValue) + " 收藏" + String.valueOf(totalFavorite));
+		title.setText("評論" + String.valueOf(totalComementValue) + " 收藏"
+				+ String.valueOf(totalFavorite));
 
 		TextView subtitle = (TextView) view
 				.findViewById(R.id.carddemo_gplay_main_inner_subtitle);
-		
-		float distance = mBabysitter.getDistance(); 
-		DecimalFormat decimalFormat =  new DecimalFormat("0.#");
-		
+
+		float distance = mBabysitter.getDistance();
+		DecimalFormat decimalFormat = new DecimalFormat("0.#");
+
 		String show = "";
-		if (distance > 0.0f && distance < 1.0f) { 
-			show = " ["+ decimalFormat.format(distance * 1000) +"公尺]";
+		if (distance > 0.0f && distance < 1.0f) {
+			show = " [" + decimalFormat.format(distance * 1000) + "公尺]";
 		} else {
-			show = " ["+ decimalFormat.format(distance) + "公里]";
+			show = " [" + decimalFormat.format(distance) + "公里]";
 		}
 
 		subtitle.setText(mBabysitter.getAddress() + show);
@@ -106,42 +106,41 @@ public class BabysitterGridCard extends Card {
 		mRatingBar.setMax(5);
 		mRatingBar.setStepSize(0.5f);
 
-		float rating = DisplayUtils.getRatingValue(totalRatingValue, totalComementValue);
+		float rating = DisplayUtils.getRatingValue(totalRatingValue,
+				totalComementValue);
 		mRatingBar.setRating(rating);
 	}
 
 	class BabysitterGridThumb extends CardThumbnail {
-		//private DisplayImageOptions options;
+		// private DisplayImageOptions options;
 		private ImageLoader imageLoader = ImageLoader.getInstance();
 
 		public BabysitterGridThumb(Context context) {
 			super(context);
 
-/*			options = new DisplayImageOptions.Builder()
-					.cacheInMemory(true)
-					.cacheOnDisc(true)
-					.displayer(new SimpleBitmapDisplayer())
-					.showImageOnFail(R.drawable.ic_launcher)
-					.showImageOnLoading(R.drawable.ic_action_name)
-					.build();
-*/
+			/*
+			 * options = new DisplayImageOptions.Builder() .cacheInMemory(true)
+			 * .cacheOnDisc(true) .displayer(new SimpleBitmapDisplayer())
+			 * .showImageOnFail(R.drawable.ic_launcher)
+			 * .showImageOnLoading(R.drawable.ic_action_name) .build();
+			 */
 		}
 
 		@Override
 		public void setupInnerViewElements(ViewGroup parent, View viewImage) {
-			String url;
-			//if (mBabysitter.getImageUrl().equals("../img/photo_mother_no.jpg")) {
-			 //url = "";
-			 //} else {
-			//url = "http://cwisweb.sfaa.gov.tw/babysitterFiles/20140315134959_0822R167.jpg";
-			url = "http://cwisweb.sfaa.gov.tw/" + mBabysitter.getImageUrl();
-			// }
+			String parseUrl = mBabysitter.getImageUrl();
 
-			imageLoader.displayImage(url, (ImageView) viewImage, Config.OPTIONS, mListener);
-
+			if (parseUrl.equals("../img/photo_mother_no.jpg")) {
+				((ImageView) viewImage)
+						.setImageResource(R.drawable.photo_mother_no);
+			} else {
+				String url;
+				url = "http://cwisweb.sfaa.gov.tw/" + mBabysitter.getImageUrl();
+				imageLoader.displayImage(url, (ImageView) viewImage,
+						Config.OPTIONS, mListener);
+			}
 			// viewImage.getLayoutParams().width = 196;
 			// viewImage.getLayoutParams().height = 196;
-
 		}
 	}
 
