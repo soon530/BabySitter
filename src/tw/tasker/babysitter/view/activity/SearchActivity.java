@@ -1,5 +1,10 @@
 package tw.tasker.babysitter.view.activity;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.parse.ParseAnalytics;
+
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.fragment.BabysittersFragment;
@@ -20,6 +25,10 @@ public class SearchActivity extends ActionBarActivity {
 		Fragment fragment = BabysittersFragment.newInstance(2);
 		getSupportFragmentManager().beginTransaction()
 				.add(R.id.container, fragment).commit();
+
+		Map<String, String> dimensions = new HashMap<String, String>();
+		dimensions.put("menu", "search");
+		ParseAnalytics.trackEvent("home", dimensions);
 	}
 
 	@Override
