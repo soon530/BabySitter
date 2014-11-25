@@ -73,7 +73,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true"
-        android:text="托育人員(保母)登記管理資訊網"
+        android:textColor="#FF0000"
+        android:text="本程式非衛福部社家署所有"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>
