@@ -187,14 +187,27 @@ class SuggestedCardThumb extends CardThumbnail {
 				}
 			}
 		
-			String url;
-			// if (babysitter.getPhotoFile() != null) {
-			// url = babysitter.getPhotoFile().getUrl();
-			// } else {
-			url = "http://cwisweb.sfaa.gov.tw/" + mBabysitter.getImageUrl();
-			// }
+			
+			String parseUrl = mBabysitter.getImageUrl();
 
-			imageLoader.displayImage(url, (ImageView) viewImage, Config.OPTIONS, null);
+			if (parseUrl.equals("../img/photo_mother_no.jpg")) {
+				((ImageView) viewImage)
+						.setImageResource(R.drawable.photo_mother_no);
+			} else {
+				String url;
+				url = "http://cwisweb.sfaa.gov.tw/" + mBabysitter.getImageUrl();
+				imageLoader.displayImage(url, (ImageView) viewImage,
+						Config.OPTIONS, null);
+			}
+
+//			String url;
+//			// if (babysitter.getPhotoFile() != null) {
+//			// url = babysitter.getPhotoFile().getUrl();
+//			// } else {
+//			url = "http://cwisweb.sfaa.gov.tw/" + mBabysitter.getImageUrl();
+//			// }
+//
+//			imageLoader.displayImage(url, (ImageView) viewImage, Config.OPTIONS, null);
 		}
 	}
 }
