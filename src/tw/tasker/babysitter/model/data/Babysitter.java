@@ -134,7 +134,7 @@ public class Babysitter extends ParseObject {
 	public void setTotalFavorite(int value) {
 		put("totalFavorite", value);
 	}
-
+	
 	public static ParseQuery<Babysitter> getQuery() {
 		return ParseQuery.getQuery(Babysitter.class);
 	}

@@ -84,6 +84,19 @@ public class BabysitterFragment extends Fragment implements
 		mPresenter = new BabysitterDetailPresenterImpl(this);
 
 		setHasOptionsMenu(true);
+		
+		addPageView();
+	}
+
+	private void addPageView() {
+		ParseQuery<Babysitter> query = Babysitter.getQuery();
+		query.getInBackground(mBabysitterObjectId,
+				new GetCallback<Babysitter>() {
+					public void done(Babysitter babysitter, ParseException e) {
+						babysitter.increment("pageView", 1);
+						babysitter.saveInBackground();
+					}
+				});
 	}
 
 	@Override
