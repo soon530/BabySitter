@@ -7,6 +7,7 @@ import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.BabysitterComment;
 import tw.tasker.babysitter.model.data.BabysitterFavorite;
 import tw.tasker.babysitter.model.data.City;
+import tw.tasker.babysitter.model.data.UserInfo;
 import android.app.Application;
 import android.content.Context;
 
@@ -31,6 +32,7 @@ public class MyApplication extends Application {
 		ParseObject.registerSubclass(BabysitterFavorite.class);
 		ParseObject.registerSubclass(BabyRecord.class);
 		ParseObject.registerSubclass(City.class);
+		ParseObject.registerSubclass(UserInfo.class);
 
 	    //Parse.enableLocalDatastore(this);
 		Parse.initialize(this, APPLICATION_ID, CLIENT_KEY);
