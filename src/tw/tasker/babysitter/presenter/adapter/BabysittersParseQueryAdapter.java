@@ -70,6 +70,8 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 					keyword = keyword.replace("台", "臺");
 					query.whereContains("address", keyword);
 					break;
+				case 3:
+					query.orderByDescending("updatedAt");
 				default:
 					break;
 				}

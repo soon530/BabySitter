@@ -152,7 +152,7 @@ public class BabysittersActivity extends ActionBarActivity implements SearchView
 
 	public class MyPagerAdapter extends FragmentPagerAdapter {
 
-		private final String[] TITLES = { "所有保母", "臨時保母" };
+		private final String[] TITLES = { "所有保母", "臨時保母", "大家正在找" };
 
 		public MyPagerAdapter(FragmentManager fm) {
 			super(fm);
@@ -179,6 +179,11 @@ public class BabysittersActivity extends ActionBarActivity implements SearchView
 
 			case 1:
 				fragment = BabysittersFragment.newInstance(position);
+				break;
+				
+			//編號2的fragment被SearchView拿走了.
+			case 2:
+				fragment = BabysittersFragment.newInstance(3);
 				break;
 
 			default:
