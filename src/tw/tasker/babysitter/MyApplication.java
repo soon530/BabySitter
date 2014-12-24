@@ -41,7 +41,7 @@ public class MyApplication extends Application {
 
 		initImageLoader(getApplicationContext());
 		
-		throw new RuntimeException("Test Exception!");
+		//throw new RuntimeException("Test Exception!");
 
 	}
 	
