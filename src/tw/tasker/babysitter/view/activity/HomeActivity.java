@@ -4,14 +4,18 @@ import static tw.tasker.babysitter.utils.LogUtils.LOGD;
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.UserInfo;
+import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.utils.MyLocation;
 import tw.tasker.babysitter.view.fragment.HomeFragment;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
+import com.parse.CountCallback;
+import com.parse.GetCallback;
 import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -61,20 +65,49 @@ public class HomeActivity extends ActionBarActivity {
 
 	private void updateMyLocaton() {
 		if (ParseUser.getCurrentUser() != null) {
-			UserInfo userInfo = new UserInfo();
-			userInfo.setLocation(Config.MY_LOCATION);
-			userInfo.setUser(ParseUser.getCurrentUser());
-
-			userInfo.saveInBackground(new SaveCallback() {
-
-				@Override
-				public void done(ParseException e) {
-					if (e == null) {
-					} else {
-						LOGD("vic", e.getMessage());
-					}
-				}
-			});
+			hasUserInfo();
 		}
+	}
+	
+	private void hasUserInfo() {
+		ParseQuery<UserInfo> userInfoQuery = UserInfo.getQuery();
+		userInfoQuery.whereEqualTo("user", ParseUser.getCurrentUser());
+		userInfoQuery.getFirstInBackground(new GetCallback<UserInfo>() {
+			
+			@Override
+			public void done(UserInfo userInfo, ParseException e) {
+				if (userInfo == null ) {
+					addUserInfo();
+				} else {
+					updateUserInfo(userInfo);
+				}
+			}
+		});
+	}
+	
+	private void addUserInfo() {
+		LogUtils.LOGD("vic", "addUserInfo");
+
+		UserInfo userInfo = new UserInfo();
+		userInfo.setLocation(Config.MY_LOCATION);
+		userInfo.setUser(ParseUser.getCurrentUser());
+
+		userInfo.saveInBackground(new SaveCallback() {
+
+			@Override
+			public void done(ParseException e) {
+				if (e == null) {
+				} else {
+					LOGD("vic", e.getMessage());
+				}
+			}
+		});
+	}
+	
+	private void updateUserInfo(UserInfo userInfo) {
+		LogUtils.LOGD("vic", "updateUserInfo");
+
+		userInfo.setLocation(Config.MY_LOCATION);
+		userInfo.saveInBackground();
 	}
 }
