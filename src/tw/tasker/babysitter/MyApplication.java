@@ -16,6 +16,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.parse.Parse;
+import com.parse.ParseCrashReporting;
 import com.parse.ParseObject;
 
 public class MyApplication extends Application {
@@ -33,11 +34,14 @@ public class MyApplication extends Application {
 		ParseObject.registerSubclass(BabyRecord.class);
 		ParseObject.registerSubclass(City.class);
 		ParseObject.registerSubclass(UserInfo.class);
-
+		ParseCrashReporting.enable(this);
+		
 	    //Parse.enableLocalDatastore(this);
 		Parse.initialize(this, APPLICATION_ID, CLIENT_KEY);
 
 		initImageLoader(getApplicationContext());
+		
+		throw new RuntimeException("Test Exception!");
 
 	}
 	
