@@ -32,6 +32,7 @@ import tw.tasker.babysitter.view.activity.BabyDiaryActivity;
 import tw.tasker.babysitter.view.activity.BabysittersActivity;
 import tw.tasker.babysitter.view.activity.DispatchActivity;
 import tw.tasker.babysitter.view.activity.MyFavoriteActivity;
+import tw.tasker.babysitter.view.activity.SitterActivity;
 import tw.tasker.babysitter.view.card.ColorCard;
 import android.content.Intent;
 import android.net.Uri;
@@ -80,7 +81,7 @@ public class HomeFragment extends Fragment implements OnCardClickListener {
 
 		// Init an array of Cards
 		ArrayList<Card> cards = new ArrayList<Card>();
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 5; i++) {
 			ColorCard card = new ColorCard(this.getActivity());
 			// card.setTitle("A simple colored card " + i);
 			card.setCount(i);
@@ -115,6 +116,8 @@ public class HomeFragment extends Fragment implements OnCardClickListener {
 				break;
 			case 4:
 				card.setBackgroundResourceId(R.drawable.demo_card_selector_color1);
+				card.setTitle("我是保母");
+				card.setDescription("保母註冊頁面prototype");
 				break;
 			}
 
@@ -192,6 +195,11 @@ public class HomeFragment extends Fragment implements OnCardClickListener {
 			startActivity(intent);
 
 			break;
+		case 4:
+			intent = new Intent();
+			intent.setClass(getActivity(), SitterActivity.class);
+			startActivity(intent);
+
 		default:
 			break;
 		}

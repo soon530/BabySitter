@@ -127,6 +127,10 @@
             android:name="tw.tasker.babysitter.view.activity.SearchActivity"
             android:label="保母搜尋" >
         </activity>
+        <activity
+            android:name="tw.tasker.babysitter.view.activity.SitterActivity"
+            android:label="保母設定" >
+        </activity>
         
         <service android:name="com.parse.PushService" />
 		<receiver android:name="com.parse.ParseBroadcastReceiver">
