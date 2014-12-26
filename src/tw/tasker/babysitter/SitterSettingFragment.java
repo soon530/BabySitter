@@ -1,8 +1,11 @@
 package tw.tasker.babysitter;
 
+import static tw.tasker.babysitter.utils.LogUtils.LOGD;
+
 import java.util.List;
 
 import tw.tasker.babysitter.model.data.Babysitter;
+import tw.tasker.babysitter.model.data.Sitter;
 import tw.tasker.babysitter.utils.LogUtils;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,11 +19,13 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
 /**
  * A simple {@link Fragment} subclass. Use the
@@ -99,12 +104,19 @@ public class SitterSettingFragment extends Fragment {
 		mBabycareCount = (EditText) rootView.findViewById(R.id.babycare_count);
 		mBabycareTime = (EditText) rootView.findViewById(R.id.babycare_time);
 
+		// set default data...
+		mNumber.setText("S102010329");
 		
 		mSync.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				syncData();
+				Toast.makeText(
+						getActivity(),
+						"資料同步..." /* e.getMessage() */,
+						Toast.LENGTH_LONG).show();
+
 			}
 
 		});
@@ -138,7 +150,7 @@ public class SitterSettingFragment extends Fragment {
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.favorite, menu);
+		inflater.inflate(R.menu.add, menu);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
@@ -147,14 +159,50 @@ public class SitterSettingFragment extends Fragment {
 		int id = item.getItemId();
 
 		switch (id) {
-		case R.id.action_favorite:
-			
+		case R.id.action_add:
+			addSitter();
+			Toast.makeText(
+					getActivity(),
+					"資料新增..." /* e.getMessage() */,
+					Toast.LENGTH_LONG).show();
+
 			break;
 		default:
 			break;
 		}
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	private void addSitter() {
+		Sitter sitter = new Sitter();
+		sitter.setBabysitterNumber(mNumber.getText().toString());
+		sitter.setName(mName.getText().toString());
+		sitter.setSex(mSex.getText().toString());
+		sitter.setAge(mAge.getText().toString());
+		sitter.setEducation(mEducation.getText().toString());
+		sitter.setTel(mTel.getText().toString());
+		sitter.setAddress(mAddress.getText().toString());
+		sitter.setBabycareCount(mBabycareCount.getText().toString());
+		sitter.setBabycareTime(mBabycareTime.getText().toString());
+		
+		sitter.saveInBackground(new SaveCallback() {
+			
+			@Override
+			public void done(ParseException e) {
+				if (e == null) {
+					//LOGD("vic", "sitter 新增成功!");
+					Toast.makeText(
+							getActivity(),
+							"資料新增成功..." /* e.getMessage() */,
+							Toast.LENGTH_LONG).show();
+
+				} else {
+					LOGD("vic", e.getMessage());
+				}
+			}
+		});
+		
 	}
 
 	

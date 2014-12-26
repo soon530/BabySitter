@@ -7,6 +7,7 @@ import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.BabysitterComment;
 import tw.tasker.babysitter.model.data.BabysitterFavorite;
 import tw.tasker.babysitter.model.data.City;
+import tw.tasker.babysitter.model.data.Sitter;
 import tw.tasker.babysitter.model.data.UserInfo;
 import tw.tasker.babysitter.utils.LogUtils;
 import android.app.Application;
@@ -38,6 +39,7 @@ public class MyApplication extends Application {
 		ParseObject.registerSubclass(BabyRecord.class);
 		ParseObject.registerSubclass(City.class);
 		ParseObject.registerSubclass(UserInfo.class);
+		ParseObject.registerSubclass(Sitter.class);
 		
 		if (isRelease())
 			ParseCrashReporting.enable(this);
