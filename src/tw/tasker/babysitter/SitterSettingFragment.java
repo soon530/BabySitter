@@ -25,6 +25,7 @@ import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 /**
@@ -160,12 +161,9 @@ public class SitterSettingFragment extends Fragment {
 
 		switch (id) {
 		case R.id.action_add:
-			addSitter();
-			Toast.makeText(
-					getActivity(),
-					"資料新增..." /* e.getMessage() */,
-					Toast.LENGTH_LONG).show();
-
+			if (ParseUser.getCurrentUser() != null) {
+				hasSitter();
+			}
 			break;
 		default:
 			break;
@@ -174,8 +172,30 @@ public class SitterSettingFragment extends Fragment {
 		return super.onOptionsItemSelected(item);
 	}
 
+	private void hasSitter() {
+		ParseQuery<Sitter> query = Sitter.getQuery();
+		query.whereEqualTo("user", ParseUser.getCurrentUser());
+		query.getFirstInBackground(new GetCallback<Sitter>() {
+			
+			@Override
+			public void done(Sitter sitter, ParseException e) {
+				if (sitter == null) {
+					addSitter();
+					LOGD("vic", "addSitter()");
+
+				} else {
+					updateSitter(sitter);
+					LOGD("vic", "updateSitter()");
+
+				}
+				
+			}
+		});
+	}
+
 	private void addSitter() {
 		Sitter sitter = new Sitter();
+		sitter.setUser(ParseUser.getCurrentUser());
 		sitter.setBabysitterNumber(mNumber.getText().toString());
 		sitter.setName(mName.getText().toString());
 		sitter.setSex(mSex.getText().toString());
@@ -205,5 +225,24 @@ public class SitterSettingFragment extends Fragment {
 		
 	}
 
+	private void updateSitter(Sitter sitter) {
+		
+		sitter.setBabysitterNumber(mNumber.getText().toString());
+		sitter.setName(mName.getText().toString());
+		sitter.setSex(mSex.getText().toString());
+		sitter.setAge(mAge.getText().toString());
+		sitter.setEducation(mEducation.getText().toString());
+		sitter.setTel(mTel.getText().toString());
+		sitter.setAddress(mAddress.getText().toString());
+		sitter.setBabycareCount(mBabycareCount.getText().toString());
+		sitter.setBabycareTime(mBabycareTime.getText().toString());
+
+		sitter.saveInBackground();
 	
+		Toast.makeText(
+				getActivity(),
+				"資料更新成功..." /* e.getMessage() */,
+				Toast.LENGTH_LONG).show();
+
+	}
 }
