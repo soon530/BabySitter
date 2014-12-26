@@ -1,14 +1,21 @@
 package tw.tasker.babysitter.view.fragment;
 
+import com.parse.ParseUser;
+
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardHeader;
 import it.gmariotti.cardslib.library.view.CardView;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
+import tw.tasker.babysitter.view.activity.DispatchActivity;
 import tw.tasker.babysitter.view.card.BabysitterCard;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -36,6 +43,8 @@ public class SitterFragment extends Fragment {
 
 		return rootView;
 	}
+	
+
 	
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {

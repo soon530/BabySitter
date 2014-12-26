@@ -53,5 +53,6 @@
     <string name="post_out_of_range">Can\'t view post! Get closer.</string>
     <string name="title_activity_baby_add">新增寶寶日記</string>
     <string name="title_activity_favorite_babysitter">保母收藏</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
