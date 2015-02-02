@@ -41,5 +41,7 @@
     <!-- Birth new -->
     <color name="demo_card_header_birth_color">#707070</color>
     <color name="demo_card_line_birth_color">#E5E5E5</color>
+    
+    <color name="babytone_main_color">#F5d641</color>
 
 </resources>
