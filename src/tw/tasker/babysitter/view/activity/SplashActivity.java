@@ -1,22 +1,20 @@
 package tw.tasker.babysitter.view.activity;
 
 import tw.tasker.babysitter.R;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.ImageView;
 
-public class SplashActivity extends ActionBarActivity {
+public class SplashActivity extends Activity {
 	private static final long SPLASH_DISPLAY_LENGTH = 1000;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		initFullScreen();
 		setContentView(R.layout.activity_splash);
 		//goSingUpOrLogin();
 		goSingUpOrLoginWithClick();
@@ -33,10 +31,6 @@ public class SplashActivity extends ActionBarActivity {
 				startSignUpOrLogin();
 			}
 		});
-	}
-
-	private void initFullScreen() {
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 	}
 
 	private void goSingUpOrLogin() {

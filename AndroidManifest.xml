@@ -59,7 +59,10 @@
             android:name="com.parse.push.notification_icon"
             android:resource="@drawable/ic_launcher" />
 
-        <activity android:name="tw.tasker.babysitter.view.activity.SplashActivity" >
+        <activity android:name="tw.tasker.babysitter.view.activity.SplashActivity" 
+            android:theme="@android:style/Theme.Black.NoTitleBar" 
+            
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
