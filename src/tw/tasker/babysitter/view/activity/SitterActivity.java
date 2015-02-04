@@ -2,6 +2,7 @@ package tw.tasker.babysitter.view.activity;
 
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.SitterSettingFragment;
+import tw.tasker.babysitter.view.fragment.AvatorFragment;
 import tw.tasker.babysitter.view.fragment.SitterFragment;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -43,7 +44,7 @@ public class SitterActivity extends ActionBarActivity {
 	
 	public class MyPagerAdapter extends FragmentPagerAdapter {
 
-		private final String[] TITLES = { "保母資料", "保母設定"};
+		private final String[] TITLES = { "保母資料", "大頭照", "基本資料"};
 
 		public MyPagerAdapter(FragmentManager fm) {
 			super(fm);
@@ -70,6 +71,11 @@ public class SitterActivity extends ActionBarActivity {
 				break;
 
 			case 1:
+				fragment = AvatorFragment.newInstance();				
+				//fragment.setArguments(arguments);
+				break;
+				
+			case 2:
 				fragment = SitterSettingFragment.newInstance();				
 				//fragment.setArguments(arguments);
 				break;
