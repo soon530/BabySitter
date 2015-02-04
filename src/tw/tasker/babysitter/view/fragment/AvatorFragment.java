@@ -1,22 +1,19 @@
 package tw.tasker.babysitter.view.fragment;
 
-import com.parse.GetCallback;
-import com.parse.ParseException;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
-import com.parse.SaveCallback;
-
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Sitter;
 import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.utils.PictureHelper;
-import tw.tasker.babysitter.view.activity.BabyRecordFragment.BabyRecordSaveCallback;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.provider.MediaStore.Images.Media;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -25,6 +22,12 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 public class AvatorFragment extends Fragment implements OnClickListener {
 	private ImageView mAvator;
@@ -94,7 +97,7 @@ public class AvatorFragment extends Fragment implements OnClickListener {
 			break;
 			
 		case 1:
-			getFromGallery();
+			getFromGallery(data);
 			break;
 		default:
 			break;
@@ -147,9 +150,32 @@ public class AvatorFragment extends Fragment implements OnClickListener {
 		mRingProgressDialog.dismiss();
 	}
 
-	private void getFromGallery() {
+	private void getFromGallery(Intent data) {
+		mRingProgressDialog = ProgressDialog.show(getActivity(),
+				"請稍等 ...", "資料儲存中...", true);
+
+		Uri selectedImage = data.getData();
+        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+        Cursor cursor = getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+        
+        cursor.moveToFirst();
+
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+        String filePath = cursor.getString(columnIndex);
+        cursor.close();
+
+
+        Bitmap bmp = BitmapFactory.decodeFile(filePath);
+        
+		mPictureHelper.setBitmap(bmp);
+		mPictureHelper.setSaveCallback(new BabyRecordSaveCallback());
+		mPictureHelper.savePicture();
+	}
+
+	private Media getContentResolver() {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 }
