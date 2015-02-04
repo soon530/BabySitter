@@ -7,21 +7,28 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.parse.GetCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
  * well.
  */
-public class LoginActivity extends Activity {
+public class LoginActivity extends Activity implements OnFocusChangeListener {
 	// UI references.
 	private EditText usernameView;
 	private EditText passwordView;
+	protected boolean mIsExist = true;
+	private Button mActionButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +41,13 @@ public class LoginActivity extends Activity {
 		// Set up the login form.
 		usernameView = (EditText) findViewById(R.id.username);
 		passwordView = (EditText) findViewById(R.id.password);
+		usernameView.setOnFocusChangeListener(this);
+		
+		mActionButton = (Button) findViewById(R.id.action_button);
+		
 
 		// Set up the submit button click handler
-		findViewById(R.id.action_button).setOnClickListener(
+		mActionButton.setOnClickListener(
 				new View.OnClickListener() {
 					public void onClick(View view) {
 						// Validate the log in data
@@ -68,12 +79,22 @@ public class LoginActivity extends Activity {
 							return;
 						}
 
+						
+						if (mIsExist) {
+							runLogin();
+						} else { 
+							runSignup();
+						}
+					}
+
+					private void runLogin() {
 						// Set up a progress dialog
 						final ProgressDialog dlg = new ProgressDialog(
 								LoginActivity.this);
 						dlg.setTitle("登入中");
 						dlg.setMessage("請稍候...");
 						dlg.show();
+
 						// Call the Parse login method
 						ParseUser.logInInBackground(usernameView.getText()
 								.toString(), passwordView.getText().toString(),
@@ -102,6 +123,43 @@ public class LoginActivity extends Activity {
 									}
 								});
 					}
+
+					private void runSignup() {
+						// Set up a progress dialog
+						final ProgressDialog dlg = new ProgressDialog(
+								LoginActivity.this);
+						dlg.setTitle("註冊中");
+						dlg.setMessage("請稍候...");
+						dlg.show();
+
+						// Set up a new Parse user
+						ParseUser user = new ParseUser();
+						user.setUsername(usernameView.getText().toString());
+						user.setPassword(passwordView.getText().toString());
+						// Call the Parse signup method
+						user.signUpInBackground(new SignUpCallback() {
+
+							@Override
+							public void done(ParseException e) {
+								dlg.dismiss();
+								if (e != null) {
+									// Show the error message
+									Toast.makeText(LoginActivity.this,
+											"註冊錯誤!" /* e.getMessage() */,
+											Toast.LENGTH_LONG).show();
+								} else {
+									// Start an intent for the dispatch activity
+									Intent intent = new Intent(
+											LoginActivity.this,
+											DispatchActivity.class);
+									intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+											| Intent.FLAG_ACTIVITY_NEW_TASK);
+									startActivity(intent);
+								}
+							}
+						});
+
+					}
 				});
 	}
 
@@ -126,5 +184,33 @@ public class LoginActivity extends Activity {
 		} else {
 			return true;
 		}
+	}
+
+	@Override
+	public void onFocusChange(View v, boolean hasFocus) {
+		if (!hasFocus) {
+			checkUserName();
+		}
+
+	}
+
+	private void checkUserName() {
+		String name = usernameView.getText().toString();
+
+		ParseQuery<ParseUser> query = ParseUser.getQuery();
+		query.whereEqualTo("username", name);
+		query.getFirstInBackground(new GetCallback<ParseUser>() {
+
+			@Override
+			public void done(ParseUser user, ParseException e) {
+				if (e == null) {
+					mActionButton.setText("登入");
+				} else {
+					mActionButton.setText("註冊");
+					mIsExist = false;
+				}
+			}
+		});
+
 	}
 }
