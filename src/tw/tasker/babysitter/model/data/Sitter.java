@@ -1,6 +1,7 @@
 package tw.tasker.babysitter.model.data;
 
 import com.parse.ParseClassName;
+import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -133,6 +134,14 @@ public class Sitter extends ParseObject {
 	}
 	public void setTotalFavorite(int value) {
 		put("totalFavorite", value);
+	}
+	
+	public ParseFile getAvatorFile() {
+		return getParseFile("avator");
+	}
+
+	public void setAvatorFile(ParseFile file) {
+		put("avator", file);
 	}
 	
 	public static ParseQuery<Sitter> getQuery() {
