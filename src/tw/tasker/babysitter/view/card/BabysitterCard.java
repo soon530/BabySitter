@@ -187,7 +187,6 @@ class SuggestedCardThumb extends CardThumbnail {
 				}
 			}
 		
-			
 			String parseUrl = mBabysitter.getImageUrl();
 
 			if (parseUrl.equals("../img/photo_mother_no.jpg")) {
@@ -195,7 +194,10 @@ class SuggestedCardThumb extends CardThumbnail {
 						.setImageResource(R.drawable.photo_mother_no);
 			} else {
 				String url;
-				url = "http://cwisweb.sfaa.gov.tw/" + mBabysitter.getImageUrl();
+				//url = "http://cwisweb.sfaa.gov.tw/" + mBabysitter.getImageUrl();
+				
+				url = mBabysitter.getImageUrl();
+				
 				imageLoader.displayImage(url, (ImageView) viewImage,
 						Config.OPTIONS, null);
 			}

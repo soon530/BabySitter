@@ -1,5 +1,8 @@
 package tw.tasker.babysitter.view.fragment;
 
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import it.gmariotti.cardslib.library.internal.Card;
@@ -7,6 +10,8 @@ import it.gmariotti.cardslib.library.internal.CardHeader;
 import it.gmariotti.cardslib.library.view.CardView;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
+import tw.tasker.babysitter.model.data.Sitter;
+import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.view.activity.DispatchActivity;
 import tw.tasker.babysitter.view.card.BabysitterCard;
 import android.content.Intent;
@@ -49,12 +54,51 @@ public class SitterFragment extends Fragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		Babysitter babysitter = new Babysitter();
-		babysitter.setTotalRating(0.0f);
-		babysitter.setImageUrl("../img/photo_mother_no.jpg");
-		babysitter.setTel("");
 		
-		initCards(babysitter);
+		ParseQuery<Sitter> sitter = Sitter.getQuery();
+		sitter.whereEqualTo("user", ParseUser.getCurrentUser());
+		sitter.getFirstInBackground(new GetCallback<Sitter>() {
+			
+			@Override
+			public void done(Sitter sitter, ParseException e) {
+
+				if (sitter == null) {
+					Babysitter babysitter = new Babysitter();
+					babysitter.setTotalRating(0.0f);
+					babysitter.setImageUrl("../img/photo_mother_no.jpg");
+					babysitter.setTel("");
+					
+					initCards(babysitter);
+
+				} else {
+					Babysitter babysitter = new Babysitter();
+					
+					babysitter.setBabysitterNumber(sitter.getBabysitterNumber());
+					babysitter.setName(sitter.getName());
+					babysitter.setSex(sitter.getSex());
+					babysitter.setAge(sitter.getAge());
+					babysitter.setEducation(sitter.getEducation());
+					babysitter.setTel(sitter.getTel());
+					babysitter.setAddress(sitter.getAddress());
+					babysitter.setBabycareCount(sitter.getBabycareCount());
+					babysitter.setBabycareTime(sitter.getBabycareTime());
+					babysitter.setTotalRating(0.0f);
+					
+					String url = "../img/photo_mother_no.jpg";
+					if (sitter.getAvatorFile() != null) {
+						url = sitter.getAvatorFile().getUrl();
+					}
+					LogUtils.LOGE("vic url=", url);
+					babysitter.setImageUrl(url);
+
+					initCards(babysitter);
+				}
+				
+			}
+		});
+		
+		
+		
 	}
 	
 	private void initCards(Babysitter babysitter) {
