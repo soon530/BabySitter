@@ -4,6 +4,7 @@ import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Sitter;
 import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.utils.PictureHelper;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -89,8 +90,12 @@ public class AvatorFragment extends Fragment implements OnClickListener {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		
-		LogUtils.LOGE("vic", "requestCode="+ requestCode);
+		LogUtils.LOGE("vic", "requestCode="+ requestCode + "resultCode=" + resultCode);
 		
+		if (resultCode == Activity.RESULT_CANCELED) {
+			return;
+		}
+
 		switch (requestCode) {
 		case 0:
 			getFromCamera(data);
@@ -102,7 +107,6 @@ public class AvatorFragment extends Fragment implements OnClickListener {
 		default:
 			break;
 		}
-		
 	}
 
 	private void getFromCamera(Intent data) {
@@ -113,6 +117,7 @@ public class AvatorFragment extends Fragment implements OnClickListener {
 		Bundle extras = data.getExtras();
 		// 將資料轉換為圖像格式
 		Bitmap bmp = (Bitmap) extras.get("data");
+        mAvator.setImageBitmap(bmp);
 
 		mPictureHelper.setBitmap(bmp);
 		mPictureHelper.setSaveCallback(new BabyRecordSaveCallback());
@@ -159,6 +164,7 @@ public class AvatorFragment extends Fragment implements OnClickListener {
         String filePath = getFilePath(selectedImage);
         
         Bitmap bmp = BitmapFactory.decodeFile(filePath);
+        mAvator.setImageBitmap(bmp);
         
 		mPictureHelper.setBitmap(bmp);
 		mPictureHelper.setSaveCallback(new BabyRecordSaveCallback());
