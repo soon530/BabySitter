@@ -205,6 +205,7 @@ public class SitterSettingFragment extends Fragment {
 		sitter.setAddress(mAddress.getText().toString());
 		sitter.setBabycareCount(mBabycareCount.getText().toString());
 		sitter.setBabycareTime(mBabycareTime.getText().toString());
+		sitter.setIsVerify(false);
 		
 		sitter.saveInBackground(new SaveCallback() {
 			
@@ -236,7 +237,8 @@ public class SitterSettingFragment extends Fragment {
 		sitter.setAddress(mAddress.getText().toString());
 		sitter.setBabycareCount(mBabycareCount.getText().toString());
 		sitter.setBabycareTime(mBabycareTime.getText().toString());
-
+		sitter.setIsVerify(false);
+		
 		sitter.saveInBackground();
 	
 		Toast.makeText(

@@ -144,6 +144,14 @@ public class Sitter extends ParseObject {
 		put("avator", file);
 	}
 	
+	public void setIsVerify(boolean value) {
+		put("isVerify", value);
+	}
+
+	public boolean getIsVerify() {
+		return getBoolean("isVerify");
+	}
+	
 	public static ParseQuery<Sitter> getQuery() {
 		return ParseQuery.getQuery(Sitter.class);
 	}
