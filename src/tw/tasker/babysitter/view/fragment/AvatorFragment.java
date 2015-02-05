@@ -155,6 +155,17 @@ public class AvatorFragment extends Fragment implements OnClickListener {
 				"請稍等 ...", "資料儲存中...", true);
 
 		Uri selectedImage = data.getData();
+
+        String filePath = getFilePath(selectedImage);
+        
+        Bitmap bmp = BitmapFactory.decodeFile(filePath);
+        
+		mPictureHelper.setBitmap(bmp);
+		mPictureHelper.setSaveCallback(new BabyRecordSaveCallback());
+		mPictureHelper.savePicture();
+	}
+
+	private String getFilePath(Uri selectedImage) {
         String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
         Cursor cursor = getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
@@ -164,18 +175,6 @@ public class AvatorFragment extends Fragment implements OnClickListener {
         int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
         String filePath = cursor.getString(columnIndex);
         cursor.close();
-
-
-        Bitmap bmp = BitmapFactory.decodeFile(filePath);
-        
-		mPictureHelper.setBitmap(bmp);
-		mPictureHelper.setSaveCallback(new BabyRecordSaveCallback());
-		mPictureHelper.savePicture();
+		return filePath;
 	}
-
-	private Media getContentResolver() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
