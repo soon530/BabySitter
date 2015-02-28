@@ -20,7 +20,8 @@
                 android:hint="@string/prompt_username"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:drawableLeft="@drawable/account" />
 
             <EditText
                 android:id="@+id/password"
