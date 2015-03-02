@@ -1,5 +1,7 @@
 package tw.tasker.babysitter.view.activity;
 
+import com.viewpagerindicator.CirclePageIndicator;
+
 import tw.tasker.babysitter.R;
 import android.app.Activity;
 import android.content.Context;
@@ -57,7 +59,9 @@ public class SignUpOrLogInActivity extends Activity {
 		ViewPager myPager = (ViewPager) findViewById(R.id.pager);
 		myPager.setAdapter(adapter);
 		myPager.setCurrentItem(0);
-	}
+		
+		CirclePageIndicator mIndicator = (CirclePageIndicator)findViewById(R.id.indicator);
+        mIndicator.setViewPager(myPager);	}
 
 	private class MyPagerAdapter extends PagerAdapter {
 
