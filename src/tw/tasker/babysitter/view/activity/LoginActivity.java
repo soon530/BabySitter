@@ -189,7 +189,7 @@ public class LoginActivity extends Activity implements OnFocusChangeListener {
 	@Override
 	public void onFocusChange(View v, boolean hasFocus) {
 		if (!hasFocus) {
-			checkUserName();
+			//checkUserName();
 		}
 
 	}
