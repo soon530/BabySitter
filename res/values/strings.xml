@@ -41,8 +41,8 @@
 
     <!-- login -->
     <string name="title_activity_sign_up_or_log_in">SignUpOrLogInActivity</string>
-    <string name="log_in">登入</string>
-    <string name="sign_up">註冊</string>
+    <string name="log_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
     <string name="powered_by">Open Data資料來源為</string>
     <string name="parse">衛生福利部社會及家庭署</string>
     <string name="slogan">為你找到可信任的保母</string>
