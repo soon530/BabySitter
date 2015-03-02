@@ -21,8 +21,8 @@
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:drawableLeft="@drawable/account" />
-
+                 />
+            
             <EditText
                 android:id="@+id/password"
                 android:layout_width="match_parent"
