@@ -122,7 +122,7 @@
         </activity>
         <activity
             android:name="tw.tasker.babysitter.view.activity.SignUpActivity"
-            android:label="@string/app_name"
+            android:label="You are"
             android:screenOrientation="portrait" >
         </activity>
         <activity
