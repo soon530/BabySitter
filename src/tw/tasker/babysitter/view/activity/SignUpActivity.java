@@ -157,21 +157,7 @@ public class SignUpActivity extends ActionBarActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	private boolean isEmpty(EditText etText) {
-		if (etText.getText().toString().trim().length() > 0) {
-			return false;
-		} else {
-			return true;
-		}
-	}
 
-	private boolean isMatching(EditText etText1, EditText etText2) {
-		if (etText1.getText().toString().equals(etText2.getText().toString())) {
-			return true;
-		} else {
-			return false;
-		}
-	}
 	
 	public class MyPagerAdapter extends FragmentPagerAdapter {
 

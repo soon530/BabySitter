@@ -23,6 +23,46 @@ public class UserInfo extends ParseObject {
 	public void setUser(ParseUser value) {
 		put("user", value);
 	}
+	
+	public String getName() {
+		return getString("name");
+	}
+	
+	public void setName(String vluae) {
+		put("name", vluae);
+	}
+	
+	public String getAddress() {
+		return getString("address");
+	}
+	
+	public void setAddress(String vluae) {
+		put("address", vluae);
+	}
+	
+	public String getPhone() {
+		return getString("phone");
+	}
+	
+	public void setPhone(String value) {
+		put("phone", value);
+	}
+	
+	public String getKidsAge() {
+		return getString("kidsAge");
+	}
+	
+	public void setKidsAge(String vluae) {
+		put("kidsAge", vluae);
+	}
+	
+	public String getKidsGender() {
+		return getString("kidsGender");
+	}
+	
+	public void setKidsGender(String vluae) {
+		put("kidsGender", vluae);
+	}
 
 	public static ParseQuery<UserInfo> getQuery() {
 		return ParseQuery.getQuery(UserInfo.class);
