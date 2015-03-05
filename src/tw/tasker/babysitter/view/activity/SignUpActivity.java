@@ -1,6 +1,7 @@
 package tw.tasker.babysitter.view.activity;
 
 import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.SitterSettingFragment;
 import tw.tasker.babysitter.view.activity.BabysitterActivity.MyPagerAdapter;
 import tw.tasker.babysitter.view.fragment.BabysitterCommentFragment;
 import tw.tasker.babysitter.view.fragment.BabysitterFragment;
@@ -188,7 +189,8 @@ public class SignUpActivity extends ActionBarActivity {
 				break;
 
 			case 1:
-				fragment = SitterSignUpFragment.newInstance();				
+				fragment = SitterSettingFragment.newInstance();				
+				//fragment = SitterSignUpFragment.newInstance();				
 				//fragment.setArguments(arguments);
 				break;
 

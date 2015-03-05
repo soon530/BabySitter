@@ -8,75 +8,88 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <EditText
-        android:id="@+id/number"
+    <LinearLayout
+        android:id="@+id/sync_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10" 
-        android:hint="編號">
+        android:orientation="vertical" >
 
-    </EditText>
+        <EditText
+            android:id="@+id/number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="編號" >
+        </EditText>
 
-    <Button
-        android:id="@+id/sync"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="依編號同步資料..." />
+        <Button
+            android:id="@+id/sync"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="依編號同步資料..." />
+    </LinearLayout>
 
-    <EditText
-        android:id="@+id/name"
+    <LinearLayout
+        android:id="@+id/data_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10" 
-        android:hint="姓名"/>
+        android:orientation="vertical" >
 
-    <EditText
-        android:id="@+id/sex"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10" 
-        android:hint="性別"/>
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="姓名" />
 
-    <EditText
-        android:id="@+id/age"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10" 
-        android:hint="年紀"/>
+        <EditText
+            android:id="@+id/sex"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="性別" />
 
-    <EditText
-        android:id="@+id/education"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10" 
-        android:hint="教育"/>
+        <EditText
+            android:id="@+id/age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="年紀" />
 
-    <EditText
-        android:id="@+id/tel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="電話" />
+        <EditText
+            android:id="@+id/education"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="教育" />
 
-    <EditText
-        android:id="@+id/address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10" 
-        android:hint="地址"/>
+        <EditText
+            android:id="@+id/tel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="電話" />
 
-    <EditText
-        android:id="@+id/babycare_count"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10" 
-        android:hint="托育"/>
+        <EditText
+            android:id="@+id/address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="地址" />
 
-    <EditText
-        android:id="@+id/babycare_time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="時段" />
+        <EditText
+            android:id="@+id/babycare_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="托育" />
+
+        <EditText
+            android:id="@+id/babycare_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="時段" />
+    </LinearLayout>
 
 </LinearLayout>

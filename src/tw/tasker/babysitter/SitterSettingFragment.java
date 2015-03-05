@@ -19,6 +19,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
@@ -53,6 +54,8 @@ public class SitterSettingFragment extends Fragment {
 	private EditText mAddress;
 	private EditText mBabycareCount;
 	private EditText mBabycareTime;
+	private LinearLayout mSyncLayout;
+	private LinearLayout mDataLayout;
 
 	/**
 	 * Use this factory method to create a new instance of this fragment using
@@ -105,6 +108,12 @@ public class SitterSettingFragment extends Fragment {
 		mBabycareCount = (EditText) rootView.findViewById(R.id.babycare_count);
 		mBabycareTime = (EditText) rootView.findViewById(R.id.babycare_time);
 
+		// layout
+		mSyncLayout = (LinearLayout) rootView.findViewById(R.id.sync_layout);
+		mDataLayout = (LinearLayout) rootView.findViewById(R.id.data_layout);
+		
+		mDataLayout.setVisibility(View.GONE);
+		
 		// set default data...
 		mNumber.setText("S102010329");
 		
@@ -121,6 +130,8 @@ public class SitterSettingFragment extends Fragment {
 			}
 
 		});
+		
+		
 		return rootView;
 	}
 
@@ -133,6 +144,8 @@ public class SitterSettingFragment extends Fragment {
 			public void done(Babysitter babysitter, ParseException e) {
 				LogUtils.LOGD("vic", "syncData()" + babysitter);
 				fillUI(babysitter);
+				mSyncLayout.setVisibility(View.GONE);
+				mDataLayout.setVisibility(View.VISIBLE);
 			}
 
 		});
