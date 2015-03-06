@@ -7,7 +7,9 @@ import tw.tasker.babysitter.model.data.UserInfo;
 import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.utils.MyLocation;
 import tw.tasker.babysitter.view.fragment.HomeFragment;
+import tw.tasker.babysitter.view.fragment.NewHomeFragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 
 import com.parse.CountCallback;
@@ -27,7 +29,7 @@ public class HomeActivity extends ActionBarActivity {
 
 		if (savedInstanceState == null) {
 
-			HomeFragment fragment = new HomeFragment();
+			Fragment fragment = new NewHomeFragment();
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, fragment).commit();
 		}

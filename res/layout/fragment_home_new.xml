@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ *******************************************************************************
+  ~   Copyright (c) 2013-2014 Gabriele Mariotti.
+  ~
+  ~   Licensed under the Apache License, Version 2.0 (the "License");
+  ~   you may not use this file except in compliance with the License.
+  ~   You may obtain a copy of the License at
+  ~
+  ~   http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~   Unless required by applicable law or agreed to in writing, software
+  ~   distributed under the License is distributed on an "AS IS" BASIS,
+  ~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~   See the License for the specific language governing permissions and
+  ~   limitations under the License.
+  ~  *****************************************************************************
+-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!--
+         You can customize this layout.
+         You need to have in your layout a `CardView` with the ID `list_cardId`
+    -->
+
+    <TextView
+        android:id="@+id/filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="v顯示更多過濾條件"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="從：高雄市鳳山區光復路"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="定位" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:id="@+id/filter_pannel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/babycare_pref"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="托育偏好"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <CheckBox
+                android:id="@+id/day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="日托" />
+
+            <CheckBox
+                android:id="@+id/night"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="夜托" />
+
+            <CheckBox
+                android:id="@+id/temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="臨托" />
+
+            <CheckBox
+                android:id="@+id/home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="到府服務" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="目前托育人數"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <CheckBox
+                android:id="@+id/kids_0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0人" />
+
+            <CheckBox
+                android:id="@+id/kids_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1人" />
+
+            <CheckBox
+                android:id="@+id/kids_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2人" />
+
+            <CheckBox
+                android:id="@+id/kids_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3人" />
+
+            <TextView
+                android:id="@+id/sitter_old"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="保母年齡"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <CheckBox
+                android:id="@+id/old_40"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="~40歲" />
+
+            <CheckBox
+                android:id="@+id/old_40_50"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="40歲~50歲" />
+
+            <CheckBox
+                android:id="@+id/old_50"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="50歲~" />
+
+            <Button
+                android:id="@+id/save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="儲存過慮條件" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
