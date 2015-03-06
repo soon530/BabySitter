@@ -21,7 +21,11 @@
                 android:id="@+id/action_gmail"
                 android:title="意見回饋"
                 app:showAsAction="never"/>
-        </menu>
+            <item
+                android:id="@+id/action_logout"
+                android:title="logout"
+                app:showAsAction="never"/>
+            </menu>
     </item>
 
 </menu>
