@@ -35,6 +35,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
+        <include layout="@layout/merge_signup"/>
+        
         <EditText
             android:id="@+id/name"
             android:layout_width="match_parent"
