@@ -20,8 +20,18 @@ package tw.tasker.babysitter.view.fragment;
 
 //import it.gmariotti.cardslib.demo.R;
 //import it.gmariotti.cardslib.demo.cards.ColorCard;
+import java.util.List;
+
+import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.model.data.Babysitter;
+import tw.tasker.babysitter.presenter.adapter.BabyRecordParseQueryAdapter;
+import tw.tasker.babysitter.presenter.adapter.BabysittersParseQueryAdapter;
+import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.activity.DispatchActivity;
+import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
+import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -39,9 +49,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 import com.parse.ParseUser;
 
 /**
@@ -49,7 +61,7 @@ import com.parse.ParseUser;
  * 
  * @author Gabriele Mariotti (gabri.mariotti@gmail.com)
  */
-public class NewHomeFragment extends Fragment implements  OnClickListener {
+public class NewHomeFragment extends Fragment implements OnClickListener, OnQueryLoadListener<Babysitter>, OnRefreshListener {
 
 	protected ScrollView mScrollView;
 	private LinearLayout mLayout;
@@ -66,17 +78,22 @@ public class NewHomeFragment extends Fragment implements  OnClickListener {
 	private CheckBox mOld40_50;
 	private CheckBox mOld50;
 	private Button mSave;
+	private BabysittersParseQueryAdapter mAdapter;
 
+	protected PullToRefreshLayout mPullToRefreshLayout;
+	protected ListView mListView;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setHasOptionsMenu(true);
 	}
-
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		
 		View rootView = inflater.inflate(R.layout.fragment_home_new, container, false);
 		
 		mLayout = (LinearLayout) rootView.findViewById(R.id.filter_pannel);
@@ -102,10 +119,29 @@ public class NewHomeFragment extends Fragment implements  OnClickListener {
 		mSave = (Button) rootView.findViewById(R.id.save);
 		mSave.setOnClickListener(this);
 		
-		loadSavedPreferences();
+		mListView = (ListView) rootView.findViewById(R.id.list);
+		//mListView.setOnItemClickListener(this);
+
+		// Retrieve the PullToRefreshLayout from the content view
+		mPullToRefreshLayout = (PullToRefreshLayout) rootView
+				.findViewById(R.id.carddemo_extra_ptr_layout);
+
+		// Now setup the PullToRefreshLayout
+		 ActionBarPullToRefresh.from(getActivity())
+		 	// Mark All Children as pullable
+		 	.allChildrenArePullable()
+		 	// Set the OnRefreshListener
+			.listener(this)
+			// Finally commit the setup to our PullToRefreshLayout
+			.setup(mPullToRefreshLayout);
 		
+		loadSavedPreferences();
+		doListQuery();
+
 		return rootView; 
 	}
+	
+	
 	
 	private void loadSavedPreferences() {
 		setCheckBox(mDay, "mDay");
@@ -143,12 +179,14 @@ public class NewHomeFragment extends Fragment implements  OnClickListener {
 		int id = v.getId();
 		switch (id) {
 		case R.id.filter :
-			if (mLayout.getVisibility() == View.VISIBLE) {
+			if (mListView.getVisibility() == View.GONE) {
 				mLayout.setVisibility(View.GONE);
+				mListView.setVisibility(View.VISIBLE);
 				mFilter.setText("v顯示更多過濾條件");
 				
-			} else { 
+			} else if (mListView.getVisibility() == View.VISIBLE) { 
 				mLayout.setVisibility(View.VISIBLE);
+				mListView.setVisibility(View.GONE);
 				mFilter.setText("^隱藏更多過濾條件");
 			}
 			
@@ -157,7 +195,8 @@ public class NewHomeFragment extends Fragment implements  OnClickListener {
 		case R.id.save:
 			
 			saveAllCheckbox();
-			
+			doListQuery();
+
 			break;
 			
 		default:
@@ -183,6 +222,7 @@ public class NewHomeFragment extends Fragment implements  OnClickListener {
 		savePreferences("mOld50", mOld50.isChecked());
 
 		mLayout.setVisibility(View.GONE);
+		mListView.setVisibility(View.VISIBLE);
 		mFilter.setText("v顯示更多過濾條件");
 	}
 
@@ -196,8 +236,17 @@ public class NewHomeFragment extends Fragment implements  OnClickListener {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-
+		//doListQuery();
 	}
+	
+	private void doListQuery() {
+
+		mAdapter = new BabysittersParseQueryAdapter(getActivity(), 3);
+		mAdapter.setObjectsPerPage(Config.OBJECTS_PER_PAGE);
+		mAdapter.addOnQueryLoadListener(this);
+		mListView.setAdapter(mAdapter);
+	}
+
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -255,5 +304,30 @@ public class NewHomeFragment extends Fragment implements  OnClickListener {
 
 		return super.onOptionsItemSelected(item);
 	}
+
+	@Override
+	public void onLoaded(List<Babysitter> arg0, Exception arg1) {
+		hideLoading();
+	}
+
+	@Override
+	public void onLoading() {
+		showLoading();
+	}
+
+	@Override
+	public void onRefreshStarted(View view) {
+		
+	}
+	
+	protected void showLoading() {
+		ProgressBarUtils.show(getActivity());
+	}
+	
+	protected void hideLoading() {
+		ProgressBarUtils.hide(getActivity());
+		mPullToRefreshLayout.setRefreshComplete();
+	}
+
 
 }

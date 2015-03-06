@@ -49,9 +49,22 @@
         android:layout_height="wrap_content"
         android:text="定位" />
 
-    <ScrollView
+    <uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/carddemo_extra_ptr_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
+
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <!--
+         <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+        -->
 
         <LinearLayout
             android:id="@+id/filter_pannel"
@@ -66,29 +79,35 @@
                 android:text="托育偏好"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
-            <CheckBox
-                android:id="@+id/day"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="日托" />
+                android:orientation="horizontal" >
 
-            <CheckBox
-                android:id="@+id/night"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="夜托" />
+                <CheckBox
+                    android:id="@+id/day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="日托" />
 
-            <CheckBox
-                android:id="@+id/temp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="臨托" />
+                <CheckBox
+                    android:id="@+id/night"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="夜托" />
 
-            <CheckBox
-                android:id="@+id/home"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="到府服務" />
+                <CheckBox
+                    android:id="@+id/temp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="臨托" />
+
+                <CheckBox
+                    android:id="@+id/home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="到府服務" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/textView4"
@@ -97,29 +116,35 @@
                 android:text="目前托育人數"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
-            <CheckBox
-                android:id="@+id/kids_0"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="0人" />
+                android:orientation="horizontal" >
 
-            <CheckBox
-                android:id="@+id/kids_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1人" />
+                <CheckBox
+                    android:id="@+id/kids_0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0人" />
 
-            <CheckBox
-                android:id="@+id/kids_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2人" />
+                <CheckBox
+                    android:id="@+id/kids_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1人" />
 
-            <CheckBox
-                android:id="@+id/kids_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="3人" />
+                <CheckBox
+                    android:id="@+id/kids_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2人" />
+
+                <CheckBox
+                    android:id="@+id/kids_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3人" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/sitter_old"
@@ -128,23 +153,29 @@
                 android:text="保母年齡"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
-            <CheckBox
-                android:id="@+id/old_40"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="~40歲" />
+                android:orientation="horizontal" >
 
-            <CheckBox
-                android:id="@+id/old_40_50"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="40歲~50歲" />
+                <CheckBox
+                    android:id="@+id/old_40"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="~40歲" />
 
-            <CheckBox
-                android:id="@+id/old_50"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="50歲~" />
+                <CheckBox
+                    android:id="@+id/old_40_50"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="40歲~50歲" />
+
+                <CheckBox
+                    android:id="@+id/old_50"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="50歲~" />
+            </LinearLayout>
 
             <Button
                 android:id="@+id/save"
@@ -152,6 +183,7 @@
                 android:layout_height="wrap_content"
                 android:text="儲存過慮條件" />
         </LinearLayout>
-    </ScrollView>
+        <!-- </ScrollView> -->
+    </uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout>
 
 </LinearLayout>
