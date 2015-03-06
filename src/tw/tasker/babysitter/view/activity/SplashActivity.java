@@ -16,8 +16,8 @@ public class SplashActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
-		//goSingUpOrLogin();
-		goSingUpOrLoginWithClick();
+		goSingUpOrLogin();
+		//goSingUpOrLoginWithClick();
 	}
 
 	private void goSingUpOrLoginWithClick() {
