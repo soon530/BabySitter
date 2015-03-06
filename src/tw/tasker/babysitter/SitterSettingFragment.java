@@ -112,10 +112,10 @@ public class SitterSettingFragment extends Fragment {
 		mSyncLayout = (LinearLayout) rootView.findViewById(R.id.sync_layout);
 		mDataLayout = (LinearLayout) rootView.findViewById(R.id.data_layout);
 		
-		mDataLayout.setVisibility(View.GONE);
+		//mDataLayout.setVisibility(View.GONE);
 		
 		// set default data...
-		mNumber.setText("S102010329");
+		mNumber.setText("031080");
 		
 		mSync.setOnClickListener(new OnClickListener() {
 			
@@ -137,15 +137,15 @@ public class SitterSettingFragment extends Fragment {
 
 	private void syncData() {
 		ParseQuery<Babysitter> query = Babysitter.getQuery();
-		query.whereEqualTo("babysitterNumber", mNumber.getText().toString());
+		query.whereEqualTo("skillNumber", mNumber.getText().toString());
 		query.getFirstInBackground(new GetCallback<Babysitter>() {
 			
 			@Override
 			public void done(Babysitter babysitter, ParseException e) {
 				LogUtils.LOGD("vic", "syncData()" + babysitter);
 				fillUI(babysitter);
-				mSyncLayout.setVisibility(View.GONE);
-				mDataLayout.setVisibility(View.VISIBLE);
+				//mSyncLayout.setVisibility(View.GONE);
+				//mDataLayout.setVisibility(View.VISIBLE);
 			}
 
 		});
@@ -174,9 +174,10 @@ public class SitterSettingFragment extends Fragment {
 
 		switch (id) {
 		case R.id.action_add:
-			if (ParseUser.getCurrentUser() != null) {
-				hasSitter();
-			}
+//			if (ParseUser.getCurrentUser() != null) {
+//				hasSitter();
+//			}
+//			addSitter(); 
 			break;
 		default:
 			break;
