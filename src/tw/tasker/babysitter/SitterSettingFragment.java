@@ -6,7 +6,10 @@ import java.util.List;
 
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.Sitter;
+import tw.tasker.babysitter.model.data.UserInfo;
+import tw.tasker.babysitter.utils.AccountChecker;
 import tw.tasker.babysitter.utils.LogUtils;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 //import android.app.Fragment;
@@ -28,6 +31,7 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+import com.parse.SignUpCallback;
 
 /**
  * A simple {@link Fragment} subclass. Use the
@@ -46,7 +50,7 @@ public class SitterSettingFragment extends Fragment {
 	private String mParam2;
 	private Button mSync;
 	private EditText mNumber;
-	private EditText mName;
+	private EditText mSitterName;
 	private EditText mSex;
 	private EditText mAge;
 	private EditText mEducation;
@@ -56,6 +60,9 @@ public class SitterSettingFragment extends Fragment {
 	private EditText mBabycareTime;
 	private LinearLayout mSyncLayout;
 	private LinearLayout mDataLayout;
+	private EditText mName;
+	private EditText mPassword;
+	private EditText mPasswordAgain;
 
 	/**
 	 * Use this factory method to create a new instance of this fragment using
@@ -99,7 +106,7 @@ public class SitterSettingFragment extends Fragment {
 		mSync = (Button) rootView.findViewById(R.id.sync);
 		
 		mNumber = (EditText) rootView.findViewById(R.id.number);
-		mName = (EditText) rootView.findViewById(R.id.name);
+		mSitterName = (EditText) rootView.findViewById(R.id.name);
 		mSex = (EditText) rootView.findViewById(R.id.sex);
 		mAge = (EditText) rootView.findViewById(R.id.age);
 		mEducation = (EditText) rootView.findViewById(R.id.education);
@@ -131,6 +138,11 @@ public class SitterSettingFragment extends Fragment {
 
 		});
 		
+		// Set up the signup form.
+		mName = (EditText) rootView.findViewById(R.id.username);
+		mPassword = (EditText) rootView.findViewById(R.id.password);
+		mPasswordAgain = (EditText) rootView.findViewById(R.id.passwordAgain);
+
 		
 		return rootView;
 	}
@@ -152,7 +164,7 @@ public class SitterSettingFragment extends Fragment {
 	}
 
 	private void fillUI(Babysitter babysitter) {
-		mName.setText(babysitter.getName());
+		mSitterName.setText(babysitter.getName());
 		mSex.setText(babysitter.getSex());
 		mAge.setText(babysitter.getAge());
 		mEducation.setText(babysitter.getEducation());
@@ -178,6 +190,12 @@ public class SitterSettingFragment extends Fragment {
 //				hasSitter();
 //			}
 //			addSitter(); 
+			
+			if (isAccountOK()) {
+				signUpSitter();
+			}
+
+			
 			break;
 		default:
 			break;
@@ -185,6 +203,104 @@ public class SitterSettingFragment extends Fragment {
 
 		return super.onOptionsItemSelected(item);
 	}
+
+	private boolean isAccountOK() {
+		// Validate the sign up data
+		boolean validationError = false;
+		StringBuilder validationErrorMessage = new StringBuilder(getResources()
+				.getString(R.string.error_intro));
+		if (AccountChecker.isEmpty(mName)) {
+			validationError = true;
+			validationErrorMessage.append(getResources().getString(
+					R.string.error_blank_username));
+		}
+		if (AccountChecker.isEmpty(mPassword)) {
+			if (validationError) {
+				validationErrorMessage.append(getResources().getString(
+						R.string.error_join));
+			}
+			validationError = true;
+			validationErrorMessage.append(getResources().getString(
+					R.string.error_blank_password));
+		}
+		if (!AccountChecker.isMatching(mPassword, mPasswordAgain)) {
+			if (validationError) {
+				validationErrorMessage.append(getResources().getString(
+						R.string.error_join));
+			}
+			validationError = true;
+			validationErrorMessage.append(getResources().getString(
+					R.string.error_mismatched_passwords));
+		}
+		validationErrorMessage.append(getResources().getString(
+				R.string.error_end));
+
+		// If there is a validation error, display the error
+		if (validationError) {
+			Toast.makeText(getActivity(), validationErrorMessage.toString(),
+					Toast.LENGTH_LONG).show();
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	
+	private void signUpSitter() {
+		// Set up a progress dialog
+		final ProgressDialog dlg = new ProgressDialog(getActivity());
+		dlg.setTitle("註冊中");
+		dlg.setMessage("請稍候...");
+		dlg.show();
+
+		// Set up a new Parse user
+		ParseUser user = new ParseUser();
+		user.setUsername(mName.getText().toString());
+		user.setPassword(mPassword.getText().toString());
+		// Call the Parse signup method
+		user.signUpInBackground(new SignUpCallback() {
+
+			@Override
+			public void done(ParseException e) {
+				dlg.dismiss();
+				if (e != null) {
+					// Show the error message
+					Toast.makeText(getActivity(), "註冊錯誤!" /* e.getMessage() */,
+							Toast.LENGTH_LONG).show();
+				} else {
+					// Start an intent for the dispatch activity
+					LogUtils.LOGD("vic", "user object id" + ParseUser.getCurrentUser().getObjectId());
+				
+					addSitter();
+				}
+			}
+		});
+	}
+
+//	private void addUserInfo() {
+//		LogUtils.LOGD("vic", "addUserInfo");
+//
+//		UserInfo userInfo = new UserInfo();
+//		//userInfo.setLocation(Config.MY_LOCATION);
+//		userInfo.setUser(ParseUser.getCurrentUser());
+//		userInfo.setName(mParentsName.getText().toString());
+//		userInfo.setAddress(mParentsAddress.getText().toString());
+//		userInfo.setPhone(mParents_phone.getText().toString());
+//		userInfo.setKidsAge(mKidsAge.getText().toString());
+//		userInfo.setKidsGender(mKidsGender.getText().toString());
+//		
+//		userInfo.saveInBackground(new SaveCallback() {
+//
+//			@Override
+//			public void done(ParseException e) {
+//				if (e == null) {
+//					goToNextActivity();
+//				} else {
+//					LOGD("vic", e.getMessage());
+//				}
+//			}
+//		});
+//	}
 
 	private void hasSitter() {
 		ParseQuery<Sitter> query = Sitter.getQuery();
@@ -211,7 +327,7 @@ public class SitterSettingFragment extends Fragment {
 		Sitter sitter = new Sitter();
 		sitter.setUser(ParseUser.getCurrentUser());
 		sitter.setBabysitterNumber(mNumber.getText().toString());
-		sitter.setName(mName.getText().toString());
+		sitter.setName(mSitterName.getText().toString());
 		sitter.setSex(mSex.getText().toString());
 		sitter.setAge(mAge.getText().toString());
 		sitter.setEducation(mEducation.getText().toString());
@@ -243,7 +359,7 @@ public class SitterSettingFragment extends Fragment {
 	private void updateSitter(Sitter sitter) {
 		
 		sitter.setBabysitterNumber(mNumber.getText().toString());
-		sitter.setName(mName.getText().toString());
+		sitter.setName(mSitterName.getText().toString());
 		sitter.setSex(mSex.getText().toString());
 		sitter.setAge(mAge.getText().toString());
 		sitter.setEducation(mEducation.getText().toString());
