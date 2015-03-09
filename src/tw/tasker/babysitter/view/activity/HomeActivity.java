@@ -33,7 +33,7 @@ public class HomeActivity extends ActionBarActivity {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, fragment).commit();
 		}
-
+		getActionBar().setDisplayShowHomeEnabled(false);
 		ParseAnalytics.trackAppOpened(getIntent());
 		// 後續看要不要放在ActionBar之類的
 		// mUserInfo.setText("使用者資訊(" + user.getObjectId() + ")："+

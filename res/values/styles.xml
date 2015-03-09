@@ -21,7 +21,7 @@
     </style>
     
     <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse" tools:ignore="NewApi">
-        <item name="android:background">#FFBB33</item>
+        <item name="android:background">@color/branding_color</item>
         <item name="android:icon">@drawable/ic_action_name</item>
     </style>
 
