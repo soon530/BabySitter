@@ -22,7 +22,8 @@
     xmlns:card="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:background="#FFFFFF">
 
     <!--
          You can customize this layout.
@@ -33,7 +34,8 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="vertical" 
-        android:id="@+id/filter_expand">
+        android:id="@+id/filter_expand"
+        android:layout_marginLeft="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -60,21 +62,41 @@
         android:id="@+id/imageView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/line" />
+        android:src="@drawable/line"
+         />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center_vertical"
+	>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="從：高雄市鳳山區光復路"
+            android:textColor="#969696"
+            android:textSize="16sp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/full_address"
+            android:gravity="center_vertical" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:src="@drawable/location" />
+
+    </LinearLayout>
+	    <ImageView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="從：高雄市鳳山區光復路"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="定位" />
-
+        android:src="@drawable/gray_line"
+         />
+    
     <uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/carddemo_extra_ptr_layout"
