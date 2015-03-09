@@ -55,13 +55,14 @@ public class SignUpOrLogInActivity extends Activity {
 					}
 				});
 
-		MyPagerAdapter adapter = new MyPagerAdapter();
-		ViewPager myPager = (ViewPager) findViewById(R.id.pager);
-		myPager.setAdapter(adapter);
-		myPager.setCurrentItem(0);
+//		MyPagerAdapter adapter = new MyPagerAdapter();
+//		ViewPager myPager = (ViewPager) findViewById(R.id.pager);
+//		myPager.setAdapter(adapter);
+//		myPager.setCurrentItem(0);
 		
-		CirclePageIndicator mIndicator = (CirclePageIndicator)findViewById(R.id.indicator);
-        mIndicator.setViewPager(myPager);	}
+//		CirclePageIndicator mIndicator = (CirclePageIndicator)findViewById(R.id.indicator);
+//        mIndicator.setViewPager(myPager);	
+     }
 
 	private class MyPagerAdapter extends PagerAdapter {
 
