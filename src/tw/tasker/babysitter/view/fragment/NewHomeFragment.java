@@ -82,6 +82,7 @@ public class NewHomeFragment extends Fragment implements OnClickListener, OnQuer
 
 	protected PullToRefreshLayout mPullToRefreshLayout;
 	protected ListView mListView;
+	private LinearLayout mFilterExpand;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -99,7 +100,8 @@ public class NewHomeFragment extends Fragment implements OnClickListener, OnQuer
 		mLayout = (LinearLayout) rootView.findViewById(R.id.filter_pannel);
 		mLayout.setVisibility(View.GONE);
 		mFilter = (TextView) rootView.findViewById(R.id.filter);
-		mFilter.setOnClickListener(this);
+		mFilterExpand = (LinearLayout) rootView.findViewById(R.id.filter_expand);
+		mFilterExpand.setOnClickListener(this);
 		
 		// check box
 		mDay = (CheckBox) rootView.findViewById(R.id.day);
@@ -178,16 +180,16 @@ public class NewHomeFragment extends Fragment implements OnClickListener, OnQuer
 		
 		int id = v.getId();
 		switch (id) {
-		case R.id.filter :
+		case R.id.filter_expand :
 			if (mListView.getVisibility() == View.GONE) {
 				mLayout.setVisibility(View.GONE);
 				mListView.setVisibility(View.VISIBLE);
-				mFilter.setText("v顯示更多過濾條件");
+				mFilter.setText("顯示更多過濾條件");
 				
 			} else if (mListView.getVisibility() == View.VISIBLE) { 
 				mLayout.setVisibility(View.VISIBLE);
 				mListView.setVisibility(View.GONE);
-				mFilter.setText("^隱藏更多過濾條件");
+				mFilter.setText("隱藏更多過濾條件");
 			}
 			
 			break;
@@ -223,7 +225,7 @@ public class NewHomeFragment extends Fragment implements OnClickListener, OnQuer
 
 		mLayout.setVisibility(View.GONE);
 		mListView.setVisibility(View.VISIBLE);
-		mFilter.setText("v顯示更多過濾條件");
+		mFilter.setText("顯示更多過濾條件");
 	}
 
 	private void savePreferences(String key, boolean value) {
