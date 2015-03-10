@@ -53,6 +53,7 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.andexert.expandablelayout.library.ExpandableLayoutListView;
 import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 import com.parse.ParseUser;
 
@@ -81,7 +82,7 @@ public class NewHomeFragment extends Fragment implements OnClickListener, OnQuer
 	private BabysittersParseQueryAdapter mAdapter;
 
 	protected PullToRefreshLayout mPullToRefreshLayout;
-	protected ListView mListView;
+	protected ExpandableLayoutListView mListView;
 	private LinearLayout mFilterExpand;
 	
 	@Override
@@ -121,7 +122,7 @@ public class NewHomeFragment extends Fragment implements OnClickListener, OnQuer
 		mSave = (Button) rootView.findViewById(R.id.save);
 		mSave.setOnClickListener(this);
 		
-		mListView = (ListView) rootView.findViewById(R.id.list);
+		mListView = (ExpandableLayoutListView ) rootView.findViewById(R.id.list);
 		//mListView.setOnItemClickListener(this);
 
 		// Retrieve the PullToRefreshLayout from the content view
