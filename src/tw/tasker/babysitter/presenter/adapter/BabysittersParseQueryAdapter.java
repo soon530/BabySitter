@@ -99,7 +99,14 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 					query.whereContains("babycareTime", "臨時");
 				}
 
-				query.whereNear("location", Config.MY_LOCATION);
+				if (!Config.keyWord.equals("")) {
+					String keyword = Config.keyWord;
+					keyword = keyword.replace("台", "臺");
+					query.whereContains("address", keyword);
+				} else {
+					query.whereNear("location", Config.MY_LOCATION);
+				}
+				
 
 //				switch (position) {
 //				case 0:

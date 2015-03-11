@@ -32,6 +32,7 @@ import tw.tasker.babysitter.view.activity.DispatchActivity;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -39,19 +40,26 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 import com.andexert.expandablelayout.library.ExpandableLayoutListView;
 import com.parse.ParseQueryAdapter.OnQueryLoadListener;
@@ -62,7 +70,7 @@ import com.parse.ParseUser;
  * 
  * @author Gabriele Mariotti (gabri.mariotti@gmail.com)
  */
-public class NewHomeFragment extends Fragment implements OnClickListener, OnQueryLoadListener<Babysitter>, OnRefreshListener {
+public class NewHomeFragment extends Fragment implements OnClickListener, OnQueryLoadListener<Babysitter>, OnRefreshListener, OnFocusChangeListener, OnEditorActionListener {
 
 	protected ScrollView mScrollView;
 	private LinearLayout mFilterPanel;
@@ -85,6 +93,9 @@ public class NewHomeFragment extends Fragment implements OnClickListener, OnQuer
 	protected ExpandableLayoutListView mListView;
 	private LinearLayout mFilterExpand;
 	private LinearLayout mAddressPanel;
+	private TextView mAddressText;
+	private EditText mAddressEdit;
+	private ImageView mLocation;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -106,6 +117,17 @@ public class NewHomeFragment extends Fragment implements OnClickListener, OnQuer
 		mFilter = (TextView) rootView.findViewById(R.id.filter);
 		mFilterExpand = (LinearLayout) rootView.findViewById(R.id.filter_expand);
 		mFilterExpand.setOnClickListener(this);
+		
+		mAddressText = (TextView) rootView.findViewById(R.id.address_text);
+		mAddressText.setOnClickListener(this);
+		
+		mAddressEdit = (EditText) rootView.findViewById(R.id.address_edit);
+		mAddressEdit.setVisibility(View.GONE);
+		mAddressEdit.setOnFocusChangeListener(this);
+		mAddressEdit.setOnEditorActionListener(this);
+		
+		mLocation = (ImageView) rootView.findViewById(R.id.location);
+		
 		
 		// check box
 		mDay = (CheckBox) rootView.findViewById(R.id.day);
@@ -206,14 +228,33 @@ public class NewHomeFragment extends Fragment implements OnClickListener, OnQuer
 			doListQuery();
 
 			break;
-			
+		case R.id.address_text:
+			mAddressText.setVisibility(View.GONE);
+			mAddressEdit.setVisibility(View.VISIBLE);
+			mLocation.setVisibility(View.GONE);
+			//mAddressEdit.setFocusable(true);
+			//mAddressEdit.setFocusableInTouchMode(true);
+			mAddressEdit.requestFocus();
+			//getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+			showKeyboard();
+			break;
 		default:
 			break;
 		}
 		
 	}
 	
-	
+	// performance issue
+	private void showKeyboard() {
+		InputMethodManager inputMethodManager=(InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+	    inputMethodManager.toggleSoftInputFromWindow(mAddressEdit.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);		
+	}
+
+	private void hideKeyboard() {
+		InputMethodManager inputMethodManager=(InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+	    inputMethodManager.toggleSoftInputFromWindow(mAddressEdit.getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS, 0);		
+	}
+
 	private void saveAllCheckbox() {
 		savePreferences("mDay", mDay.isChecked());
 		savePreferences("mNight", mNight.isChecked());
@@ -336,6 +377,30 @@ public class NewHomeFragment extends Fragment implements OnClickListener, OnQuer
 	protected void hideLoading() {
 		ProgressBarUtils.hide(getActivity());
 		mPullToRefreshLayout.setRefreshComplete();
+	}
+
+	@Override
+	public void onFocusChange(View v, boolean hasFocus) {
+		if (!hasFocus) {
+			mAddressText.setVisibility(View.VISIBLE);
+			mAddressEdit.setVisibility(View.GONE);
+			mLocation.setVisibility(View.VISIBLE);
+		}
+	}
+
+	@Override
+	public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+		String addr = mAddressEdit.getText().toString();
+		mAddressText.setText(addr);
+		Config.keyWord= addr;
+		
+		mAddressText.setVisibility(View.VISIBLE);
+		mAddressEdit.setVisibility(View.GONE);
+		mLocation.setVisibility(View.VISIBLE);
+		doListQuery();
+		hideKeyboard();
+		
+		return true;
 	}
 
 
