@@ -67,7 +67,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:gravity="center_vertical" >
+        android:gravity="center_vertical" 
+        android:id="@+id/address_panel">
 
         <TextView
             android:id="@+id/textView2"
@@ -125,6 +126,7 @@
                 android:textColor="@color/branding_color"
                 android:textSize="16sp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="24dp"
                  />
 
             <RelativeLayout
