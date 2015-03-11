@@ -22,8 +22,8 @@
     xmlns:card="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
-    android:background="#FFFFFF">
+    android:background="#FFFFFF"
+    android:orientation="vertical" >
 
     <!--
          You can customize this layout.
@@ -31,11 +31,11 @@
     -->
 
     <LinearLayout
+        android:id="@+id/filter_expand"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:orientation="vertical" 
-        android:id="@+id/filter_expand"
-        android:layout_marginLeft="16dp">
+        android:layout_marginLeft="16dp"
+        android:orientation="vertical" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -62,26 +62,24 @@
         android:id="@+id/imageView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/line"
-         />
+        android:src="@drawable/line" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:gravity="center_vertical"
-	>
+        android:gravity="center_vertical" >
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="從：高雄市鳳山區光復路"
-            android:textColor="#969696"
-            android:textSize="16sp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:background="@drawable/full_address"
-            android:gravity="center_vertical" />
+            android:gravity="center_vertical"
+            android:text="從：高雄市鳳山區光復路"
+            android:textColor="#969696"
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/imageView3"
@@ -89,14 +87,13 @@
             android:layout_height="wrap_content"
             android:gravity="right"
             android:src="@drawable/location" />
-
     </LinearLayout>
-	    <ImageView
+
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/gray_line"
-         />
-    
+        android:src="@drawable/gray_line" />
+
     <uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/carddemo_extra_ptr_layout"
@@ -125,55 +122,112 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="托育偏好"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:textColor="@color/branding_color"
+                android:textSize="16sp"
+                android:layout_marginLeft="10dp"
+                 />
 
-            <LinearLayout
+            <RelativeLayout
+                android:id="@+id/RelativeLayout1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:orientation="horizontal" 
+                android:background="@drawable/border_button"
+                android:layout_margin="10dp"
+                >
 
                 <CheckBox
                     android:id="@+id/day"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/textView1"
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginTop="14dp"
                     android:text="日托" />
 
                 <CheckBox
                     android:id="@+id/night"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/textView1"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_toRightOf="@+id/day"
                     android:text="夜托" />
 
                 <CheckBox
                     android:id="@+id/temp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/night"
+                    android:layout_alignBottom="@+id/night"
+                    android:layout_marginLeft="25dp"
+                    android:layout_toRightOf="@+id/night"
                     android:text="臨托" />
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/day"
+                    android:layout_alignParentTop="true"
+                    android:text="托育時段"
+                    android:textColor="@color/branding_color"
+                    android:textSize="16sp"
+                    android:layout_marginTop="10dp" />
+
+                <TextView
+                    android:id="@+id/TextView01"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/day"
+                    android:layout_below="@+id/day"
+                    android:layout_marginTop="10dp"
+                    android:text="托育方式"
+                    android:textColor="@color/branding_color"
+                    android:textSize="16sp" 
+                    />
 
                 <CheckBox
                     android:id="@+id/home"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/TextView01"
+                    android:layout_below="@+id/TextView01"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:text="到府服務" />
-            </LinearLayout>
+
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="目前托育人數"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:textColor="@color/branding_color"
+                android:textSize="16sp"
+                android:layout_marginLeft="10dp"
+                 />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:orientation="horizontal" 
+				android:background="@drawable/border_button"
+                android:layout_margin="10dp"
+                android:gravity="center_vertical"
+                
+                >
 
                 <CheckBox
                     android:id="@+id/kids_0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0人" />
+                    android:text="0人"
+                    android:layout_marginLeft="20dp"
+                     />
 
                 <CheckBox
                     android:id="@+id/kids_1"
@@ -199,18 +253,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="保母年齡"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:textColor="@color/branding_color"
+                android:textSize="16sp"
+                android:layout_marginLeft="10dp"
+                 />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:orientation="horizontal" 
+                android:background="@drawable/border_button"
+                android:layout_margin="10dp"
+                android:gravity="center_vertical"
+                >
 
                 <CheckBox
                     android:id="@+id/old_40"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="~40歲" />
+                    android:text="~40歲"
+                    android:layout_marginLeft="20dp"
+                     />
 
                 <CheckBox
                     android:id="@+id/old_40_50"
@@ -228,9 +291,14 @@
             <Button
                 android:id="@+id/save"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="儲存過慮條件" />
+                android:layout_height="30dp"
+                android:text="儲存過慮條件"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/full_button_contact"
+                android:textColor="#FFFFFF"
+                android:layout_marginTop="10dp" />
         </LinearLayout>
+
         <!-- </ScrollView> -->
     </uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout>
 
