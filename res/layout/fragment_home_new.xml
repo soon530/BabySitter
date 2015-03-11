@@ -71,7 +71,7 @@
         android:id="@+id/address_panel">
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/address_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
@@ -82,8 +82,21 @@
             android:textColor="#969696"
             android:textSize="16sp" />
 
+        <EditText
+            android:id="@+id/address_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10" 
+            android:background="@drawable/full_edittext_address"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:singleLine="true"
+            android:imeOptions="actionSearch"
+             />
+
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="right"
