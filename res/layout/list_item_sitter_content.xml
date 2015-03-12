@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="保母編號：1234567"
-        android:layout_marginLeft="75dp" 
+        android:layout_marginLeft="105dp" 
         
          />
 
@@ -20,22 +20,22 @@
         android:id="@+id/education"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="75dp"
+        android:layout_marginLeft="105dp"
         android:text="教育程度：大學" />
 
     <TextView
         android:id="@+id/train"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="75dp" 
+        android:layout_marginLeft="105dp" 
         android:text="在職訓練：100小時" />
 
     <Button
         android:id="@+id/contact"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_marginLeft="32dp" 
-        android:layout_marginTop="16dp"
+        android:layout_marginLeft="40dp" 
+        android:layout_marginTop="30dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/full_button_contact"
         android:textColor="#FFFFFF"
