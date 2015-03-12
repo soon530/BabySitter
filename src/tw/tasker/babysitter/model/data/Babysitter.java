@@ -8,7 +8,9 @@ import com.parse.ParseUser;
 
 @ParseClassName("Babysitter")
 public class Babysitter extends ParseObject {
-	private float mDistance;
+	private float mDistance = 0;
+	public boolean mIsShow = false;
+	public int mGroup = -1;
 	
 	public String getImageUrl() {
 		String value = getString("imageUrl");

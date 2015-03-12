@@ -1,5 +1,7 @@
 package tw.tasker.babysitter.presenter.adapter;
 
+import java.text.DecimalFormat;
+
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.view.CardView;
 import tw.tasker.babysitter.Config;
@@ -14,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.wearable.NodeApi.GetConnectedNodesResult;
@@ -21,6 +24,10 @@ import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
 public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> {
+	private int defaultDistance = 2;
+	private int count = 2;
+	private boolean isColor = true;
+	private boolean mIsFirst = true;
 
 	public BabysittersParseQueryAdapter(Context context, int position) {
 		super(context, getQueryFactory(context, position));
@@ -30,12 +37,13 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 	public View getItemView(Babysitter babysitter, View view, ViewGroup parent) {
 		//boolean recycle = false;
 		View rootView;
+
 		if (view == null) {
 			//recycle = false;
 			//rootView = View.inflate(getContext(), R.layout.list_item_sitter, null);
 			LayoutInflater mInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			rootView = mInflater.inflate(R.layout.list_item_sitter, parent, false);
-			} else {
+		} else {
 				rootView = view;
 			//recycle = true;
 		}
@@ -48,9 +56,101 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 		address.setText(babysitter.getAddress());
 		babycareTime.setText(babysitter.getBabycareTime());
         
+		TextView km = (TextView) rootView.findViewById(R.id.km);
+		ImageView kmLine = (ImageView) rootView.findViewById(R.id.km_line);
 		
-		//float distance = (float) babysitter.getLocation().distanceInKilometersTo(Config.MY_LOCATION);
-        //babysitter.setDistance(distance);
+		float distance = (float) babysitter.getLocation().distanceInKilometersTo(Config.MY_LOCATION);
+		
+		LogUtils.LOGD("vic", "defaultDistance:"+defaultDistance+", distance%2:" + (distance%2) + ", distance/2:"+ (distance/2) + " ["+distance+"]");
+
+		if (babysitter.mGroup > -1) { // 已有距離區間
+		
+		
+		} else { // 沒有距離區間
+			babysitter.mGroup = defaultDistance; // 給 距離區間 ex.2
+			
+			int d = (int) distance; // 轉為單純數字來比較就好
+			if (d >= defaultDistance) { // 如果現在的距離 > 門檻值，做調整
+				babysitter.mGroup = defaultDistance; // 更新 距離區間
+				defaultDistance = defaultDistance + 1; //門檻值往上調整 ex.4
+				babysitter.mIsShow = true; // 可以show出來 
+			}
+		}
+		
+//		if (mIsFirst) {
+//			kmLine.setVisibility(View.INVISIBLE);
+//			mIsFirst = false;
+//		} else {
+//			kmLine.setVisibility(View.VISIBLE);
+//		}
+		
+		if (babysitter.mIsShow) {
+			//km.setTextColor(android.graphics.Color.RED);
+			km.setText("  " + babysitter.mGroup + " KM  ");
+			km.setVisibility(View.VISIBLE);
+			kmLine.setBackgroundResource(R.drawable.line);
+		} else {
+			km.setVisibility(View.INVISIBLE);
+			kmLine.setBackgroundResource(R.drawable.gray_line);
+			km.setText("  2 KM  ");
+			//km.setTextColor(android.graphics.Color.RED);
+		}
+		
+		LogUtils.LOGD("vic", "babysitter.mGroup:" + babysitter.mGroup + ", babysitter.mIsShwo:" + babysitter.mIsShow);
+		
+//		if (babysitter.getDistance() > 0.0f && babysitter.mIsShowDistance ) { // 已存
+//			km.setTextColor(android.graphics.Color.RED);
+//			km.setText(" [" + babysitter.getDistance() + "] ");
+//
+//		} else { //未存
+//			DecimalFormat decimalFormat = new DecimalFormat("0.#");
+//			
+//			String show = "";
+//			int d = (int) distance;
+//			if (d >= defaultDistance ) {
+//				babysitter.setDistance(defaultDistance);
+//				km.setTextColor(android.graphics.Color.RED);
+//				km.setText(" [" + babysitter.getDistance() + "] ");
+//				//count++;
+//				defaultDistance = defaultDistance + count;
+//			} else {
+//				//babysitter.setDistance(-2.0f);
+//			}
+//		}
+		
+
+		//babysitter.setDistance(distance);
+
+		//if ( distance > defaultDistance) {
+			//if (distance > 0.0f && distance < 1.0f) {
+			//	show = " [" + decimalFormat.format(distance * 1000) + "公尺]";
+			//} else {
+				//show = " [" + decimalFormat.format(distance) + "公里]";
+			//}		
+			//show = " [" + defaultDistance + "km]";
+			//km.setText(show);
+			
+			//LogUtils.LOGD("vic", "defaultDistance:"+defaultDistance+", count:"+count+", total:" + (defaultDistance ) + ", distance:" +babysitter.getDistance() + "d:" + d);
+			//if (d >= defaultDistance ) {
+
+				//show = " [" + defaultDistance + "km]";
+				//km.setText(show);
+
+				//km.setTextColor(android.graphics.Color.RED);
+				//count++;
+				//defaultDistance = defaultDistance + count;
+				//isColor = false;
+			//} else {
+				//km.setText("");
+			//}
+			
+			
+		//}	
+		//} else {
+			//km.setText("");
+		//}
+		
+		//babysitter.setDistance(distance);
         
 		//BabysitterGridCard mCard = new BabysitterGridCard(getContext());
 		//mCard.setBabysitter(babysitter);
