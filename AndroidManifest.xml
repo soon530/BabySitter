@@ -71,7 +71,9 @@
         <activity
             android:name="tw.tasker.babysitter.view.activity.HomeActivity"
             android:label="保母列表"
-            android:launchMode="singleTask" >
+            android:launchMode="singleTask" 
+            android:theme="@style/ActivityTheme"
+            >
         </activity>
         <activity
             android:name="tw.tasker.babysitter.view.activity.BabysittersActivity"

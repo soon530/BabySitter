@@ -7,11 +7,12 @@
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="資訊"
-        app:showAsAction="always">
+        app:showAsAction="always"
+        android:icon="@drawable/abc_ic_menu_moreoverflow_normal_holo_dark">
         <menu>
             <item
                 android:id="@+id/action_fb"
-                android:title="Search保母粉絲團"
+                android:title="BabyCare粉絲團"
                 app:showAsAction="never"/>
             <item
                 android:id="@+id/action_google_play"
