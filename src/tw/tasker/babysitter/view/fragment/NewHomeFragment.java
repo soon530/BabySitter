@@ -96,6 +96,7 @@ public class NewHomeFragment extends Fragment implements OnClickListener, OnQuer
 	private TextView mAddressText;
 	private EditText mAddressEdit;
 	private ImageView mLocation;
+	private ImageView mArrow;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -127,6 +128,9 @@ public class NewHomeFragment extends Fragment implements OnClickListener, OnQuer
 		mAddressEdit.setOnEditorActionListener(this);
 		
 		mLocation = (ImageView) rootView.findViewById(R.id.location);
+		
+		// arraw
+		mArrow = (ImageView) rootView.findViewById(R.id.arrow);
 		
 		
 		// check box
@@ -220,10 +224,11 @@ public class NewHomeFragment extends Fragment implements OnClickListener, OnQuer
 				mFilter.setText("隱藏更多過濾條件");
 			}
 			
+			mArrow.animate().rotationBy(180).start();
+			
 			break;
 
 		case R.id.save:
-			
 			saveAllCheckbox();
 			doListQuery();
 
@@ -274,6 +279,8 @@ public class NewHomeFragment extends Fragment implements OnClickListener, OnQuer
 		mListView.setVisibility(View.VISIBLE);
 		mAddressPanel.setVisibility(View.VISIBLE);
 		mFilter.setText("顯示更多過濾條件");
+		mArrow.animate().rotationBy(180).start();
+
 	}
 
 	private void savePreferences(String key, boolean value) {
