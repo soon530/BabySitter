@@ -160,7 +160,9 @@
                     android:layout_below="@+id/textView1"
                     android:layout_marginLeft="22dp"
                     android:layout_marginTop="14dp"
-                    android:text="日托" />
+                    android:text="日托"
+                    style="@style/FullCheckbox"
+                     />
 
                 <CheckBox
                     android:id="@+id/night"
@@ -170,7 +172,10 @@
                     android:layout_marginLeft="25dp"
                     android:layout_marginTop="14dp"
                     android:layout_toRightOf="@+id/day"
-                    android:text="夜托" />
+                    android:text="夜托"
+                    style="@style/FullCheckbox"
+                    
+                     />
 
                 <CheckBox
                     android:id="@+id/temp"
@@ -180,7 +185,10 @@
                     android:layout_alignBottom="@+id/night"
                     android:layout_marginLeft="25dp"
                     android:layout_toRightOf="@+id/night"
-                    android:text="臨托" />
+                    android:text="臨托"
+                    style="@style/FullCheckbox"
+                    
+                     />
 
                 <TextView
                     android:id="@+id/textView1"
@@ -191,7 +199,9 @@
                     android:text="托育時段"
                     android:textColor="@color/branding_color"
                     android:textSize="16sp"
-                    android:layout_marginTop="10dp" />
+                    android:layout_marginTop="10dp"
+                    
+                     />
 
                 <TextView
                     android:id="@+id/TextView01"
@@ -213,7 +223,9 @@
                     android:layout_below="@+id/TextView01"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:text="到府服務" />
+                    android:text="到府服務"
+                    style="@style/FullCheckbox"
+                     />
 
             </RelativeLayout>
 
@@ -243,25 +255,39 @@
                     android:layout_height="wrap_content"
                     android:text="0人"
                     android:layout_marginLeft="20dp"
+                    style="@style/FullCheckbox"
+                   
                      />
 
                 <CheckBox
                     android:id="@+id/kids_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1人" />
+                    android:text="1人"
+                    android:layout_marginLeft="10dp"
+                    
+                    style="@style/FullCheckbox"
+                     />
 
                 <CheckBox
                     android:id="@+id/kids_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2人" />
+                    android:text="2人"
+                                        android:layout_marginLeft="10dp"
+                    
+                    style="@style/FullCheckbox"
+                     />
 
                 <CheckBox
                     android:id="@+id/kids_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="3人" />
+                    android:text="3人"
+                    android:layout_marginLeft="10dp"
+                    
+                    style="@style/FullCheckbox"
+                     />
             </LinearLayout>
 
             <TextView
@@ -289,19 +315,29 @@
                     android:layout_height="wrap_content"
                     android:text="~40歲"
                     android:layout_marginLeft="20dp"
+                     style="@style/FullCheckbox"
+                     
                      />
 
                 <CheckBox
                     android:id="@+id/old_40_50"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="40歲~50歲" />
+                    android:text="40歲~50歲"
+                    style="@style/FullCheckbox"
+                    android:layout_marginLeft="10dp"
+                    
+                     />
 
                 <CheckBox
                     android:id="@+id/old_50"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="50歲~" />
+                    android:text="50歲~"
+                    style="@style/FullCheckbox"
+                    android:layout_marginLeft="10dp"
+                    
+                     />
             </LinearLayout>
 
             <Button
