@@ -1,72 +1,156 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/signup_form"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignUpActivity" >
+    android:background="#FFFFFF" >
 
     <!-- Login form -->
 
-    <ScrollView
-        android:id="@+id/signup_form"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_margin="16dp" >
+
+        <include layout="@layout/merge_signup" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/gray_line" />
 
         <LinearLayout
-            style="@style/LoginFormContainer"
-            android:orientation="vertical" >
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:orientation="horizontal" >
 
-            <include layout="@layout/merge_signup" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="　　姓名："
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <EditText
                 android:id="@+id/parents_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Your name"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginRight="45dp"
+                android:background="@drawable/full_edittext_selector"
                 android:maxLines="1"
                 android:singleLine="true" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="聯絡電話："
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <EditText
                 android:id="@+id/parents_address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Address"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginRight="45dp"
+                android:background="@drawable/full_edittext_selector"
+                android:ems="10"
                 android:maxLines="1"
                 android:singleLine="true" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="住家地址："
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <EditText
                 android:id="@+id/parents_phone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Phone number"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginRight="45dp"
+                android:background="@drawable/full_edittext_selector"
                 android:maxLines="1"
                 android:singleLine="true" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/gray_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="小孩生日："
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <EditText
                 android:id="@+id/kids_age"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Kids age"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginRight="45dp"
+                android:background="@drawable/full_edittext_selector"
                 android:maxLines="1"
                 android:singleLine="true" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="小孩姓別："
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <EditText
                 android:id="@+id/kids_gender"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Kids gender"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginRight="45dp"
+                android:background="@drawable/full_edittext_selector"
                 android:maxLines="1"
                 android:singleLine="true" />
-
-            <Button
-                android:id="@+id/action_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginTop="16dp"
-                android:paddingLeft="32dp"
-                android:paddingRight="32dp"
-                android:text="@string/sign_up" />
         </LinearLayout>
-    </ScrollView>
 
-</LinearLayout>
+        <Button
+            android:id="@+id/action_button"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/full_button_selector"
+            android:paddingLeft="32dp"
+            android:paddingRight="32dp"
+            android:text="@string/sign_up"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+</ScrollView>
