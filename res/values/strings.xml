@@ -2,7 +2,7 @@
 <resources>
 
     <!-- MainActivity -->
-    <string name="app_name">BabyTone</string>
+    <string name="app_name">BabyCare</string>
     <string name="search_babysitter">搜尋保母</string>
     <string name="rating_babysitter">評分保母</string>
     <string name="social_babysitter">社群保母</string>
