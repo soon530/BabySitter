@@ -121,7 +121,9 @@
         </activity>
         <activity
             android:name="tw.tasker.babysitter.view.activity.DispatchActivity"
-            android:noHistory="true" >
+            android:noHistory="true"
+            android:theme="@android:style/Theme.Black.NoTitleBar" 
+             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
