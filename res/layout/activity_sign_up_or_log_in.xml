@@ -80,9 +80,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/border_button"
+            android:background="@drawable/border_button_selector"
             android:text="@string/sign_up"
-            android:textColor="#3FA9B1" />
+            android:textColor="@drawable/border_button_text_selector" />
 
         <Button
             android:id="@+id/go"
@@ -90,9 +90,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="6dp"
             android:layout_weight="1"
-            android:background="@drawable/border_button"
+            android:background="@drawable/border_button_selector"
             android:text="下次再註冊"
-            android:textColor="#3FA9B1" />
+            android:textColor="@drawable/border_button_text_selector" />
     </LinearLayout>
 
 </LinearLayout>
