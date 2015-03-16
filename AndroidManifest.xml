@@ -117,7 +117,8 @@
         <activity
             android:name="tw.tasker.babysitter.view.activity.SignUpActivity"
             android:label="建立帳號"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"  >
         </activity>
         <activity
             android:name="tw.tasker.babysitter.view.activity.DispatchActivity"
