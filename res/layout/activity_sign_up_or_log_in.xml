@@ -24,11 +24,12 @@
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
         android:background="@drawable/full_edittext_selector"
-        android:hint="@string/prompt_username"
+        android:hint="帳號"
         android:inputType="textEmailAddress"
         android:maxLines="1"
         android:singleLine="true"
-        android:textColor="@color/branding_color" />
+        android:textColor="@color/branding_color"
+         />
 
     <EditText
         android:id="@+id/password"
@@ -38,13 +39,15 @@
         android:layout_marginRight="32dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/full_edittext_selector"
-        android:hint="@string/prompt_password"
+        android:hint="密碼"
         android:imeActionId="@+id/login"
         android:imeActionLabel="@string/action_sign_in_short"
         android:imeOptions="actionUnspecified"
         android:inputType="textPassword"
         android:maxLines="1"
-        android:singleLine="true" />
+        android:singleLine="true"
+        android:textColor="@color/branding_color"
+         />
 
     <Button
         android:id="@+id/logInButton"
