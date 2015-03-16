@@ -116,7 +116,7 @@
         </activity>
         <activity
             android:name="tw.tasker.babysitter.view.activity.SignUpActivity"
-            android:label="You are"
+            android:label="建立帳號"
             android:screenOrientation="portrait" >
         </activity>
         <activity
