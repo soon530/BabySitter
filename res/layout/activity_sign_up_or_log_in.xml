@@ -23,11 +23,12 @@
         android:layout_marginTop="48dp"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
-        android:background="@drawable/full_edittext"
+        android:background="@drawable/full_edittext_selector"
         android:hint="@string/prompt_username"
         android:inputType="textEmailAddress"
         android:maxLines="1"
-        android:singleLine="true" />
+        android:singleLine="true"
+        android:textColor="@color/branding_color" />
 
     <EditText
         android:id="@+id/password"
@@ -36,7 +37,7 @@
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/full_edittext"
+        android:background="@drawable/full_edittext_selector"
         android:hint="@string/prompt_password"
         android:imeActionId="@+id/login"
         android:imeActionLabel="@string/action_sign_in_short"
