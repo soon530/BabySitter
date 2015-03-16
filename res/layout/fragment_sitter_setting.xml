@@ -1,97 +1,157 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/LinearLayout1"
+    android:id="@+id/signup_form"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="tw.tasker.babysitter.SitterSettingFragment" >
-
-    <!-- TODO: Update blank fragment layout -->
+    android:background="#FFFFFF" >
 
     <LinearLayout
-        android:id="@+id/sync_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical" >
 
-        <EditText
-            android:id="@+id/number"
+        <!-- TODO: Update blank fragment layout -->
+
+        <LinearLayout
+            android:id="@+id/sync_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="編號" >
-        </EditText>
+            android:layout_margin="16dp"
+            android:orientation="horizontal" >
 
-        <Button
-            android:id="@+id/sync"
-            android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/number"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="3"
+                android:background="@drawable/full_edittext_selector"
+                android:ems="10"
+                android:hint="請填入您的保母證號" />
+
+            <Button
+                android:id="@+id/sync"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="16dp"
+                android:layout_weight="1"
+                android:background="@drawable/full_button_selector"
+                android:text="確認"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:src="@drawable/gray_line" />
+
+        <LinearLayout
+            android:id="@+id/data_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="依編號同步資料..." />
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="28dp"
+                android:src="@drawable/profile" />
+
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginBottom="28dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/full_edittext_selector"
+                android:ems="10"
+                android:hint="姓名" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:src="@drawable/gray_line" />
+
+            <!-- <include layout="@layout/merge_signup" /> -->
+
+            <EditText
+                android:id="@+id/tel"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/full_edittext_selector"
+                android:ems="10"
+                android:hint="電話" />
+
+            <EditText
+                android:id="@+id/address"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/full_edittext_selector"
+                android:ems="10"
+                android:hint="地址" />
+
+            <EditText
+                android:id="@+id/babycare_count"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/full_edittext_selector"
+                android:ems="10"
+                android:hint="托育" />
+
+            <EditText
+                android:id="@+id/education"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/full_edittext_selector"
+                android:ems="10"
+                android:hint="教育" />
+
+            <EditText
+                android:id="@+id/sex"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/full_edittext_selector"
+                android:ems="10"
+                android:hint="性別" />
+
+            <EditText
+                android:id="@+id/age"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/full_edittext_selector"
+                android:ems="10"
+                android:hint="年紀" />
+
+            <EditText
+                android:id="@+id/babycare_time"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/full_edittext_selector"
+                android:ems="10"
+                android:hint="時段" />
+
+            <Button
+                android:id="@+id/create"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginBottom="32dp"
+                android:layout_marginTop="32dp"
+                android:layout_weight="1"
+                android:background="@drawable/full_button_selector"
+                android:text="確認"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/data_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <include layout="@layout/merge_signup"/>
-        
-        <EditText
-            android:id="@+id/name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="姓名" />
-
-        <EditText
-            android:id="@+id/sex"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="性別" />
-
-        <EditText
-            android:id="@+id/age"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="年紀" />
-
-        <EditText
-            android:id="@+id/education"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="教育" />
-
-        <EditText
-            android:id="@+id/tel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="電話" />
-
-        <EditText
-            android:id="@+id/address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="地址" />
-
-        <EditText
-            android:id="@+id/babycare_count"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="托育" />
-
-        <EditText
-            android:id="@+id/babycare_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="時段" />
-    </LinearLayout>
-
-</LinearLayout>
+</ScrollView>
