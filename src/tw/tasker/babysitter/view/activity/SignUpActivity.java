@@ -50,6 +50,8 @@ public class SignUpActivity extends ActionBarActivity {
 
 		tabs.setViewPager(pager);
 		tabs.setIndicatorColor(currentColor);
+		
+		getActionBar().setDisplayShowHomeEnabled(false);
 
 		//getActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -162,7 +164,7 @@ public class SignUpActivity extends ActionBarActivity {
 	
 	public class MyPagerAdapter extends FragmentPagerAdapter {
 
-		private final String[] TITLES = { "Parents", "Sitter"};
+		private final String[] TITLES = { "父母註冊", "保母註冊"};
 
 		public MyPagerAdapter(FragmentManager fm) {
 			super(fm);
