@@ -28,8 +28,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="105dp" 
-        android:text="在職訓練：100小時" />
+        android:text="在職訓練：10小時" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="105dp" 
+        android:text="社區保母系統："
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:id="@+id/communityName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="105dp" 
+        android:text="高雄市第四區社區保母系統"
+        android:textColor="@color/branding_color"
+         />
+    
     <Button
         android:id="@+id/contact"
         android:layout_width="wrap_content"

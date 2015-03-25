@@ -137,6 +137,14 @@ public class Babysitter extends ParseObject {
 		put("totalFavorite", value);
 	}
 	
+	public String getCommunityAddress() {
+		return getString("communityAddress");
+	}
+	public void setCommunityAddress(String value) {
+		put("communityAddress", value);
+	}
+	
+	
 	public static ParseQuery<Babysitter> getQuery() {
 		return ParseQuery.getQuery(Babysitter.class);
 	}

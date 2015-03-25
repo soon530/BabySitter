@@ -12,6 +12,8 @@ import tw.tasker.babysitter.view.card.BabysitterGridCard;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,9 +54,21 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 		TextView address = (TextView) rootView.findViewById(R.id.address);
 		TextView babycareTime = (TextView) rootView.findViewById(R.id.babycare_time);
 
+		TextView babysitterNumber = (TextView) rootView.findViewById(R.id.babysitterNumber);
+		TextView education = (TextView) rootView.findViewById(R.id.education);
+		TextView communityName = (TextView) rootView.findViewById(R.id.communityName);
+
+		SpannableString content = new SpannableString(babysitter.getCommunityAddress());
+		content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+		communityName.setText(content);
+		
+		
 		name.setText(babysitter.getName());
 		address.setText(babysitter.getAddress());
 		babycareTime.setText(babysitter.getBabycareTime());
+		
+		babysitterNumber.setText("保母編號：" + babysitter.getBabysitterNumber());
+		education.setText("教育程度：" + babysitter.getEducation());
         
 		TextView km = (TextView) rootView.findViewById(R.id.km);
 		ImageView kmLine = (ImageView) rootView.findViewById(R.id.km_line);
