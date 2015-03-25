@@ -88,7 +88,8 @@
             android:layout_weight="1"
             android:background="@drawable/border_button_selector"
             android:text="@string/sign_up"
-            android:textColor="@drawable/border_button_text_selector" />
+            android:textColor="@drawable/border_button_text_selector"
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/go"
@@ -98,7 +99,8 @@
             android:layout_weight="1"
             android:background="@drawable/border_button_selector"
             android:text="下次再註冊"
-            android:textColor="@drawable/border_button_text_selector" />
+            android:textColor="@drawable/border_button_text_selector"
+            android:textSize="16sp" />
     </LinearLayout>
 
 </LinearLayout>
