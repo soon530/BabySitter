@@ -1,11 +1,5 @@
 package tw.tasker.babysitter.view.activity;
 
-import com.parse.LogInCallback;
-import com.parse.ParseException;
-import com.parse.ParseUser;
-import com.parse.SignUpCallback;
-import com.viewpagerindicator.CirclePageIndicator;
-
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.utils.AccountChecker;
 import android.app.Activity;
@@ -17,11 +11,20 @@ import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.parse.LogInCallback;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 /**
  * Activity which displays a registration screen to the user.
@@ -32,19 +35,28 @@ public class SignUpOrLogInActivity extends Activity {
 	private EditText passwordView;
 	private Button mActionButton;
 	private boolean mIsExist =true;
+	private LinearLayout mAllScreen;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_sign_up_or_log_in);
-
-		
-		
 		
 		// Set up the login form.
 		usernameView = (EditText) findViewById(R.id.username);
 		passwordView = (EditText) findViewById(R.id.password);
 		//usernameView.setOnFocusChangeListener(this);
+
+		mAllScreen = (LinearLayout) findViewById(R.id.all_screen);
+		mAllScreen.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+		        InputMethodManager imm = (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+		        imm.hideSoftInputFromWindow(v.getWindowToken(),0);
+				return false;
+			}
+		});
 		
 		mActionButton = (Button) findViewById(R.id.logInButton);
 

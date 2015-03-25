@@ -1,14 +1,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/LinearLayout1"
+    android:id="@+id/all_screen"
     style="@android:style/Theme.Holo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context=".SignUpOrLogInActivity" >
+    tools:context=".SignUpOrLogInActivity"
+    >
 
     <ImageView
         android:id="@+id/imageView1"
