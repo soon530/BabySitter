@@ -1,27 +1,27 @@
 package tw.tasker.babysitter.presenter.adapter;
 
-import java.text.DecimalFormat;
-
-import it.gmariotti.cardslib.library.internal.Card;
-import it.gmariotti.cardslib.library.view.CardView;
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.utils.LogUtils;
-import tw.tasker.babysitter.view.card.BabysitterGridCard;
+import tw.tasker.babysitter.view.fragment.ListDialogFragment;
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.wearable.NodeApi.GetConnectedNodesResult;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
@@ -36,7 +36,7 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 	}
 
 	@Override
-	public View getItemView(Babysitter babysitter, View view, ViewGroup parent) {
+	public View getItemView(final Babysitter babysitter, View view, ViewGroup parent) {
 		//boolean recycle = false;
 		View rootView;
 
@@ -62,6 +62,25 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 		content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
 		communityName.setText(content);
 		
+		Button contact = (Button) rootView.findViewById(R.id.contact);
+		contact.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				String[] phones = babysitter.getTel().replace("(日):", "").replace("手機: ", "").split(" ");
+				LogUtils.LOGD("vic", "phones" + babysitter.getTel());
+				for (String phone : phones) {
+					LogUtils.LOGD("vic", "phone" + phone);
+				}
+				
+				//if (phones.length == 1) {
+					//mPresenter.makePhoneCall(phones[0]);
+				//} else {
+					showBabysitterPhone(phones);
+				//}
+				
+			}
+		});
 		
 		name.setText(babysitter.getName());
 		address.setText(babysitter.getAddress());
@@ -189,6 +208,22 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 		return 2;
 	}
 */
+	private void showBabysitterPhone(final String[] phones) {
+		DialogFragment newFragment = new ListDialogFragment(phones, new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				
+				String phone = phones[which];
+				//mPresenter.makePhoneCall(phone);
+				
+			}
+		});
+		
+		newFragment.show(((FragmentActivity)getContext()).getSupportFragmentManager(), "dialog");		
+	}
+
+	
 	private static ParseQueryAdapter.QueryFactory<Babysitter> getQueryFactory(final Context context, final int position) {
 		ParseQueryAdapter.QueryFactory<Babysitter> factory = new ParseQueryAdapter.QueryFactory<Babysitter>() {
 			public ParseQuery<Babysitter> create() {
