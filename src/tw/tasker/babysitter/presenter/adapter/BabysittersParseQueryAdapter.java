@@ -20,6 +20,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.parse.ParseQuery;
@@ -30,6 +31,7 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 	private int count = 2;
 	private boolean isColor = true;
 	private boolean mIsFirst = true;
+	private RatingBar mBabyCount;
 
 	public BabysittersParseQueryAdapter(Context context, int position) {
 		super(context, getQueryFactory(context, position));
@@ -81,6 +83,10 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 				
 			}
 		});
+		
+		mBabyCount = (RatingBar) rootView.findViewById(R.id.babycareCount);
+		int babyCount = getBabyCount(babysitter.getBabycareCount());
+		mBabyCount.setRating(babyCount);
 		
 		name.setText(babysitter.getName());
 		address.setText(babysitter.getAddress());
@@ -203,7 +209,12 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 		return rootView;
 	}
 	
-/*	@Override
+	private int getBabyCount(String babycareCount) {
+		String[] babies = babycareCount.split(" ");
+		return babies.length;
+	}
+
+	/*	@Override
 	public int getViewTypeCount() {
 		return 2;
 	}

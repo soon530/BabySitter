@@ -97,5 +97,12 @@
         <item name="android:button">@drawable/full_checkbox</item>
         <item name="android:paddingLeft">10dp</item>
     </style>
+    
+    <!-- Baby Rating Bar -->
+    <style name="BabyRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/baby_rating_layerlist</item>
+        <item name="android:minHeight">16dp</item>
+        <item name="android:maxHeight">16dp</item>
+    </style>
 
 </resources>

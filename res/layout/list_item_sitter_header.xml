@@ -97,11 +97,16 @@
                     android:layout_height="wrap_content"
                     android:text="目前托育人數：" />
 
-                <ImageView
-                    android:id="@+id/imageView3"
+
+                <RatingBar
+                    android:id="@+id/babycareCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/babynum" />
+                    android:numStars="4"
+                    android:rating="0"
+                    android:isIndicator="true"
+                    style="@style/BabyRatingBar" />
+
             </LinearLayout>
         </LinearLayout>
 
