@@ -8,17 +8,18 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.parse.ParseGeoPoint;
+import com.google.android.gms.common.ConnectionResult;
 
-public class MyLocation implements ConnectionCallbacks,
-		OnConnectionFailedListener {
+public class MyLocation implements 
+		OnConnectionFailedListener, ConnectionCallbacks {
 	private static final String TAG = makeLogTag(MyLocation.class);
 
 	// Initial offset for calculating the map bounds
@@ -31,7 +32,7 @@ public class MyLocation implements ConnectionCallbacks,
 	static final int METERS_PER_KILOMETER = 1000;
 	static final int RADIUS = 250;
 
-	private LocationClient mLocationClient;
+	private GoogleApiClient mLocationClient;
 	private Location mCurrentLocation;
 	private Context mContext;
 	private LatLngBounds mBounds;
@@ -49,7 +50,15 @@ public class MyLocation implements ConnectionCallbacks,
 	public MyLocation(Context mapActivity, GetLocation getLocation) {
 		mContext = mapActivity;
 		mGetLocation = getLocation;
-		mLocationClient = new LocationClient(mapActivity, this, this);
+		
+		//mLocationClient = new LocationClient(mapActivity, this, this);
+		
+		mLocationClient = new GoogleApiClient.Builder(mapActivity)
+        .addApi(LocationServices.API)
+        .addConnectionCallbacks(this)
+        .addOnConnectionFailedListener(this)
+        .build();
+		
 		connect();
 	}
 
@@ -82,7 +91,10 @@ public class MyLocation implements ConnectionCallbacks,
 		if (servicesConnected()) {
 			// Get the current location
 			Log.i("vic", "getLocation()");
-			return mLocationClient.getLastLocation();
+			
+			Location loc = LocationServices.FusedLocationApi.getLastLocation(mLocationClient);
+			
+			return loc;
 		} else {
 			return null;
 		}
@@ -156,13 +168,13 @@ public class MyLocation implements ConnectionCallbacks,
 		}
 	}
 
-	@Override
-	public void onDisconnected() {
-	}
+//	@Override
+//	public void onDisconnected() {
+//	}
 
-	@Override
-	public void onConnectionFailed(ConnectionResult result) {
-	}
+//	@Override
+//	public void onConnectionFailed(ConnectionResult result) {
+//	}
 
 	private double calculateLatLngOffset(LatLng myLatLng, boolean bLatOffset) {
 		// The return offset, initialized to the default difference
@@ -216,6 +228,18 @@ public class MyLocation implements ConnectionCallbacks,
 	
 	public double getLng() {
 		return mCurrentLocation.getLongitude();
+	}
+
+	@Override
+	public void onConnectionSuspended(int cause) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onConnectionFailed(ConnectionResult result) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
