@@ -28,6 +28,15 @@ public class Babysitter extends ParseObject {
 		put("babysitterNumber", value);
 	}
 
+	public String getSkillNumber() {
+		String value = getString("skillNumber");
+		return value;
+	}
+	public void setSkillNumber(String value) {
+		put("skillNumber", value);
+	}
+
+	
 	public String getName() {
 		String value = getString("name");
 		return value;
@@ -143,6 +152,14 @@ public class Babysitter extends ParseObject {
 	public void setCommunityAddress(String value) {
 		put("communityAddress", value);
 	}
+	
+	public String getCommunityName() {
+		return getString("communityName");
+	}
+	public void setCommunityName(String value) {
+		put("communityName", value);
+	}
+	
 	
 	
 	public static ParseQuery<Babysitter> getQuery() {

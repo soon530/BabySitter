@@ -60,7 +60,7 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 		TextView education = (TextView) rootView.findViewById(R.id.education);
 		TextView communityName = (TextView) rootView.findViewById(R.id.communityName);
 
-		SpannableString content = new SpannableString(babysitter.getCommunityAddress());
+		SpannableString content = new SpannableString(babysitter.getCommunityName());
 		content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
 		communityName.setText(content);
 		
@@ -92,7 +92,7 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 		address.setText(babysitter.getAddress());
 		babycareTime.setText(babysitter.getBabycareTime());
 		
-		babysitterNumber.setText("保母編號：" + babysitter.getBabysitterNumber());
+		babysitterNumber.setText("保母證號：" + babysitter.getSkillNumber());
 		education.setText("教育程度：" + babysitter.getEducation());
         
 		TextView km = (TextView) rootView.findViewById(R.id.km);
