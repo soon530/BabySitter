@@ -23,6 +23,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
@@ -49,20 +51,23 @@ public class SitterSettingFragment extends Fragment {
 	private String mParam1;
 	private String mParam2;
 	private Button mSync;
-	private EditText mNumber;
-	private EditText mSitterName;
-	private EditText mSex;
-	private EditText mAge;
-	private EditText mEducation;
-	private EditText mTel;
-	private EditText mAddress;
-	private EditText mBabycareCount;
-	private EditText mBabycareTime;
+	
+	private TextView mNumber;
+	private TextView mSitterName;
+	//private TextView mSex;
+	private TextView mAge;
+	private TextView mEducation;
+	private TextView mTel;
+	private TextView mAddress;
+	private RatingBar mBabycareCount;
+	private TextView mBabycareTime;
 	private LinearLayout mSyncLayout;
 	private LinearLayout mDataLayout;
 	private EditText mName;
 	private EditText mPassword;
 	private EditText mPasswordAgain;
+	private TextView mSkillNumber;
+	private TextView mCommunityName;
 
 	/**
 	 * Use this factory method to create a new instance of this fragment using
@@ -102,24 +107,29 @@ public class SitterSettingFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_sitter_setting, container, false);
+		View rootView = inflater.inflate(R.layout.fragment_sitter_setting_read, container, false);
 		mSync = (Button) rootView.findViewById(R.id.sync);
 		
-		mNumber = (EditText) rootView.findViewById(R.id.number);
-		mSitterName = (EditText) rootView.findViewById(R.id.name);
-		mSex = (EditText) rootView.findViewById(R.id.sex);
-		mAge = (EditText) rootView.findViewById(R.id.age);
-		mEducation = (EditText) rootView.findViewById(R.id.education);
-		mTel = (EditText) rootView.findViewById(R.id.tel);
-		mAddress = (EditText) rootView.findViewById(R.id.address);
-		mBabycareCount = (EditText) rootView.findViewById(R.id.babycare_count);
-		mBabycareTime = (EditText) rootView.findViewById(R.id.babycare_time);
+		mNumber = (TextView) rootView.findViewById(R.id.number);
+		mSitterName = (TextView) rootView.findViewById(R.id.name);
+		//mSex = (TextView) rootView.findViewById(R.id.sex);
+		mAge = (TextView) rootView.findViewById(R.id.age);
+		mEducation = (TextView) rootView.findViewById(R.id.education);
+		mTel = (TextView) rootView.findViewById(R.id.tel);
+		mAddress = (TextView) rootView.findViewById(R.id.address);
+		mBabycareCount = (RatingBar) rootView.findViewById(R.id.babycareCount);
+		mBabycareTime = (TextView) rootView.findViewById(R.id.babycare_time);
 
+		mSkillNumber = (TextView) rootView.findViewById(R.id.skillNumber);
+		mCommunityName = (TextView) rootView.findViewById(R.id.communityName);
+		
+
+		
 		// layout
 		mSyncLayout = (LinearLayout) rootView.findViewById(R.id.sync_layout);
 		mDataLayout = (LinearLayout) rootView.findViewById(R.id.data_layout);
 		
-		//mDataLayout.setVisibility(View.GONE);
+		mDataLayout.setVisibility(View.GONE);
 		
 		// set default data...
 		mNumber.setText("031080");
@@ -157,7 +167,7 @@ public class SitterSettingFragment extends Fragment {
 				LogUtils.LOGD("vic", "syncData()" + babysitter);
 				fillUI(babysitter);
 				//mSyncLayout.setVisibility(View.GONE);
-				//mDataLayout.setVisibility(View.VISIBLE);
+				mDataLayout.setVisibility(View.VISIBLE);
 			}
 
 		});
@@ -165,14 +175,26 @@ public class SitterSettingFragment extends Fragment {
 
 	private void fillUI(Babysitter babysitter) {
 		mSitterName.setText(babysitter.getName());
-		mSex.setText(babysitter.getSex());
-		mAge.setText(babysitter.getAge());
-		mEducation.setText(babysitter.getEducation());
-		mTel.setText(babysitter.getTel());
-		mAddress.setText(babysitter.getAddress());
-		mBabycareCount.setText(babysitter.getBabycareCount());
-		mBabycareTime.setText(babysitter.getBabycareTime());
+		//mSex.setText(babysitter.getSex());
+		//mAge.setText(babysitter.getAge());
+		mTel.setText("聯絡電話：" + babysitter.getTel());
+		mAddress.setText("住家地址：" + babysitter.getAddress());
+		
+		int babyCount = getBabyCount(babysitter.getBabycareCount());
+		mBabycareCount.setRating(babyCount);
+		
+		mSkillNumber.setText("保母證號：" + babysitter.getSkillNumber());
+		mEducation.setText("教育程度：" + babysitter.getEducation());
+		mCommunityName.setText(babysitter.getCommunityName());
+		
+		//mBabycareTime.setText(babysitter.getBabycareTime());
 	}
+	
+	private int getBabyCount(String babycareCount) {
+		String[] babies = babycareCount.split(" ");
+		return babies.length;
+	}
+
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -328,12 +350,12 @@ public class SitterSettingFragment extends Fragment {
 		sitter.setUser(ParseUser.getCurrentUser());
 		sitter.setBabysitterNumber(mNumber.getText().toString());
 		sitter.setName(mSitterName.getText().toString());
-		sitter.setSex(mSex.getText().toString());
+		//sitter.setSex(mSex.getText().toString());
 		sitter.setAge(mAge.getText().toString());
 		sitter.setEducation(mEducation.getText().toString());
 		sitter.setTel(mTel.getText().toString());
 		sitter.setAddress(mAddress.getText().toString());
-		sitter.setBabycareCount(mBabycareCount.getText().toString());
+		//sitter.setBabycareCount(mBabycareCount.getText().toString());
 		sitter.setBabycareTime(mBabycareTime.getText().toString());
 		sitter.setIsVerify(false);
 		
@@ -360,12 +382,12 @@ public class SitterSettingFragment extends Fragment {
 		
 		sitter.setBabysitterNumber(mNumber.getText().toString());
 		sitter.setName(mSitterName.getText().toString());
-		sitter.setSex(mSex.getText().toString());
+		//sitter.setSex(mSex.getText().toString());
 		sitter.setAge(mAge.getText().toString());
 		sitter.setEducation(mEducation.getText().toString());
 		sitter.setTel(mTel.getText().toString());
 		sitter.setAddress(mAddress.getText().toString());
-		sitter.setBabycareCount(mBabycareCount.getText().toString());
+		//sitter.setBabycareCount(mBabycareCount.getText().toString());
 		sitter.setBabycareTime(mBabycareTime.getText().toString());
 		sitter.setIsVerify(false);
 		
