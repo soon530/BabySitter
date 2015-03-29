@@ -8,7 +8,7 @@
         android:orderInCategory="100"
         android:title="資訊"
         app:showAsAction="always"
-        android:icon="@drawable/abc_ic_menu_moreoverflow_normal_holo_dark">
+        android:icon="@drawable/abc_ic_menu_moreoverflow_mtrl_alpha">
         <menu>
             <item
                 android:id="@+id/action_fb"
