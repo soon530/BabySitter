@@ -31,11 +31,14 @@ import tw.tasker.babysitter.view.activity.DispatchActivity;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -48,6 +51,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -109,7 +114,8 @@ public class NewHomeFragment extends Fragment implements OnClickListener, OnQuer
 		View rootView = inflater.inflate(R.layout.fragment_home_new, container, false);
 		
 		mFilterPanel = (LinearLayout) rootView.findViewById(R.id.filter_pannel);
-		mFilterPanel.setVisibility(View.GONE);
+		//mFilterPanel.setAlpha(0.0f);
+		//mFilterPanel.setVisibility(View.INVISIBLE);
 		mAddressPanel = (LinearLayout) rootView.findViewById(R.id.address_panel);
 		
 		mFilter = (TextView) rootView.findViewById(R.id.filter);
@@ -170,7 +176,28 @@ public class NewHomeFragment extends Fragment implements OnClickListener, OnQuer
 		return rootView; 
 	}
 	
-	
+	@Override
+	public void onViewCreated(final View view, Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onViewCreated(view, savedInstanceState);
+		final ViewTreeObserver observer = view.getViewTreeObserver();
+	    observer.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+	        public void onGlobalLayout() {
+	            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+	        		mFilterPanel.setY(-mFilterPanel.getHeight());
+
+	        		view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+	            } else {
+	            	view.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+	            }
+
+	            // get width and height of the view
+	        }});
+
+		//mFilterPanel.setTranslationY(mFilterPanel.getHeight());
+
+	}
+		
 	
 	private void loadSavedPreferences() {
 		setCheckBox(mDay, "mDay");
@@ -208,20 +235,16 @@ public class NewHomeFragment extends Fragment implements OnClickListener, OnQuer
 		int id = v.getId();
 		switch (id) {
 		case R.id.filter_expand :
-			if (mListView.getVisibility() == View.GONE) {
-				mFilterPanel.setVisibility(View.GONE);
-				mListView.setVisibility(View.VISIBLE);
-				mAddressPanel.setVisibility(View.VISIBLE);
-				mFilter.setText("顯示更多過濾條件");
+			if (mListView.getVisibility() == View.GONE) { //hide
 				
-			} else if (mListView.getVisibility() == View.VISIBLE) { 
-				mFilterPanel.setVisibility(View.VISIBLE);
-				mListView.setVisibility(View.GONE);
-				mAddressPanel.setVisibility(View.GONE);
-				mFilter.setText("隱藏更多過濾條件");
+				hideFilterPanel();
+				
+				
+			} else if (mListView.getVisibility() == View.VISIBLE) { // show
+				showFilterPanel();
 			}
-			
-			mArrow.animate().rotationBy(180).start();
+			//mArrow.animate().rotationBy(180).start();
+
 			
 			break;
 
@@ -246,6 +269,50 @@ public class NewHomeFragment extends Fragment implements OnClickListener, OnQuer
 		
 	}
 	
+	private void showFilterPanel() {
+		mListView.setVisibility(View.GONE);
+        mFilterPanel.setVisibility(View.VISIBLE);
+		mAddressPanel.setVisibility(View.GONE);
+		
+		mFilterPanel.animate()
+        .translationY(0.0f)
+        .alpha(1.0f)
+        .setDuration(1000)
+        .setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                //mFilterPanel.setVisibility(View.VISIBLE);
+				mFilter.setText("隱藏更多過濾條件");
+            }
+        });
+		mArrow.animate().rotation(180).start();
+
+		//mFilterPanel.setVisibility(View.VISIBLE);
+	}
+
+	private void hideFilterPanel() {
+		mFilterPanel.animate()
+        .translationY(-mFilterPanel.getHeight())
+        .alpha(0.0f)
+        .setDuration(1000)
+        .setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                mFilterPanel.setVisibility(View.GONE);
+				mListView.setVisibility(View.VISIBLE);
+				mAddressPanel.setVisibility(View.VISIBLE);
+				mFilter.setText("顯示更多過濾條件");
+            }
+        });
+		
+		mArrow.animate().rotation(360).start();
+
+		//mFilterPanel.setVisibility(View.GONE);
+		
+	}
+
 	// performance issue
 	private void showKeyboard() {
 		InputMethodManager inputMethodManager=(InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -258,6 +325,7 @@ public class NewHomeFragment extends Fragment implements OnClickListener, OnQuer
 	}
 
 	private void saveAllCheckbox() {
+
 		savePreferences("mDay", mDay.isChecked());
 		savePreferences("mNight", mNight.isChecked());
 		savePreferences("mTemp", mTemp.isChecked());
@@ -272,11 +340,7 @@ public class NewHomeFragment extends Fragment implements OnClickListener, OnQuer
 		savePreferences("mOld40_50", mOld40_50.isChecked());
 		savePreferences("mOld50", mOld50.isChecked());
 
-		mFilterPanel.setVisibility(View.GONE);
-		mListView.setVisibility(View.VISIBLE);
-		mAddressPanel.setVisibility(View.VISIBLE);
-		mFilter.setText("顯示更多過濾條件");
-		mArrow.animate().rotationBy(180).start();
+		hideFilterPanel();
 
 	}
 
