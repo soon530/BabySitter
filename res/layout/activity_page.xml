@@ -4,16 +4,20 @@
     android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:orientation="vertical" >
 
     <com.astuetz.PagerSlidingTabStrip
         android:id="@+id/tabs"
         android:layout_width="match_parent"
-        android:layout_height="48dip"
-        />
-<!--         android:background="@drawable/background_tabs" 
- -->    
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:textColor="#80FFFFFF"
+        app:pstsIndicatorColor="#f5d641"
+        app:pstsIndicatorHeight="3dp"
+        app:pstsShouldExpand="true"
+        app:pstsTextColorSelected="@android:color/white" />
+
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"

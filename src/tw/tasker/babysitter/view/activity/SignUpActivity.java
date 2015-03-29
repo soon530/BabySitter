@@ -49,7 +49,7 @@ public class SignUpActivity extends BaseActivity {
 		pager.setPageMargin(pageMargin);
 
 		tabs.setViewPager(pager);
-		tabs.setIndicatorColor(currentColor);
+		//tabs.setIndicatorColor(currentColor);
 		
 		//getActionBar().setDisplayShowHomeEnabled(false);
 
