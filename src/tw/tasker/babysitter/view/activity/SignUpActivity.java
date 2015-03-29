@@ -23,7 +23,7 @@ import com.astuetz.PagerSlidingTabStrip;
 /**
  * Activity which displays a login screen to the user.
  */
-public class SignUpActivity extends ActionBarActivity {
+public class SignUpActivity extends BaseActivity {
 	// UI references.
 //	private EditText usernameView;
 //	private EditText passwordView;
@@ -51,7 +51,7 @@ public class SignUpActivity extends ActionBarActivity {
 		tabs.setViewPager(pager);
 		tabs.setIndicatorColor(currentColor);
 		
-		getActionBar().setDisplayShowHomeEnabled(false);
+		//getActionBar().setDisplayShowHomeEnabled(false);
 
 		//getActionBar().setDisplayHomeAsUpEnabled(true);
 

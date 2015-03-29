@@ -6,13 +6,10 @@ import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.UserInfo;
 import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.utils.MyLocation;
-import tw.tasker.babysitter.view.fragment.HomeFragment;
 import tw.tasker.babysitter.view.fragment.NewHomeFragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
 
-import com.parse.CountCallback;
 import com.parse.GetCallback;
 import com.parse.ParseAnalytics;
 import com.parse.ParseException;
@@ -21,7 +18,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-public class HomeActivity extends ActionBarActivity {
+public class HomeActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -33,7 +30,7 @@ public class HomeActivity extends ActionBarActivity {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, fragment).commit();
 		}
-		getActionBar().setDisplayShowHomeEnabled(false);
+		//getActionBar().setDisplayShowHomeEnabled(false);
 		ParseAnalytics.trackAppOpened(getIntent());
 		// 後續看要不要放在ActionBar之類的
 		// mUserInfo.setText("使用者資訊(" + user.getObjectId() + ")："+

@@ -2,7 +2,6 @@ package tw.tasker.babysitter.view.activity;
 
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.utils.AccountChecker;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -29,7 +28,7 @@ import com.parse.SignUpCallback;
 /**
  * Activity which displays a registration screen to the user.
  */
-public class SignUpOrLogInActivity extends Activity {
+public class SignUpOrLogInActivity extends BaseActivity {
 
 	private EditText usernameView;
 	private EditText passwordView;

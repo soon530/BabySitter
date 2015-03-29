@@ -4,5 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="tw.tasker.babysitter.view.activity.HomeActivity"
-    tools:ignore="MergeRootFrame" />
+    tools:ignore="MergeRootFrame" 
+    android:fitsSystemWindows="true">
 
+</FrameLayout>
