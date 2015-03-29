@@ -30,7 +30,7 @@
         android:maxLines="1"
         android:singleLine="true"
         android:textColor="@color/branding_color"
-        android:textColorHint="#CCC"
+        android:textColorHint="#CCCCCC"
          />
 
     <EditText
