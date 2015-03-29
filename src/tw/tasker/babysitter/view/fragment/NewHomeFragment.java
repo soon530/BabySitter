@@ -26,6 +26,7 @@ import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.presenter.adapter.BabysittersParseQueryAdapter;
+import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.activity.DispatchActivity;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
@@ -47,6 +48,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
@@ -61,6 +63,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.TextView.OnEditorActionListener;
 
 import com.andexert.expandablelayout.library.ExpandableLayoutListView;
@@ -99,6 +102,9 @@ public class NewHomeFragment extends Fragment implements OnClickListener, OnQuer
 	private EditText mAddressEdit;
 	private ImageView mLocation;
 	private ImageView mArrow;
+	private MenuItem mItem;
+	private SubMenu mSubMenu;
+	private MenuItem mLogoutItem;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -196,6 +202,7 @@ public class NewHomeFragment extends Fragment implements OnClickListener, OnQuer
 
 		//mFilterPanel.setTranslationY(mFilterPanel.getHeight());
 
+	    
 	}
 		
 	
@@ -341,7 +348,9 @@ public class NewHomeFragment extends Fragment implements OnClickListener, OnQuer
 		savePreferences("mOld50", mOld50.isChecked());
 
 		hideFilterPanel();
-
+		
+		Toast.makeText(getActivity(), "過慮條件，已儲存!",
+				Toast.LENGTH_LONG).show();
 	}
 
 	private void savePreferences(String key, boolean value) {
@@ -369,6 +378,28 @@ public class NewHomeFragment extends Fragment implements OnClickListener, OnQuer
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		inflater.inflate(R.menu.home, menu);
+		
+		mItem = menu.findItem(R.id.action_settings);
+		//LogUtils.LOGD("vic", "sub menu :" + mItem.hasSubMenu());
+		mSubMenu = mItem.getSubMenu();
+		//LogUtils.LOGD("vic", "getSubMenu() :" + mSubMenu.hasVisibleItems());
+		mLogoutItem = mSubMenu.findItem(R.id.action_logout);
+		//LogUtils.LOGD("vic", "loginout :" + mLogoutItem );
+		//mLogoutItem.setTitle("這是測試");
+		
+	    if (ParseUser.getCurrentUser()==null) {
+	    	mLogoutItem.setTitle("登入帳號");
+	    } else {
+	    	mLogoutItem.setTitle("登出帳號");
+	    }
+
+		
+		//mLogoutItem = menu.findItem(R.id.action_settings).getSubMenu().getItem(0);
+		
+		//mItem = menu.findItem(R.id.action_settings);
+		//mSubMenu = mItem.getSubMenu().getItem(R.id.);
+		//mLogoutItem = mSubMenu.findItem(R.id.action_logout);
+
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
@@ -380,11 +411,11 @@ public class NewHomeFragment extends Fragment implements OnClickListener, OnQuer
 		Intent intent;
 
 		switch (id) {
-		case R.id.action_google_play:
-			uri = "market://details?id=tw.tasker.babysitter";
-			intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-			startActivity(intent);
-			break;
+//		case R.id.action_google_play:
+//			uri = "market://details?id=tw.tasker.babysitter";
+//			intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+//			startActivity(intent);
+//			break;
 		case R.id.action_fb:
 			uri = "fb://page/765766966779332";
 			intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));

@@ -220,11 +220,11 @@ public class HomeFragment extends Fragment implements OnCardClickListener {
 		Intent intent;
 
 		switch (id) {
-		case R.id.action_google_play:
-			uri = "market://details?id=tw.tasker.babysitter";
-			intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-			startActivity(intent);
-			break;
+//		case R.id.action_google_play:
+//			uri = "market://details?id=tw.tasker.babysitter";
+//			intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+//			startActivity(intent);
+//			break;
 		case R.id.action_fb:
 			uri = "fb://page/765766966779332";
 			intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));

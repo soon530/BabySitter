@@ -11,20 +11,26 @@
         android:icon="@drawable/abc_ic_menu_moreoverflow_mtrl_alpha">
         <menu>
             <item
+                android:id="@+id/action_profile"
+                android:title="我的資料"
+                app:showAsAction="never"/>
+            
+            <item
                 android:id="@+id/action_fb"
                 android:title="BabyCare粉絲團"
                 app:showAsAction="never"/>
-            <item
+<!--             <item
                 android:id="@+id/action_google_play"
                 android:title="評價這個App"
                 app:showAsAction="never"/>
-            <item
+ -->
+             <item
                 android:id="@+id/action_gmail"
                 android:title="意見回饋"
                 app:showAsAction="never"/>
             <item
                 android:id="@+id/action_logout"
-                android:title="logout"
+                android:title="登入帳號"
                 app:showAsAction="never"/>
             </menu>
     </item>
