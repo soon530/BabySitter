@@ -63,7 +63,7 @@
         android:background="@drawable/full_button_selector"
         android:text="@string/log_in"
         android:textColor="#FFFFFF"
-        android:textSize="14sp" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/textView1"
