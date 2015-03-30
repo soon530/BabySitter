@@ -285,7 +285,7 @@ public class NewHomeFragment extends Fragment implements OnClickListener, OnQuer
 		mFilterPanel.animate()
         .translationY(0.0f)
         .alpha(1.0f)
-        .setDuration(1000)
+        .setDuration(250)
         .setListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
@@ -303,7 +303,7 @@ public class NewHomeFragment extends Fragment implements OnClickListener, OnQuer
 		mFilterPanel.animate()
         .translationY(-mFilterPanel.getHeight())
         .alpha(0.0f)
-        .setDuration(1000)
+        .setDuration(250)
         .setListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
