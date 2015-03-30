@@ -388,9 +388,10 @@ public class NewHomeFragment extends Fragment implements OnClickListener, OnQuer
 		//mLogoutItem.setTitle("這是測試");
 		
 	    if (ParseUser.getCurrentUser()==null) {
-	    	mLogoutItem.setTitle("登入帳號");
+	    	mLogoutItem.setTitle("登入");
+	    	
 	    } else {
-	    	mLogoutItem.setTitle("登出帳號");
+	    	mLogoutItem.setTitle("登出");
 	    }
 
 		

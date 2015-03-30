@@ -30,7 +30,7 @@
                 app:showAsAction="never"/>
             <item
                 android:id="@+id/action_logout"
-                android:title="登入帳號"
+                android:title="登入"
                 app:showAsAction="never"/>
             </menu>
     </item>
