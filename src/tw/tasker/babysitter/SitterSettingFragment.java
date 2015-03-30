@@ -1,12 +1,8 @@
 package tw.tasker.babysitter;
 
 import static tw.tasker.babysitter.utils.LogUtils.LOGD;
-
-import java.util.List;
-
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.Sitter;
-import tw.tasker.babysitter.model.data.UserInfo;
 import tw.tasker.babysitter.utils.AccountChecker;
 import tw.tasker.babysitter.utils.LogUtils;
 import android.app.ProgressDialog;
@@ -18,18 +14,20 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.InputMethodManager;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -70,6 +68,7 @@ public class SitterSettingFragment extends Fragment {
 	private EditText mPasswordAgain;
 	private TextView mSkillNumber;
 	private TextView mCommunityName;
+	private ScrollView mAllScreen;
 
 	/**
 	 * Use this factory method to create a new instance of this fragment using
@@ -110,6 +109,20 @@ public class SitterSettingFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_sitter_setting_read, container, false);
+		
+		
+		mAllScreen = (ScrollView) rootView.findViewById(R.id.signup_form);
+		mAllScreen.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+		        InputMethodManager imm = (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+		        imm.hideSoftInputFromWindow(v.getWindowToken(),0);
+				return false;
+			}
+		});
+
+		
 		mSync = (Button) rootView.findViewById(R.id.sync);
 		
 		mNumber = (TextView) rootView.findViewById(R.id.number);
