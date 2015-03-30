@@ -105,6 +105,7 @@ public class NewHomeFragment extends Fragment implements OnClickListener, OnQuer
 	private MenuItem mItem;
 	private SubMenu mSubMenu;
 	private MenuItem mLogoutItem;
+	private MenuItem mProfileItem;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -384,11 +385,13 @@ public class NewHomeFragment extends Fragment implements OnClickListener, OnQuer
 		mSubMenu = mItem.getSubMenu();
 		//LogUtils.LOGD("vic", "getSubMenu() :" + mSubMenu.hasVisibleItems());
 		mLogoutItem = mSubMenu.findItem(R.id.action_logout);
+		mProfileItem = mSubMenu.findItem(R.id.action_profile);
 		//LogUtils.LOGD("vic", "loginout :" + mLogoutItem );
 		//mLogoutItem.setTitle("這是測試");
 		
 	    if (ParseUser.getCurrentUser()==null) {
 	    	mLogoutItem.setTitle("登入");
+	    	mProfileItem.setVisible(false);
 	    	
 	    } else {
 	    	mLogoutItem.setTitle("登出");
