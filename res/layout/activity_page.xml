@@ -14,7 +14,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:textColor="#80FFFFFF"
-        app:pstsIndicatorColor="#f5d641"
+        app:pstsIndicatorColor="#FBC53B"
         app:pstsIndicatorHeight="3dp"
         app:pstsShouldExpand="true"
         app:pstsTextColorSelected="@android:color/white" />
