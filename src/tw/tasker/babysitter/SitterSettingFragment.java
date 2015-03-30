@@ -10,6 +10,7 @@ import tw.tasker.babysitter.model.data.UserInfo;
 import tw.tasker.babysitter.utils.AccountChecker;
 import tw.tasker.babysitter.utils.LogUtils;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 //import android.app.Fragment;
@@ -19,6 +20,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
@@ -144,6 +146,7 @@ public class SitterSettingFragment extends Fragment {
 						"資料同步..." /* e.getMessage() */,
 						Toast.LENGTH_LONG).show();
 
+				hideKeyPad();
 			}
 
 		});
@@ -155,6 +158,11 @@ public class SitterSettingFragment extends Fragment {
 
 		
 		return rootView;
+	}
+
+	protected void hideKeyPad() {
+        InputMethodManager imm = (InputMethodManager) mSync.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(mSync.getWindowToken(),0);
 	}
 
 	private void syncData() {
