@@ -9,6 +9,7 @@
     android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".SignUpOrLogInActivity"
+    android:fitsSystemWindows="true"
     >
 
     <ImageView
