@@ -186,9 +186,17 @@ public class SitterSettingFragment extends Fragment {
 			@Override
 			public void done(Babysitter babysitter, ParseException e) {
 				LogUtils.LOGD("vic", "syncData()" + babysitter);
-				fillUI(babysitter);
-				//mSyncLayout.setVisibility(View.GONE);
-				mDataLayout.setVisibility(View.VISIBLE);
+				
+				if (babysitter == null) {
+					Toast.makeText(getActivity(), "查不到此證號!", Toast.LENGTH_LONG).show();
+					mDataLayout.setVisibility(View.INVISIBLE);
+
+				} else {
+					fillUI(babysitter);
+					//mSyncLayout.setVisibility(View.GONE);
+					mDataLayout.setVisibility(View.VISIBLE);
+				}
+				
 			}
 
 		});
