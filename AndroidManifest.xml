@@ -93,7 +93,13 @@
             android:windowSoftInputMode="stateHidden"  >
         </activity>
         
-
+        <activity
+            android:name="tw.tasker.babysitter.view.activity.ProfileActivity"
+            android:label="個人檔案"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"  >
+        </activity>
+        
         <!-- Parse -->
         <service android:name="com.parse.PushService" />
 

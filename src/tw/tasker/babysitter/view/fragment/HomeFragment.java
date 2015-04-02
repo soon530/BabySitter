@@ -29,6 +29,7 @@ import tw.tasker.babysitter.presenter.adapter.BabysittersParseQueryAdapter;
 import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.activity.DispatchActivity;
+import tw.tasker.babysitter.view.activity.ProfileActivity;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
@@ -441,6 +442,14 @@ public class HomeFragment extends Fragment implements OnClickListener, OnQueryLo
 		Intent intent;
 
 		switch (id) {
+		
+		case R.id.action_profile:
+			intent = new Intent();
+			intent.setClass(getActivity(), ProfileActivity.class);
+			startActivity(intent);
+
+		break;
+		
 //		case R.id.action_google_play:
 //			uri = "market://details?id=tw.tasker.babysitter";
 //			intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
@@ -524,7 +533,6 @@ public class HomeFragment extends Fragment implements OnClickListener, OnQueryLo
 		mAddressText.setVisibility(View.VISIBLE);
 		mAddressEdit.setVisibility(View.GONE);
 		mLocation.setVisibility(View.VISIBLE);
-		doListQuery();
 		hideKeyboard();
 		
 		return true;
