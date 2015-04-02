@@ -1,22 +1,16 @@
 package tw.tasker.babysitter.view.activity;
 
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.SitterSettingFragment;
-import tw.tasker.babysitter.view.activity.BabysitterActivity.MyPagerAdapter;
-import tw.tasker.babysitter.view.fragment.BabysitterCommentFragment;
-import tw.tasker.babysitter.view.fragment.BabysitterFragment;
 import tw.tasker.babysitter.view.fragment.ParentsSignUpFragment;
-import tw.tasker.babysitter.view.fragment.SitterSignUpFragment;
+import tw.tasker.babysitter.view.fragment.SitterSettingFragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.util.TypedValue;
 import android.view.MenuItem;
-import android.widget.EditText;
 
 import com.astuetz.PagerSlidingTabStrip;
 
