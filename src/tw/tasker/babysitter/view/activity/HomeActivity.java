@@ -7,7 +7,7 @@ import tw.tasker.babysitter.model.data.UserInfo;
 import tw.tasker.babysitter.utils.GetLocation;
 import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.utils.MyLocation;
-import tw.tasker.babysitter.view.fragment.NewHomeFragment;
+import tw.tasker.babysitter.view.fragment.HomeFragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
@@ -27,7 +27,7 @@ public class HomeActivity extends BaseActivity {
 
 		if (savedInstanceState == null) {
 
-			Fragment fragment = new NewHomeFragment();
+			Fragment fragment = new HomeFragment();
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, fragment).commit();
 		}

@@ -8,7 +8,7 @@
     android:background="#FFFFFF"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context=".SignUpOrLogInActivity"
+    tools:context=".LogInActivity"
     android:fitsSystemWindows="true"
     >
 

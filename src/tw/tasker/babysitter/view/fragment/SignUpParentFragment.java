@@ -25,10 +25,10 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
-public class ParentsSignUpFragment extends Fragment implements OnClickListener {
+public class SignUpParentFragment extends Fragment implements OnClickListener {
 
 	public static Fragment newInstance() {
-		ParentsSignUpFragment fragment = new ParentsSignUpFragment();
+		SignUpParentFragment fragment = new SignUpParentFragment();
 		return fragment;
 	}
 

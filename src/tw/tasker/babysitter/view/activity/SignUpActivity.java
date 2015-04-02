@@ -1,8 +1,8 @@
 package tw.tasker.babysitter.view.activity;
 
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.view.fragment.ParentsSignUpFragment;
-import tw.tasker.babysitter.view.fragment.SitterSettingFragment;
+import tw.tasker.babysitter.view.fragment.SignUpParentFragment;
+import tw.tasker.babysitter.view.fragment.SignUpSitterFragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -180,12 +180,12 @@ public class SignUpActivity extends BaseActivity {
 			Fragment fragment = null;
 			switch (position) {
 			case 0:
-				fragment = ParentsSignUpFragment.newInstance();
+				fragment = SignUpParentFragment.newInstance();
 				//fragment.setArguments(arguments);
 				break;
 
 			case 1:
-				fragment = SitterSettingFragment.newInstance();				
+				fragment = SignUpSitterFragment.newInstance();				
 				//fragment = SitterSignUpFragment.newInstance();				
 				//fragment.setArguments(arguments);
 				break;

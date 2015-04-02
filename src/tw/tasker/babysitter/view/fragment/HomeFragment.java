@@ -75,7 +75,7 @@ import com.parse.ParseUser;
  * 
  * @author Gabriele Mariotti (gabri.mariotti@gmail.com)
  */
-public class NewHomeFragment extends Fragment implements OnClickListener, OnQueryLoadListener<Babysitter>, OnRefreshListener, OnFocusChangeListener, OnEditorActionListener {
+public class HomeFragment extends Fragment implements OnClickListener, OnQueryLoadListener<Babysitter>, OnRefreshListener, OnFocusChangeListener, OnEditorActionListener {
 
 	protected ScrollView mScrollView;
 	private LinearLayout mFilterPanel;

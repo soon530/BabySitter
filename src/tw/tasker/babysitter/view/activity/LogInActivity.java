@@ -28,7 +28,7 @@ import com.parse.SignUpCallback;
 /**
  * Activity which displays a registration screen to the user.
  */
-public class SignUpOrLogInActivity extends BaseActivity {
+public class LogInActivity extends BaseActivity {
 
 	private EditText usernameView;
 	private EditText passwordView;
@@ -87,7 +87,7 @@ public class SignUpOrLogInActivity extends BaseActivity {
 
 						// If there is a validation error, display the error
 						if (validationError) {
-							Toast.makeText(SignUpOrLogInActivity.this,
+							Toast.makeText(LogInActivity.this,
 									validationErrorMessage.toString(),
 									Toast.LENGTH_LONG).show();
 							return;
@@ -104,7 +104,7 @@ public class SignUpOrLogInActivity extends BaseActivity {
 					private void runLogin() {
 						// Set up a progress dialog
 						final ProgressDialog dlg = new ProgressDialog(
-								SignUpOrLogInActivity.this);
+								LogInActivity.this);
 						dlg.setTitle("登入中");
 						dlg.setMessage("請稍候...");
 						dlg.show();
@@ -121,14 +121,14 @@ public class SignUpOrLogInActivity extends BaseActivity {
 										if (e != null) {
 											// Show the error message
 											Toast.makeText(
-													SignUpOrLogInActivity.this,
+													LogInActivity.this,
 													"登入錯誤!" /* e.getMessage() */,
 													Toast.LENGTH_LONG).show();
 										} else {
 											// Start an intent for the dispatch
 											// activity
 											Intent intent = new Intent(
-													SignUpOrLogInActivity.this,
+													LogInActivity.this,
 													DispatchActivity.class);
 											intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
 													| Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -141,7 +141,7 @@ public class SignUpOrLogInActivity extends BaseActivity {
 					private void runSignup() {
 						// Set up a progress dialog
 						final ProgressDialog dlg = new ProgressDialog(
-								SignUpOrLogInActivity.this);
+								LogInActivity.this);
 						dlg.setTitle("註冊中");
 						dlg.setMessage("請稍候...");
 						dlg.show();
@@ -158,13 +158,13 @@ public class SignUpOrLogInActivity extends BaseActivity {
 								dlg.dismiss();
 								if (e != null) {
 									// Show the error message
-									Toast.makeText(SignUpOrLogInActivity.this,
+									Toast.makeText(LogInActivity.this,
 											"註冊錯誤!" /* e.getMessage() */,
 											Toast.LENGTH_LONG).show();
 								} else {
 									// Start an intent for the dispatch activity
 									Intent intent = new Intent(
-											SignUpOrLogInActivity.this,
+											LogInActivity.this,
 											DispatchActivity.class);
 									intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
 											| Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -182,7 +182,7 @@ public class SignUpOrLogInActivity extends BaseActivity {
 //				.setOnClickListener(new OnClickListener() {
 //					public void onClick(View v) {
 //						// Starts an intent of the log in activity
-//						startActivity(new Intent(SignUpOrLogInActivity.this,
+//						startActivity(new Intent(LogInActivity.this,
 //								LoginActivity.class));
 //					}
 //				});
@@ -192,7 +192,7 @@ public class SignUpOrLogInActivity extends BaseActivity {
 				.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
 						// Starts an intent for the sign up activity
-						startActivity(new Intent(SignUpOrLogInActivity.this,
+						startActivity(new Intent(LogInActivity.this,
 								SignUpActivity.class));
 					}
 				});
@@ -202,7 +202,7 @@ public class SignUpOrLogInActivity extends BaseActivity {
 				.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
 						// Starts an intent for the sign up activity
-						startActivity(new Intent(SignUpOrLogInActivity.this,
+						startActivity(new Intent(LogInActivity.this,
 								HomeActivity.class));
 					}
 				});

@@ -41,11 +41,11 @@ import com.parse.SignUpCallback;
 
 /**
  * A simple {@link Fragment} subclass. Use the
- * {@link SitterSettingFragment#newInstance} factory method to create an
+ * {@link SignUpSitterFragment#newInstance} factory method to create an
  * instance of this fragment.
  * 
  */
-public class SitterSettingFragment extends Fragment {
+public class SignUpSitterFragment extends Fragment {
 	// TODO: Rename parameter arguments, choose names that match
 	// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 	private static final String ARG_PARAM1 = "param1";
@@ -82,11 +82,11 @@ public class SitterSettingFragment extends Fragment {
 	 *            Parameter 1.
 	 * @param param2
 	 *            Parameter 2.
-	 * @return A new instance of fragment SitterSettingFragment.
+	 * @return A new instance of fragment SignUpSitterFragment.
 	 */
 	// TODO: Rename and change types and number of parameters
 	public static Fragment newInstance() {
-		Fragment fragment = new SitterSettingFragment();
+		Fragment fragment = new SignUpSitterFragment();
 		//Bundle args = new Bundle();
 		//args.putString(ARG_PARAM1, param1);
 		//args.putString(ARG_PARAM2, param2);
@@ -94,7 +94,7 @@ public class SitterSettingFragment extends Fragment {
 		return fragment;
 	}
 
-	public SitterSettingFragment() {
+	public SignUpSitterFragment() {
 		// Required empty public constructor
 	}
 
