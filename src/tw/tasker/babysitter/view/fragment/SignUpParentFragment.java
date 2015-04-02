@@ -111,6 +111,8 @@ public class SignUpParentFragment extends Fragment implements OnClickListener {
 		ParseUser user = new ParseUser();
 		user.setUsername(mName.getText().toString());
 		user.setPassword(mPassword.getText().toString());
+		user.put("userType", "parent");
+		
 		// Call the Parse signup method
 		user.signUpInBackground(new SignUpCallback() {
 

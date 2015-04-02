@@ -312,6 +312,7 @@ public class SignUpSitterFragment extends Fragment {
 		ParseUser user = new ParseUser();
 		user.setUsername(mName.getText().toString());
 		user.setPassword(mPassword.getText().toString());
+		user.put("userType", "sitter");
 		// Call the Parse signup method
 		user.signUpInBackground(new SignUpCallback() {
 

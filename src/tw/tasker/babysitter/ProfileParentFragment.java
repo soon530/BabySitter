@@ -1,13 +1,6 @@
 package tw.tasker.babysitter;
 
-import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.UserInfo;
-
-import com.parse.GetCallback;
-import com.parse.ParseException;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,6 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 public class ProfileParentFragment extends Fragment {
 
