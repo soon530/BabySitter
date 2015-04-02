@@ -207,61 +207,6 @@ public class SignUpOrLogInActivity extends BaseActivity {
 					}
 				});
 
-//		MyPagerAdapter adapter = new MyPagerAdapter();
-//		ViewPager myPager = (ViewPager) findViewById(R.id.pager);
-//		myPager.setAdapter(adapter);
-//		myPager.setCurrentItem(0);
-		
-//		CirclePageIndicator mIndicator = (CirclePageIndicator)findViewById(R.id.indicator);
-//        mIndicator.setViewPager(myPager);	
      }
 
-	private class MyPagerAdapter extends PagerAdapter {
-
-		public int getCount() {
-			return 3;
-		}
-
-		public Object instantiateItem(View collection, int position) {
-
-			LayoutInflater inflater = (LayoutInflater) collection.getContext()
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-			int resId = 0;
-			switch (position) {
-			case 0:
-				resId = R.layout.first_page;
-				break;
-			case 1:
-				resId = R.layout.second_page;
-				break;
-			case 2:
-				resId = R.layout.third_page;
-				break;
-			}
-
-			View view = inflater.inflate(resId, null);
-
-			((ViewPager) collection).addView(view, 0);
-
-			return view;
-		}
-
-		@Override
-		public void destroyItem(View arg0, int arg1, Object arg2) {
-			((ViewPager) arg0).removeView((View) arg2);
-
-		}
-
-		@Override
-		public boolean isViewFromObject(View arg0, Object arg1) {
-			return arg0 == ((View) arg1);
-
-		}
-
-		@Override
-		public Parcelable saveState() {
-			return null;
-		}
-	}
 }

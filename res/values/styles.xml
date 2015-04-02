@@ -38,63 +38,6 @@
         <item name="android:popupBackground">@drawable/menu_dropdown_panel_example</item>
     </style>
 
-    <style name="LoginFormContainer">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:padding">16dp</item>
-    </style>
-
-    <style name="Birth.card.content_outer_layout" parent="@style/card.content_outer_layout">
-
-        <!-- Style for Content View -->
-        <item name="android:minHeight">60dp</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_marginTop">@dimen/card_content_outer_view_margin_top</item>
-        <item name="android:layout_marginBottom">@dimen/card_content_outer_view_margin_bottom</item>
-        <item name="android:layout_marginLeft">@dimen/card_content_outer_view_margin_left</item>
-        <item name="android:layout_marginRight">@dimen/card_content_outer_view_margin_right</item>
-    </style>
-
-    <style name="carddemo_myapps_main_inner_ratingbar">
-        <item name="android:indeterminateOnly">false</item>
-        <item name="android:progressDrawable">@drawable/ratingbar_small_holo_dark</item>
-        <item name="android:indeterminateDrawable">@drawable/ratingbar_small_holo_dark</item>
-        <item name="android:minHeight">12dip</item>
-        <item name="android:maxHeight">12dip</item>
-        <item name="android:thumb">@null</item>
-        <item name="android:isIndicator">true</item>
-    </style>
-
-    <style name="carddemo_suggested_text_bold">
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@android:color/black</item>
-    </style>
-
-    <style name="AppTheme.TitleText">
-        <item name="android:textSize">@dimen/demo_title_section_textsize</item>
-        <item name="android:layout_marginLeft">@dimen/demo_title_section_margin</item>
-        <item name="android:layout_marginRight">@dimen/demo_title_section_margin</item>
-        <item name="android:layout_marginBottom">@dimen/demo_title_section_margin_bottom</item>
-        <item name="android:layout_marginTop">@dimen/demo_title_section_margin_top</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/demo_title_section_textcolor</item>
-    </style>
-
-    <style name="grid_card">
-        <item name="android:paddingLeft">@dimen/grid_card_padding_left</item>
-        <item name="android:paddingRight">@dimen/grid_card_padding_right</item>
-        <item name="android:paddingBottom">@dimen/grid_card_padding_bottom</item>
-        <item name="android:paddingTop">@dimen/grid_card_padding_top</item>
-    </style>
-
-    <!-- Style for simple title inner main view -->
-    <style name="card.base_simple_title">
-        <item name="android:textStyle">bold</item>
-        <item name="android:layout_gravity">left|center_vertical</item>
-        <item name="android:layout_marginLeft">@dimen/card_main_simple_title_margin_left</item>
-        <item name="android:layout_marginTop">@dimen/card_main_simple_title_margin_top</item>
-    </style>
-
     <!-- BabyCare Style -->
     <style name="FullCheckbox" parent="@android:style/Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/full_checkbox</item>

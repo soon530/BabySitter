@@ -132,7 +132,7 @@ public class SitterSettingFragment extends Fragment {
 		mNumber = (TextView) rootView.findViewById(R.id.number);
 		mSitterName = (TextView) rootView.findViewById(R.id.name);
 		//mSex = (TextView) rootView.findViewById(R.id.sex);
-		mAge = (TextView) rootView.findViewById(R.id.age);
+		//mAge = (TextView) rootView.findViewById(R.id.age);
 		mEducation = (TextView) rootView.findViewById(R.id.education);
 		mTel = (TextView) rootView.findViewById(R.id.tel);
 		mAddress = (TextView) rootView.findViewById(R.id.address);
