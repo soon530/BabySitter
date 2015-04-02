@@ -106,6 +106,7 @@ public class NewHomeFragment extends Fragment implements OnClickListener, OnQuer
 	private SubMenu mSubMenu;
 	private MenuItem mLogoutItem;
 	private MenuItem mProfileItem;
+	private Button mCancel;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -132,10 +133,15 @@ public class NewHomeFragment extends Fragment implements OnClickListener, OnQuer
 		mAddressText = (TextView) rootView.findViewById(R.id.address_text);
 		mAddressText.setOnClickListener(this);
 		
+		// Address
 		mAddressEdit = (EditText) rootView.findViewById(R.id.address_edit);
 		mAddressEdit.setVisibility(View.GONE);
 		mAddressEdit.setOnFocusChangeListener(this);
 		mAddressEdit.setOnEditorActionListener(this);
+
+		mCancel = (Button) rootView.findViewById(R.id.cancel);
+		mCancel.setVisibility(View.GONE);
+		mCancel.setOnClickListener(this);
 		
 		mLocation = (ImageView) rootView.findViewById(R.id.location);
 		
@@ -261,21 +267,41 @@ public class NewHomeFragment extends Fragment implements OnClickListener, OnQuer
 			doListQuery();
 
 			break;
+
 		case R.id.address_text:
-			mAddressText.setVisibility(View.GONE);
-			mAddressEdit.setVisibility(View.VISIBLE);
-			mLocation.setVisibility(View.GONE);
-			//mAddressEdit.setFocusable(true);
-			//mAddressEdit.setFocusableInTouchMode(true);
-			mAddressEdit.requestFocus();
-			//getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-			showKeyboard();
+			changeToAddressEditMode();
+			break;
+
+		case R.id.cancel:
+			changeToAndressTextMode();
 			break;
 		default:
 			break;
 		}
 		
 	}
+	
+	private void changeToAndressTextMode() {
+		mAddressText.setVisibility(View.VISIBLE);
+		mAddressEdit.setVisibility(View.GONE);
+		mCancel.setVisibility(View.GONE);
+		mLocation.setVisibility(View.VISIBLE);
+		hideKeyboard();
+	}
+	
+	private void changeToAddressEditMode() {
+		mAddressText.setVisibility(View.GONE);
+		mAddressEdit.setVisibility(View.VISIBLE);
+		mLocation.setVisibility(View.GONE);
+		//mAddressEdit.setFocusable(true);
+		//mAddressEdit.setFocusableInTouchMode(true);
+		mAddressEdit.requestFocus();
+		//getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+		mCancel.setVisibility(View.VISIBLE);
+		showKeyboard();
+	}
+
+	
 	
 	private void showFilterPanel() {
 		mListView.setVisibility(View.GONE);
@@ -485,9 +511,7 @@ public class NewHomeFragment extends Fragment implements OnClickListener, OnQuer
 	@Override
 	public void onFocusChange(View v, boolean hasFocus) {
 		if (!hasFocus) {
-			mAddressText.setVisibility(View.VISIBLE);
-			mAddressEdit.setVisibility(View.GONE);
-			mLocation.setVisibility(View.VISIBLE);
+			changeToAndressTextMode();
 		}
 	}
 
