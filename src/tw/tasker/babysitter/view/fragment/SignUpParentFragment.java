@@ -1,6 +1,7 @@
 package tw.tasker.babysitter.view.fragment;
 
 import static tw.tasker.babysitter.utils.LogUtils.LOGD;
+import tw.tasker.babysitter.BuildConfig;
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.UserInfo;
@@ -10,6 +11,7 @@ import tw.tasker.babysitter.view.activity.DispatchActivity;
 import tw.tasker.babysitter.view.activity.SignUpActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -68,8 +70,25 @@ public class SignUpParentFragment extends Fragment implements OnClickListener {
 		//
 		mSignUp = (Button) rootView.findViewById(R.id.action_button);
 		mSignUp.setOnClickListener(this);
+		
+		if (BuildConfig.DEBUG)
+			loadTestData();
 
 		return rootView;
+	}
+
+	private void loadTestData() {
+		mName.setText("vic2");
+		mPassword.setText("vic2");
+		mPasswordAgain.setText("vic2");
+		
+		mParentsName.setText("張小誠");
+		mParentsAddress.setText("高雄市鳳山區建國路一段31巷37號");
+		mParents_phone.setText("0915552673");
+		
+		mKidsAge.setText("1歲");
+		mKidsGender.setText("男");
+		
 	}
 
 	@Override
