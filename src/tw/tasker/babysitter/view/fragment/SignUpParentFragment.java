@@ -51,7 +51,7 @@ public class SignUpParentFragment extends Fragment implements OnClickListener {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_signup_parents,
+		View rootView = inflater.inflate(R.layout.fragment_parent_signup,
 				container, false);
 		// Set up the signup form.
 		mName = (EditText) rootView.findViewById(R.id.username);

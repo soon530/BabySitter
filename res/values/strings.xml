@@ -1,58 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <!-- MainActivity -->
+	<!-- BabyCare -->
     <string name="app_name">BabyCare</string>
-    <string name="search_babysitter">搜尋保母</string>
-    <string name="rating_babysitter">評分保母</string>
-    <string name="social_babysitter">社群保母</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="action_example">搜尋</string>
-    <string name="action_settings">設定</string>
-
-    <!-- BabySitterMapActivity -->
-    <string name="title_activity_map">保母地圖</string>
-    <string name="goto_babysitterlist_activity">列表</string>
-
-    <!-- BabySitterListActivity -->
-    <string name="title_item_list">保母列表</string>
-    <string name="goto_babysittermap_activity">地圖</string>
-
-    <!-- BabySitterDetailActivity -->
-    <string name="title_item_detail">保母明細</string>
-
-    <!-- BabySitterCommentActivity -->
-    <string name="title_activity_babysitter_comment">保母評分</string>
-    <string name="goto_babysittercomment_activity">評分</string>
-    <string name="add">新增</string>
-
-    <!-- BabyDetailActivity -->
-    <string name="title_activity_baby_detail">成長記錄</string>
-    <string name="post_words">成長記錄</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="title_activity_home">保母搜尋</string>
-    <string name="title_activity_baby_comment">成長記錄</string>
-    <string name="title_activity_baby_list">寶寶收藏</string>
-
-    <!-- BabyDiaryActivity -->
-    <string name="title_activity_baby_diary">寶寶日記</string>
-    <string name="action_add">新增</string>
-
-    <!-- login -->
-    <string name="title_activity_sign_up_or_log_in">SignUpOrLogInActivity</string>
-    <string name="log_in">登入</string>
+    
+    <!-- Strings related to login -->
     <string name="sign_up">建立帳號</string>
-    <string name="powered_by">Open Data資料來源為</string>
-    <string name="parse">衛生福利部社會及家庭署</string>
-    <string name="slogan">為你找到可信任的保母</string>
-    <string name="title_activity_settings">Settings</string>
-    <string name="search_distance">Search Distance</string>
-    <string name="log_out">Log out of Anywall</string>
-    <string name="post">Post</string>
-    <string name="post_out_of_range">Can\'t view post! Get closer.</string>
-    <string name="title_activity_baby_add">新增寶寶日記</string>
-    <string name="title_activity_favorite_babysitter">保母收藏</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="log_in">登入</string>
+    <string name="prompt_username">英文字母或數字</string>
+    <string name="prompt_password">六位數以上數字或英文字母</string>
+    <string name="prompt_password_again">請再輸入一次您的密碼</string>
+    <string name="action_sign_in_short">登入</string>
+    
+    <!-- Error messages -->
+    <string name="error_intro">"請 "</string>
+    <string name="error_blank_username">輸入帳號</string>
+    <string name="error_blank_password">輸入密碼</string>
+    <string name="error_mismatched_passwords">再輸入一次密碼</string>
+    <string name="error_join">", 並 "</string>
+    <string name="error_end">.</string>
 </resources>

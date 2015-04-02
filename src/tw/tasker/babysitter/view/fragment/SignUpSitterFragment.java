@@ -112,7 +112,7 @@ public class SignUpSitterFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_sitter_setting_read, container, false);
+		View rootView = inflater.inflate(R.layout.fragment_sitter_signup, container, false);
 		
 		
 		mAllScreen = (ScrollView) rootView.findViewById(R.id.signup_form);

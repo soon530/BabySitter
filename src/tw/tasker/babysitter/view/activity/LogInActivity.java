@@ -39,7 +39,7 @@ public class LogInActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_sign_up_or_log_in);
+		setContentView(R.layout.activity_log_in);
 		
 		// Set up the login form.
 		usernameView = (EditText) findViewById(R.id.username);
