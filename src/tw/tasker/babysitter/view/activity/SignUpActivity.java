@@ -2,7 +2,7 @@ package tw.tasker.babysitter.view.activity;
 
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.view.fragment.SignUpParentFragment;
-import tw.tasker.babysitter.view.fragment.SignUpSitterFragment;
+import tw.tasker.babysitter.view.fragment.SyncDataFragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -184,7 +184,7 @@ public class SignUpActivity extends BaseActivity {
 				break;
 
 			case 1:
-				fragment = SignUpSitterFragment.newInstance();				
+				fragment = SyncDataFragment.newInstance();				
 				//fragment = SitterSignUpFragment.newInstance();				
 				//fragment.setArguments(arguments);
 				break;
