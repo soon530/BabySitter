@@ -19,7 +19,7 @@
         android:contentDescription="BabyCare Logo" />
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
@@ -54,7 +54,7 @@
          />
 
     <Button
-        android:id="@+id/logInButton"
+        android:id="@+id/log_in"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="32dp"
@@ -84,7 +84,7 @@
         android:orientation="horizontal" >
 
         <Button
-            android:id="@+id/signUpButton"
+            android:id="@+id/sign_up"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -94,7 +94,7 @@
             android:textSize="16sp" />
 
         <Button
-            android:id="@+id/go"
+            android:id="@+id/later"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="6dp"
