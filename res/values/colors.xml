@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-    <color name="branding_color">#3FA9B1</color>
-    <color name="status_bar_color">#90CFD2</color>
+    <!-- Brand colors -->
+    <color name="primary">#3FA9B1</color>
+    <color name="primary_dark">#90CFD2</color>
+    <color name="accent">#FBC53B</color>
+    
+    <color name="click">#23869A</color>
+    
+    <color name="hint">#CCCCCC</color>
+    <color name="gray_dark">#969696</color>
+    <color name="gray_light">#F2F2F2</color>
+    
+    <!-- PagerSlidingTabStrip -->
+    <color name="white_alpha_80">#80FFFFFF</color>
+    <color name="forget_password">#BABABA</color>
+    
 </resources>

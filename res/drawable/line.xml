@@ -3,7 +3,7 @@
     android:shape="line" >
 
     <stroke
-        android:color="#3FA9B1" />
+        android:color="@color/primary" />
     <size android:height="1dp" />
 
 </shape>

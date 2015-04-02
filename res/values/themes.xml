@@ -17,8 +17,8 @@
 
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
         <item name="android:actionBarStyle">@style/MyActionBar</item>
-        <item name="colorPrimary">@color/branding_color</item>
-        <item name="android:windowBackground">@color/branding_color</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="android:windowBackground">@color/primary</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
@@ -26,7 +26,7 @@
     <style name="ActivityTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
         <item name="android:actionBarStyle">@style/MyActionBar</item>
         <item name="android:popupMenuStyle">@style/PopupMenu.Example</item>
-        <item name="colorPrimary">@color/branding_color</item>
+        <item name="colorPrimary">@color/primary</item>
 	</style>
 
     <!-- Theme item -->

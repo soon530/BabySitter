@@ -21,7 +21,7 @@
             android:background="@drawable/full_km"
             android:gravity="center"
             android:text="        "
-            android:textColor="#FFFFFF"
+            android:textColor="@android:color/white"
             android:textSize="12sp" />
 
         <ImageView
@@ -75,7 +75,7 @@
                     android:ellipsize="end"
                     android:maxLength="12"
                     android:text="時間"
-                    android:textColor="#969696" />
+                    android:textColor="@color/gray_dark" />
             </LinearLayout>
 
             <TextView

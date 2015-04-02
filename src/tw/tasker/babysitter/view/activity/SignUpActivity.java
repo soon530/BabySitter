@@ -25,7 +25,6 @@ public class SignUpActivity extends BaseActivity {
 	private PagerSlidingTabStrip tabs;
 	private ViewPager pager;
 	private MyPagerAdapter adapter;
-	private int currentColor = Color.parseColor("#FF4343"); //0xFF666666;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

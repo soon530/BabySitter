@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="105dp" 
         android:text="高雄市第四區社區保母系統"
-        android:textColor="@color/branding_color"
+        android:textColor="@color/primary"
          />
     
     <Button
@@ -54,7 +54,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/full_button_contact"
-        android:textColor="#FFFFFF"
+        android:textColor="@android:color/white"
         android:text="聯絡保母" />
 
 </LinearLayout>

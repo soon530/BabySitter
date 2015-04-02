@@ -3,7 +3,7 @@
     android:id="@+id/signup_form"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF" 
+    android:background="@android:color/white" 
     >
 
     <!-- Login form -->
@@ -151,7 +151,7 @@
             android:paddingLeft="32dp"
             android:paddingRight="32dp"
             android:text="@string/sign_up"
-            android:textColor="#FFFFFF" />
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
 </ScrollView>

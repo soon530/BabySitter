@@ -26,7 +26,7 @@ public class BaseActivity extends ActionBarActivity {
 
 		SystemBarTintManager tintManager = new SystemBarTintManager(this);
 		tintManager.setStatusBarTintEnabled(true);
-		tintManager.setStatusBarTintResource(R.color.status_bar_color);
+		tintManager.setStatusBarTintResource(R.color.primary_dark);
 	}
 
 	@TargetApi(19)

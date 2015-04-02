@@ -3,7 +3,7 @@
     android:id="@+id/signup_form"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF" >
+    android:background="@android:color/white" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -39,7 +39,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/full_button_selector"
                 android:text="確認"
-                android:textColor="#FFFFFF" />
+                android:textColor="@android:color/white" />
         </LinearLayout>
 
         <ImageView
@@ -167,7 +167,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/full_button_selector"
                 android:text="確認"
-                android:textColor="#FFFFFF" />
+                android:textColor="@android:color/white" />
         </LinearLayout>
     </LinearLayout>
 

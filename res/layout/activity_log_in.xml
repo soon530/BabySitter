@@ -5,7 +5,7 @@
     style="@android:style/Theme.Holo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@android:color/white"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".LogInActivity"
@@ -13,10 +13,10 @@
     >
 
     <ImageView
-        android:id="@+id/imageView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/main" />
+        android:src="@drawable/main"
+        android:contentDescription="BabyCare Logo" />
 
     <EditText
         android:id="@+id/username"
@@ -30,8 +30,8 @@
         android:inputType="textEmailAddress"
         android:maxLines="1"
         android:singleLine="true"
-        android:textColor="@color/branding_color"
-        android:textColorHint="#CCCCCC"
+        android:textColor="@color/primary"
+        android:textColorHint="@color/hint"
          />
 
     <EditText
@@ -49,8 +49,8 @@
         android:inputType="textPassword"
         android:maxLines="1"
         android:singleLine="true"
-        android:textColor="@color/branding_color"
-        android:textColorHint="#CCC"
+        android:textColor="@color/primary"
+        android:textColorHint="@color/hint"
          />
 
     <Button
@@ -62,7 +62,7 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/full_button_selector"
         android:text="@string/log_in"
-        android:textColor="#FFFFFF"
+        android:textColor="@android:color/white"
         android:textSize="16sp" />
 
     <TextView
@@ -71,7 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="忘記帳號或密碼嗎？"
-        android:textColor="#BABABA"
+        android:textColor="@color/forget_password"
         android:textSize="14sp" />
 
     <LinearLayout
