@@ -240,18 +240,18 @@ public class SitterSettingFragment extends Fragment {
 		int id = item.getItemId();
 
 		switch (id) {
-		case R.id.action_add:
+//		case R.id.action_add:
 //			if (ParseUser.getCurrentUser() != null) {
 //				hasSitter();
 //			}
 //			addSitter(); 
 			
-			if (isAccountOK()) {
-				signUpSitter();
-			}
+//			if (isAccountOK()) {
+//				signUpSitter();
+//			}
 
 			
-			break;
+//			break;
 		default:
 			break;
 		}
