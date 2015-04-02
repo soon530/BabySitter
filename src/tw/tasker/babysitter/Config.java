@@ -20,8 +20,8 @@ public class Config {
 	.cacheInMemory(true)
 	.cacheOnDisc(true)
 	.displayer(new SimpleBitmapDisplayer())
-	.showImageOnFail(R.drawable.photo_mother_fail1)
-	.showImageOnLoading(R.drawable.photo_mother_loading)
+	.showImageOnFail(R.drawable.profile)
+	.showImageOnLoading(R.drawable.profile)
 	.build();
 	
 	public static final double LAT = 22.885127;
