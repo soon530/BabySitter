@@ -107,6 +107,8 @@ public class SignUpActivity extends BaseActivity {
 			case 1:
 				if (mFragmentAtPos1 == null) {
 					mFragmentAtPos1 = SyncDataFragment.newInstance(mListener);
+					//mFragmentAtPos1 = VerifyCodeFragment.newInstance(mListener);
+					
 				}
 				return mFragmentAtPos1;
 			}
