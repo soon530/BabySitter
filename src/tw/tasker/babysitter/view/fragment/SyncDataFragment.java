@@ -9,10 +9,12 @@ import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.Sitter;
 import tw.tasker.babysitter.utils.AccountChecker;
 import tw.tasker.babysitter.utils.LogUtils;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 //import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -45,7 +47,7 @@ import com.parse.SignUpCallback;
  * instance of this fragment.
  * 
  */
-public class SyncDataFragment extends Fragment {
+public class SyncDataFragment extends Fragment implements OnClickListener {
 	// TODO: Rename parameter arguments, choose names that match
 	// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 	private static final String ARG_PARAM1 = "param1";
@@ -73,6 +75,7 @@ public class SyncDataFragment extends Fragment {
 	private TextView mSkillNumber;
 	private TextView mCommunityName;
 	private ScrollView mAllScreen;
+	private Button mConfirm;
 
 	/**
 	 * Use this factory method to create a new instance of this fragment using
@@ -172,11 +175,32 @@ public class SyncDataFragment extends Fragment {
 		mName = (EditText) rootView.findViewById(R.id.username);
 		mPassword = (EditText) rootView.findViewById(R.id.password);
 		mPasswordAgain = (EditText) rootView.findViewById(R.id.passwordAgain);
+		
+		mConfirm = (Button) rootView.findViewById(R.id.confirm);
+		mConfirm.setOnClickListener(this);
 
 		
 		return rootView;
 	}
 
+	@Override
+	public void onClick(View v) {
+		int id = v.getId();
+		switch (id) {
+		case R.id.confirm:
+			break;
+			
+		default:
+			break;
+		}
+	}
+	
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		
+	}
+	
 	protected void hideKeyPad() {
         InputMethodManager imm = (InputMethodManager) mSync.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(mSync.getWindowToken(),0);
@@ -433,4 +457,5 @@ public class SyncDataFragment extends Fragment {
 				Toast.LENGTH_LONG).show();
 
 	}
+
 }

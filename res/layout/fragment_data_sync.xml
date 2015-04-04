@@ -16,10 +16,10 @@
             android:id="@+id/sync_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
             android:orientation="horizontal" >
 
             <EditText
@@ -106,9 +106,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:layout_marginLeft="45dp" 
                 android:layout_marginBottom="20dp"
-                >
+                android:layout_marginLeft="45dp" >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -162,7 +161,7 @@
                 android:textSize="16sp" />
 
             <Button
-                android:id="@+id/create"
+                android:id="@+id/confirm"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_marginBottom="32dp"
