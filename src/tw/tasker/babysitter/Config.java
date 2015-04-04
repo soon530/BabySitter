@@ -1,5 +1,7 @@
 package tw.tasker.babysitter;
 
+import tw.tasker.babysitter.model.data.Babysitter;
+
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.parse.ParseGeoPoint;
@@ -31,5 +33,6 @@ public class Config {
 	//public static ParseGeoPoint MY_TEST_LOCATION = new ParseGeoPoint(25.0601727,121.5593073);
 	
 	public static final int MAX_POST_SEARCH_DISTANCE = 50;
+	public static Babysitter sitterInfo;
 
 }

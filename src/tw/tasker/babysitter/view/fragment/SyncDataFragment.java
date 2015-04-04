@@ -1,6 +1,7 @@
 package tw.tasker.babysitter.view.fragment;
 
 import static tw.tasker.babysitter.utils.LogUtils.LOGD;
+import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.Sitter;
@@ -31,6 +32,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.Batch;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -223,6 +225,7 @@ public class SyncDataFragment extends Fragment implements OnClickListener {
 
 				} else {
 					fillUI(babysitter);
+					Config.sitterInfo = babysitter;
 					//mSyncLayout.setVisibility(View.GONE);
 					mDataLayout.setVisibility(View.VISIBLE);
 				}
@@ -231,6 +234,7 @@ public class SyncDataFragment extends Fragment implements OnClickListener {
 
 		});
 	}
+
 
 	private void fillUI(Babysitter babysitter) {
 		mSitterName.setText(babysitter.getName());

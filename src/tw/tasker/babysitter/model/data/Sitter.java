@@ -152,6 +152,22 @@ public class Sitter extends ParseObject {
 		return getBoolean("isVerify");
 	}
 	
+	public String getCommunityName() {
+		return getString("communityName");
+	}
+	public void setCommunityName(String value) {
+		put("communityName", value);
+	}
+
+	public String getSkillNumber() {
+		String value = getString("skillNumber");
+		return value;
+	}
+	public void setSkillNumber(String value) {
+		put("skillNumber", value);
+	}
+
+	
 	public static ParseQuery<Sitter> getQuery() {
 		return ParseQuery.getQuery(Sitter.class);
 	}
