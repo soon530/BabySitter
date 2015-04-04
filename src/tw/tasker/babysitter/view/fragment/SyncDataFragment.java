@@ -26,19 +26,22 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.api.Batch;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * A simple {@link Fragment} subclass. Use the
@@ -76,6 +79,9 @@ public class SyncDataFragment extends Fragment implements OnClickListener {
 	private TextView mCommunityName;
 	private ScrollView mAllScreen;
 	private Button mConfirm;
+	private CircleImageView mAvator;
+	
+	private ImageLoader imageLoader = ImageLoader.getInstance();
 
 	/**
 	 * Use this factory method to create a new instance of this fragment using
@@ -120,6 +126,7 @@ public class SyncDataFragment extends Fragment implements OnClickListener {
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_data_sync, container, false);
 		
+		mAvator = (CircleImageView) rootView.findViewById(R.id.avator);
 		
 		mAllScreen = (ScrollView) rootView.findViewById(R.id.signup_form);
 		mAllScreen.setOnTouchListener(new OnTouchListener() {
@@ -249,6 +256,14 @@ public class SyncDataFragment extends Fragment implements OnClickListener {
 		mSkillNumber.setText("保母證號：" + babysitter.getSkillNumber());
 		mEducation.setText("教育程度：" + babysitter.getEducation());
 		mCommunityName.setText(babysitter.getCommunityName());
+		
+		String websiteUrl = "http://cwisweb.sfaa.gov.tw/";
+		String parseUrl = babysitter.getImageUrl();
+		if (parseUrl.equals("../img/photo_mother_no.jpg")) {
+			mAvator.setImageResource(R.drawable.profile);
+		} else {
+			imageLoader.displayImage(websiteUrl + parseUrl, mAvator, Config.OPTIONS, null);
+		}
 		
 		//mBabycareTime.setText(babysitter.getBabycareTime());
 	}
