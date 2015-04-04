@@ -2,13 +2,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     android:orientation="vertical" 
-    android:background="#FFFFFF">
+    >
 
     <TextView
-        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="最後一步，請申請帳號以便下次登入" />
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="10dp"
+        android:text="最後一步，請申請帳號以便下次登入"
+        android:textSize="14sp"
+        android:layout_marginLeft="32dp" />
 
+    <include layout="@layout/merge_signup" />
+
+    <Button
+        android:id="@+id/create"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/full_button_selector"
+        android:paddingLeft="32dp"
+        android:paddingRight="32dp"
+        android:text="@string/sign_up"
+        android:textColor="@android:color/white"
+        android:layout_gravity="center_horizontal" />
 </LinearLayout>
