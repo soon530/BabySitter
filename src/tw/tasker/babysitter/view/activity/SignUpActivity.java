@@ -1,6 +1,7 @@
 package tw.tasker.babysitter.view.activity;
 
 import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.view.fragment.CreateAccountFragment;
 import tw.tasker.babysitter.view.fragment.SignUpParentFragment;
 import tw.tasker.babysitter.view.fragment.SyncDataFragment;
 import tw.tasker.babysitter.view.fragment.VerifyCodeFragment;
@@ -64,10 +65,12 @@ public class SignUpActivity extends BaseActivity {
 				mFragmentManager.beginTransaction().remove(mFragmentAtPos1)
 						.commit();
 
-				if (mFragmentAtPos1 instanceof SyncDataFragment) {
+				if (mFragmentAtPos1 instanceof SyncDataFragment) { // Page2
 					mFragmentAtPos1 = VerifyCodeFragment.newInstance(mListener);
-				} else { // Instance of NextFragment
-					mFragmentAtPos1 = SyncDataFragment.newInstance(mListener);
+				} else if (mFragmentAtPos1 instanceof VerifyCodeFragment) { // Page3
+					mFragmentAtPos1 = CreateAccountFragment.newInstance();
+				} else {
+					mFragmentAtPos1 = SyncDataFragment.newInstance(mListener); // Page1
 				}
 				
 				notifyDataSetChanged();
@@ -117,10 +120,10 @@ public class SignUpActivity extends BaseActivity {
 					&& mFragmentAtPos1 instanceof VerifyCodeFragment) {
 				return POSITION_NONE;
 			}
-//			if (object instanceof VerifyCodeFragment
-//					&& mFragmentAtPos1 instanceof SyncDataFragment) {
-//				return POSITION_NONE;
-//			}
+			if (object instanceof VerifyCodeFragment
+					&& mFragmentAtPos1 instanceof CreateAccountFragment) {
+				return POSITION_NONE;
+			}
 			return POSITION_UNCHANGED;
 		}
 	}
