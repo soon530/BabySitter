@@ -2,19 +2,16 @@ package tw.tasker.babysitter.view.fragment;
 
 import static tw.tasker.babysitter.utils.LogUtils.LOGD;
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.R.id;
-import tw.tasker.babysitter.R.layout;
-import tw.tasker.babysitter.R.string;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.Sitter;
 import tw.tasker.babysitter.utils.AccountChecker;
 import tw.tasker.babysitter.utils.LogUtils;
+import tw.tasker.babysitter.view.activity.SignUpListener;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 //import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -52,6 +49,7 @@ public class SyncDataFragment extends Fragment implements OnClickListener {
 	// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 	private static final String ARG_PARAM1 = "param1";
 	private static final String ARG_PARAM2 = "param2";
+	private static SignUpListener mListener;
 
 	// TODO: Rename and change types of parameters
 	private String mParam1;
@@ -88,8 +86,11 @@ public class SyncDataFragment extends Fragment implements OnClickListener {
 	 * @return A new instance of fragment SyncDataFragment.
 	 */
 	// TODO: Rename and change types and number of parameters
-	public static Fragment newInstance() {
+	
+	public static Fragment newInstance(SignUpListener listener) {
 		Fragment fragment = new SyncDataFragment();
+		mListener = listener;
+		
 		//Bundle args = new Bundle();
 		//args.putString(ARG_PARAM1, param1);
 		//args.putString(ARG_PARAM2, param2);
@@ -188,6 +189,7 @@ public class SyncDataFragment extends Fragment implements OnClickListener {
 		int id = v.getId();
 		switch (id) {
 		case R.id.confirm:
+			mListener.onSwitchToNextFragment();
 			break;
 			
 		default:

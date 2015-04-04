@@ -3,6 +3,7 @@ package tw.tasker.babysitter.view.activity;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.view.fragment.SignUpParentFragment;
 import tw.tasker.babysitter.view.fragment.SyncDataFragment;
+import tw.tasker.babysitter.view.fragment.VerifyCodeFragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -30,13 +31,15 @@ public class SignUpActivity extends BaseActivity {
 
 		pager.setAdapter(adapter);
 
-		final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics());
+		final int pageMargin = (int) TypedValue.applyDimension(
+				TypedValue.COMPLEX_UNIT_DIP, 4, getResources()
+						.getDisplayMetrics());
 		pager.setPageMargin(pageMargin);
 
 		tabs.setViewPager(pager);
-		
-		//getActionBar().setDisplayShowHomeEnabled(false);
-		//getActionBar().setDisplayHomeAsUpEnabled(true);
+
+		// getActionBar().setDisplayShowHomeEnabled(false);
+		// getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
@@ -54,14 +57,31 @@ public class SignUpActivity extends BaseActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-
-	
 	public class MyPagerAdapter extends FragmentPagerAdapter {
 
-		private final String[] TITLES = { "父母註冊", "保母註冊"};
+		private final class Listener implements SignUpListener {
+			public void onSwitchToNextFragment() {
+				mFragmentManager.beginTransaction().remove(mFragmentAtPos1)
+						.commit();
+
+				if (mFragmentAtPos1 instanceof SyncDataFragment) {
+					mFragmentAtPos1 = VerifyCodeFragment.newInstance(mListener);
+				} else { // Instance of NextFragment
+					mFragmentAtPos1 = SyncDataFragment.newInstance(mListener);
+				}
+				
+				notifyDataSetChanged();
+			}
+		}
+
+		private final String[] TITLES = { "父母註冊", "保母註冊" };
+		private final FragmentManager mFragmentManager;
+		private Fragment mFragmentAtPos1;
+		SignUpListener mListener = new Listener();
 
 		public MyPagerAdapter(FragmentManager fm) {
 			super(fm);
+			mFragmentManager = fm;
 		}
 
 		@Override
@@ -76,25 +96,32 @@ public class SignUpActivity extends BaseActivity {
 
 		@Override
 		public Fragment getItem(int position) {
-			
-			Fragment fragment = null;
+
 			switch (position) {
 			case 0:
-				fragment = SignUpParentFragment.newInstance();
-				//fragment.setArguments(arguments);
-				break;
+				return SignUpParentFragment.newInstance();
 
 			case 1:
-				fragment = SyncDataFragment.newInstance();				
-				//fragment = SitterSignUpFragment.newInstance();				
-				//fragment.setArguments(arguments);
-				break;
-
-			default:
-				break;
+				if (mFragmentAtPos1 == null) {
+					mFragmentAtPos1 = SyncDataFragment.newInstance(mListener);
+				}
+				return mFragmentAtPos1;
 			}
-			
-			return fragment;
+
+			return null;
+		}
+
+		@Override
+		public int getItemPosition(Object object) {
+			if (object instanceof SyncDataFragment
+					&& mFragmentAtPos1 instanceof VerifyCodeFragment) {
+				return POSITION_NONE;
+			}
+//			if (object instanceof VerifyCodeFragment
+//					&& mFragmentAtPos1 instanceof SyncDataFragment) {
+//				return POSITION_NONE;
+//			}
+			return POSITION_UNCHANGED;
 		}
 	}
 }
