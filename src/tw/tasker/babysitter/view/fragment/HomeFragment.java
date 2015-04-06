@@ -1,21 +1,3 @@
-/*
- * ******************************************************************************
- *   Copyright (c) 2013-2014 Gabriele Mariotti.
- *
- *   Licensed under the Apache License, Version 2.0 (the "License");
- *   you may not use this file except in compliance with the License.
- *   You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- *   Unless required by applicable law or agreed to in writing, software
- *   distributed under the License is distributed on an "AS IS" BASIS,
- *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *   See the License for the specific language governing permissions and
- *   limitations under the License.
- *  *****************************************************************************
- */
-
 package tw.tasker.babysitter.view.fragment;
 
 //import it.gmariotti.cardslib.demo.R;
@@ -136,12 +118,10 @@ public class HomeFragment extends Fragment implements OnClickListener, OnQueryLo
 		
 		// Address
 		mAddressEdit = (EditText) rootView.findViewById(R.id.address_edit);
-		mAddressEdit.setVisibility(View.GONE);
 		mAddressEdit.setOnFocusChangeListener(this);
 		mAddressEdit.setOnEditorActionListener(this);
 
 		mCancel = (Button) rootView.findViewById(R.id.cancel);
-		mCancel.setVisibility(View.GONE);
 		mCancel.setOnClickListener(this);
 		
 		mLocation = (ImageView) rootView.findViewById(R.id.location);
@@ -184,12 +164,22 @@ public class HomeFragment extends Fragment implements OnClickListener, OnQueryLo
 			// Finally commit the setup to our PullToRefreshLayout
 			.setup(mPullToRefreshLayout);
 		
+		
+		initPanel();
+		
 		loadSavedPreferences();
 		doListQuery();
 
 		return rootView; 
 	}
 	
+	private void initPanel() {
+		mFilterPanel.setVisibility(View.GONE);
+		mListView.setVisibility(View.VISIBLE); 
+		mCancel.setVisibility(View.GONE);
+		mAddressEdit.setVisibility(View.GONE);
+	}
+
 	@Override
 	public void onViewCreated(final View view, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub

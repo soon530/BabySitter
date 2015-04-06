@@ -83,6 +83,7 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" 
+            android:windowSoftInputMode="stateHidden"  
             >
         </activity>
         
@@ -90,7 +91,8 @@
             android:name="tw.tasker.babysitter.view.activity.SignUpActivity"
             android:label="建立帳號"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"  >
+            android:windowSoftInputMode="stateHidden"  
+            >
         </activity>
         
         <activity
