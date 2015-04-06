@@ -41,14 +41,15 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
-import com.andexert.expandablelayout.library.ExpandableLayoutListView;
 import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 import com.parse.ParseUser;
+import com.tjerkw.slideexpandable.library.SlideExpandableListAdapter;
 
 /**
  * List base example
@@ -76,7 +77,7 @@ public class HomeFragment extends Fragment implements OnClickListener,
 	private Button mSave;
 	private BabysittersParseQueryAdapter mAdapter;
 
-	protected ExpandableLayoutListView mListView;
+	protected ListView mListView;
 	private LinearLayout mFilterExpand;
 	private LinearLayout mAddressPanel;
 	private TextView mAddressText;
@@ -148,7 +149,7 @@ public class HomeFragment extends Fragment implements OnClickListener,
 		mSave = (Button) rootView.findViewById(R.id.save);
 		mSave.setOnClickListener(this);
 
-		mListView = (ExpandableLayoutListView) rootView.findViewById(R.id.list);
+		mListView = (ListView) rootView.findViewById(R.id.list);
 		// mListView.setOnItemClickListener(this);
 
 		initPanel();
@@ -371,8 +372,16 @@ public class HomeFragment extends Fragment implements OnClickListener,
 
 		mAdapter = new BabysittersParseQueryAdapter(getActivity(), 3);
 		mAdapter.setObjectsPerPage(Config.OBJECTS_PER_PAGE);
+		//mAdapter.setPaginationEnabled(false);
 		mAdapter.addOnQueryLoadListener(this);
-		mListView.setAdapter(mAdapter);
+		mListView.setAdapter(
+				
+				new SlideExpandableListAdapter(
+						mAdapter,
+		                R.id.expandable_toggle_button,
+		                R.id.expandable
+		            )
+				);
 	}
 
 	@Override

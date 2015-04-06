@@ -1,21 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout 
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:expandable="http://schemas.android.com/apk/res-auto"
     android:id="@+id/list_item_type1_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:minHeight="100dp"
-    android:orientation="horizontal" >
+    android:orientation="vertical" >
 
-        <com.andexert.expandablelayout.library.ExpandableLayoutItem
-        android:id="@+id/row"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        expandable:headerLayout="@layout/list_item_sitter_header"
-        expandable:contentLayout="@layout/list_item_sitter_content"
-        />
+    <include layout="@layout/list_item_sitter_header" />
+	<include layout="@layout/list_item_sitter_content" />
     
 
 </LinearLayout>
