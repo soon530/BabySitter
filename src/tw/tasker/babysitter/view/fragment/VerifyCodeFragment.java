@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class VerifyCodeFragment extends Fragment implements OnClickListener {
 
@@ -21,6 +22,7 @@ public class VerifyCodeFragment extends Fragment implements OnClickListener {
 	}
 
 	private Button mConfirm;
+	private TextView mChangePhone;
 
 	public VerifyCodeFragment() {
 		// Required empty public constructor
@@ -33,12 +35,31 @@ public class VerifyCodeFragment extends Fragment implements OnClickListener {
 		mConfirm = (Button)rootView.findViewById(R.id.confirm);
 		mConfirm.setOnClickListener(this);
 		
+		mChangePhone = (TextView) rootView.findViewById(R.id.change_phone);
+		mChangePhone.setOnClickListener(this);
+		
 		return rootView;
 	}
 
 	@Override
 	public void onClick(View v) {
-		mListener.onSwitchToNextFragment();
+		
+		int id = v.getId();
+		switch (id) {
+		case R.id.confirm:
+			mListener.onSwitchToNextFragment(0);
+			
+			break;
+
+		case R.id.change_phone:
+			mListener.onSwitchToNextFragment(1);
+			
+			break;
+			
+		default:
+			break;
+		}
+		
 	}
 
 }

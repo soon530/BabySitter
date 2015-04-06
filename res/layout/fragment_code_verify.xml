@@ -7,81 +7,87 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="45dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginTop="32dp"
-        android:gravity="center_vertical" >
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="45dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginTop="32dp"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="資料傳送至  "
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0915552673"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/send"
+                android:layout_width="60dp"
+                android:layout_height="35dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/border_button_selector"
+                android:text="發送"
+                android:textColor="@drawable/border_button_text_selector"
+                android:textSize="16sp" />
+        </LinearLayout>
 
         <TextView
+            android:id="@+id/change_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="資料傳送至  "
+            android:layout_marginLeft="45dp"
+            android:layout_marginRight="32dp"
+            android:text="不是這支號碼？"
             android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="45dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginTop="30dp"
+            android:gravity="center_vertical" >
+
+            <EditText
+                android:id="@+id/verify_code"
+                android:layout_width="185dp"
+                android:layout_height="35dp"
+                android:layout_weight="1"
+                android:background="@drawable/full_edittext_selector"
+                android:ems="4"
+                android:inputType="number"
+                android:singleLine="true" />
+
+            <Button
+                android:id="@+id/confirm"
+                android:layout_width="60dp"
+                android:layout_height="35dp"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/full_button_selector"
+                android:text="確認"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+
         <TextView
-            android:id="@+id/phone"
+            android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0915552673"
-            android:textSize="18sp" />
-
-        <Button
-            android:id="@+id/send"
-            android:layout_width="60dp"
-            android:layout_height="35dp"
-            android:layout_margin="8dp"
-            android:background="@drawable/border_button_selector"
-            android:text="發送"
-            android:textColor="@drawable/border_button_text_selector"
+            android:layout_marginLeft="45dp"
+            android:layout_marginRight="32dp"
+            android:text="驗證號碼未符合，請重新輸入(!)"
             android:textSize="16sp" />
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="45dp"
-        android:layout_marginRight="32dp"
-        android:text="不是這支號碼？"
-        android:textSize="16sp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="45dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginTop="30dp"
-        android:gravity="center_vertical" >
-
-        <EditText
-            android:id="@+id/verify_code"
-            android:layout_width="185dp"
-            android:layout_height="35dp"
-            android:background="@drawable/full_edittext_selector"
-            android:ems="4" 
-            android:inputType="number"
-            android:singleLine="true">
-
-            <requestFocus />
-        </EditText>
-
-        <Button
-            android:id="@+id/confirm"
-            android:layout_width="60dp"
-            android:layout_height="35dp"
-            android:layout_margin="8dp"
-            android:background="@drawable/full_button_selector"
-            android:text="確認"
-            android:textColor="@android:color/white" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="45dp"
-        android:layout_marginRight="32dp"
-        android:text="驗證號碼未符合，請重新輸入(!)"
-        android:textSize="16sp" />
 
 </LinearLayout>

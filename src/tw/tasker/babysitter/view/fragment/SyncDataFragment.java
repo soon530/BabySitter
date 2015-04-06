@@ -198,7 +198,7 @@ public class SyncDataFragment extends Fragment implements OnClickListener {
 		int id = v.getId();
 		switch (id) {
 		case R.id.confirm:
-			mListener.onSwitchToNextFragment();
+			mListener.onSwitchToNextFragment(-1);
 			break;
 			
 		default:

@@ -1,6 +1,7 @@
 package tw.tasker.babysitter.view.activity;
 
 import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.view.fragment.ChangePhoneFragment;
 import tw.tasker.babysitter.view.fragment.CreateAccountFragment;
 import tw.tasker.babysitter.view.fragment.SignUpParentFragment;
 import tw.tasker.babysitter.view.fragment.SyncDataFragment;
@@ -61,18 +62,24 @@ public class SignUpActivity extends BaseActivity {
 	public class MyPagerAdapter extends FragmentPagerAdapter {
 
 		private final class Listener implements SignUpListener {
-			public void onSwitchToNextFragment() {
+			public void onSwitchToNextFragment(int type) {
 				mFragmentManager.beginTransaction().remove(mFragmentAtPos1)
 						.commit();
 
 				if (mFragmentAtPos1 instanceof SyncDataFragment) { // Page2
 					mFragmentAtPos1 = VerifyCodeFragment.newInstance(mListener);
 				} else if (mFragmentAtPos1 instanceof VerifyCodeFragment) { // Page3
-					mFragmentAtPos1 = CreateAccountFragment.newInstance();
+					if (type == 0) // confirm
+					{
+						mFragmentAtPos1 = CreateAccountFragment.newInstance();
+					} else if (type == 1) { // change_phone
+						mFragmentAtPos1 = ChangePhoneFragment.newInstance();
+					}
+
 				} else {
 					mFragmentAtPos1 = SyncDataFragment.newInstance(mListener); // Page1
 				}
-				
+
 				notifyDataSetChanged();
 			}
 		}
@@ -106,10 +113,10 @@ public class SignUpActivity extends BaseActivity {
 
 			case 1:
 				if (mFragmentAtPos1 == null) {
-					mFragmentAtPos1 = SyncDataFragment.newInstance(mListener);
-					//mFragmentAtPos1 = VerifyCodeFragment.newInstance(mListener);
-					//mFragmentAtPos1 = CreateAccountFragment.newInstance();
-					
+					// mFragmentAtPos1 = SyncDataFragment.newInstance(mListener);
+					mFragmentAtPos1 = VerifyCodeFragment.newInstance(mListener);
+					// mFragmentAtPos1 = CreateAccountFragment.newInstance();
+
 				}
 				return mFragmentAtPos1;
 			}
@@ -127,6 +134,12 @@ public class SignUpActivity extends BaseActivity {
 					&& mFragmentAtPos1 instanceof CreateAccountFragment) {
 				return POSITION_NONE;
 			}
+
+			if (object instanceof VerifyCodeFragment
+					&& mFragmentAtPos1 instanceof ChangePhoneFragment) {
+				return POSITION_NONE;
+			}
+
 			return POSITION_UNCHANGED;
 		}
 	}
