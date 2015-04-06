@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.parse.LogInCallback;
@@ -27,7 +28,7 @@ import com.parse.SignUpCallback;
 public class LogInActivity extends BaseActivity implements OnTouchListener,
 		OnClickListener {
 
-	private LinearLayout mAllScreen;
+	private ScrollView mAllScreen;
 
 	private EditText mAccoutn;
 	private EditText mPassword;
@@ -50,7 +51,7 @@ public class LogInActivity extends BaseActivity implements OnTouchListener,
 		mPassword = (EditText) findViewById(R.id.password);
 		// mAccoutn.setOnFocusChangeListener(this);
 
-		mAllScreen = (LinearLayout) findViewById(R.id.all_screen);
+		mAllScreen = (ScrollView) findViewById(R.id.all_screen);
 		mAllScreen.setOnTouchListener(this);
 
 		mLogIn = (Button) findViewById(R.id.log_in);

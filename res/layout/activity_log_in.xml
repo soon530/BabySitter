@@ -1,108 +1,110 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/all_screen"
-    style="@android:style/Theme.Holo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    tools:context=".LogInActivity"
     android:fitsSystemWindows="true"
-    >
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/main"
-        android:contentDescription="BabyCare Logo" />
-
-    <EditText
-        android:id="@+id/account"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
-        android:background="@drawable/full_edittext_selector"
-        android:hint="帳號"
-        android:inputType="textEmailAddress"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:textColor="@color/primary"
-        android:textColorHint="@color/hint"
-         />
-
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/full_edittext_selector"
-        android:hint="密碼"
-        android:imeActionId="@+id/login"
-        android:imeActionLabel="@string/action_sign_in_short"
-        android:imeOptions="actionUnspecified"
-        android:inputType="textPassword"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:textColor="@color/primary"
-        android:textColorHint="@color/hint"
-         />
-
-    <Button
-        android:id="@+id/log_in"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/full_button_selector"
-        android:text="@string/log_in"
-        android:textColor="@android:color/white"
-        android:textSize="16sp" />
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="忘記帳號或密碼嗎？"
-        android:textColor="@color/forget_password"
-        android:textSize="14sp" />
+    tools:context=".LogInActivity" >
 
     <LinearLayout
+        style="@android:style/Theme.Holo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginTop="32dp"
-        
-        android:orientation="horizontal" >
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
 
-        <Button
-            android:id="@+id/sign_up"
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="BabyCare Logo"
+            android:src="@drawable/main" />
+
+        <EditText
+            android:id="@+id/account"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/border_button_selector"
-            android:text="@string/sign_up"
-            android:textColor="@drawable/border_button_text_selector"
-            android:textSize="16sp" />
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginTop="48dp"
+            android:background="@drawable/full_edittext_selector"
+            android:hint="帳號"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="@color/primary"
+            android:textColorHint="@color/hint" />
 
-        <Button
-            android:id="@+id/later"
+        <EditText
+            android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="6dp"
-            android:layout_weight="1"
-            android:background="@drawable/border_button_selector"
-            android:text="下次再註冊"
-            android:textColor="@drawable/border_button_text_selector"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/full_edittext_selector"
+            android:hint="密碼"
+            android:imeActionId="@+id/login"
+            android:imeActionLabel="@string/action_sign_in_short"
+            android:imeOptions="actionUnspecified"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="@color/primary"
+            android:textColorHint="@color/hint" />
+
+        <Button
+            android:id="@+id/log_in"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/full_button_selector"
+            android:text="@string/log_in"
+            android:textColor="@android:color/white"
             android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="忘記帳號或密碼嗎？"
+            android:textColor="@color/forget_password"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginTop="32dp"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/sign_up"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/border_button_selector"
+                android:text="@string/sign_up"
+                android:textColor="@drawable/border_button_text_selector"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/later"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_weight="1"
+                android:background="@drawable/border_button_selector"
+                android:text="下次再註冊"
+                android:textColor="@drawable/border_button_text_selector"
+                android:textSize="16sp"
+                android:layout_marginBottom="16dp" />
+        </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>
