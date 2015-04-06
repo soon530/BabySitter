@@ -29,7 +29,8 @@ public class Config {
 	public static final double LAT = 22.885127;
 	public static final double LNG = 120.589881;
 	
-	public static ParseGeoPoint MY_LOCATION;
+	// if we can't get the user location.
+	public static ParseGeoPoint MY_LOCATION = new ParseGeoPoint(LAT, LNG);
 	//public static ParseGeoPoint MY_TEST_LOCATION = new ParseGeoPoint(25.0601727,121.5593073);
 	
 	public static final int MAX_POST_SEARCH_DISTANCE = 50;
