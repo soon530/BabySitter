@@ -55,7 +55,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="聯絡電話："
+                android:text="住家地址："
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <EditText
@@ -78,7 +78,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="住家地址："
+                android:text="聯絡電話："
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <EditText

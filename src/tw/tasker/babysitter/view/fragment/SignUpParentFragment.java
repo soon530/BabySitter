@@ -88,7 +88,6 @@ public class SignUpParentFragment extends Fragment implements OnClickListener {
 		
 		mKidsAge.setText("1歲");
 		mKidsGender.setText("男");
-		
 	}
 
 	@Override
