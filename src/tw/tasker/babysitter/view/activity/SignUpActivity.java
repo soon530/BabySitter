@@ -67,7 +67,12 @@ public class SignUpActivity extends BaseActivity {
 						.commit();
 
 				if (mFragmentAtPos1 instanceof SyncDataFragment) { // Page2
-					mFragmentAtPos1 = VerifyCodeFragment.newInstance(mListener);
+					if (type == -1)
+						mFragmentAtPos1 = VerifyCodeFragment.newInstance(mListener);
+					else if (type == 1) {
+						mFragmentAtPos1 = ChangePhoneFragment.newInstance();
+					}
+				
 				} else if (mFragmentAtPos1 instanceof VerifyCodeFragment) { // Page3
 					if (type == 0) // confirm
 					{
@@ -113,8 +118,8 @@ public class SignUpActivity extends BaseActivity {
 
 			case 1:
 				if (mFragmentAtPos1 == null) {
-					// mFragmentAtPos1 = SyncDataFragment.newInstance(mListener);
-					mFragmentAtPos1 = VerifyCodeFragment.newInstance(mListener);
+					mFragmentAtPos1 = SyncDataFragment.newInstance(mListener);
+					// mFragmentAtPos1 = VerifyCodeFragment.newInstance(mListener);
 					// mFragmentAtPos1 = CreateAccountFragment.newInstance();
 
 				}
@@ -130,6 +135,12 @@ public class SignUpActivity extends BaseActivity {
 					&& mFragmentAtPos1 instanceof VerifyCodeFragment) {
 				return POSITION_NONE;
 			}
+			
+			if (object instanceof SyncDataFragment
+					&& mFragmentAtPos1 instanceof ChangePhoneFragment) {
+				return POSITION_NONE;
+			}
+			
 			if (object instanceof VerifyCodeFragment
 					&& mFragmentAtPos1 instanceof CreateAccountFragment) {
 				return POSITION_NONE;

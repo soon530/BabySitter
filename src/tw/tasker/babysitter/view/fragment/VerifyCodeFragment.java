@@ -1,5 +1,6 @@
 package tw.tasker.babysitter.view.fragment;
 
+import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.view.activity.SignUpListener;
 import android.os.Bundle;
@@ -29,6 +30,12 @@ public class VerifyCodeFragment extends Fragment implements OnClickListener {
 	}
 	
 	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		
+	}
+	
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_code_verify, container, false);
@@ -39,6 +46,12 @@ public class VerifyCodeFragment extends Fragment implements OnClickListener {
 		mChangePhone.setOnClickListener(this);
 		
 		return rootView;
+	}
+	
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		
 	}
 
 	@Override

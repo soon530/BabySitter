@@ -198,7 +198,14 @@ public class SyncDataFragment extends Fragment implements OnClickListener {
 		int id = v.getId();
 		switch (id) {
 		case R.id.confirm:
-			mListener.onSwitchToNextFragment(-1);
+			String tel = Config.sitterInfo.getTel();
+			
+			if (tel.indexOf("09") > -1 ) {
+				mListener.onSwitchToNextFragment(-1);
+			} else {
+				mListener.onSwitchToNextFragment(1);
+			}
+
 			break;
 			
 		default:

@@ -32,7 +32,6 @@
                 android:background="@drawable/full_edittext_selector"
                 android:ems="10"
                 android:hint="請填入您的保母證號"
-                android:inputType="number"
                 android:singleLine="true"
                 android:textSize="16sp" />
 
