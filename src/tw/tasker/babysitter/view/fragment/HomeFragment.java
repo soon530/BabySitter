@@ -49,6 +49,7 @@ import android.widget.Toast;
 
 import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 import com.parse.ParseUser;
+import com.tjerkw.slideexpandable.library.AbstractSlideExpandableListAdapter.OnItemExpandCollapseListener;
 import com.tjerkw.slideexpandable.library.SlideExpandableListAdapter;
 
 /**
@@ -374,14 +375,46 @@ public class HomeFragment extends Fragment implements OnClickListener,
 		mAdapter.setObjectsPerPage(Config.OBJECTS_PER_PAGE);
 		//mAdapter.setPaginationEnabled(false);
 		mAdapter.addOnQueryLoadListener(this);
-		mListView.setAdapter(
+		
+		SlideExpandableListAdapter slideAdapter = new SlideExpandableListAdapter(
+				mAdapter,
+                R.id.expandable_toggle_button,
+                R.id.expandable);
+		slideAdapter.setItemExpandCollapseListener(new OnItemExpandCollapseListener() {
+			
+			@Override
+			public void onExpand(View itemView, int position) {
 				
-				new SlideExpandableListAdapter(
-						mAdapter,
-		                R.id.expandable_toggle_button,
-		                R.id.expandable
-		            )
-				);
+				View view = getViewByPosition(position, mListView);
+				
+				ImageView arrow = (ImageView) view.findViewById(R.id.arrow);
+				arrow.animate().rotation(180).start();
+				mAdapter.setExpandableObjectID(mAdapter.getItem(position).getObjectId());
+			}
+			
+			@Override
+			public void onCollapse(View itemView, int position) {
+				View view = getViewByPosition(position, mListView);
+				ImageView arrow = (ImageView) view.findViewById(R.id.arrow);
+				arrow.animate().rotation(0).start();				
+				mAdapter.setExpandableObjectID("");
+			}
+		});
+		
+		mListView.setAdapter(slideAdapter);		
+
+	}
+		
+	public View getViewByPosition(int pos, ListView listView) {
+	    final int firstListItemPosition = listView.getFirstVisiblePosition();
+	    final int lastListItemPosition = firstListItemPosition + listView.getChildCount() - 1;
+
+	    if (pos < firstListItemPosition || pos > lastListItemPosition ) {
+	        return listView.getAdapter().getView(pos, null, listView);
+	    } else {
+	        final int childIndex = pos - firstListItemPosition;
+	        return listView.getChildAt(childIndex);
+	    }
 	}
 
 	@Override
