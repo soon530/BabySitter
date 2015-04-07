@@ -36,6 +36,8 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -153,6 +155,29 @@ public class HomeFragment extends Fragment implements OnClickListener,
 		mListView = (ListView) rootView.findViewById(R.id.list);
 		// mListView.setOnItemClickListener(this);
 
+		mListView.setOnScrollListener(new OnScrollListener() {
+			
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				int threshold = 1;
+				int count = mListView.getCount();
+
+				if (scrollState == SCROLL_STATE_IDLE) {
+					if (mListView.getLastVisiblePosition() >= count
+							- threshold) {
+						mAdapter.loadNextPage();
+					}
+				}
+			}
+			
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
 		initPanel();
 
 		loadSavedPreferences();
