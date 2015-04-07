@@ -2,7 +2,10 @@ package tw.tasker.babysitter.view.fragment;
 
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.view.activity.SignUpListener;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -17,6 +20,8 @@ public class ChangePhoneFragment extends Fragment implements OnClickListener {
 	private TextView mPhone;
 	private TextView mMessageTop;
 	private TextView mMessageBottom;
+	private Button mWebSite;
+	private Button mCall;
 
 	public static Fragment newInstance() {
 		Fragment fragment = new ChangePhoneFragment();
@@ -37,16 +42,25 @@ public class ChangePhoneFragment extends Fragment implements OnClickListener {
 		mMessageTop = (TextView) rootView.findViewById(R.id.message_top);
 		mMessageBottom = (TextView) rootView.findViewById(R.id.message_bottom);
 		
+		mWebSite = (Button) rootView.findViewById(R.id.website);
+		mWebSite.setOnClickListener(this);
+		
+		mCall = (Button) rootView.findViewById(R.id.call);
+		mCall.setOnClickListener(this);
+		
+		
+		
 		String tel = Config.sitterInfo.getTel();
 		
 		if (tel.indexOf("09") > -1 ) {
-			mMessageBottom.setText("目前您在保母系統登錄的電話為：");
+			mMessageTop.setText("目前您在保母系統登錄的電話為：");
 			mPhone.setText(tel);
-			mMessageTop.setText("若是想要更改聯絡電話您可以選擇");
+			mMessageBottom.setText("若是想要更改聯絡電話您可以選擇");
 		} else {
-			mMessageBottom.setText("目前您在系統登錄僅有市話號碼，");
+			mMessageTop.setText("目前您在系統登錄僅有市話號碼，");
 			mPhone.setText("認證程序需要手機號碼以完成驗證。");
-			mMessageTop.setText("若是想要增加手機號碼可以選擇");
+			mPhone.setTextColor(getResources().getColor(R.color.primary));
+			mMessageBottom.setText("若是想要增加手機號碼可以選擇");
 		}		
 		
 		return rootView;
@@ -54,7 +68,29 @@ public class ChangePhoneFragment extends Fragment implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
+		int id = v.getId();
 		
+		switch (id) {
+		case R.id.website:
+			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://cwisweb.sfaa.gov.tw/index.jsp"));
+			startActivity(browserIntent);
+			getActivity().finish();
+			break;
+
+		case R.id.call:
+			String phoneNumber = Config.sitterInfo.getCommunityTel();
+			makePhoneCall(phoneNumber.replace("-", ""));
+			break;
+		default:
+			break;
+		}
+		
+	}
+	
+	private void makePhoneCall(String phoneNumber) {
+		Intent intent = new Intent(Intent.ACTION_DIAL);
+		intent.setData(Uri.parse("tel:" + phoneNumber));
+		getActivity().startActivity(intent);
 	}
 
 }

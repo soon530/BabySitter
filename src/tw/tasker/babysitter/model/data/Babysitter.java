@@ -160,6 +160,12 @@ public class Babysitter extends ParseObject {
 		put("communityName", value);
 	}
 	
+	public String getCommunityTel() {
+		return getString("communityTel");
+	}
+	public void setCommunityTel(String value) {
+		put("communityTel", value);
+	}
 	
 	
 	public static ParseQuery<Babysitter> getQuery() {
