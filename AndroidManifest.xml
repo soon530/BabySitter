@@ -19,10 +19,15 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    
+    <!-- verify code -->
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+	<uses-permission android:name="android.permission.READ_SMS" />
 
     <!--
   	IMPORTANT: Change "com.parse.tutorials.pushnotifications.permission.C2D_MESSAGE" in the lines below
-  	to match your app's package name + ".permission.C2D_MESSAGE".    -->
+  	to match your app's package name + ".permission.C2D_MESSAGE".
+    -->
     <permission
         android:name="tw.tasker.babysitter.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
@@ -31,7 +36,8 @@
 
     <!--
      The following two permissions are not required to use
-     Google Maps Android API v2, but are recommended.    -->
+     Google Maps Android API v2, but are recommended.
+    -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
@@ -40,7 +46,7 @@
         android:required="true" />
 
     <application
-        android:name="tw.tasker.babysitter.MyApplication"
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -58,50 +64,43 @@
             android:resource="@drawable/ic_launcher" />
 
         <activity
-            android:name="tw.tasker.babysitter.view.activity.HomeActivity"
+            android:name=".view.activity.HomeActivity"
             android:label="保母列表"
-            android:launchMode="singleTask" 
-            android:theme="@style/ActivityTheme"
-            >
+            android:launchMode="singleTask"
+            android:theme="@style/ActivityTheme" >
         </activity>
 
         <!-- User Manager -->
         <activity
-            android:name="tw.tasker.babysitter.view.activity.DispatchActivity"
+            android:name=".view.activity.DispatchActivity"
             android:noHistory="true"
-            android:theme="@android:style/Theme.Black.NoTitleBar" 
-             >
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="tw.tasker.babysitter.view.activity.LogInActivity"
+            android:name=".view.activity.LogInActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar" 
-            android:windowSoftInputMode="stateHidden"  
-            >
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:windowSoftInputMode="stateHidden" >
         </activity>
-        
         <activity
-            android:name="tw.tasker.babysitter.view.activity.SignUpActivity"
+            android:name=".view.activity.SignUpActivity"
             android:label="建立帳號"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"  
-            >
+            android:windowSoftInputMode="stateHidden" >
         </activity>
-        
         <activity
-            android:name="tw.tasker.babysitter.view.activity.ProfileActivity"
+            android:name=".view.activity.ProfileActivity"
             android:label="個人檔案"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"  >
+            android:windowSoftInputMode="stateHidden" >
         </activity>
-        
+
         <!-- Parse -->
         <service android:name="com.parse.PushService" />
 
@@ -123,7 +122,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name="tw.tasker.babysitter.Receiver"
+            android:name=".Receiver"
             android:exported="false" >
             <intent-filter>
                 <action android:name="com.parse.push.intent.RECEIVE" />

@@ -26,7 +26,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.ScrollView;
@@ -119,6 +118,9 @@ public class SyncDataFragment extends Fragment implements OnClickListener {
 //			mParam1 = getArguments().getString(ARG_PARAM1);
 //			mParam2 = getArguments().getString(ARG_PARAM2);
 //		}
+		
+		
+		
 	}
 
 	@Override
@@ -164,7 +166,8 @@ public class SyncDataFragment extends Fragment implements OnClickListener {
 		mDataLayout.setVisibility(View.GONE);
 		
 		// set default data...
-		mNumber.setText("031080");
+		//mNumber.setText("031080");
+		mNumber.setText("154-056893");
 		
 		mSync.setOnClickListener(new OnClickListener() {
 			

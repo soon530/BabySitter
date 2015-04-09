@@ -63,25 +63,24 @@
                 android:id="@+id/verify_code"
                 android:layout_width="185dp"
                 android:layout_height="35dp"
-                android:layout_weight="1"
                 android:background="@drawable/full_edittext_selector"
                 android:ems="4"
                 android:inputType="number"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:hint="請輸入驗證碼" />
 
             <Button
                 android:id="@+id/confirm"
                 android:layout_width="60dp"
                 android:layout_height="35dp"
                 android:layout_margin="8dp"
-                android:layout_weight="1"
                 android:background="@drawable/full_button_selector"
                 android:text="確認"
                 android:textColor="@android:color/white" />
         </LinearLayout>
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/error"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="45dp"
