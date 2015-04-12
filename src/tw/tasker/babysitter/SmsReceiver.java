@@ -59,8 +59,9 @@ public class SmsReceiver extends BroadcastReceiver {
 
                 } // end for loop
               } else { // bundle is null
-            	String message = "您的BabyCare驗證碼為[12345]";  
-          		setVerifyCode(message);
+            	String message = "您的BabyCare驗證碼為[" + mFragment.mVerifyCodeNumber + "]";  
+          		LogUtils.LOGD("vic", "message: " + message);
+            	setVerifyCode(message);
               }
         } catch (Exception e) {
             Log.e("SmsReceiver", "Exception smsReceiver" +e);

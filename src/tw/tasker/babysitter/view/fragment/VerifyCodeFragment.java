@@ -1,11 +1,13 @@
 package tw.tasker.babysitter.view.fragment;
 
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.SmsReceiver;
+import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.view.activity.SignUpListener;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -23,6 +25,7 @@ import android.widget.TextView;
 
 public class VerifyCodeFragment extends Fragment implements OnClickListener {
 
+	private static final int MAX_LENGTH = 5;
 	private static SignUpListener mListener;
 
 	public static Fragment newInstance(SignUpListener listener) {
@@ -39,6 +42,7 @@ public class VerifyCodeFragment extends Fragment implements OnClickListener {
 	private TextView mError;
 	private Button mSend;
 	private TextView mPhone;
+	public String mVerifyCodeNumber;
 
 	public VerifyCodeFragment() {
 		// Required empty public constructor
@@ -121,7 +125,7 @@ public class VerifyCodeFragment extends Fragment implements OnClickListener {
 			break;
 			
 		case R.id.send:
-			
+			makeVerifyCode();
 			sendVerifyCodeToSms();
 			sendVerifyCodeToServer();
 			
@@ -131,6 +135,18 @@ public class VerifyCodeFragment extends Fragment implements OnClickListener {
 			break;
 		}
 		
+	}
+
+	private void makeVerifyCode() {
+		Random generator = new Random();
+	    StringBuilder stringBuilder = new StringBuilder();
+	    String number;
+	    for (int i = 0; i <= MAX_LENGTH; i++){
+	    	number = String.valueOf(generator.nextInt(10));
+	    	stringBuilder.append(number);
+	    }
+	    
+	    mVerifyCodeNumber = stringBuilder.toString();
 	}
 
 	private void sendVerifyCodeToSms() {
