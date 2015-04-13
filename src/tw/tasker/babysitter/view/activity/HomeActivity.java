@@ -42,72 +42,8 @@ public class HomeActivity extends BaseActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		initLocation();
+		//initLocation();
 	}
 
-	private void initLocation() {
-		// 初始化現在的位置
-		// if (Config.MY_LOCATION == null) {
-		MyLocation myLocation = new MyLocation(this, new GetLocation() {
 
-			@Override
-			public void done(ParseGeoPoint parseGeoPoint) {
-				Config.MY_LOCATION = parseGeoPoint;
-				updateMyLocaton();
-				// Config.MY_LOCATION = Config.MY_TEST_LOCATION;
-				// LogUtils.LOGD("vic",
-				// "get my location at ("+parseGeoPoint.getLatitude()+","+parseGeoPoint.getLongitude()+")");
-			}
-
-		});
-		// }
-	}
-
-	private void updateMyLocaton() {
-		if (ParseUser.getCurrentUser() != null) {
-			hasUserInfo();
-		}
-	}
-	
-	private void hasUserInfo() {
-		ParseQuery<UserInfo> userInfoQuery = UserInfo.getQuery();
-		userInfoQuery.whereEqualTo("user", ParseUser.getCurrentUser());
-		userInfoQuery.getFirstInBackground(new GetCallback<UserInfo>() {
-			
-			@Override
-			public void done(UserInfo userInfo, ParseException e) {
-				if (userInfo == null ) {
-					addUserInfo();
-				} else {
-					updateUserInfo(userInfo);
-				}
-			}
-		});
-	}
-	
-	private void addUserInfo() {
-		LogUtils.LOGD("vic", "addUserInfo");
-
-		UserInfo userInfo = new UserInfo();
-		userInfo.setLocation(Config.MY_LOCATION);
-		userInfo.setUser(ParseUser.getCurrentUser());
-
-		userInfo.saveInBackground(new SaveCallback() {
-
-			@Override
-			public void done(ParseException e) {
-				if (e == null) {
-				} else {
-					LOGD("vic", e.getMessage());
-				}
-			}
-		});
-	}
-	
-	private void updateUserInfo(UserInfo userInfo) {
-		LogUtils.LOGD("vic", "updateUserInfo");
-
-		userInfo.setLocation(Config.MY_LOCATION);
-		userInfo.saveInBackground();
-	}
 }

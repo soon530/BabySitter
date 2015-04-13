@@ -2,12 +2,18 @@ package tw.tasker.babysitter.view.fragment;
 
 //import it.gmariotti.cardslib.demo.R;
 //import it.gmariotti.cardslib.demo.cards.ColorCard;
+import static tw.tasker.babysitter.utils.LogUtils.LOGD;
+
 import java.util.List;
 
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
+import tw.tasker.babysitter.model.data.UserInfo;
 import tw.tasker.babysitter.presenter.adapter.BabysittersParseQueryAdapter;
+import tw.tasker.babysitter.utils.GetLocation;
+import tw.tasker.babysitter.utils.LogUtils;
+import tw.tasker.babysitter.utils.MyLocation;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.activity.DispatchActivity;
 import tw.tasker.babysitter.view.activity.ProfileActivity;
@@ -50,7 +56,12 @@ import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 import com.parse.ParseQueryAdapter.OnQueryLoadListener;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.tjerkw.slideexpandable.library.AbstractSlideExpandableListAdapter.OnItemExpandCollapseListener;
 import com.tjerkw.slideexpandable.library.SlideExpandableListAdapter;
 
@@ -98,6 +109,79 @@ public class HomeFragment extends Fragment implements OnClickListener,
 		super.onCreate(savedInstanceState);
 
 		setHasOptionsMenu(true);
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		initLocation();
+	}
+	
+	private void initLocation() {
+		// 初始化現在的位置
+		// if (Config.MY_LOCATION == null) {
+		MyLocation myLocation = new MyLocation(getActivity(), new GetLocation() {
+
+			@Override
+			public void done(ParseGeoPoint parseGeoPoint) {
+				Config.MY_LOCATION = parseGeoPoint;
+				//updateMyLocaton();
+				doListQuery();
+				// Config.MY_LOCATION = Config.MY_TEST_LOCATION;
+				// LogUtils.LOGD("vic",
+				// "get my location at ("+parseGeoPoint.getLatitude()+","+parseGeoPoint.getLongitude()+")");
+			}
+
+		});
+		// }
+	}
+
+	private void updateMyLocaton() {
+		if (ParseUser.getCurrentUser() != null) {
+			hasUserInfo();
+		}
+	}
+	
+	private void hasUserInfo() {
+		ParseQuery<UserInfo> userInfoQuery = UserInfo.getQuery();
+		userInfoQuery.whereEqualTo("user", ParseUser.getCurrentUser());
+		userInfoQuery.getFirstInBackground(new GetCallback<UserInfo>() {
+			
+			@Override
+			public void done(UserInfo userInfo, ParseException e) {
+				if (userInfo == null ) {
+					addUserInfo();
+				} else {
+					updateUserInfo(userInfo);
+				}
+			}
+		});
+	}
+	
+	private void addUserInfo() {
+		LogUtils.LOGD("vic", "addUserInfo");
+
+		UserInfo userInfo = new UserInfo();
+		userInfo.setLocation(Config.MY_LOCATION);
+		userInfo.setUser(ParseUser.getCurrentUser());
+
+		userInfo.saveInBackground(new SaveCallback() {
+
+			@Override
+			public void done(ParseException e) {
+				if (e == null) {
+				} else {
+					LOGD("vic", e.getMessage());
+				}
+			}
+		});
+	}
+	
+	private void updateUserInfo(UserInfo userInfo) {
+		LogUtils.LOGD("vic", "updateUserInfo");
+
+		userInfo.setLocation(Config.MY_LOCATION);
+		userInfo.saveInBackground();
 	}
 
 	@Override
@@ -181,7 +265,6 @@ public class HomeFragment extends Fragment implements OnClickListener,
 		initPanel();
 
 		loadSavedPreferences();
-		doListQuery();
 
 		return rootView;
 	}
@@ -215,7 +298,6 @@ public class HomeFragment extends Fragment implements OnClickListener,
 		});
 
 		// mFilterPanel.setTranslationY(mFilterPanel.getHeight());
-
 	}
 
 	private void loadSavedPreferences() {
@@ -391,7 +473,7 @@ public class HomeFragment extends Fragment implements OnClickListener,
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		// doListQuery();
+		//doListQuery();
 	}
 
 	private void doListQuery() {
@@ -462,13 +544,6 @@ public class HomeFragment extends Fragment implements OnClickListener,
 		} else {
 			mLogoutItem.setTitle("登出");
 		}
-
-		// mLogoutItem =
-		// menu.findItem(R.id.action_settings).getSubMenu().getItem(0);
-
-		// mItem = menu.findItem(R.id.action_settings);
-		// mSubMenu = mItem.getSubMenu().getItem(R.id.);
-		// mLogoutItem = mSubMenu.findItem(R.id.action_logout);
 
 		super.onCreateOptionsMenu(menu, inflater);
 	}
