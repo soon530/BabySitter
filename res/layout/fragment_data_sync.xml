@@ -171,7 +171,8 @@
                 android:layout_weight="1"
                 android:background="@drawable/full_button_selector"
                 android:text="確認為資料本人"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
         </LinearLayout>
     </LinearLayout>
 
