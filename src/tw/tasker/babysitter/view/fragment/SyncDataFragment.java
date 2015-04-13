@@ -166,8 +166,8 @@ public class SyncDataFragment extends Fragment implements OnClickListener {
 		mDataLayout.setVisibility(View.GONE);
 		
 		// set default data...
-		//mNumber.setText("031080");
-		mNumber.setText("154-056893");
+		mNumber.setText("031080");
+		//mNumber.setText("154-056893");
 		
 		mSync.setOnClickListener(new OnClickListener() {
 			
