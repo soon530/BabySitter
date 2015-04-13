@@ -124,6 +124,8 @@ public class CreateAccountFragment extends Fragment implements OnClickListener {
 		sitter.setEducation(sitterInfo.getEducation());
 		sitter.setCommunityName(sitterInfo.getCommunityName());
 		
+		sitter.setImageUrl(sitterInfo.getImageUrl());
+		
 		sitter.setIsVerify(false);
 
 		sitter.saveInBackground(new SaveCallback() {
