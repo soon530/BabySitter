@@ -1,10 +1,13 @@
 package tw.tasker.babysitter.view.activity;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.ProfileParentFragment;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Sitter;
@@ -34,6 +37,9 @@ public class ProfileSitterFragment extends Fragment {
 	private TextView mBabycareTime;
 	private TextView mSkillNumber;
 	private TextView mCommunityName;
+	private CircleImageView mAvatar;
+	private ImageLoader imageLoader = ImageLoader.getInstance();
+
 
 	public ProfileSitterFragment() {
 		// TODO Auto-generated constructor stub
@@ -43,6 +49,10 @@ public class ProfileSitterFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_profile_sitter, container, false);
+		
+		mAvatar = (CircleImageView) rootView.findViewById(R.id.avatar);
+
+		
 		mNumber = (TextView) rootView.findViewById(R.id.number);
 		mSitterName = (TextView) rootView.findViewById(R.id.name);
 		//mSex = (TextView) rootView.findViewById(R.id.sex);
@@ -105,6 +115,14 @@ public class ProfileSitterFragment extends Fragment {
 		
 		//mBabycareTime.setText(babysitter.getBabycareTime());
 		
+		String websiteUrl = "http://cwisweb.sfaa.gov.tw/";
+		String parseUrl = sitter.getImageUrl();
+		if (parseUrl.equals("../img/photo_mother_no.jpg")) {
+			mAvatar.setImageResource(R.drawable.profile);
+		} else {
+			imageLoader.displayImage(websiteUrl + parseUrl, mAvatar, Config.OPTIONS, null);
+		}
+
 	}
 	
 	private int getBabyCount(String babycareCount) {
