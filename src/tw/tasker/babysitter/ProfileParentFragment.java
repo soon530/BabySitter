@@ -126,6 +126,6 @@ public class ProfileParentFragment extends Fragment implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		mListener.onSwitchToNextFragment(0);
+		mListener.onSwitchToNextFragment(Config.EDIT_PAGE);
 	}
 }

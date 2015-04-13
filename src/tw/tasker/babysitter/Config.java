@@ -37,5 +37,8 @@ public class Config {
 	public static final int MAX_POST_SEARCH_DISTANCE = 50;
 	public static Babysitter sitterInfo;
 	public static UserInfo userInfo;
+	
+	public static final int READ_PAGE = 0;
+	public static final int EDIT_PAGE = 1;
 
 }
