@@ -7,6 +7,7 @@ import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.utils.LogUtils;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -17,6 +18,8 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
 	private Fragment mProfileSitterFragment;
 	private Fragment mProfileParentFragment;
 	private Fragment mProfileParentEditFragment;
+	private Fragment mProfileSitterEditFragment;
+	private FragmentTransaction mFragmentTransaction;
 
 
 	@Override
@@ -24,10 +27,14 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_container);
 		
-		mProfileSitterFragment = ProfileSitterFragment.newInstance();
+		mProfileSitterFragment = ProfileSitterFragment.newInstance(mListener);
+		mProfileSitterEditFragment = ProfileSitterEditFragment.newInstance(mListener);
+		
 		mProfileParentFragment = ProfileParentFragment.newInstance(mListener);
 		mProfileParentEditFragment = ProfileParentEditFragment.newInstance(mListener);
 
+		mFragmentTransaction = getSupportFragmentManager().beginTransaction();
+		
 		if (savedInstanceState == null) {
 			Fragment fragment = null;
 			if (isSitter()) {
@@ -35,8 +42,8 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
 			} else {
 				fragment = mProfileParentFragment;
 			}
-			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, fragment).commit();
+			
+			mFragmentTransaction.add(R.id.container, fragment).commit();
 		
 		}
 		
@@ -74,19 +81,25 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
 		@Override
 		public void onSwitchToNextFragment(int type) {
 			
+			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+			
 			switch (type) {
-			case Config.READ_PAGE:
-				getSupportFragmentManager().beginTransaction()
-				.replace(R.id.container, mProfileParentFragment).commit();
-				
+			case Config.PARENT_READ_PAGE:
+				ft.replace(R.id.container, mProfileParentFragment).commit();
 				break;
 
-			case Config.EDIT_PAGE:
-				LogUtils.LOGD("vic", "編輯");
-				getSupportFragmentManager().beginTransaction()
-				.replace(R.id.container, mProfileParentEditFragment).commit();
-				
+			case Config.PARENT_EDIT_PAGE:
+				ft.replace(R.id.container, mProfileParentEditFragment).commit();
 				break;
+				
+			case Config.SITTER_READ_PAGE:
+				ft.replace(R.id.container, mProfileSitterFragment).commit();
+				break;
+				
+			case Config.SITTER_EDIT_PAGE:
+				ft.replace(R.id.container, mProfileSitterEditFragment).commit();
+				break;
+				
 			default:
 				break;
 			}

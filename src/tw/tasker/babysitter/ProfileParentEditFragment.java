@@ -123,7 +123,7 @@ public class ProfileParentEditFragment extends Fragment implements OnClickListen
 							"我的資料更新成功!" /* e.getMessage() */, Toast.LENGTH_LONG)
 							.show();
 					//getActivity().finish();
-					mListener.onSwitchToNextFragment(Config.READ_PAGE);
+					mListener.onSwitchToNextFragment(Config.PARENT_READ_PAGE);
 				} else {
 					
 				}

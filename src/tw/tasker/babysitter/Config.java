@@ -38,7 +38,9 @@ public class Config {
 	public static Babysitter sitterInfo;
 	public static UserInfo userInfo;
 	
-	public static final int READ_PAGE = 0;
-	public static final int EDIT_PAGE = 1;
-
+	// profile pages switch
+	public static final int PARENT_READ_PAGE = 0;
+	public static final int PARENT_EDIT_PAGE = 1;
+	public static final int SITTER_READ_PAGE = 2;
+	public static final int SITTER_EDIT_PAGE = 3;
 }

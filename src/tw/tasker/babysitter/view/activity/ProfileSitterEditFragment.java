@@ -23,14 +23,13 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ProfileSitterFragment extends Fragment implements OnClickListener {
+public class ProfileSitterEditFragment extends Fragment implements OnClickListener {
 
-	private static SignUpListener mListener;
-
+	private static SignUpListener mListner;
 
 	public static Fragment newInstance(SignUpListener listener) {
-		Fragment fragment = new ProfileSitterFragment();
-		mListener = listener;
+		Fragment fragment = new ProfileSitterEditFragment();
+		mListner = listener;
 		return fragment;
 	}
 
@@ -45,20 +44,20 @@ public class ProfileSitterFragment extends Fragment implements OnClickListener {
 	private TextView mCommunityName;
 	private CircleImageView mAvatar;
 	private ImageLoader imageLoader = ImageLoader.getInstance();
-	private Button mEidt;
+	private Button mConfirm;
 
 
-	public ProfileSitterFragment() {
+	public ProfileSitterEditFragment() {
 		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_profile_sitter, container, false);
+		View rootView = inflater.inflate(R.layout.fragment_edit_profile_sitter, container, false);
 		
-		mEidt = (Button) rootView.findViewById(R.id.edit);
-		mEidt.setOnClickListener(this);
+		mConfirm = (Button) rootView.findViewById(R.id.confirm);
+		mConfirm.setOnClickListener(this);
 		
 		mAvatar = (CircleImageView) rootView.findViewById(R.id.avatar);
 
@@ -142,7 +141,7 @@ public class ProfileSitterFragment extends Fragment implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		mListener.onSwitchToNextFragment(Config.SITTER_EDIT_PAGE);
+		mListner.onSwitchToNextFragment(Config.SITTER_READ_PAGE);
 	}
 
 }
