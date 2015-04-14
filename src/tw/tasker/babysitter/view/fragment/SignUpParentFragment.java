@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -41,8 +42,11 @@ public class SignUpParentFragment extends Fragment implements OnClickListener {
 	private EditText mParentsName;
 	private EditText mParentsAddress;
 	private EditText mParents_phone;
-	private EditText mKidsAge;
-	private EditText mKidsGender;
+	//private EditText mKidsGender;
+	private EditText mKidsAgeYear;
+	private EditText mKidsAgeMonth;
+	private CheckBox mKidsGenderBoy;
+	private CheckBox mKidsGenderGirl;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -64,8 +68,14 @@ public class SignUpParentFragment extends Fragment implements OnClickListener {
 		mParentsName = (EditText) rootView.findViewById(R.id.parents_name);
 		mParentsAddress = (EditText) rootView.findViewById(R.id.parents_address);
 		mParents_phone = (EditText) rootView.findViewById(R.id.parents_phone);
-		mKidsAge = (EditText) rootView.findViewById(R.id.kids_age);
-		mKidsGender = (EditText) rootView.findViewById(R.id.kids_gender);
+		mKidsAgeYear = (EditText) rootView.findViewById(R.id.kids_age_year);
+		mKidsAgeMonth = (EditText) rootView.findViewById(R.id.kids_age_month);
+		//mKidsGender = (EditText) rootView.findViewById(R.id.kids_gender);
+		mKidsGenderBoy = (CheckBox) rootView.findViewById(R.id.kids_gender_boy);
+		mKidsGenderGirl = (CheckBox) rootView.findViewById(R.id.kids_gender_girl);
+
+		mKidsGenderBoy.setOnClickListener(this);
+		mKidsGenderGirl.setOnClickListener(this);
 		
 		//
 		mSignUp = (Button) rootView.findViewById(R.id.action_button);
@@ -86,16 +96,37 @@ public class SignUpParentFragment extends Fragment implements OnClickListener {
 		mParentsAddress.setText("高雄市鳳山區建國路一段31巷37號");
 		mParents_phone.setText("0915552673");
 		
-		mKidsAge.setText("1歲");
-		mKidsGender.setText("男");
+		mKidsAgeYear.setText("2015");
+		mKidsAgeMonth.setText("03");
+		//mKidsGender.setText("男");
 	}
 
 	@Override
 	public void onClick(View v) {
+		
+		int id = v.getId();
+		switch (id) {
+		case R.id.action_button:
+			if (isAccountOK()) {
+				signUpParents();
+			}
+			
+			break;
 
-		if (isAccountOK()) {
-			signUpParents();
+		case R.id.kids_gender_boy:
+			mKidsGenderGirl.setChecked(false);
+			mKidsGenderBoy.setChecked(true);
+			break;
+
+		case R.id.kids_gender_girl:
+			mKidsGenderBoy.setChecked(false);
+			mKidsGenderGirl.setChecked(true);
+
+			break;
+		default:
+			break;
 		}
+		
 
 	}
 
@@ -141,8 +172,16 @@ public class SignUpParentFragment extends Fragment implements OnClickListener {
 		userInfo.setName(mParentsName.getText().toString());
 		userInfo.setAddress(mParentsAddress.getText().toString());
 		userInfo.setPhone(mParents_phone.getText().toString());
-		userInfo.setKidsAge(mKidsAge.getText().toString());
-		userInfo.setKidsGender(mKidsGender.getText().toString());
+		
+		userInfo.setKidsAge(mKidsAgeYear.getText().toString() + mKidsAgeMonth.getText().toString());
+		
+		String kidsGender;
+		if (mKidsGenderBoy.isChecked()) {
+			kidsGender = "男";
+		} else {
+			kidsGender = "女";
+		}
+		userInfo.setKidsGender(kidsGender);
 		
 		userInfo.saveInBackground(new SaveCallback() {
 
@@ -169,11 +208,13 @@ public class SignUpParentFragment extends Fragment implements OnClickListener {
 		boolean validationError = false;
 		StringBuilder validationErrorMessage = new StringBuilder(getResources()
 				.getString(R.string.error_intro));
+		
 		if (AccountChecker.isEmpty(mName)) {
 			validationError = true;
 			validationErrorMessage.append(getResources().getString(
 					R.string.error_blank_username));
 		}
+		
 		if (AccountChecker.isEmpty(mPassword)) {
 			if (validationError) {
 				validationErrorMessage.append(getResources().getString(
@@ -183,6 +224,7 @@ public class SignUpParentFragment extends Fragment implements OnClickListener {
 			validationErrorMessage.append(getResources().getString(
 					R.string.error_blank_password));
 		}
+		
 		if (!AccountChecker.isMatching(mPassword, mPasswordAgain)) {
 			if (validationError) {
 				validationErrorMessage.append(getResources().getString(
@@ -192,6 +234,7 @@ public class SignUpParentFragment extends Fragment implements OnClickListener {
 			validationErrorMessage.append(getResources().getString(
 					R.string.error_mismatched_passwords));
 		}
+		
 		validationErrorMessage.append(getResources().getString(
 				R.string.error_end));
 

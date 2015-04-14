@@ -3,17 +3,16 @@
     android:id="@+id/signup_form"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white" 
-    >
+    android:background="@android:color/white" >
 
     <!-- Login form -->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="16dp"
         android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:layout_margin="16dp" >
+        android:orientation="vertical" >
 
         <include layout="@layout/merge_signup" />
 
@@ -111,13 +110,37 @@
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <EditText
-                android:id="@+id/kids_age"
-                android:layout_width="wrap_content"
+                android:id="@+id/kids_age_year"
+                android:layout_width="80dp"
                 android:layout_height="40dp"
-                android:layout_marginRight="45dp"
+                android:layout_marginRight="10dp"
                 android:background="@drawable/full_edittext_selector"
                 android:maxLines="1"
+                android:singleLine="true"
+                android:maxLength="4" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="年"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <EditText
+                android:id="@+id/kids_age_month"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/full_edittext_selector"
+                android:maxLines="1"
+                android:maxLength="2"
                 android:singleLine="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="月"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
 
         <LinearLayout
@@ -132,14 +155,21 @@
                 android:text="小孩姓別："
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
-            <EditText
-                android:id="@+id/kids_gender"
+            <CheckBox
+                android:id="@+id/kids_gender_boy"
+                style="@style/FullCheckbox"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginRight="45dp"
-                android:background="@drawable/full_edittext_selector"
-                android:maxLines="1"
-                android:singleLine="true" />
+                android:layout_height="wrap_content"
+                android:text="男" />
+
+            <CheckBox
+                android:id="@+id/kids_gender_girl"
+                style="@style/FullCheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="女" />
+
         </LinearLayout>
 
         <Button
