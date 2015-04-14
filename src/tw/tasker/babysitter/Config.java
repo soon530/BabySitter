@@ -38,7 +38,7 @@ public class Config {
 	public static final int MAX_POST_SEARCH_DISTANCE = 50;
 	public static Babysitter sitterInfo;
 	public static UserInfo userInfo;
-	public static Sitter tmpSiterInfo;
+	//public static Sitter tmpSiterInfo;
 	
 	// profile pages switch
 	public static final int PARENT_READ_PAGE = 0;

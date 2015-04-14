@@ -2,6 +2,7 @@ package tw.tasker.babysitter.view.activity;
 
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.Sitter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -93,33 +94,33 @@ public class ProfileSitterFragment extends Fragment implements OnClickListener {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		
-		if (Config.tmpSiterInfo == null) {
+		if (Config.sitterInfo == null) {
 			loadProfileData();
 		} else {
-			fillDataToUI(Config.tmpSiterInfo);
+			fillDataToUI(Config.sitterInfo);
 		}
 		
 	}
 
 	private void loadProfileData() {
-		ParseQuery<Sitter> query = Sitter.getQuery();
+		ParseQuery<Babysitter> query = Babysitter.getQuery();
 		query.whereEqualTo("user", ParseUser.getCurrentUser());
-		query.getFirstInBackground(new GetCallback<Sitter>() {
+		query.getFirstInBackground(new GetCallback<Babysitter>() {
 			
 			@Override
-			public void done(Sitter sitter, ParseException exception) {
+			public void done(Babysitter sitter, ParseException exception) {
 				if (sitter == null) {
 					Toast.makeText(getActivity(), "唉唷~產生一些錯誤了~", Toast.LENGTH_SHORT).show();
 
 				} else {
-					Config.tmpSiterInfo = sitter;
+					Config.sitterInfo = sitter;
 					fillDataToUI(sitter);
 				}
 			}
 		});
 
 	}
-	protected void fillDataToUI(Sitter sitter) {
+	protected void fillDataToUI(Babysitter sitter) {
 		mSitterName.setText(sitter.getName());
 		//mSex.setText(babysitter.getSex());
 		//mAge.setText(babysitter.getAge());
@@ -136,15 +137,14 @@ public class ProfileSitterFragment extends Fragment implements OnClickListener {
 		mBabycareTime.setText("托育時段：" + sitter.getBabycareTime());
 		
 		
-		if (sitter.getAvatorFile()==null) {
-			getOldAvator(sitter);
+		if (sitter.getAvatarFile()==null) {
+			getOldAvatar(sitter);
 		} else {
-			getNewAvator(sitter);
+			getNewAvatar(sitter);
 		}
-
 	}
 	
-	private void getOldAvator(Sitter sitter) {
+	private void getOldAvatar(Babysitter sitter) {
 		String websiteUrl = "http://cwisweb.sfaa.gov.tw/";
 		String parseUrl = sitter.getImageUrl();
 		if (parseUrl.equals("../img/photo_mother_no.jpg")) {
@@ -154,18 +154,15 @@ public class ProfileSitterFragment extends Fragment implements OnClickListener {
 		}
 	}
 	
-	private void getNewAvator(Sitter sitter) {
-		if (sitter.getAvatorFile() != null) {
-			String url = sitter.getAvatorFile().getUrl();
+	private void getNewAvatar(Babysitter sitter) {
+		if (sitter.getAvatarFile() != null) {
+			String url = sitter.getAvatarFile().getUrl();
 			imageLoader.displayImage(url, mAvatar, Config.OPTIONS, null);
 		} else {
 			mAvatar.setImageResource(R.drawable.profile);
 		}
 
 	}
-
-	
-
 
 	private int getBabyCount(String babycareCount) {
 		String[] babies = babycareCount.split(" ");

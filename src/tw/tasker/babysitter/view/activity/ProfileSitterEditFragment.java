@@ -2,13 +2,10 @@ package tw.tasker.babysitter.view.activity;
 
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.ProfileParentEditFragment.BabyRecordSaveCallback;
-import tw.tasker.babysitter.model.data.Sitter;
-import tw.tasker.babysitter.model.data.UserInfo;
+import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.utils.PictureHelper;
 import android.app.Activity;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
@@ -114,11 +111,11 @@ public class ProfileSitterEditFragment extends Fragment implements OnClickListen
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 
-		fillDataToUI(Config.tmpSiterInfo);
+		fillDataToUI(Config.sitterInfo);
 	
 	}
 
-	protected void fillDataToUI(Sitter sitter) {
+	protected void fillDataToUI(Babysitter sitter) {
 		mSitterName.setText(sitter.getName());
 		//mSex.setText(babysitter.getSex());
 		//mAge.setText(babysitter.getAge());
@@ -136,14 +133,14 @@ public class ProfileSitterEditFragment extends Fragment implements OnClickListen
 		
 		setBabyCareTime(sitter.getBabycareTime());
 		
-		if (sitter.getAvatorFile()==null) {
-			getOldAvator(sitter);
+		if (sitter.getAvatarFile()==null) {
+			getOldAvatar(sitter);
 		} else {
-			getNewAvator(sitter);
+			getNewAvatar(sitter);
 		}
 	}
 	
-	private void getOldAvator(Sitter sitter) {
+	private void getOldAvatar(Babysitter sitter) {
 		String websiteUrl = "http://cwisweb.sfaa.gov.tw/";
 		String parseUrl = sitter.getImageUrl();
 		if (parseUrl.equals("../img/photo_mother_no.jpg")) {
@@ -153,9 +150,9 @@ public class ProfileSitterEditFragment extends Fragment implements OnClickListen
 		}
 	}
 	
-	private void getNewAvator(Sitter sitter) {
-		if (sitter.getAvatorFile() != null) {
-			String url = sitter.getAvatorFile().getUrl();
+	private void getNewAvatar(Babysitter sitter) {
+		if (sitter.getAvatarFile() != null) {
+			String url = sitter.getAvatarFile().getUrl();
 			imageLoader.displayImage(url, mAvatar, Config.OPTIONS, null);
 		} else {
 			mAvatar.setImageResource(R.drawable.photo_icon);
@@ -206,7 +203,7 @@ public class ProfileSitterEditFragment extends Fragment implements OnClickListen
 			break;
 
 		case R.id.confirm:
-			saveSitterInfo(Config.tmpSiterInfo);
+			saveSitterInfo(Config.sitterInfo);
 			
 		default:
 			break;
@@ -305,7 +302,7 @@ public class ProfileSitterEditFragment extends Fragment implements OnClickListen
 			if (e == null) {
 				Toast.makeText(getActivity().getApplicationContext(),
 						"大頭照已上傳..", Toast.LENGTH_SHORT).show();
-				saveComment(Config.tmpSiterInfo);
+				saveComment(Config.sitterInfo);
 			} else {
 				Toast.makeText(getActivity().getApplicationContext(),
 						"Error saving: " + e.getMessage(),
@@ -315,14 +312,14 @@ public class ProfileSitterEditFragment extends Fragment implements OnClickListen
 		}
 	}
 	
-	private void saveComment(Sitter tmpSiterInfo) {
+	private void saveComment(Babysitter tmpSiterInfo) {
 		//ParseQuery<UserInfo> query = UserInfo.getQuery();
 		//query.whereEqualTo("user", ParseUser.getCurrentUser());
 		//query.getFirstInBackground(new GetCallback<UserInfo>() {
 			
 			//@Override
 			//public void done(UserInfo userInfo, ParseException e) {
-				tmpSiterInfo.setAvatorFile(mPictureHelper.getFile());
+				tmpSiterInfo.setAvatarFile(mPictureHelper.getFile());
 				tmpSiterInfo.saveInBackground();
 			//}
 		//});
@@ -331,7 +328,7 @@ public class ProfileSitterEditFragment extends Fragment implements OnClickListen
 
 
 
-	private void saveSitterInfo(Sitter tmpSiterInfo) {
+	private void saveSitterInfo(Babysitter tmpSiterInfo) {
 		String phone = mTel.getText().toString();
 		String address = mAddress.getText().toString();
 		

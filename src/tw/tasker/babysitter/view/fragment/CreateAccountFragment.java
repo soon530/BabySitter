@@ -111,25 +111,25 @@ public class CreateAccountFragment extends Fragment implements OnClickListener {
 
 	private void addSitterInfo() {
 		Babysitter sitterInfo = Config.sitterInfo;
-		Sitter sitter = new Sitter();
-		sitter.setUser(ParseUser.getCurrentUser());
+		//Sitter sitter = new Sitter();
+		sitterInfo.setUser(ParseUser.getCurrentUser());
 		
-		sitter.setName(sitterInfo.getName());
+		//sitter.setName(sitterInfo.getName());
 
-		sitter.setTel(sitterInfo.getTel());
-		sitter.setAddress(sitterInfo.getAddress());
-		sitter.setBabycareCount(sitterInfo.getBabycareCount());
-		sitter.setBabycareTime(sitterInfo.getBabycareTime());
+		//sitter.setTel(sitterInfo.getTel());
+		//sitter.setAddress(sitterInfo.getAddress());
+		//sitter.setBabycareCount(sitterInfo.getBabycareCount());
+		//sitter.setBabycareTime(sitterInfo.getBabycareTime());
 		
-		sitter.setSkillNumber(sitterInfo.getSkillNumber());
-		sitter.setEducation(sitterInfo.getEducation());
-		sitter.setCommunityName(sitterInfo.getCommunityName());
+		//sitter.setSkillNumber(sitterInfo.getSkillNumber());
+		//sitter.setEducation(sitterInfo.getEducation());
+		//sitter.setCommunityName(sitterInfo.getCommunityName());
 		
-		sitter.setImageUrl(sitterInfo.getImageUrl());
+		//sitter.setImageUrl(sitterInfo.getImageUrl());
 		
-		sitter.setIsVerify(false);
+		//sitterInfo.setIsVerify(false);
 
-		sitter.saveInBackground(new SaveCallback() {
+		sitterInfo.saveInBackground(new SaveCallback() {
 
 			@Override
 			public void done(ParseException e) {
