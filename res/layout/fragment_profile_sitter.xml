@@ -67,8 +67,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="45dp" >
+            android:layout_marginLeft="45dp" 
+            >
 
             <TextView
                 android:layout_width="wrap_content"
@@ -85,7 +85,18 @@
                 android:numStars="4"
                 android:rating="0" />
         </LinearLayout>
-
+		
+		<TextView
+            android:id="@+id/babycare_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginLeft="45dp"
+            android:text="托育時段："
+            android:textSize="16sp"
+            android:layout_marginBottom="20dp"
+             />
+		
         <TextView
             android:id="@+id/skillNumber"
             android:layout_width="wrap_content"

@@ -124,11 +124,13 @@ public class ProfileSitterFragment extends Fragment implements OnClickListener {
 		int babyCount = getBabyCount(sitter.getBabycareCount());
 		mBabycareCount.setRating(babyCount);
 		
-		//mSkillNumber.setText("保母證號：" + sitter.getSkillNumber());
+		mSkillNumber.setText("保母證號：" + sitter.getSkillNumber());
 		mEducation.setText("教育程度：" + sitter.getEducation());
 		mCommunityName.setText(sitter.getCommunityName());
 		
-		//mBabycareTime.setText(babysitter.getBabycareTime());
+		mBabycareTime.setText("托育時段：" + sitter.getBabycareTime());
+		
+		setBabyCareTime(sitter.getBabycareTime());
 		
 		String websiteUrl = "http://cwisweb.sfaa.gov.tw/";
 		String parseUrl = sitter.getImageUrl();
@@ -140,6 +142,13 @@ public class ProfileSitterFragment extends Fragment implements OnClickListener {
 
 	}
 	
+	private void setBabyCareTime(String babycareTime) {
+		if (babycareTime.indexOf("白天") > -1) {
+			
+		}
+		
+	}
+
 	private int getBabyCount(String babycareCount) {
 		String[] babies = babycareCount.split(" ");
 		return babies.length;
