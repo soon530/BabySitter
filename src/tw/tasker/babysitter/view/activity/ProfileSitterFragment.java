@@ -129,6 +129,16 @@ public class ProfileSitterFragment extends Fragment implements OnClickListener {
 		
 		mBabycareTime.setText("托育時段：" + sitter.getBabycareTime());
 		
+		
+		if (sitter.getAvatorFile()==null) {
+			getOldAvator(sitter);
+		} else {
+			getNewAvator(sitter);
+		}
+
+	}
+	
+	private void getOldAvator(Sitter sitter) {
 		String websiteUrl = "http://cwisweb.sfaa.gov.tw/";
 		String parseUrl = sitter.getImageUrl();
 		if (parseUrl.equals("../img/photo_mother_no.jpg")) {
@@ -136,8 +146,18 @@ public class ProfileSitterFragment extends Fragment implements OnClickListener {
 		} else {
 			imageLoader.displayImage(websiteUrl + parseUrl, mAvatar, Config.OPTIONS, null);
 		}
+	}
+	
+	private void getNewAvator(Sitter sitter) {
+		if (sitter.getAvatorFile() != null) {
+			String url = sitter.getAvatorFile().getUrl();
+			imageLoader.displayImage(url, mAvatar, Config.OPTIONS, null);
+		} else {
+			mAvatar.setImageResource(R.drawable.profile);
+		}
 
 	}
+
 	
 
 

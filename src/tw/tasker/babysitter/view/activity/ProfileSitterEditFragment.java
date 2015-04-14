@@ -2,8 +2,21 @@ package tw.tasker.babysitter.view.activity;
 
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.ProfileParentEditFragment.BabyRecordSaveCallback;
 import tw.tasker.babysitter.model.data.Sitter;
+import tw.tasker.babysitter.model.data.UserInfo;
+import tw.tasker.babysitter.utils.LogUtils;
+import tw.tasker.babysitter.utils.PictureHelper;
+import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,6 +62,8 @@ public class ProfileSitterEditFragment extends Fragment implements OnClickListen
 	private CheckBox mFullDay;
 	private CheckBox mPartTime;
 	private CheckBox mInHouse;
+	private ProgressDialog mRingProgressDialog;
+	private PictureHelper mPictureHelper;
 
 
 	public ProfileSitterEditFragment() {
@@ -64,6 +79,7 @@ public class ProfileSitterEditFragment extends Fragment implements OnClickListen
 		mConfirm.setOnClickListener(this);
 		
 		mAvatar = (CircleImageView) rootView.findViewById(R.id.avatar);
+		mAvatar.setOnClickListener(this);
 
 		
 		mNumber = (TextView) rootView.findViewById(R.id.number);
@@ -119,18 +135,34 @@ public class ProfileSitterEditFragment extends Fragment implements OnClickListen
 		//mBabycareTime.setText(babysitter.getBabycareTime());
 		
 		setBabyCareTime(sitter.getBabycareTime());
-
 		
+		if (sitter.getAvatorFile()==null) {
+			getOldAvator(sitter);
+		} else {
+			getNewAvator(sitter);
+		}
+	}
+	
+	private void getOldAvator(Sitter sitter) {
 		String websiteUrl = "http://cwisweb.sfaa.gov.tw/";
 		String parseUrl = sitter.getImageUrl();
 		if (parseUrl.equals("../img/photo_mother_no.jpg")) {
-			mAvatar.setImageResource(R.drawable.profile);
+			mAvatar.setImageResource(R.drawable.photo_icon);
 		} else {
 			imageLoader.displayImage(websiteUrl + parseUrl, mAvatar, Config.OPTIONS, null);
 		}
-
 	}
 	
+	private void getNewAvator(Sitter sitter) {
+		if (sitter.getAvatorFile() != null) {
+			String url = sitter.getAvatorFile().getUrl();
+			imageLoader.displayImage(url, mAvatar, Config.OPTIONS, null);
+		} else {
+			mAvatar.setImageResource(R.drawable.photo_icon);
+		}
+
+	}
+
 	private void setBabyCareTime(String babycareTime) {
 		if (babycareTime.indexOf("白天") > -1) {
 			mDayTime.setChecked(true);
@@ -166,10 +198,138 @@ public class ProfileSitterEditFragment extends Fragment implements OnClickListen
 
 	@Override
 	public void onClick(View v) {
+		int id = v.getId();
 		
-		saveSitterInfo(Config.tmpSiterInfo);
+		switch (id) {
+		case R.id.avatar:
+			saveAvatar();
+			break;
+
+		case R.id.confirm:
+			saveSitterInfo(Config.tmpSiterInfo);
+			
+		default:
+			break;
+		}
 		
 	}
+	
+	private void saveAvatar() {
+		mPictureHelper = new PictureHelper();	
+		openCamera();
+	}
+
+	private void openCamera() {
+		Intent intent_camera = new Intent(
+				android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+		startActivityForResult(intent_camera, 0);
+	}
+
+	private void openGallery() {
+		Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+		photoPickerIntent.setType("image/*");
+		startActivityForResult(photoPickerIntent, 1); 		
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		LogUtils.LOGD("vic", "requestCode="+ requestCode + "resultCode=" + resultCode);
+		
+		if (resultCode == Activity.RESULT_CANCELED) {
+			return;
+		}
+
+		switch (requestCode) {
+		case 0:
+			getFromCamera(data);
+			break;
+			
+		case 1:
+			getFromGallery(data);
+			break;
+		default:
+			break;
+		}
+	}
+	
+	private void getFromCamera(Intent data) {
+		mRingProgressDialog = ProgressDialog.show(getActivity(),
+				"請稍等 ...", "資料儲存中...", true);
+
+		// 取出拍照後回傳資料
+		Bundle extras = data.getExtras();
+		// 將資料轉換為圖像格式
+		Bitmap bmp = (Bitmap) extras.get("data");
+        mAvatar.setImageBitmap(bmp);
+
+		mPictureHelper.setBitmap(bmp);
+		mPictureHelper.setSaveCallback(new BabyRecordSaveCallback());
+		mPictureHelper.savePicture();
+	}
+	
+	private void getFromGallery(Intent data) {
+		mRingProgressDialog = ProgressDialog.show(getActivity(),
+				"請稍等 ...", "資料儲存中...", true);
+
+		Uri selectedImage = data.getData();
+
+        String filePath = getFilePath(selectedImage);
+        
+        Bitmap bmp = BitmapFactory.decodeFile(filePath);
+        mAvatar.setImageBitmap(bmp);
+        
+		mPictureHelper.setBitmap(bmp);
+		mPictureHelper.setSaveCallback(new BabyRecordSaveCallback());
+		mPictureHelper.savePicture();
+	}
+	
+	private String getFilePath(Uri selectedImage) {
+        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+        Cursor cursor = getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+        
+        cursor.moveToFirst();
+
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+        String filePath = cursor.getString(columnIndex);
+        cursor.close();
+		return filePath;
+	}
+	
+	public class BabyRecordSaveCallback extends SaveCallback {
+
+		@Override
+		public void done(ParseException e) {
+			if (e == null) {
+				Toast.makeText(getActivity().getApplicationContext(),
+						"大頭照已上傳..", Toast.LENGTH_SHORT).show();
+				saveComment(Config.tmpSiterInfo);
+			} else {
+				Toast.makeText(getActivity().getApplicationContext(),
+						"Error saving: " + e.getMessage(),
+						Toast.LENGTH_SHORT).show();
+			}
+
+		}
+	}
+	
+	private void saveComment(Sitter tmpSiterInfo) {
+		//ParseQuery<UserInfo> query = UserInfo.getQuery();
+		//query.whereEqualTo("user", ParseUser.getCurrentUser());
+		//query.getFirstInBackground(new GetCallback<UserInfo>() {
+			
+			//@Override
+			//public void done(UserInfo userInfo, ParseException e) {
+				tmpSiterInfo.setAvatorFile(mPictureHelper.getFile());
+				tmpSiterInfo.saveInBackground();
+			//}
+		//});
+		mRingProgressDialog.dismiss();
+	}
+
+
 
 	private void saveSitterInfo(Sitter tmpSiterInfo) {
 		String phone = mTel.getText().toString();
