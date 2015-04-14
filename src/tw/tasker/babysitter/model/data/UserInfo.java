@@ -1,6 +1,7 @@
 package tw.tasker.babysitter.model.data;
 
 import com.parse.ParseClassName;
+import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -64,6 +65,14 @@ public class UserInfo extends ParseObject {
 		put("kidsGender", vluae);
 	}
 
+	public ParseFile getAvatorFile() {
+		return getParseFile("avator");
+	}
+
+	public void setAvatorFile(ParseFile file) {
+		put("avator", file);
+	}
+	
 	public static ParseQuery<UserInfo> getQuery() {
 		return ParseQuery.getQuery(UserInfo.class);
 	}

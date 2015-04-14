@@ -92,7 +92,7 @@ public class MyApplication extends Application {
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
         .memoryCache(new LruMemoryCache(2 * 1024 * 1024))
         .defaultDisplayImageOptions(DisplayImageOptions.createSimple())
-        //.writeDebugLogs()
+        .writeDebugLogs()
         .denyCacheImageMultipleSizesInMemory()
         .build();
 

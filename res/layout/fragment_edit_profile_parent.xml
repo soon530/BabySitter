@@ -18,11 +18,11 @@
             android:orientation="vertical" 
             >
 
-            <ImageView
-                android:id="@+id/avator"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/avatar"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/profile"
+                android:src="@drawable/photo_icon"
                 android:layout_marginTop="32dp" />
 
             <TextView

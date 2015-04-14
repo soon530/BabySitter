@@ -1,6 +1,7 @@
 package tw.tasker.babysitter;
 
 import tw.tasker.babysitter.model.data.UserInfo;
+import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.view.activity.SignUpListener;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,14 +13,18 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ProfileParentFragment extends Fragment implements OnClickListener {
 
 	private static SignUpListener mListener;
+	private ImageLoader imageLoader = ImageLoader.getInstance();
 
 	public static Fragment newInstance(SignUpListener listener) {
 		Fragment fragment = new ProfileParentFragment();
@@ -35,6 +40,7 @@ public class ProfileParentFragment extends Fragment implements OnClickListener {
 	private TextView mKidsAge;
 	private TextView mKidsGender;
 	private Button mEdit;
+	private CircleImageView mAvatar;
 
 	public ProfileParentFragment() {
 		// Required empty public constructor
@@ -50,6 +56,8 @@ public class ProfileParentFragment extends Fragment implements OnClickListener {
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_profile_parent, container, false);
 		
+		mAvatar = (CircleImageView) rootView.findViewById(R.id.avatar);
+
 		mEdit = (Button) rootView.findViewById(R.id.edit); 
 		
 		mName = (TextView) rootView.findViewById(R.id.name);
@@ -63,7 +71,7 @@ public class ProfileParentFragment extends Fragment implements OnClickListener {
 		mKidsGender = (TextView) rootView.findViewById(R.id.kids_gender);
 
 		mEdit.setOnClickListener(this);
-		
+				
 		initData();
 		
 		return  rootView;
@@ -122,6 +130,15 @@ public class ProfileParentFragment extends Fragment implements OnClickListener {
 		
 		mKidsAge.setText("小孩歲數：" + userInfo.getKidsAge());
 		mKidsGender.setText("小孩姓別：" + userInfo.getKidsGender());
+		
+		if (userInfo.getAvatorFile() != null) {
+			String url = userInfo.getAvatorFile().getUrl();
+			LogUtils.LOGD("vic", "url=" + url);
+
+			imageLoader.displayImage(url, mAvatar, Config.OPTIONS, null);
+		} else {
+			mAvatar.setImageResource(R.drawable.profile);
+		}
 	}
 
 	@Override
