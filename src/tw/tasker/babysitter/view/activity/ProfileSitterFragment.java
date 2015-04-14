@@ -80,7 +80,13 @@ public class ProfileSitterFragment extends Fragment implements OnClickListener {
 	}
 
 	private void initData() {
+		mSitterName.setText("聯絡電話：");
+		mAddress.setText("住家地址：");
+		mBabycareTime.setText("托育時段：");
 		
+		mSkillNumber.setText("保母證號：");
+		mEducation.setText("教育程度：");
+		mCommunityName.setText("");
 	}
 	
 	@Override
