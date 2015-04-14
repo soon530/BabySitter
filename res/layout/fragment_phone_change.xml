@@ -1,39 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="match_parent" 
     android:background="@android:color/white"
-    android:gravity="center_horizontal"
-    android:orientation="vertical" >
+    >
 
-    <TextView
-		android:id="@+id/message_top"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="目前您在保母系統登錄的電話為："
-        android:textColor="@android:color/black"
-        android:textSize="16sp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/phone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0915552673"
-        android:textColor="@color/primary"
-        android:textSize="16sp"
-        android:layout_marginTop="16dp" />
+        <TextView
+            android:id="@+id/message_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="目前您在保母系統登錄的電話為："
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
 
-    <TextView
-		android:id="@+id/message_bottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="若是想要更改聯絡電話您可以選擇"
-        android:textColor="@android:color/black"
-        android:textSize="16sp" />
+        <TextView
+            android:id="@+id/phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="0915552673"
+            android:textColor="@color/primary"
+            android:textSize="16sp" />
 
-    <Button
+        <TextView
+            android:id="@+id/message_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="若是想要更改聯絡電話您可以選擇"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+        <!--
+         <Button
         android:id="@+id/website"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,9 +47,11 @@
         android:background="@drawable/full_button_selector"
         android:text="前往網頁修改個人資料"
         android:textColor="@android:color/white"
-        android:textSize="16sp" />
+        android:textSize="16sp" />        -->
 
-    <Button
+
+        <!--
+         <Button
         android:id="@+id/call"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -51,6 +59,39 @@
         android:background="@drawable/full_button_selector"
         android:text="致電社區保母系統"
         android:textColor="@android:color/white"
-        android:textSize="16sp" />
+        android:textSize="16sp" />        -->
 
-</LinearLayout>
+        <LinearLayout
+            android:id="@+id/sync_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/number"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="3"
+                android:background="@drawable/full_edittext_selector"
+                android:ems="10"
+                android:hint="電話 或 E-mail"
+                android:singleLine="true"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/sync"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="16dp"
+                android:layout_weight="1"
+                android:background="@drawable/full_button_selector"
+                android:text="送出"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>
