@@ -116,7 +116,9 @@
                     android:layout_marginRight="20dp"
                     android:numStars="4"
                     android:rating="0"
-                    android:stepSize="1" />
+                    android:stepSize="1"
+                    android:isIndicator="true"
+                     />
             </LinearLayout>
 
             <LinearLayout
