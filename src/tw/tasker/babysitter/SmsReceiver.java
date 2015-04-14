@@ -70,7 +70,7 @@ public class SmsReceiver extends BroadcastReceiver {
 	}
 
 	private void setVerifyCode(String message) {
-        Pattern p = Pattern.compile("\\d{5}");
+        Pattern p = Pattern.compile("\\d{6}");
         Matcher m = p.matcher(message);
         if(m.find()) {
         	mFragment.mVerifyCode.setText(m.group());
