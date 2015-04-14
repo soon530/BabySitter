@@ -119,6 +119,7 @@ public class CreateAccountFragment extends Fragment implements OnClickListener {
 		sitter.setTel(sitterInfo.getTel());
 		sitter.setAddress(sitterInfo.getAddress());
 		sitter.setBabycareCount(sitterInfo.getBabycareCount());
+		sitter.setBabycareTime(sitterInfo.getBabycareTime());
 		
 		sitter.setSkillNumber(sitterInfo.getSkillNumber());
 		sitter.setEducation(sitterInfo.getEducation());
