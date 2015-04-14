@@ -1,6 +1,15 @@
 package tw.tasker.babysitter.view.fragment;
 
 import static tw.tasker.babysitter.utils.LogUtils.LOGD;
+
+import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
@@ -11,6 +20,7 @@ import tw.tasker.babysitter.view.activity.SignUpListener;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 //import android.app.Fragment;
@@ -166,14 +176,15 @@ public class SyncDataFragment extends Fragment implements OnClickListener {
 		mDataLayout.setVisibility(View.GONE);
 		
 		// set default data...
-		mNumber.setText("031080");
-		//mNumber.setText("154-056893");
+		// mNumber.setText("031080");
+		mNumber.setText("154-056893");
 		
 		mSync.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				syncData();
+				// runGovData();
 				Toast.makeText(
 						getActivity(),
 						"資料同步..." /* e.getMessage() */,
@@ -195,6 +206,9 @@ public class SyncDataFragment extends Fragment implements OnClickListener {
 		
 		return rootView;
 	}
+
+
+
 
 	@Override
 	public void onClick(View v) {
@@ -245,11 +259,79 @@ public class SyncDataFragment extends Fragment implements OnClickListener {
 					Config.sitterInfo = babysitter;
 					//mSyncLayout.setVisibility(View.GONE);
 					mDataLayout.setVisibility(View.VISIBLE);
+					//runGovData(babysitter.getBabysitterNumber());
 				}
 				
 			}
 
 		});
+	}
+	
+	protected void runGovData(String babysitterNumber) {
+		GovAsyncTask govAsyncTask = new GovAsyncTask();
+		govAsyncTask.execute(babysitterNumber);
+	}
+
+	
+	public class GovAsyncTask extends AsyncTask<String, Void, String> {
+
+		@Override
+		protected String doInBackground(String... babysitterNumber) {
+			String phone = syncGovData(babysitterNumber[0]);
+			return phone;
+		}
+		
+		@Override
+		protected void onPostExecute(String result) {
+			super.onPostExecute(result);
+			
+			if (result.isEmpty()) {
+				
+			} else {
+				mTel.setText("聯絡電話：" + result);
+			}
+		}
+	}
+
+	protected String syncGovData(String babysitterNumber) {
+		//String sitterNumber = "29144";
+		String url = "http://cwisweb.sfaa.gov.tw/04nanny/02_2map.jsp";
+		String sn="";
+		String phone="";
+		
+		try {
+			Document doc = Jsoup.connect(url).data("sysnums", babysitterNumber).timeout(3000).post();
+			
+			sn = getSnNumber(doc);
+			phone = getPhone(sn);
+			LogUtils.LOGD("vic", "your phone: " + phone);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return phone;
+	}
+	
+	private String getSnNumber(Document doc) {
+		Element item = doc.select("input[name=sn]").first();
+		String sn = item.attr("value");
+
+		return sn;
+	}
+	
+	private String getPhone(String sn) throws IOException {
+		String url = "http://cwisweb.sfaa.gov.tw/04nanny/03view.jsp";
+		Document doc = Jsoup.connect(url).data("sn", sn).timeout(3000).post();
+		String html = doc.toString();
+		
+        Pattern p = Pattern.compile("09[0-9]{8}");
+        Matcher m = p.matcher(html);
+        String tel = "";
+        if(m.find()) {
+        	tel = m.group(0);
+        }
+
+        return tel;
 	}
 
 
@@ -488,5 +570,7 @@ public class SyncDataFragment extends Fragment implements OnClickListener {
 				Toast.LENGTH_LONG).show();
 
 	}
+	
+
 
 }
