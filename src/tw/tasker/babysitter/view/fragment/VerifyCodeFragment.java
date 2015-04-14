@@ -1,8 +1,14 @@
 package tw.tasker.babysitter.view.fragment;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import com.parse.FunctionCallback;
+import com.parse.ParseCloud;
+import com.parse.ParseException;
 
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
@@ -22,6 +28,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class VerifyCodeFragment extends Fragment implements OnClickListener {
 
@@ -115,20 +122,25 @@ public class VerifyCodeFragment extends Fragment implements OnClickListener {
 		int id = v.getId();
 		switch (id) {
 		case R.id.confirm:
-			mListener.onSwitchToNextFragment(0);
+			String inputVerifyCode = mVerifyCode.getText().toString();
+			LogUtils.LOGD("vic", "sourc: " + mVerifyCodeNumber + " input:" + inputVerifyCode);
+			if (inputVerifyCode.equals(mVerifyCodeNumber)) {
+				mListener.onSwitchToNextFragment(0);
+			} else {
+				mError.setVisibility(View.VISIBLE);
+			}
 			
 			break;
 
 		case R.id.change_phone:
-			mListener.onSwitchToNextFragment(1);
-			
+				mListener.onSwitchToNextFragment(1);
 			break;
 			
 		case R.id.send:
+			mError.setVisibility(View.INVISIBLE);
 			makeVerifyCode();
 			sendVerifyCodeToSms();
-			sendVerifyCodeToServer();
-			
+			//sendVerifyCodeToServer();
 			break;
 			
 		default:
@@ -157,6 +169,23 @@ public class VerifyCodeFragment extends Fragment implements OnClickListener {
 	}
 
 	private void sendVerifyCodeToServer() {
+		
+		LogUtils.LOGD("vic", "sendVerifyCodeToServer()");
+		
+		Map<String, String>  params = new HashMap<String, String>();
+		params.put("phoneNumber", "+886915552673");
+		params.put("verificationCode", mVerifyCodeNumber);
+		
+		ParseCloud.callFunctionInBackground("sendVerificationCode", params, 
+				new FunctionCallback<String>() {
+			@Override
+			  public void done(String result, ParseException e) {
+			    if (e == null) {
+					Toast.makeText(getActivity(), "簡訊送出中...", Toast.LENGTH_LONG).show();
+			    }
+			  }
+
+			});
 		
 	}
 
