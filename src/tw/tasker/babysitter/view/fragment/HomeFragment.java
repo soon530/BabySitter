@@ -114,7 +114,6 @@ public class HomeFragment extends Fragment implements OnClickListener,
 	@Override
 	public void onResume() {
 		super.onResume();
-		initLocation();
 	}
 	
 	private void initLocation() {
@@ -473,6 +472,8 @@ public class HomeFragment extends Fragment implements OnClickListener,
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		
+		initLocation();
 		//doListQuery();
 	}
 
