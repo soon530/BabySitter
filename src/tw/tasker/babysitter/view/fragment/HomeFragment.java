@@ -580,10 +580,10 @@ public class HomeFragment extends Fragment implements OnClickListener,
 			intent = new Intent(Intent.ACTION_SEND);
 			intent.setType("message/rfc822");
 			intent.putExtra(Intent.EXTRA_EMAIL,
-					new String[] { "soon530@gmail.com" });
-			intent.putExtra(Intent.EXTRA_SUBJECT, "Search保母意見回饋");
+					new String[] { "service@babytone.cc" });
+			intent.putExtra(Intent.EXTRA_SUBJECT, "BabyCare意見回饋");
 			// intent.putExtra(Intent.EXTRA_TEXT, "");
-			startActivity(Intent.createChooser(intent, "Search保母意見回饋"));
+			startActivity(Intent.createChooser(intent, "BabyCare意見回饋"));
 			break;
 
 		case R.id.action_logout:
