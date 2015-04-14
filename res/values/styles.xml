@@ -12,5 +12,13 @@
         <item name="android:minHeight">16dp</item>
         <item name="android:maxHeight">16dp</item>
     </style>
+    
+    <!-- Baby Rating Bar Big -->
+    <style name="BabyRatingBarBig" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/baby_rating_layerlist_big</item>
+        <item name="android:minHeight">22dp</item>
+        <item name="android:maxHeight">22dp</item>
+    </style>
+    
 
 </resources>
