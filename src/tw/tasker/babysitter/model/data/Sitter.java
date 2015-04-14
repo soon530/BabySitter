@@ -166,7 +166,14 @@ public class Sitter extends ParseObject {
 	public void setSkillNumber(String value) {
 		put("skillNumber", value);
 	}
-
+	
+	public String getContact() {
+		String value = getString("contact");
+		return value;
+	}
+	public void setContact(String value) {
+		put("contact", value);
+	}
 	
 	public static ParseQuery<Sitter> getQuery() {
 		return ParseQuery.getQuery(Sitter.class);
