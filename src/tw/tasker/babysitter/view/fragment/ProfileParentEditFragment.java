@@ -135,7 +135,7 @@ public class ProfileParentEditFragment extends Fragment implements OnClickListen
 
 			imageLoader.displayImage(url, mAvatar, Config.OPTIONS, null);
 		} else {
-			mAvatar.setImageResource(R.drawable.profile);
+			mAvatar.setImageResource(R.drawable.photo_icon);
 		}
 
 	}
