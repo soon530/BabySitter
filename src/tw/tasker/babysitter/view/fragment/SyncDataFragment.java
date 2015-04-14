@@ -10,6 +10,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import tw.tasker.babysitter.BuildConfig;
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
@@ -175,10 +176,6 @@ public class SyncDataFragment extends Fragment implements OnClickListener {
 		
 		mDataLayout.setVisibility(View.GONE);
 		
-		// set default data...
-		// mNumber.setText("031080");
-		mNumber.setText("154-056893");
-		
 		mSync.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -203,12 +200,17 @@ public class SyncDataFragment extends Fragment implements OnClickListener {
 		mConfirm = (Button) rootView.findViewById(R.id.confirm);
 		mConfirm.setOnClickListener(this);
 
+		if (BuildConfig.DEBUG)
+			loadTestData();
+
 		
 		return rootView;
 	}
 
-
-
+	private void loadTestData() {
+		// mNumber.setText("031080");
+		mNumber.setText("154-056893");
+	}
 
 	@Override
 	public void onClick(View v) {
