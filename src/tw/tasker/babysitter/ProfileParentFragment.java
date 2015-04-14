@@ -133,8 +133,6 @@ public class ProfileParentFragment extends Fragment implements OnClickListener {
 		
 		if (userInfo.getAvatorFile() != null) {
 			String url = userInfo.getAvatorFile().getUrl();
-			LogUtils.LOGD("vic", "url=" + url);
-
 			imageLoader.displayImage(url, mAvatar, Config.OPTIONS, null);
 		} else {
 			mAvatar.setImageResource(R.drawable.profile);

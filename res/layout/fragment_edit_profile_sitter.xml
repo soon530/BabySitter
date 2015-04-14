@@ -22,7 +22,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="32dp"
-                android:src="@drawable/profile" />
+                android:src="@drawable/photo_icon" />
 
             <TextView
                 android:id="@+id/name"
