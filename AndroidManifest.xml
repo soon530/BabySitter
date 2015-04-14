@@ -86,7 +86,9 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="adjustPan|stateHidden" 
+            
+            >
         </activity>
         <activity
             android:name=".view.activity.SignUpActivity"
