@@ -10,6 +10,7 @@ import com.parse.FunctionCallback;
 import com.parse.ParseCloud;
 import com.parse.ParseException;
 
+import tw.tasker.babysitter.BuildConfig;
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.SmsReceiver;
@@ -139,8 +140,12 @@ public class VerifyCodeFragment extends Fragment implements OnClickListener {
 		case R.id.send:
 			mError.setVisibility(View.INVISIBLE);
 			makeVerifyCode();
-			sendVerifyCodeToSms();
-			//sendVerifyCodeToServer();
+			
+			if (BuildConfig.DEBUG) {
+				sendVerifyCodeToSms();
+			} else {
+				sendVerifyCodeToServer();
+			}
 			break;
 			
 		default:
@@ -172,8 +177,12 @@ public class VerifyCodeFragment extends Fragment implements OnClickListener {
 		
 		LogUtils.LOGD("vic", "sendVerifyCodeToServer()");
 		
+		String phoneNumber = mPhone.getText().toString();
+		String contryPhoneNumber = phoneNumber.replaceFirst("^0", "+886");
+		LogUtils.LOGD("vic", "Phone Number:" + contryPhoneNumber);
+		
 		Map<String, String>  params = new HashMap<String, String>();
-		params.put("phoneNumber", "+886915552673");
+		params.put("phoneNumber", contryPhoneNumber);
 		params.put("verificationCode", mVerifyCodeNumber);
 		
 		ParseCloud.callFunctionInBackground("sendVerificationCode", params, 
@@ -186,9 +195,5 @@ public class VerifyCodeFragment extends Fragment implements OnClickListener {
 			  }
 
 			});
-		
 	}
-
-
-
 }
