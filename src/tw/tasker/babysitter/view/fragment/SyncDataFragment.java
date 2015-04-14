@@ -258,8 +258,7 @@ public class SyncDataFragment extends Fragment implements OnClickListener {
 					fillUI(babysitter);
 					Config.sitterInfo = babysitter;
 					//mSyncLayout.setVisibility(View.GONE);
-					mDataLayout.setVisibility(View.VISIBLE);
-					//runGovData(babysitter.getBabysitterNumber());
+					runGovData(babysitter.getBabysitterNumber());
 				}
 				
 			}
@@ -289,6 +288,8 @@ public class SyncDataFragment extends Fragment implements OnClickListener {
 				
 			} else {
 				mTel.setText("聯絡電話：" + result);
+				Config.sitterInfo.setTel(result);
+				mDataLayout.setVisibility(View.VISIBLE);
 			}
 		}
 	}
