@@ -348,6 +348,7 @@ public class SyncDataFragment extends Fragment implements OnClickListener {
 		mSkillNumber.setText("保母證號：" + babysitter.getSkillNumber());
 		mEducation.setText("教育程度：" + babysitter.getEducation());
 		mCommunityName.setText(babysitter.getCommunityName());
+		mBabycareTime.setText("托育時段：" + babysitter.getBabycareTime());
 		
 		String websiteUrl = "http://cwisweb.sfaa.gov.tw/";
 		String parseUrl = babysitter.getImageUrl();
