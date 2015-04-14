@@ -6,6 +6,7 @@ import java.util.List;
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
+import tw.tasker.babysitter.model.data.Sitter;
 import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.view.fragment.ListDialogFragment;
 import android.content.Context;
@@ -26,8 +27,11 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> {
 	private int defaultDistance = 2;
@@ -36,6 +40,8 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 	private boolean mIsFirst = true;
 	private RatingBar mBabyCount;
 	private String mExpandableObjectID = "";
+	private CircleImageView mAvatar;
+	private ImageLoader imageLoader = ImageLoader.getInstance();
 
 	public BabysittersParseQueryAdapter(Context context, int position) {
 		super(context, getQueryFactory(context, position));
@@ -60,6 +66,9 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 			// recycle = true;
 		}
 
+		mAvatar = (CircleImageView) rootView.findViewById(R.id.avatar);
+		getOldAvator(babysitter);
+		
 		final LinearLayout expandable = (LinearLayout) rootView
 				.findViewById(R.id.expandable);
 		final LinearLayout expandableToggle = (LinearLayout) rootView
@@ -258,6 +267,17 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 		// }
 		return rootView;
 	}
+	
+	private void getOldAvator(Babysitter sitter) {
+		String websiteUrl = "http://cwisweb.sfaa.gov.tw/";
+		String parseUrl = sitter.getImageUrl();
+		if (parseUrl.equals("../img/photo_mother_no.jpg")) {
+			mAvatar.setImageResource(R.drawable.profile);
+		} else {
+			imageLoader.displayImage(websiteUrl + parseUrl, mAvatar, Config.OPTIONS, null);
+		}
+	}
+
 
 	private int getBabyCount(String babycareCount) {
 		
