@@ -1,18 +1,8 @@
 package tw.tasker.babysitter.view.activity;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.parse.GetCallback;
-import com.parse.ParseException;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
-import com.parse.SaveCallback;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 import tw.tasker.babysitter.Config;
-import tw.tasker.babysitter.ProfileParentFragment;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Sitter;
-import tw.tasker.babysitter.model.data.UserInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -20,9 +10,16 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.parse.ParseException;
+import com.parse.SaveCallback;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileSitterEditFragment extends Fragment implements OnClickListener {
 
@@ -46,6 +43,12 @@ public class ProfileSitterEditFragment extends Fragment implements OnClickListen
 	private CircleImageView mAvatar;
 	private ImageLoader imageLoader = ImageLoader.getInstance();
 	private Button mConfirm;
+	private CheckBox mDayTime;
+	private CheckBox mNightTime;
+	private CheckBox mHalfDay;
+	private CheckBox mFullDay;
+	private CheckBox mPartTime;
+	private CheckBox mInHouse;
 
 
 	public ProfileSitterEditFragment() {
@@ -76,6 +79,13 @@ public class ProfileSitterEditFragment extends Fragment implements OnClickListen
 		mSkillNumber = (TextView) rootView.findViewById(R.id.skillNumber);
 		mCommunityName = (TextView) rootView.findViewById(R.id.communityName);
 
+		mDayTime = (CheckBox) rootView.findViewById(R.id.day_time);
+		mNightTime = (CheckBox) rootView.findViewById(R.id.night_time);
+		mHalfDay = (CheckBox) rootView.findViewById(R.id.half_day);
+		mFullDay = (CheckBox) rootView.findViewById(R.id.full_day);
+		mPartTime = (CheckBox) rootView.findViewById(R.id.part_time);
+		mInHouse = (CheckBox) rootView.findViewById(R.id.in_house);
+		
 		initData();
 		return rootView;
 	}
@@ -108,12 +118,42 @@ public class ProfileSitterEditFragment extends Fragment implements OnClickListen
 		
 		//mBabycareTime.setText(babysitter.getBabycareTime());
 		
+		setBabyCareTime(sitter.getBabycareTime());
+
+		
 		String websiteUrl = "http://cwisweb.sfaa.gov.tw/";
 		String parseUrl = sitter.getImageUrl();
 		if (parseUrl.equals("../img/photo_mother_no.jpg")) {
 			mAvatar.setImageResource(R.drawable.profile);
 		} else {
 			imageLoader.displayImage(websiteUrl + parseUrl, mAvatar, Config.OPTIONS, null);
+		}
+
+	}
+	
+	private void setBabyCareTime(String babycareTime) {
+		if (babycareTime.indexOf("白天") > -1) {
+			mDayTime.setChecked(true);
+		}
+		
+		if (babycareTime.indexOf("夜間") > -1) {
+			mNightTime.setChecked(true);
+		}
+		
+		if (babycareTime.indexOf("全天") > -1) {
+			mFullDay.setChecked(true);
+		}
+		
+		if (babycareTime.indexOf("半天") > -1) {
+			mHalfDay.setChecked(true);
+		}
+		
+		if (babycareTime.indexOf("臨時托育(平日)") > -1 || babycareTime.indexOf("臨時托育(假日)") > -1) {
+			mPartTime.setChecked(true);
+		}
+		
+		if (babycareTime.indexOf("到宅服務") > -1) {
+			mInHouse.setChecked(true);
 		}
 
 	}
@@ -137,11 +177,14 @@ public class ProfileSitterEditFragment extends Fragment implements OnClickListen
 		
 		String education = mEducation.getText().toString();
 		String communityName = mCommunityName.getText().toString();
+
+		String babycareTime = getBabycareTimeInfo();
 		
 		tmpSiterInfo.setTel(phone);
 		tmpSiterInfo.setAddress(address);
 		tmpSiterInfo.setEducation(education);
 		tmpSiterInfo.setCommunityName(communityName);
+		tmpSiterInfo.setBabycareTime(babycareTime);
 		
 		tmpSiterInfo.saveInBackground(new SaveCallback() {
 			
@@ -157,5 +200,34 @@ public class ProfileSitterEditFragment extends Fragment implements OnClickListen
 		});
 		
 	}
+
+	private String getBabycareTimeInfo() {
+		String babycareTimeInfo = "";
+		if (mDayTime.isChecked()) {
+			babycareTimeInfo = babycareTimeInfo + "白天, ";
+		}
+		
+		if (mNightTime.isChecked()) {
+			babycareTimeInfo = babycareTimeInfo + "夜間, ";
+		}
+		
+		if (mFullDay.isChecked()) {
+			babycareTimeInfo = babycareTimeInfo + "全天, ";
+		}
+		
+		if (mHalfDay.isChecked()) {
+			babycareTimeInfo = babycareTimeInfo + "半天, ";
+		}
+		
+		if (mPartTime.isChecked()) {
+			babycareTimeInfo = babycareTimeInfo + "臨時托育(平日), 臨時托育(假日), ";
+		}
+		
+		if (mInHouse.isChecked()) {
+			babycareTimeInfo = babycareTimeInfo + "到宅服務, ";
+		}
+		return babycareTimeInfo;
+	}
+
 
 }

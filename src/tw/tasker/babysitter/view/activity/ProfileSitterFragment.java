@@ -1,17 +1,8 @@
 package tw.tasker.babysitter.view.activity;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.parse.GetCallback;
-import com.parse.ParseException;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 import tw.tasker.babysitter.Config;
-import tw.tasker.babysitter.ProfileParentFragment;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Sitter;
-import tw.tasker.babysitter.model.data.UserInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -22,6 +13,14 @@ import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileSitterFragment extends Fragment implements OnClickListener {
 
@@ -130,8 +129,6 @@ public class ProfileSitterFragment extends Fragment implements OnClickListener {
 		
 		mBabycareTime.setText("托育時段：" + sitter.getBabycareTime());
 		
-		setBabyCareTime(sitter.getBabycareTime());
-		
 		String websiteUrl = "http://cwisweb.sfaa.gov.tw/";
 		String parseUrl = sitter.getImageUrl();
 		if (parseUrl.equals("../img/photo_mother_no.jpg")) {
@@ -142,12 +139,7 @@ public class ProfileSitterFragment extends Fragment implements OnClickListener {
 
 	}
 	
-	private void setBabyCareTime(String babycareTime) {
-		if (babycareTime.indexOf("白天") > -1) {
-			
-		}
-		
-	}
+
 
 	private int getBabyCount(String babycareCount) {
 		String[] babies = babycareCount.split(" ");
