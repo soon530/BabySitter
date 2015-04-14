@@ -148,12 +148,12 @@ public class SignUpActivity extends BaseActivity {
 						.commit();
 
 				if (mFragmentAtPos1 instanceof SyncDataFragment) { // Page2
-					//if (type == -1)
-					//	mFragmentAtPos1 = VerifyCodeFragment.newInstance(mListener);
-					//else if (type == 1) {
-					//	mFragmentAtPos1 = ChangePhoneFragment.newInstance();
-					//}
-					mFragmentAtPos1 = CreateAccountFragment.newInstance();
+					if (type == -1)
+						mFragmentAtPos1 = VerifyCodeFragment.newInstance(mListener);
+					else if (type == 1) {
+						mFragmentAtPos1 = ChangePhoneFragment.newInstance();
+					}
+					//mFragmentAtPos1 = CreateAccountFragment.newInstance();
 
 				
 				} else if (mFragmentAtPos1 instanceof VerifyCodeFragment) { // Page3
