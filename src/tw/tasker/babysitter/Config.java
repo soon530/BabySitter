@@ -1,6 +1,7 @@
 package tw.tasker.babysitter;
 
 import tw.tasker.babysitter.model.data.Babysitter;
+import tw.tasker.babysitter.model.data.Sitter;
 import tw.tasker.babysitter.model.data.UserInfo;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -37,6 +38,7 @@ public class Config {
 	public static final int MAX_POST_SEARCH_DISTANCE = 50;
 	public static Babysitter sitterInfo;
 	public static UserInfo userInfo;
+	public static Sitter tmpSiterInfo;
 	
 	// profile pages switch
 	public static final int PARENT_READ_PAGE = 0;

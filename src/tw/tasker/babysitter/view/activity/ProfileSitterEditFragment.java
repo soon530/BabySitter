@@ -5,6 +5,7 @@ import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import tw.tasker.babysitter.Config;
@@ -86,41 +87,24 @@ public class ProfileSitterEditFragment extends Fragment implements OnClickListen
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		
-		loadProfileData();
-	}
 
-	private void loadProfileData() {
-		ParseQuery<Sitter> query = Sitter.getQuery();
-		query.whereEqualTo("user", ParseUser.getCurrentUser());
-		query.getFirstInBackground(new GetCallback<Sitter>() {
-			
-			@Override
-			public void done(Sitter sitter, ParseException exception) {
-				if (sitter == null) {
-					Toast.makeText(getActivity(), "唉唷~產生一些錯誤了~", Toast.LENGTH_SHORT).show();
-
-				} else {
-					fillDataToUI(sitter);
-				}
-			}
-		});
-
+		fillDataToUI(Config.tmpSiterInfo);
+	
 	}
 
 	protected void fillDataToUI(Sitter sitter) {
 		mSitterName.setText(sitter.getName());
 		//mSex.setText(babysitter.getSex());
 		//mAge.setText(babysitter.getAge());
-		mTel.setText("聯絡電話：" + sitter.getTel());
-		mAddress.setText("住家地址：" + sitter.getAddress());
+		mTel.setText(sitter.getTel());
+		mAddress.setText(sitter.getAddress());
 		
 		int babyCount = getBabyCount(sitter.getBabycareCount());
 		mBabycareCount.setRating(babyCount);
 		
 		//mSkillNumber.setText("保母證號：" + sitter.getSkillNumber());
-		mEducation.setText("教育程度：" + sitter.getEducation());
-		//mCommunityName.setText(sitter.getCommunityName());
+		mEducation.setText(sitter.getEducation());
+		mCommunityName.setText(sitter.getCommunityName());
 		
 		//mBabycareTime.setText(babysitter.getBabycareTime());
 		
@@ -133,6 +117,7 @@ public class ProfileSitterEditFragment extends Fragment implements OnClickListen
 		}
 
 	}
+
 	
 	private int getBabyCount(String babycareCount) {
 		String[] babies = babycareCount.split(" ");
@@ -141,7 +126,36 @@ public class ProfileSitterEditFragment extends Fragment implements OnClickListen
 
 	@Override
 	public void onClick(View v) {
-		mListner.onSwitchToNextFragment(Config.SITTER_READ_PAGE);
+		
+		saveSitterInfo(Config.tmpSiterInfo);
+		
+	}
+
+	private void saveSitterInfo(Sitter tmpSiterInfo) {
+		String phone = mTel.getText().toString();
+		String address = mAddress.getText().toString();
+		
+		String education = mEducation.getText().toString();
+		String communityName = mCommunityName.getText().toString();
+		
+		tmpSiterInfo.setTel(phone);
+		tmpSiterInfo.setAddress(address);
+		tmpSiterInfo.setEducation(education);
+		tmpSiterInfo.setCommunityName(communityName);
+		
+		tmpSiterInfo.saveInBackground(new SaveCallback() {
+			
+			@Override
+			public void done(ParseException e) {
+				if (e == null) {
+					Toast.makeText(getActivity(),
+							"我的資料更新成功!" /* e.getMessage() */, Toast.LENGTH_LONG)
+							.show();
+					mListner.onSwitchToNextFragment(Config.SITTER_READ_PAGE);
+				}
+			}
+		});
+		
 	}
 
 }

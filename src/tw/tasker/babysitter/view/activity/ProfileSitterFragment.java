@@ -88,7 +88,12 @@ public class ProfileSitterFragment extends Fragment implements OnClickListener {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		
-		loadProfileData();
+		if (Config.tmpSiterInfo == null) {
+			loadProfileData();
+		} else {
+			fillDataToUI(Config.tmpSiterInfo);
+		}
+		
 	}
 
 	private void loadProfileData() {
@@ -102,13 +107,13 @@ public class ProfileSitterFragment extends Fragment implements OnClickListener {
 					Toast.makeText(getActivity(), "唉唷~產生一些錯誤了~", Toast.LENGTH_SHORT).show();
 
 				} else {
+					Config.tmpSiterInfo = sitter;
 					fillDataToUI(sitter);
 				}
 			}
 		});
 
 	}
-
 	protected void fillDataToUI(Sitter sitter) {
 		mSitterName.setText(sitter.getName());
 		//mSex.setText(babysitter.getSex());
@@ -121,7 +126,7 @@ public class ProfileSitterFragment extends Fragment implements OnClickListener {
 		
 		//mSkillNumber.setText("保母證號：" + sitter.getSkillNumber());
 		mEducation.setText("教育程度：" + sitter.getEducation());
-		//mCommunityName.setText(sitter.getCommunityName());
+		mCommunityName.setText(sitter.getCommunityName());
 		
 		//mBabycareTime.setText(babysitter.getBabycareTime());
 		
