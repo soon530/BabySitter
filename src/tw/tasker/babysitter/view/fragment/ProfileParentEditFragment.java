@@ -1,5 +1,10 @@
-package tw.tasker.babysitter;
+package tw.tasker.babysitter.view.fragment;
 
+import tw.tasker.babysitter.Config;
+import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.R.drawable;
+import tw.tasker.babysitter.R.id;
+import tw.tasker.babysitter.R.layout;
 import tw.tasker.babysitter.model.data.UserInfo;
 import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.utils.PictureHelper;

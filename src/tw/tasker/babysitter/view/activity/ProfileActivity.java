@@ -1,10 +1,10 @@
 package tw.tasker.babysitter.view.activity;
 
 import tw.tasker.babysitter.Config;
-import tw.tasker.babysitter.ProfileParentEditFragment;
-import tw.tasker.babysitter.ProfileParentFragment;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.utils.LogUtils;
+import tw.tasker.babysitter.view.fragment.ProfileParentEditFragment;
+import tw.tasker.babysitter.view.fragment.ProfileParentFragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
