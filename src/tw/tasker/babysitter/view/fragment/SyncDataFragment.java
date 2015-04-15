@@ -182,10 +182,6 @@ public class SyncDataFragment extends Fragment implements OnClickListener {
 			public void onClick(View v) {
 				syncData();
 				// runGovData();
-				Toast.makeText(
-						getActivity(),
-						"資料同步..." /* e.getMessage() */,
-						Toast.LENGTH_LONG).show();
 
 				hideKeyPad();
 			}
@@ -244,8 +240,18 @@ public class SyncDataFragment extends Fragment implements OnClickListener {
 	}
 
 	private void syncData() {
+		mDataLayout.setVisibility(View.INVISIBLE);
+		
+		String skillNumber = mNumber.getText().toString();
+		if (skillNumber.isEmpty()) {
+			Toast.makeText(getActivity(), "請輸入保母證號!", Toast.LENGTH_LONG).show();
+			return ;
+		} else {
+			Toast.makeText(getActivity(),  "資料同步...", Toast.LENGTH_LONG).show();
+		}
+		
 		ParseQuery<Babysitter> query = Babysitter.getQuery();
-		query.whereEqualTo("skillNumber", mNumber.getText().toString());
+		query.whereEqualTo("skillNumber", skillNumber);
 		query.getFirstInBackground(new GetCallback<Babysitter>() {
 			
 			@Override
@@ -254,7 +260,6 @@ public class SyncDataFragment extends Fragment implements OnClickListener {
 				
 				if (babysitter == null) {
 					Toast.makeText(getActivity(), "查不到此證號!", Toast.LENGTH_LONG).show();
-					mDataLayout.setVisibility(View.INVISIBLE);
 
 				} else {
 					fillUI(babysitter);
