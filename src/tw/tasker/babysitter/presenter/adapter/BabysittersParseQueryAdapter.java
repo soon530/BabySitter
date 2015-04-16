@@ -1,13 +1,8 @@
 package tw.tasker.babysitter.presenter.adapter;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
-import tw.tasker.babysitter.model.data.Sitter;
 import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.view.fragment.ListDialogFragment;
 import android.content.Context;
@@ -164,20 +159,30 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 		float distance = (float) babysitter.getLocation()
 				.distanceInKilometersTo(Config.MY_LOCATION);
 
-		LogUtils.LOGD("vic", "defaultDistance:" + defaultDistance
-				+ ", distance%2:" + (distance % 2) + ", distance/2:"
-				+ (distance / 2) + " [" + distance + "]");
 
 		if (babysitter.mGroup > -1) { // 已有距離區間
 
 		} else { // 沒有距離區間
-			babysitter.mGroup = defaultDistance; // 給 距離區間 ex.2
-
 			int d = (int) distance; // 轉為單純數字來比較就好
-			if (d >= defaultDistance) { // 如果現在的距離 > 門檻值，做調整
+			LogUtils.LOGD("vic", "[ ] defaultDistance:" + defaultDistance + ", d: " + d + ", diff: " + (d - defaultDistance));
+
+			if (mIsFirst && d >= defaultDistance) {
+				defaultDistance = d;
+				mIsFirst = false;
+			}
+			
+			babysitter.mGroup = defaultDistance; // 給 距離區間 ex.2
+			if (d >= defaultDistance ) { // 如果現在的距離 > 門檻值，做調整
+
 				babysitter.mGroup = defaultDistance; // 更新 距離區間
-				defaultDistance = defaultDistance + 1; // 門檻值往上調整 ex.4
+				int step = 1;
+				if (d - defaultDistance > 0 ) {
+					step = d - defaultDistance; 
+				}
+				LogUtils.LOGD("vic", "[*] defaultDistance:" + defaultDistance + ", d: " + d + ", diff: " + (d - defaultDistance));
+				defaultDistance = defaultDistance + step; // 門檻值往上調整 ex.4
 				babysitter.mIsShow = true; // 可以show出來
+
 			}
 		}
 
@@ -188,7 +193,7 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 		// kmLine.setVisibility(View.VISIBLE);
 		// }
 
-		if (babysitter.mIsShow) {
+		if (babysitter.mIsShow && Config.keyWord.isEmpty()) {
 			// km.setTextColor(android.graphics.Color.RED);
 			km.setText("  " + babysitter.mGroup + " KM  ");
 			km.setVisibility(View.VISIBLE);
@@ -416,6 +421,7 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 					String keyword = Config.keyWord;
 					keyword = keyword.replace("台", "臺");
 					query.whereContains("address", keyword);
+					query.orderByAscending("address");
 				} 
 
 				
