@@ -4,6 +4,7 @@ package tw.tasker.babysitter.view.fragment;
 //import it.gmariotti.cardslib.demo.cards.ColorCard;
 import static tw.tasker.babysitter.utils.LogUtils.LOGD;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import tw.tasker.babysitter.Config;
@@ -77,17 +78,6 @@ public class HomeFragment extends Fragment implements OnClickListener,
 	protected ScrollView mScrollView;
 	private LinearLayout mFilterPanel;
 	private TextView mFilter;
-	private CheckBox mDay;
-	private CheckBox mNight;
-	private CheckBox mTemp;
-	private CheckBox mHome;
-	private CheckBox mKids0;
-	private CheckBox mKids1;
-	private CheckBox mKids2;
-	private CheckBox mKids3;
-	private CheckBox mOld40;
-	private CheckBox mOld40_50;
-	private CheckBox mOld50;
 	private Button mSave;
 	private BabysittersParseQueryAdapter mAdapter;
 
@@ -103,6 +93,26 @@ public class HomeFragment extends Fragment implements OnClickListener,
 	private MenuItem mLogoutItem;
 	private MenuItem mProfileItem;
 	private Button mCancel;
+	
+	private CheckBox mDayTime;
+	private CheckBox mNightTime;
+	private CheckBox mHalfDay;
+	private CheckBox mFullDay;
+	private CheckBox mPartTime;
+	private CheckBox mInHouse;
+
+	private CheckBox mKids0;
+	private CheckBox mKids1;
+	private CheckBox mKids2;
+	private CheckBox mKids3;
+	
+	private CheckBox mOld40;
+	private CheckBox mOld40_50;
+	private CheckBox mOld50;
+	
+	private ArrayList<CheckBox> mTimeCheckBoxs = new ArrayList<CheckBox>();
+	private ArrayList<CheckBox> mKidsCheckBoxs = new ArrayList<CheckBox>();
+	private ArrayList<CheckBox> mAgeCheckBoxs = new ArrayList<CheckBox>();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -218,10 +228,15 @@ public class HomeFragment extends Fragment implements OnClickListener,
 		mArrow = (ImageView) rootView.findViewById(R.id.arrow);
 
 		// check box
-		mDay = (CheckBox) rootView.findViewById(R.id.day);
-		mNight = (CheckBox) rootView.findViewById(R.id.night);
-		mTemp = (CheckBox) rootView.findViewById(R.id.temp);
-		mHome = (CheckBox) rootView.findViewById(R.id.home);
+		mDayTime = (CheckBox) rootView.findViewById(R.id.day_time);
+		mNightTime = (CheckBox) rootView.findViewById(R.id.night_time);
+
+		mHalfDay = (CheckBox) rootView.findViewById(R.id.half_day);
+		mFullDay = (CheckBox) rootView.findViewById(R.id.full_day);
+		
+		mPartTime = (CheckBox) rootView.findViewById(R.id.part_time);
+		mInHouse = (CheckBox) rootView.findViewById(R.id.in_house);
+		
 
 		mKids0 = (CheckBox) rootView.findViewById(R.id.kids_0);
 		mKids1 = (CheckBox) rootView.findViewById(R.id.kids_1);
@@ -262,10 +277,43 @@ public class HomeFragment extends Fragment implements OnClickListener,
 		});
 		
 		initPanel();
-
 		loadSavedPreferences();
+		
+		initCheckboxs();
+		setCheckBoxsListener();
 
 		return rootView;
+	}
+	
+	private void initCheckboxs() {
+		mTimeCheckBoxs.add(mDayTime);
+		mTimeCheckBoxs.add(mNightTime);
+		mTimeCheckBoxs.add(mHalfDay);
+		mTimeCheckBoxs.add(mFullDay);
+		mTimeCheckBoxs.add(mPartTime);
+		mTimeCheckBoxs.add(mInHouse);
+		
+		mKidsCheckBoxs.add(mKids0);
+		mKidsCheckBoxs.add(mKids1);
+		mKidsCheckBoxs.add(mKids2);
+		mKidsCheckBoxs.add(mKids3);
+		
+		mAgeCheckBoxs.add(mOld40);
+		mAgeCheckBoxs.add(mOld40_50);
+		mAgeCheckBoxs.add(mOld50);
+		
+	}
+
+	private void setCheckBoxsListener() {
+		for (CheckBox item : mTimeCheckBoxs) {
+			item.setOnClickListener(this);
+		}
+		for (CheckBox item : mKidsCheckBoxs) {
+			item.setOnClickListener(this);
+		}
+		for (CheckBox item : mAgeCheckBoxs) {
+			item.setOnClickListener(this);
+		}
 	}
 
 	private void initPanel() {
@@ -300,10 +348,12 @@ public class HomeFragment extends Fragment implements OnClickListener,
 	}
 
 	private void loadSavedPreferences() {
-		setCheckBox(mDay, "mDay");
-		setCheckBox(mNight, "mNight");
-		setCheckBox(mTemp, "mTemp");
-		setCheckBox(mHome, "mHome");
+		setCheckBox(mDayTime, "mDayTime");
+		setCheckBox(mNightTime, "mNightTime");
+		setCheckBox(mHalfDay, "mHalfDay");
+		setCheckBox(mFullDay, "mFullDay");
+		setCheckBox(mPartTime, "mPartTime");
+		setCheckBox(mInHouse, "mInHouse");
 
 		setCheckBox(mKids0, "mKids0");
 		setCheckBox(mKids1, "mKids1");
@@ -330,7 +380,7 @@ public class HomeFragment extends Fragment implements OnClickListener,
 
 	@Override
 	public void onClick(View v) {
-
+		boolean checkBoxStatus = false;
 		int id = v.getId();
 		switch (id) {
 		case R.id.filter_expand:
@@ -358,10 +408,83 @@ public class HomeFragment extends Fragment implements OnClickListener,
 		case R.id.cancel:
 			changeToAndressTextMode();
 			break;
+		
+		// time
+		case R.id.day_time:
+			clearTimeCheckboxs(R.id.day_time);
+			break;
+		case R.id.night_time:
+			clearTimeCheckboxs(R.id.night_time);
+			break;
+		case R.id.half_day:
+			clearTimeCheckboxs(R.id.half_day);
+			break;
+		case R.id.full_day:
+			clearTimeCheckboxs(R.id.full_day);
+			break;
+		case R.id.part_time:
+			clearTimeCheckboxs(R.id.part_time);
+			break;
+		case R.id.in_house:
+			clearTimeCheckboxs(R.id.in_house);
+			break;
+		
+		// kids
+		case R.id.kids_0:
+			clearKidsCheckBoxs(R.id.kids_0);
+			break;
+		case R.id.kids_1:
+			clearKidsCheckBoxs(R.id.kids_1);
+			break;
+		case R.id.kids_2:
+			clearKidsCheckBoxs(R.id.kids_2);
+			break;
+		case R.id.kids_3:
+			clearKidsCheckBoxs(R.id.kids_3);
+			break;
+		
+		// age
+		case R.id.old_40:
+			clearAgeCheckBoxs(R.id.old_40);
+			break;
+		case R.id.old_40_50:
+			clearAgeCheckBoxs(R.id.old_40_50);
+			break;
+		case R.id.old_50:
+			clearAgeCheckBoxs(R.id.old_50);
+			break;
+
 		default:
 			break;
 		}
 
+	}
+	
+	private void clearTimeCheckboxs(int r) {
+		for (CheckBox item : mTimeCheckBoxs) {
+			if (item.getId() == r) {
+			} else {
+				item.setChecked(false);
+			}
+		}
+	}
+	
+	private void clearKidsCheckBoxs(int r) {
+		for (CheckBox item : mKidsCheckBoxs) {
+			if (item.getId() == r) {
+			} else {
+				item.setChecked(false);
+			}
+		}
+	}
+	
+	private void clearAgeCheckBoxs(int r) {
+		for (CheckBox item : mAgeCheckBoxs) {
+			if (item.getId() == r) {
+			} else {
+				item.setChecked(false);
+			}
+		}
 	}
 
 	private void changeToAndressTextMode() {
@@ -425,11 +548,15 @@ public class HomeFragment extends Fragment implements OnClickListener,
 
 	// performance issue
 	private void showKeyboard() {
-		InputMethodManager inputMethodManager = (InputMethodManager) getActivity()
+		InputMethodManager imm = (InputMethodManager) getActivity()
 				.getSystemService(Context.INPUT_METHOD_SERVICE);
-		inputMethodManager.toggleSoftInputFromWindow(
-				mAddressEdit.getApplicationWindowToken(),
-				InputMethodManager.SHOW_FORCED, 0);
+//		inputMethodManager.toggleSoftInputFromWindow(
+//				mAddressEdit.getApplicationWindowToken(),
+//				InputMethodManager.SHOW_FORCED, 0);
+		
+		if(imm != null){
+	        imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+	    }
 	}
 
 	private void hideKeyboard() {
@@ -442,10 +569,12 @@ public class HomeFragment extends Fragment implements OnClickListener,
 
 	private void saveAllCheckbox() {
 
-		savePreferences("mDay", mDay.isChecked());
-		savePreferences("mNight", mNight.isChecked());
-		savePreferences("mTemp", mTemp.isChecked());
-		savePreferences("mHome", mHome.isChecked());
+		savePreferences("mDayTime", mDayTime.isChecked());
+		savePreferences("mNightTime", mNightTime.isChecked());
+		savePreferences("mHalfDay", mHalfDay.isChecked());
+		savePreferences("mFullDay", mFullDay.isChecked());
+		savePreferences("mPartTime", mPartTime.isChecked());
+		savePreferences("mInHouse", mInHouse.isChecked());
 
 		savePreferences("mKids0", mKids0.isChecked());
 		savePreferences("mKids1", mKids1.isChecked());
@@ -648,6 +777,7 @@ public class HomeFragment extends Fragment implements OnClickListener,
 		mAddressEdit.setVisibility(View.GONE);
 		mLocation.setVisibility(View.VISIBLE);
 		hideKeyboard();
+		doListQuery();
 
 		return true;
 	}

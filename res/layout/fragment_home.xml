@@ -146,7 +146,7 @@
                         android:layout_height="match_parent" >
 
                         <CheckBox
-                            android:id="@+id/day"
+                            android:id="@+id/day_time"
                             style="@style/FullCheckbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -155,7 +155,7 @@
                             android:text="日托" />
 
                         <CheckBox
-                            android:id="@+id/night"
+                            android:id="@+id/night_time"
                             style="@style/FullCheckbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -203,7 +203,7 @@
                         android:layout_marginBottom="10dp">
 
                         <CheckBox
-                            android:id="@+id/temp"
+                            android:id="@+id/part_time"
                             style="@style/FullCheckbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -211,7 +211,7 @@
                             android:text="臨時托育" />
 
                         <CheckBox
-                            android:id="@+id/home"
+                            android:id="@+id/in_house"
                             style="@style/FullCheckbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -294,7 +294,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
-                        android:text="~40歲" />
+                        android:text="~39歲" />
 
                     <CheckBox
                         android:id="@+id/old_40_50"
@@ -302,7 +302,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:text="40歲~50歲" />
+                        android:text="40歲~49歲" />
 
                     <CheckBox
                         android:id="@+id/old_50"

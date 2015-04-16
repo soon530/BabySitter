@@ -15,39 +15,43 @@
         android:id="@+id/babysitterNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="保母編號：1234567"
-        android:layout_marginLeft="115dp" 
-        
+        android:text="保母證號：1234567"
+        android:layout_marginLeft="110dp" 
+        android:layout_marginTop="16dp"
+        android:textSize="16dp"
          />
 
     <TextView
         android:id="@+id/education"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="115dp"
+        android:layout_marginLeft="110dp"
+        android:textSize="16sp"
         android:text="教育程度：大學" />
 
 <!--     <TextView
         android:id="@+id/train"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="115dp" 
+        android:layout_marginLeft="110dp" 
         android:text="在職訓練：10小時" />
  -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="115dp" 
+        android:layout_marginLeft="110dp" 
         android:text="社區保母系統："
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/communityName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="115dp" 
+        android:layout_marginLeft="110dp" 
         android:text="高雄市第四區社區保母系統"
         android:textColor="@color/primary"
+        android:textSize="16sp"
          />
     
     <Button
