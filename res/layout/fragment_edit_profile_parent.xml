@@ -144,7 +144,8 @@
             android:layout_marginBottom="16dp"
             android:background="@drawable/full_button_selector"
             android:text="確認修改"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
     </LinearLayout>
 
 </ScrollView>

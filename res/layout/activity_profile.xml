@@ -21,6 +21,7 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/full_button_selector"
         android:text="修改資料"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:textSize="16sp" />
 
 </LinearLayout>

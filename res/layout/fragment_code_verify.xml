@@ -76,7 +76,8 @@
                 android:layout_margin="8dp"
                 android:background="@drawable/full_button_selector"
                 android:text="確認"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
         </LinearLayout>
 
         <TextView

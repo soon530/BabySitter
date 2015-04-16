@@ -77,7 +77,8 @@
             android:layout_marginRight="16dp"
             android:background="@drawable/border_button_selector"
             android:text="取消"
-            android:textColor="@drawable/border_button_text_selector" />
+            android:textColor="@drawable/border_button_text_selector"
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/location"
