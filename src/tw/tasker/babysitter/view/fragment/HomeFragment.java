@@ -770,7 +770,12 @@ public class HomeFragment extends Fragment implements OnClickListener,
 	@Override
 	public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 		String addr = mAddressEdit.getText().toString();
-		mAddressText.setText(addr);
+		
+		if (addr.isEmpty()) { 
+			mAddressText.setText("範例：高雄市鳳山區");
+		} else {
+			mAddressText.setText(addr);
+		}
 		Config.keyWord = addr;
 
 		mAddressText.setVisibility(View.VISIBLE);
