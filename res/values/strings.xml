@@ -18,4 +18,5 @@
     <string name="error_mismatched_passwords">再輸入一次密碼</string>
     <string name="error_join">", 並 "</string>
     <string name="error_end">.</string>
+
 </resources>

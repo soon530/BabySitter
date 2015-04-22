@@ -1,6 +1,11 @@
 package tw.tasker.babysitter.view.fragment;
 
 import static tw.tasker.babysitter.utils.LogUtils.LOGD;
+
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Calendar;
+
 import tw.tasker.babysitter.BuildConfig;
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
@@ -18,9 +23,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.parse.ParseException;
@@ -43,8 +50,8 @@ public class SignUpParentFragment extends Fragment implements OnClickListener {
 	private EditText mParentsAddress;
 	private EditText mParents_phone;
 	//private EditText mKidsGender;
-	private EditText mKidsAgeYear;
-	private EditText mKidsAgeMonth;
+	private Spinner mKidsAgeYear;
+	private Spinner mKidsAgeMonth;
 	private CheckBox mKidsGenderBoy;
 	private CheckBox mKidsGenderGirl;
 
@@ -68,8 +75,21 @@ public class SignUpParentFragment extends Fragment implements OnClickListener {
 		mParentsName = (EditText) rootView.findViewById(R.id.parents_name);
 		mParentsAddress = (EditText) rootView.findViewById(R.id.parents_address);
 		mParents_phone = (EditText) rootView.findViewById(R.id.parents_phone);
-		mKidsAgeYear = (EditText) rootView.findViewById(R.id.kids_age_year);
-		mKidsAgeMonth = (EditText) rootView.findViewById(R.id.kids_age_month);
+		mKidsAgeYear = (Spinner) rootView.findViewById(R.id.kids_age_year);
+		
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+		        R.array.kids_age_year, R.layout.spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		mKidsAgeYear.setAdapter(adapter);
+		mKidsAgeYear.setSelection(getPositionFromYear());
+		
+		mKidsAgeMonth = (Spinner) rootView.findViewById(R.id.kids_age_month);
+		adapter = ArrayAdapter.createFromResource(getActivity(),
+		        R.array.kids_age_month, R.layout.spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		mKidsAgeMonth.setAdapter(adapter);
+		mKidsAgeMonth.setSelection(getPositionFromMonth());
+		
 		//mKidsGender = (EditText) rootView.findViewById(R.id.kids_gender);
 		mKidsGenderBoy = (CheckBox) rootView.findViewById(R.id.kids_gender_boy);
 		mKidsGenderGirl = (CheckBox) rootView.findViewById(R.id.kids_gender_girl);
@@ -87,6 +107,32 @@ public class SignUpParentFragment extends Fragment implements OnClickListener {
 		return rootView;
 	}
 
+	
+	
+	private int getPositionFromYear() {
+		Calendar calendar=Calendar.getInstance();
+		calendar.setTimeInMillis(System.currentTimeMillis());
+	    String currentYear = String.valueOf((calendar.get(Calendar.YEAR)-1911));
+		
+		String[] months = getResources().getStringArray(R.array.kids_age_year);
+		int position = Arrays.asList(months).indexOf(currentYear);
+		
+		LogUtils.LOGD("vic", "year: " + position);
+		return position;
+	}
+	
+	private int getPositionFromMonth() {
+		Calendar calendar=Calendar.getInstance(); 
+		SimpleDateFormat simpleDateFormat=new SimpleDateFormat("MM"); 
+		String currentMonth = simpleDateFormat.format(calendar.getTime());
+		
+		String[] months = getResources().getStringArray(R.array.kids_age_month);
+		int position = Arrays.asList(months).indexOf(currentMonth);
+		
+		//LogUtils.LOGD("vic", "month: " + position);
+		return position;
+	}
+
 	private void loadTestData() {
 		mName.setText("vic2");
 		mPassword.setText("vic2");
@@ -96,8 +142,8 @@ public class SignUpParentFragment extends Fragment implements OnClickListener {
 		mParentsAddress.setText("高雄市鳳山區建國路一段31巷37號");
 		mParents_phone.setText("0915552673");
 		
-		mKidsAgeYear.setText("2015");
-		mKidsAgeMonth.setText("03");
+		//mKidsAgeYear.setText("2015");
+		//mKidsAgeMonth.setText("03");
 		//mKidsGender.setText("男");
 	}
 
@@ -173,7 +219,7 @@ public class SignUpParentFragment extends Fragment implements OnClickListener {
 		userInfo.setAddress(mParentsAddress.getText().toString());
 		userInfo.setPhone(mParents_phone.getText().toString());
 		
-		userInfo.setKidsAge(mKidsAgeYear.getText().toString() + mKidsAgeMonth.getText().toString());
+		userInfo.setKidsAge(mKidsAgeYear.getSelectedItem().toString() + mKidsAgeMonth.getSelectedItem().toString());
 		
 		String kidsGender;
 		if (mKidsGenderBoy.isChecked()) {

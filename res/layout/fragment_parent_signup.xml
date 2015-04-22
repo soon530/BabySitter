@@ -109,7 +109,8 @@
                 android:text="小孩生日："
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
-            <EditText
+            
+<!--             <EditText
                 android:id="@+id/kids_age_year"
                 android:layout_width="80dp"
                 android:layout_height="40dp"
@@ -118,6 +119,12 @@
                 android:maxLines="1"
                 android:singleLine="true"
                 android:maxLength="4" />
+ -->
+            <Spinner
+                android:id="@+id/kids_age_year"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                 />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -125,7 +132,7 @@
                 android:text="年"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
-            <EditText
+<!--             <EditText
                 android:id="@+id/kids_age_month"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -135,7 +142,14 @@
                 android:maxLines="1"
                 android:maxLength="2"
                 android:singleLine="true" />
-
+ -->
+ 
+             <Spinner
+                android:id="@+id/kids_age_month"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                 />
+ 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
