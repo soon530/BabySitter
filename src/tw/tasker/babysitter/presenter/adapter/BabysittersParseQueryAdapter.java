@@ -7,7 +7,9 @@ import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.view.fragment.ListDialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
@@ -328,7 +330,7 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 					public void onClick(DialogInterface dialog, int which) {
 
 						String phone = phones[which];
-						// mPresenter.makePhoneCall(phone);
+						makePhoneCall(phone);
 
 					}
 				});
@@ -338,6 +340,13 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 				"dialog");
 	}
 
+	private void makePhoneCall(String phoneNumber) {
+		Intent intent = new Intent(Intent.ACTION_DIAL);
+		intent.setData(Uri.parse("tel:" + phoneNumber));
+		getContext().startActivity(intent);
+	}
+
+	
 	private static ParseQueryAdapter.QueryFactory<Babysitter> getQueryFactory(
 			final Context context, final int position) {
 		ParseQueryAdapter.QueryFactory<Babysitter> factory = new ParseQueryAdapter.QueryFactory<Babysitter>() {

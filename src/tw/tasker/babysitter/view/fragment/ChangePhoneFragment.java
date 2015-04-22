@@ -174,11 +174,4 @@ public class ChangePhoneFragment extends Fragment implements OnClickListener {
 //		
 //	}
 
-
-	private void makePhoneCall(String phoneNumber) {
-		Intent intent = new Intent(Intent.ACTION_DIAL);
-		intent.setData(Uri.parse("tel:" + phoneNumber));
-		getActivity().startActivity(intent);
-	}
-
 }
