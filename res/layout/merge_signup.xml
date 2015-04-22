@@ -19,7 +19,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="　　帳號："
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/normal_text"
+                 />
 
             <EditText
                 android:id="@+id/username"
@@ -31,7 +33,8 @@
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textColorHint="@color/hint" />
         </LinearLayout>
 
         <LinearLayout
@@ -44,7 +47,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="　　密碼："
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/normal_text"
+                 />
 
             <EditText
                 android:id="@+id/password"
@@ -56,7 +61,8 @@
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textColorHint="@color/hint" />
         </LinearLayout>
 
         <LinearLayout
@@ -84,7 +90,8 @@
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textColorHint="@color/hint" />
         </LinearLayout>
     </LinearLayout>
 

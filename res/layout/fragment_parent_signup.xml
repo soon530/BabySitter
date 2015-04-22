@@ -33,7 +33,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="　　姓名："
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/normal_text" />
 
             <EditText
                 android:id="@+id/parents_name"
@@ -55,7 +56,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="住家地址："
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/normal_text" />
 
             <EditText
                 android:id="@+id/parents_address"
@@ -78,7 +80,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="聯絡電話："
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/normal_text" />
 
             <EditText
                 android:id="@+id/parents_phone"
@@ -107,7 +110,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="小孩生日：民國"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/normal_text" />
 
             <!--
                  <EditText
@@ -118,7 +122,8 @@
                 android:background="@drawable/full_edittext_selector"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:maxLength="4" />            -->
+                android:maxLength="4" />
+            -->
 
             <Spinner
                 android:id="@+id/kids_age_year"
@@ -141,7 +146,8 @@
                 android:background="@drawable/full_edittext_selector"
                 android:maxLines="1"
                 android:maxLength="2"
-                android:singleLine="true" />            -->
+                android:singleLine="true" />
+            -->
 
             <Spinner
                 android:id="@+id/kids_age_month"
@@ -165,7 +171,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="小孩姓別："
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/normal_text" />
 
             <CheckBox
                 android:id="@+id/kids_gender_boy"

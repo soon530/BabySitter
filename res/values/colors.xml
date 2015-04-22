@@ -11,6 +11,7 @@
     <color name="hint">#CCCCCC</color>
     <color name="gray_dark">#969696</color>
     <color name="gray_light">#F2F2F2</color>
+    <color name="normal_text">#646464</color>
     
     <!-- PagerSlidingTabStrip -->
     <color name="white_alpha_80">#80FFFFFF</color>

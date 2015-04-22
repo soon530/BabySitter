@@ -32,7 +32,8 @@
                 android:ems="10"
                 android:hint="請填入您的保母證號"
                 android:singleLine="true"
-                android:textSize="16sp" />
+                android:textSize="14sp"
+                android:textColorHint="@color/hint" />
 
             <Button
                 android:id="@+id/sync"
