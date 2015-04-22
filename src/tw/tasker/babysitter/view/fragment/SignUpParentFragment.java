@@ -11,6 +11,7 @@ import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.UserInfo;
 import tw.tasker.babysitter.utils.AccountChecker;
+import tw.tasker.babysitter.utils.DisplayUtils;
 import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.view.activity.DispatchActivity;
 import tw.tasker.babysitter.view.activity.SignUpActivity;
@@ -20,13 +21,16 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -54,6 +58,7 @@ public class SignUpParentFragment extends Fragment implements OnClickListener {
 	private Spinner mKidsAgeMonth;
 	private CheckBox mKidsGenderBoy;
 	private CheckBox mKidsGenderGirl;
+	private ScrollView mAllScreen;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -66,6 +71,18 @@ public class SignUpParentFragment extends Fragment implements OnClickListener {
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_parent_signup,
 				container, false);
+		
+		mAllScreen = (ScrollView) rootView.findViewById(R.id.all_screen);
+		mAllScreen.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				DisplayUtils.hideKeypad(getActivity());
+				return false;
+			}
+		});
+
+		
 		// Set up the signup form.
 		mName = (EditText) rootView.findViewById(R.id.username);
 		mPassword = (EditText) rootView.findViewById(R.id.password);

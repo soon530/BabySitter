@@ -6,6 +6,7 @@ import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.Sitter;
 import tw.tasker.babysitter.utils.AccountChecker;
+import tw.tasker.babysitter.utils.DisplayUtils;
 import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.view.activity.DispatchActivity;
 import android.app.ProgressDialog;
@@ -13,11 +14,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.parse.ParseException;
@@ -36,6 +40,7 @@ public class CreateAccountFragment extends Fragment implements OnClickListener {
 	private EditText mPassword;
 	private EditText mPasswordAgain;
 	private Button mCreate;
+	private ScrollView mAllScreen;
 
 	public CreateAccountFragment() {
 	}
@@ -45,6 +50,17 @@ public class CreateAccountFragment extends Fragment implements OnClickListener {
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_account_create,
 				container, false);
+		
+		mAllScreen = (ScrollView) rootView.findViewById(R.id.all_screen);
+		mAllScreen.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				DisplayUtils.hideKeypad(getActivity());
+				return false;
+			}
+		});
+
 
 		// Set up the signup form.
 		mName = (EditText) rootView.findViewById(R.id.username);

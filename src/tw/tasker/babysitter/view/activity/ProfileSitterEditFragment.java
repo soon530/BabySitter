@@ -3,6 +3,7 @@ package tw.tasker.babysitter.view.activity;
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
+import tw.tasker.babysitter.utils.DisplayUtils;
 import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.utils.PictureHelper;
 import android.app.Activity;
@@ -16,12 +17,15 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.RatingBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,6 +65,7 @@ public class ProfileSitterEditFragment extends Fragment implements OnClickListen
 	private CheckBox mInHouse;
 	private ProgressDialog mRingProgressDialog;
 	private PictureHelper mPictureHelper;
+	private ScrollView mAllScreen;
 
 
 	public ProfileSitterEditFragment() {
@@ -71,6 +76,16 @@ public class ProfileSitterEditFragment extends Fragment implements OnClickListen
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_edit_profile_sitter, container, false);
+		
+		mAllScreen = (ScrollView) rootView.findViewById(R.id.all_screen);
+		mAllScreen.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				DisplayUtils.hideKeypad(getActivity());
+				return false;
+			}
+		});
 		
 		mConfirm = (Button) rootView.findViewById(R.id.confirm);
 		mConfirm.setOnClickListener(this);

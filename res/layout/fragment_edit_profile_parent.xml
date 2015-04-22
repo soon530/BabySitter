@@ -1,5 +1,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/all_screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
@@ -15,24 +16,23 @@
             android:layout_height="wrap_content"
             android:background="@color/gray_light"
             android:gravity="center"
-            android:orientation="vertical" 
-            >
+            android:orientation="vertical" >
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/avatar"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/photo_icon"
-                android:layout_marginTop="32dp" />
+                android:layout_marginTop="32dp"
+                android:src="@drawable/photo_icon" />
 
             <TextView
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
                 android:layout_marginTop="16dp"
                 android:text="王小華"
-                android:textSize="20sp"
-                android:layout_marginBottom="32dp" />
+                android:textSize="20sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -119,20 +119,20 @@
                 android:textColor="@color/primary"
                 android:textSize="16sp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="小孩生日：民國"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:layout_margin="4dp"
+                android:orientation="horizontal" >
 
-            
-<!--             <EditText
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="小孩生日：民國"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <!--
+                 <EditText
                 android:id="@+id/kids_age_year"
                 android:layout_width="80dp"
                 android:layout_height="40dp"
@@ -140,21 +140,21 @@
                 android:background="@drawable/full_edittext_selector"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:maxLength="4" />
- -->
-            <Spinner
-                android:id="@+id/kids_age_year"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                 />
+                android:maxLength="4" />                -->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="年"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                <Spinner
+                    android:id="@+id/kids_age_year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp" />
 
-<!--             <EditText
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="年"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <!--
+                 <EditText
                 android:id="@+id/kids_age_month"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -163,30 +163,29 @@
                 android:background="@drawable/full_edittext_selector"
                 android:maxLines="1"
                 android:maxLength="2"
-                android:singleLine="true" />
- -->
- 
-             <Spinner
-                android:id="@+id/kids_age_month"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                 />
- 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="月"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-        </LinearLayout>            
-            
-<!--             <TextView
+                android:singleLine="true" />                -->
+
+                <Spinner
+                    android:id="@+id/kids_age_month"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="月"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            </LinearLayout>
+
+            <!--
+                 <TextView
                 android:id="@+id/kids_age"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="小孩歲數：1歲"
-                android:textSize="16sp" />
- -->
+                android:textSize="16sp" />            -->
+
             <TextView
                 android:id="@+id/kids_gender"
                 android:layout_width="wrap_content"
@@ -200,8 +199,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/full_button_selector"
             android:text="確認修改"
             android:textColor="@android:color/white"

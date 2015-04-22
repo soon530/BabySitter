@@ -12,6 +12,7 @@ import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.UserInfo;
 import tw.tasker.babysitter.presenter.adapter.BabysittersParseQueryAdapter;
+import tw.tasker.babysitter.utils.DisplayUtils;
 import tw.tasker.babysitter.utils.GetLocation;
 import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.utils.MyLocation;
@@ -21,7 +22,6 @@ import tw.tasker.babysitter.view.activity.ProfileActivity;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -42,7 +42,6 @@ import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.Button;
@@ -56,11 +55,11 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
-import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
+import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.tjerkw.slideexpandable.library.AbstractSlideExpandableListAdapter.OnItemExpandCollapseListener;
@@ -492,7 +491,7 @@ public class HomeFragment extends Fragment implements OnClickListener,
 		mAddressEdit.setVisibility(View.GONE);
 		mCancel.setVisibility(View.GONE);
 		mLocation.setVisibility(View.VISIBLE);
-		hideKeyboard();
+		DisplayUtils.toggleKeypad(getActivity());
 	}
 
 	private void changeToAddressEditMode() {
@@ -504,7 +503,7 @@ public class HomeFragment extends Fragment implements OnClickListener,
 		mAddressEdit.requestFocus();
 		// getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 		mCancel.setVisibility(View.VISIBLE);
-		showKeyboard();
+		DisplayUtils.toggleKeypad(getActivity());
 	}
 
 	private void showFilterPanel() {
@@ -544,27 +543,6 @@ public class HomeFragment extends Fragment implements OnClickListener,
 
 		// mFilterPanel.setVisibility(View.GONE);
 
-	}
-
-	// performance issue
-	private void showKeyboard() {
-		InputMethodManager imm = (InputMethodManager) getActivity()
-				.getSystemService(Context.INPUT_METHOD_SERVICE);
-//		inputMethodManager.toggleSoftInputFromWindow(
-//				mAddressEdit.getApplicationWindowToken(),
-//				InputMethodManager.SHOW_FORCED, 0);
-		
-		if(imm != null){
-	        imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
-	    }
-	}
-
-	private void hideKeyboard() {
-		InputMethodManager inputMethodManager = (InputMethodManager) getActivity()
-				.getSystemService(Context.INPUT_METHOD_SERVICE);
-		inputMethodManager.toggleSoftInputFromWindow(
-				mAddressEdit.getApplicationWindowToken(),
-				InputMethodManager.HIDE_NOT_ALWAYS, 0);
 	}
 
 	private void saveAllCheckbox() {
@@ -781,7 +759,7 @@ public class HomeFragment extends Fragment implements OnClickListener,
 		mAddressText.setVisibility(View.VISIBLE);
 		mAddressEdit.setVisibility(View.GONE);
 		mLocation.setVisibility(View.VISIBLE);
-		hideKeyboard();
+		DisplayUtils.toggleKeypad(getActivity());
 		doListQuery();
 
 		return true;

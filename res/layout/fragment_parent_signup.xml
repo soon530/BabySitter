@@ -1,6 +1,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/signup_form"
+    android:id="@+id/all_screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white" >
@@ -109,8 +109,8 @@
                 android:text="小孩生日：民國"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
-            
-<!--             <EditText
+            <!--
+                 <EditText
                 android:id="@+id/kids_age_year"
                 android:layout_width="80dp"
                 android:layout_height="40dp"
@@ -118,13 +118,12 @@
                 android:background="@drawable/full_edittext_selector"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:maxLength="4" />
- -->
+                android:maxLength="4" />            -->
+
             <Spinner
                 android:id="@+id/kids_age_year"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                 />
+                android:layout_height="40dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -132,7 +131,8 @@
                 android:text="年"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
-<!--             <EditText
+            <!--
+                 <EditText
                 android:id="@+id/kids_age_month"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -141,15 +141,13 @@
                 android:background="@drawable/full_edittext_selector"
                 android:maxLines="1"
                 android:maxLength="2"
-                android:singleLine="true" />
- -->
- 
-             <Spinner
+                android:singleLine="true" />            -->
+
+            <Spinner
                 android:id="@+id/kids_age_month"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                 />
- 
+                android:layout_height="40dp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -183,7 +181,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:text="女" />
-
         </LinearLayout>
 
         <Button

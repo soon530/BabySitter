@@ -10,6 +10,7 @@ import tw.tasker.babysitter.R.drawable;
 import tw.tasker.babysitter.R.id;
 import tw.tasker.babysitter.R.layout;
 import tw.tasker.babysitter.model.data.UserInfo;
+import tw.tasker.babysitter.utils.DisplayUtils;
 import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.utils.PictureHelper;
 import tw.tasker.babysitter.view.activity.SignUpListener;
@@ -24,12 +25,15 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -67,6 +71,7 @@ public class ProfileParentEditFragment extends Fragment implements OnClickListen
 	private ImageLoader imageLoader = ImageLoader.getInstance();
 	private Spinner mKidsAgeYear;
 	private Spinner mKidsAgeMonth;
+	private ScrollView mAllScreen;
 
 	public ProfileParentEditFragment() {
 		// Required empty public constructor
@@ -81,7 +86,17 @@ public class ProfileParentEditFragment extends Fragment implements OnClickListen
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_edit_profile_parent, container, false);
-		
+
+		mAllScreen = (ScrollView) rootView.findViewById(R.id.all_screen);
+		mAllScreen.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				DisplayUtils.hideKeypad(getActivity());
+				return false;
+			}
+		});
+
 		mAvatar = (CircleImageView) rootView.findViewById(R.id.avatar);
 		mAvatar.setOnClickListener(this);
 		

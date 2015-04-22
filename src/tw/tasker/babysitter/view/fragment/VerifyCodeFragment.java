@@ -14,6 +14,7 @@ import tw.tasker.babysitter.BuildConfig;
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.SmsReceiver;
+import tw.tasker.babysitter.utils.DisplayUtils;
 import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.view.activity.SignUpListener;
 import android.content.Intent;
@@ -24,11 +25,14 @@ import android.support.v4.app.Fragment;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +56,7 @@ public class VerifyCodeFragment extends Fragment implements OnClickListener {
 	private Button mSend;
 	private TextView mPhone;
 	public String mVerifyCodeNumber;
+	private ScrollView mAllScreen;
 
 	public VerifyCodeFragment() {
 		// Required empty public constructor
@@ -83,6 +88,17 @@ public class VerifyCodeFragment extends Fragment implements OnClickListener {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_code_verify, container, false);
+		
+		mAllScreen = (ScrollView) rootView.findViewById(R.id.all_screen);
+		mAllScreen.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				DisplayUtils.hideKeypad(getActivity());
+				return false;
+			}
+		});
+		
 		mConfirm = (Button)rootView.findViewById(R.id.confirm);
 		mConfirm.setOnClickListener(this);
 		mConfirm.setVisibility(View.INVISIBLE);

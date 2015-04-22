@@ -2,18 +2,16 @@ package tw.tasker.babysitter.view.activity;
 
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.utils.AccountChecker;
+import tw.tasker.babysitter.utils.DisplayUtils;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
@@ -53,7 +51,8 @@ public class LogInActivity extends BaseActivity implements OnTouchListener,
 
 		mAllScreen = (ScrollView) findViewById(R.id.all_screen);
 		mAllScreen.setOnTouchListener(this);
-
+		//mAllScreen.setOnClickListener(this);
+		
 		mLogIn = (Button) findViewById(R.id.log_in);
 
 		// Set up the submit button click handler
@@ -93,6 +92,10 @@ public class LogInActivity extends BaseActivity implements OnTouchListener,
 			} else {
 				runSignup();
 			}
+			break;
+			
+		case R.id.all_screen:
+			DisplayUtils.hideKeypad(this);
 			break;
 
 		default:
@@ -213,9 +216,7 @@ public class LogInActivity extends BaseActivity implements OnTouchListener,
 
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
-		InputMethodManager imm = (InputMethodManager) v.getContext()
-				.getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+		DisplayUtils.hideKeypad(this);
 		return false;
 	}
 

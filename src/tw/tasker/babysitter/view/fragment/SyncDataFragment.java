@@ -16,11 +16,11 @@ import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.Sitter;
 import tw.tasker.babysitter.utils.AccountChecker;
+import tw.tasker.babysitter.utils.DisplayUtils;
 import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.view.activity.SignUpListener;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -34,7 +34,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -141,13 +140,12 @@ public class SyncDataFragment extends Fragment implements OnClickListener {
 		
 		mAvator = (CircleImageView) rootView.findViewById(R.id.avator);
 		
-		mAllScreen = (ScrollView) rootView.findViewById(R.id.signup_form);
+		mAllScreen = (ScrollView) rootView.findViewById(R.id.all_screen);
 		mAllScreen.setOnTouchListener(new OnTouchListener() {
 			
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-		        InputMethodManager imm = (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-		        imm.hideSoftInputFromWindow(v.getWindowToken(),0);
+				DisplayUtils.hideKeypad(getActivity());
 				return false;
 			}
 		});
@@ -183,7 +181,7 @@ public class SyncDataFragment extends Fragment implements OnClickListener {
 				syncData();
 				// runGovData();
 
-				hideKeyPad();
+				DisplayUtils.hideKeypad(getActivity());
 			}
 
 		});
@@ -232,11 +230,6 @@ public class SyncDataFragment extends Fragment implements OnClickListener {
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
 		
-	}
-	
-	protected void hideKeyPad() {
-        InputMethodManager imm = (InputMethodManager) mSync.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(mSync.getWindowToken(),0);
 	}
 
 	private void syncData() {
