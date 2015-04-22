@@ -18,7 +18,7 @@
             android:layout_marginLeft="32dp"
             android:layout_marginTop="32dp"
             android:text="最後一步，請申請帳號以便下次登入"
-            android:textSize="14sp" />
+            android:textSize="16sp" />
 
         <include layout="@layout/merge_signup" />
 

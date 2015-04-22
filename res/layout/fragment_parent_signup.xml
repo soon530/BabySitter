@@ -43,7 +43,8 @@
                 android:layout_marginRight="45dp"
                 android:background="@drawable/full_edittext_selector"
                 android:maxLines="1"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -67,7 +68,8 @@
                 android:background="@drawable/full_edittext_selector"
                 android:ems="10"
                 android:maxLines="1"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -90,7 +92,9 @@
                 android:layout_marginRight="45dp"
                 android:background="@drawable/full_edittext_selector"
                 android:maxLines="1"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:inputType="phone"
+                android:textSize="16sp" />
         </LinearLayout>
 
         <ImageView
