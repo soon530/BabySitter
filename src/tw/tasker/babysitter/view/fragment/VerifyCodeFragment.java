@@ -19,6 +19,7 @@ import tw.tasker.babysitter.view.activity.SignUpListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
@@ -139,6 +140,9 @@ public class VerifyCodeFragment extends Fragment implements OnClickListener {
 			
 		case R.id.send:
 			mError.setVisibility(View.INVISIBLE);
+			
+			sendSmsButtonDisable();
+			
 			makeVerifyCode();
 			
 			if (BuildConfig.DEBUG) {
@@ -152,6 +156,22 @@ public class VerifyCodeFragment extends Fragment implements OnClickListener {
 			break;
 		}
 		
+	}
+
+	private void sendSmsButtonDisable() {
+		mSend.setEnabled(false);
+		
+		new CountDownTimer(30000, 1000) {
+		     //每秒鐘執行一次 onTick
+		     public void onTick(long millisUntilFinished) {
+		    	 mSend.setText((millisUntilFinished / 1000) + ".");
+		     }
+		     //30秒完成之後，執行onFinish
+		     public void onFinish() {
+		 		mSend.setEnabled(true);
+		 		mSend.setText("發送");
+		     }
+		}.start();
 	}
 
 	private void makeVerifyCode() {
