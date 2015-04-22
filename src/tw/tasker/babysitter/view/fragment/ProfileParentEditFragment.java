@@ -1,5 +1,9 @@
 package tw.tasker.babysitter.view.fragment;
 
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Calendar;
+
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.R.drawable;
@@ -23,8 +27,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,6 +65,8 @@ public class ProfileParentEditFragment extends Fragment implements OnClickListen
 	private PictureHelper mPictureHelper;
 	private ProgressDialog mRingProgressDialog;
 	private ImageLoader imageLoader = ImageLoader.getInstance();
+	private Spinner mKidsAgeYear;
+	private Spinner mKidsAgeMonth;
 
 	public ProfileParentEditFragment() {
 		// Required empty public constructor
@@ -84,7 +92,22 @@ public class ProfileParentEditFragment extends Fragment implements OnClickListen
 		mPhone = (TextView) rootView.findViewById(R.id.phone);
 		mAddress = (TextView) rootView.findViewById(R.id.address);
 		
-		mKidsAge = (TextView) rootView.findViewById(R.id.kids_age);
+		//mKidsAge = (TextView) rootView.findViewById(R.id.kids_age);
+		mKidsAgeYear = (Spinner) rootView.findViewById(R.id.kids_age_year);
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+		        R.array.kids_age_year, R.layout.spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		mKidsAgeYear.setAdapter(adapter);
+		mKidsAgeYear.setSelection(getPositionFromYear());
+
+		
+		mKidsAgeMonth = (Spinner) rootView.findViewById(R.id.kids_age_month);
+		adapter = ArrayAdapter.createFromResource(getActivity(),
+		        R.array.kids_age_month, R.layout.spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		mKidsAgeMonth.setAdapter(adapter);
+		mKidsAgeMonth.setSelection(getPositionFromMonth());
+
 		mKidsGender = (TextView) rootView.findViewById(R.id.kids_gender);
 
 		mConfirm = (Button) rootView.findViewById(R.id.confirm);
@@ -96,6 +119,44 @@ public class ProfileParentEditFragment extends Fragment implements OnClickListen
 		return  rootView;
 	}
 	
+	private int getPositionFromYear() {
+		
+		String currentYear = Config.userInfo.getKidsAge();
+		if (!currentYear.isEmpty()) {
+		    currentYear = Config.userInfo.getKidsAge().substring(0, 3);
+			
+		} else {
+			Calendar calendar=Calendar.getInstance();
+			calendar.setTimeInMillis(System.currentTimeMillis());
+		    currentYear = String.valueOf((calendar.get(Calendar.YEAR)-1911));
+		}
+		
+		String[] months = getResources().getStringArray(R.array.kids_age_year);
+		int position = Arrays.asList(months).indexOf(currentYear);
+		
+		LogUtils.LOGD("vic", "year: " + position);
+		return position;
+	}
+	
+	private int getPositionFromMonth() {
+		
+		String currentMonth = Config.userInfo.getKidsAge();
+		if (!currentMonth.isEmpty()) {
+			currentMonth = Config.userInfo.getKidsAge().substring(3, 5);
+		} else {
+			Calendar calendar=Calendar.getInstance(); 
+			SimpleDateFormat simpleDateFormat=new SimpleDateFormat("MM"); 
+			currentMonth = simpleDateFormat.format(calendar.getTime());
+		}
+		
+		String[] months = getResources().getStringArray(R.array.kids_age_month);
+		int position = Arrays.asList(months).indexOf(currentMonth);
+		
+		//LogUtils.LOGD("vic", "month: " + position);
+		return position;
+	}
+
+	
 	protected void initData() {
 		mName.setText("");
 		mAccount.setText("");
@@ -104,7 +165,7 @@ public class ProfileParentEditFragment extends Fragment implements OnClickListen
 		mPhone.setText("");
 		mAddress.setText("");
 		
-		mKidsAge.setText("");
+		//mKidsAge.setText("");
 		mKidsGender.setText("");
 	}
 
@@ -126,7 +187,8 @@ public class ProfileParentEditFragment extends Fragment implements OnClickListen
 		mPhone.setText(userInfo.getPhone());
 		mAddress.setText(userInfo.getAddress());
 		
-		mKidsAge.setText("小孩歲數：" + userInfo.getKidsAge());
+		// mKidsAge.setText("小孩生日： 民國 " + year + " 年 " + month + " 月");
+
 		mKidsGender.setText("小孩姓別：" + userInfo.getKidsGender());
 		
 		if (userInfo.getAvatorFile() != null) {
@@ -280,6 +342,7 @@ public class ProfileParentEditFragment extends Fragment implements OnClickListen
 		
 		userInfo.setPhone(phone);
 		userInfo.setAddress(address);
+		userInfo.setKidsAge(mKidsAgeYear.getSelectedItem().toString() + mKidsAgeMonth.getSelectedItem().toString());
 		userInfo.saveInBackground(new SaveCallback() {
 			
 			@Override

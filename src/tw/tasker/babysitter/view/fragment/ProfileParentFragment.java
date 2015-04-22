@@ -132,8 +132,24 @@ public class ProfileParentFragment extends Fragment implements OnClickListener {
 		
 		mPhone.setText("聯絡電話：" + userInfo.getPhone());
 		mAddress.setText("聯絡地址：" + userInfo.getAddress());
+
 		
-		mKidsAge.setText("小孩歲數：" + userInfo.getKidsAge());
+		String year = userInfo.getKidsAge();
+		if (!year.isEmpty()) {
+			year = "民國 " + userInfo.getKidsAge().substring(0, 3) + " 年 ";
+		} else {
+			year = "民國     年";
+		}
+		
+		String month = userInfo.getKidsAge();
+		if (!month.isEmpty()) {
+			month = userInfo.getKidsAge().substring(3,5) + " 月";
+		} else {
+			month = "   月";
+		}
+		
+		mKidsAge.setText("小孩生日：" + year + month);
+		
 		mKidsGender.setText("小孩姓別：" + userInfo.getKidsGender());
 		
 		if (userInfo.getAvatorFile() != null) {

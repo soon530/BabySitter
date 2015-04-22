@@ -21,13 +21,14 @@ public class SmsReceiver extends BroadcastReceiver {
 	 // Get the object of SmsManager
     final SmsManager sms = SmsManager.getDefault();
 	private VerifyCodeFragment mFragment;
+	private Context mContext;
 	
 	public SmsReceiver() {
 	}
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		
+		mContext = context;
 		LogUtils.LOGD("vic", "SmsReceiver onReceiver");
 		// Retrieves a map of extended data from the intent.
         final Bundle bundle = intent.getExtras();
@@ -47,14 +48,7 @@ public class SmsReceiver extends BroadcastReceiver {
                     String message = currentMessage.getDisplayMessageBody();
  
                     Log.i("SmsReceiver", "senderNum: "+ senderNum + "; message: " + message);
-                     
- 
-                   // Show Alert
-                    int duration = Toast.LENGTH_LONG;
-                    Toast toast = Toast.makeText(context, 
-                                 "senderNum: "+ senderNum + ", message: " + message, duration);
-                    toast.show();
-                    
+                                         
                     setVerifyCode(message);
 
                 } // end for loop
@@ -70,6 +64,12 @@ public class SmsReceiver extends BroadcastReceiver {
 	}
 
 	private void setVerifyCode(String message) {
+        // Show Alert
+        int duration = Toast.LENGTH_LONG;
+        //Toast toast = Toast.makeText(context, "senderNum: "+ senderNum + ", message: " + message, duration);
+        Toast toast = Toast.makeText(mContext, "*" + message, duration);
+        toast.show();
+
         Pattern p = Pattern.compile("\\d{6}");
         Matcher m = p.matcher(message);
         if(m.find()) {
