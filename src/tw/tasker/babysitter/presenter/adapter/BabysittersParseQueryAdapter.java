@@ -1,5 +1,7 @@
 package tw.tasker.babysitter.presenter.adapter;
 
+import java.util.List;
+
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
@@ -26,8 +28,15 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseInstallation;
+import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
+import com.parse.ParseUser;
+import com.parse.SendCallback;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -124,19 +133,38 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 
 			@Override
 			public void onClick(View v) {
-				String[] phones = babysitter.getTel().replace("(日):", "")
-						.replace("手機: ", "").split(" ");
-				LogUtils.LOGD("vic", "phones" + babysitter.getTel());
-				for (String phone : phones) {
-					LogUtils.LOGD("vic", "phone" + phone);
-				}
+//				String[] phones = babysitter.getTel().replace("(日):", "")
+//						.replace("手機: ", "").split(" ");
+//				LogUtils.LOGD("vic", "phones" + babysitter.getTel());
+//				for (String phone : phones) {
+//					LogUtils.LOGD("vic", "phone" + phone);
+//				}
 
-				// if (phones.length == 1) {
-				// mPresenter.makePhoneCall(phones[0]);
-				// } else {
-				showBabysitterPhone(phones);
-				// }
+//				showBabysitterPhone(phones);
+				
+				pushTextToSitter(babysitter);
 
+			}
+
+			private void pushTextToSitter(Babysitter babysitter) {
+				ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
+				LogUtils.LOGD("vic", "push obj:" + babysitter.getUser().getObjectId());
+				//ParseObject obj = ParseObject.createWithoutData("user", "KMyQfnc5k3");
+				pushQuery.whereEqualTo("user", babysitter.getUser());
+				
+				// Send push notification to query
+				ParsePush push = new ParsePush();
+				push.setQuery(pushQuery); // Set our Installation query
+				push.setMessage("有爸媽，想找你帶小孩唷~");
+				push.sendInBackground(new SendCallback() {
+					
+					@Override
+					public void done(ParseException e) {
+						if (e != null)
+							LogUtils.LOGD("vic", "erroe" + e.getMessage());
+					}
+				});
+				
 			}
 		});
 
@@ -358,6 +386,7 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 
 				ParseQuery<Babysitter> query = Babysitter.getQuery();
 
+					query.whereEqualTo("skillNumber", "154-056893");
 				boolean mDayTime = sharedPreferences.getBoolean("mDayTime", false);
 				if (mDayTime) {
 					query.whereContains("babycareTime", "白天");
