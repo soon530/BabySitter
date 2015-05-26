@@ -113,7 +113,7 @@ public class SitterMessageParseQueryAdapter extends
 				query.whereEqualTo("UserInfo", Config.userInfo);
 				//query.whereEqualTo("isParentConfirm", true);
 				query.whereEqualTo("isSitterConfirm", true);
-				query.orderByDescending("createdAt");
+				query.orderByDescending("updatedAt");
 				
 /*				if (!DisplayUtils.hasNetwork(context)) {
 					query.fromLocalDatastore();
