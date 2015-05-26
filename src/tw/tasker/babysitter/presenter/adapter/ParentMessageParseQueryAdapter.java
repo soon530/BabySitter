@@ -4,6 +4,7 @@ import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.BabysitterFavorite;
+import tw.tasker.babysitter.model.data.UserInfo;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
 
-public class SitterMessageParseQueryAdapter extends
+public class ParentMessageParseQueryAdapter extends
 		ParseQueryAdapter<BabysitterFavorite> {
 
 	private TextView mAge;
@@ -22,7 +23,7 @@ public class SitterMessageParseQueryAdapter extends
 
 
 
-	public SitterMessageParseQueryAdapter(Context context) {
+	public ParentMessageParseQueryAdapter(Context context) {
 		super(context, getQueryFactory(context));
 	}
 
@@ -38,35 +39,34 @@ public class SitterMessageParseQueryAdapter extends
 			rootView = view;
 		}
 
-		Babysitter babysitter = favorite.getBabysitter();
-		
+		UserInfo userInfo = favorite.getUserInfo();
+
 		String status = "";
-		if (favorite.getIsParentConfirm()) {
+		if (favorite.getIsSitterConfirm()) {
 			status = "";
 		} else {
 			status = "*";
 		}
 		
-		
 		TextView name = (TextView) rootView.findViewById(R.id.name);
-		name.setText(babysitter.getName() + " " + status);
+		name.setText(userInfo.getName() + " " + status);
 
 		TextView address = (TextView) rootView.findViewById(R.id.address);
-		address.setText(babysitter.getAddress());
+		address.setText(userInfo.getAddress());
 
-		TextView babycareTime = (TextView) rootView.findViewById(R.id.babycare_time);
-		String changeText = getChangeText(babysitter.getBabycareTime());
-		babycareTime.setText(changeText);
+//		TextView babycareTime = (TextView) rootView.findViewById(R.id.babycare_time);
+//		String changeText = getChangeText(userInfo.getBabycareTime());
+//		babycareTime.setText(changeText);
 
-		TextView babysitterNumber = (TextView) rootView
-				.findViewById(R.id.babysitterNumber);
+//		TextView babysitterNumber = (TextView) rootView
+//				.findViewById(R.id.babysitterNumber);
 
-		mAge = (TextView) rootView.findViewById(R.id.age);
-		mAge.setText("("+babysitter.getAge()+")");
+//		mAge = (TextView) rootView.findViewById(R.id.age);
+//		mAge.setText("("+babysitter.getAge()+")");
 
-		mBabyCount = (RatingBar) rootView.findViewById(R.id.babycareCount);
-		int babyCount = getBabyCount(babysitter.getBabycareCount());
-		mBabyCount.setRating(babyCount);
+//		mBabyCount = (RatingBar) rootView.findViewById(R.id.babycareCount);
+//		int babyCount = getBabyCount(babysitter.getBabycareCount());
+//		mBabyCount.setRating(babyCount);
 
 		// 加入距離計算公式
 //        float distance = (float) babysitter.getLocation().distanceInKilometersTo(Config.MY_LOCATION);
@@ -88,18 +88,18 @@ public class SitterMessageParseQueryAdapter extends
 		return changeText;
 	}
 
-	private int getBabyCount(String babycareCount) {
-		
-		int count;
-		if (babycareCount.isEmpty()) {
-			count = 0;
-		} else {
-			String[] babies = babycareCount.split(" ");
-			count = babies.length;
-		}
-		
-		return count;
-	}
+//	private int getBabyCount(String babycareCount) {
+//		
+//		int count;
+//		if (babycareCount.isEmpty()) {
+//			count = 0;
+//		} else {
+//			String[] babies = babycareCount.split(" ");
+//			count = babies.length;
+//		}
+//		
+//		return count;
+//	}
 
 
 	private static ParseQueryAdapter.QueryFactory<BabysitterFavorite> getQueryFactory(final Context context) {
@@ -107,12 +107,11 @@ public class SitterMessageParseQueryAdapter extends
 			public ParseQuery<BabysitterFavorite> create() {
 				ParseQuery<BabysitterFavorite> query = BabysitterFavorite
 						.getQuery();
-				//query.include("user");
 				query.include("Babysitter");
 				query.include("UserInfo");
-				query.whereEqualTo("UserInfo", Config.userInfo);
-				//query.whereEqualTo("isParentConfirm", true);
-				query.whereEqualTo("isSitterConfirm", true);
+				query.whereEqualTo("Babysitter", Config.sitterInfo);
+				query.whereEqualTo("isParentConfirm", true);
+				//query.whereEqualTo("isSitterConfirm", true);
 				query.orderByDescending("createdAt");
 				
 /*				if (!DisplayUtils.hasNetwork(context)) {

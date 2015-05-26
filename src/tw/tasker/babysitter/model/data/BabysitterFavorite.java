@@ -43,4 +43,12 @@ public class BabysitterFavorite extends ParseObject {
 	public static ParseQuery<BabysitterFavorite> getQuery() {
 		return ParseQuery.getQuery(BabysitterFavorite.class);
 	}
+
+	public void setUserInfo(UserInfo userInfo) {
+		put("UserInfo", userInfo);
+	}
+	public UserInfo getUserInfo() {
+		return (UserInfo) getParseObject("UserInfo");
+	}
+
 }

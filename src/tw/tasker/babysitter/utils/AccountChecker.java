@@ -1,5 +1,7 @@
 package tw.tasker.babysitter.utils;
 
+import com.parse.ParseUser;
+
 import android.widget.EditText;
 
 public class AccountChecker {
@@ -19,5 +21,16 @@ public class AccountChecker {
 			return false;
 		}
 	}
+	
+	public static boolean isSitter() {
+		String userType = ParseUser.getCurrentUser().getString("userType"); 
+		LogUtils.LOGD("userType", userType);
+		if (userType.equals("sitter")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 
 }

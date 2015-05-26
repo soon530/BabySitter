@@ -20,7 +20,9 @@ import tw.tasker.babysitter.R.menu;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.UserInfo;
 import tw.tasker.babysitter.presenter.adapter.BabysittersParseQueryAdapter;
+import tw.tasker.babysitter.presenter.adapter.ParentMessageParseQueryAdapter;
 import tw.tasker.babysitter.presenter.adapter.SitterMessageParseQueryAdapter;
+import tw.tasker.babysitter.utils.AccountChecker;
 import tw.tasker.babysitter.utils.LogUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
@@ -41,17 +43,26 @@ public class MessageActivity extends ActionBarActivity {
 	private UserInfo mUserInfo;
 	private ListView mListView;
 	private SitterMessageParseQueryAdapter mAdapter;
+	private ParentMessageParseQueryAdapter mParentAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_message);
 		
-		mAdapter = new SitterMessageParseQueryAdapter(this);
-		mAdapter.setObjectsPerPage(Config.OBJECTS_PER_PAGE);
-		
 		mListView = (ListView) findViewById(R.id.list);
-		mListView.setAdapter(mAdapter);
+		
+		if (AccountChecker.isSitter()) {
+			mParentAdapter = new ParentMessageParseQueryAdapter(this);
+			mParentAdapter.setObjectsPerPage(Config.OBJECTS_PER_PAGE);
+			mListView.setAdapter(mParentAdapter);
+			
+		} else { // 爸媽看保母列表 
+			mAdapter = new SitterMessageParseQueryAdapter(this);
+			mAdapter.setObjectsPerPage(Config.OBJECTS_PER_PAGE);
+			mListView.setAdapter(mAdapter);
+		}
+		
 
 		
 //        JSONObject data = getDataFromIntent(getIntent());

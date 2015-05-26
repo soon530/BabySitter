@@ -192,7 +192,8 @@ public class ParentsParseQueryAdapter extends ParseQueryAdapter<UserInfo> {
 				mBabysitterFavorite = babysitterfavorite;
 				// favorite.put("baby", mBaby);
 				babysitterfavorite.setBabysitter(babysitter);
-				babysitterfavorite.put("user", userInfo.getUser()); // 這裡的user，放的是爸媽的 user pointer
+				babysitterfavorite.setUserInfo(userInfo);
+				babysitterfavorite.put("user", ParseUser.getCurrentUser()); // 這裡的user，放的是爸媽的 user pointer
 				babysitterfavorite.setIsParentConfirm(false);
 				babysitterfavorite.setIsSitterConfirm(true);
 				babysitterfavorite.saveInBackground(new SaveCallback() {

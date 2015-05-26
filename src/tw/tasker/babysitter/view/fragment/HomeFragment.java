@@ -13,6 +13,7 @@ import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.UserInfo;
 import tw.tasker.babysitter.presenter.adapter.BabysittersParseQueryAdapter;
 import tw.tasker.babysitter.presenter.adapter.ParentsParseQueryAdapter;
+import tw.tasker.babysitter.utils.AccountChecker;
 import tw.tasker.babysitter.utils.DisplayUtils;
 import tw.tasker.babysitter.utils.GetLocation;
 import tw.tasker.babysitter.utils.LogUtils;
@@ -589,7 +590,7 @@ public class HomeFragment extends Fragment implements OnClickListener,
 	}
 
 	private void loadProfileData() {
-		if (isSitter()) { 
+		if (AccountChecker.isSitter()) { 
 			loadSitterProfileData(); // 如果是爸媽，抓保母資料
 		} else {
 			loadParentsProfileData();// 如果是保母，抓爸媽資料
@@ -634,7 +635,7 @@ public class HomeFragment extends Fragment implements OnClickListener,
 
 	private void doListQuery() {
 
-		if (isSitter()) { 
+		if (AccountChecker.isSitter()) { 
 			doParentsQuery();// 如果是保母，抓爸媽資料
 		} else {
 			doSittersQuery(); // 如果是爸媽，抓保母資料
@@ -713,18 +714,6 @@ public class HomeFragment extends Fragment implements OnClickListener,
 		
 		mListView.setAdapter(slideAdapter);	
 	}
-	
-	
-	private boolean isSitter() {
-		String userType = ParseUser.getCurrentUser().getString("userType"); 
-		LogUtils.LOGD("userType", userType);
-		if (userType.equals("sitter")) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 		
 	public View getViewByPosition(int pos, ListView listView) {
 	    final int firstListItemPosition = listView.getFirstVisiblePosition();

@@ -9,6 +9,7 @@ import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.BabysitterFavorite;
+import tw.tasker.babysitter.model.data.UserInfo;
 import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.view.fragment.ListDialogFragment;
 import android.app.ProgressDialog;
@@ -186,14 +187,18 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 				"請稍等 ...", "加入收藏中...", true);
 
 				Babysitter babysitter = ParseObject.createWithoutData(Babysitter.class, sitter.getObjectId());
+				UserInfo userInfo = ParseObject.createWithoutData(UserInfo.class, Config.userInfo.getObjectId());
 
 				BabysitterFavorite babysitterfavorite = new BabysitterFavorite();
 				mBabysitterFavorite = babysitterfavorite;
 				// favorite.put("baby", mBaby);
 				babysitterfavorite.setBabysitter(babysitter);
+				babysitterfavorite.setUserInfo(userInfo);
+				
 				babysitterfavorite.put("user", ParseUser.getCurrentUser());
 				babysitterfavorite.setIsParentConfirm(true);
 				babysitterfavorite.setIsSitterConfirm(false);
+				
 				babysitterfavorite.saveInBackground(new SaveCallback() {
 					@Override
 					public void done(ParseException e) {

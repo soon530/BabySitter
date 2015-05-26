@@ -2,6 +2,7 @@ package tw.tasker.babysitter.view.activity;
 
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.utils.AccountChecker;
 import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.view.fragment.ProfileParentEditFragment;
 import tw.tasker.babysitter.view.fragment.ProfileParentFragment;
@@ -37,7 +38,7 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
 		
 		if (savedInstanceState == null) {
 			Fragment fragment = null;
-			if (isSitter()) {
+			if (AccountChecker.isSitter()) {
 				fragment = mProfileSitterFragment;
 			} else {
 				fragment = mProfileParentFragment;
@@ -53,15 +54,6 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
 
 	}
 
-	private boolean isSitter() {
-		String userType = ParseUser.getCurrentUser().getString("userType"); 
-		LogUtils.LOGD("userType", userType);
-		if (userType.equals("sitter")) {
-			return true;
-		} else {
-			return false;
-		}
-	}
 
 	@Override
 	protected void onResume() {
