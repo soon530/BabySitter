@@ -192,6 +192,8 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 				// favorite.put("baby", mBaby);
 				babysitterfavorite.setBabysitter(babysitter);
 				babysitterfavorite.put("user", ParseUser.getCurrentUser());
+				babysitterfavorite.setIsParentConfirm(true);
+				babysitterfavorite.setIsSitterConfirm(false);
 				babysitterfavorite.saveInBackground(new SaveCallback() {
 					@Override
 					public void done(ParseException e) {

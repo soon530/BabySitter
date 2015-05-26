@@ -24,6 +24,22 @@ public class BabysitterFavorite extends ParseObject {
 		put("Babysitter", babysitter);
 	}
 	
+	public void setIsParentConfirm(Boolean value) {
+		put("isParentConfirm", value);
+	}
+	
+	public Boolean getIsParentConfirm() {
+		return getBoolean("isParentConfirm");
+	}
+
+	public void setIsSitterConfirm(Boolean value) {
+		put("isSitterConfirm", value);
+	}
+	
+	public Boolean getIsSitterConfirm() {
+		return getBoolean("isSitterConfirm");
+	}
+
 	public static ParseQuery<BabysitterFavorite> getQuery() {
 		return ParseQuery.getQuery(BabysitterFavorite.class);
 	}
