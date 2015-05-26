@@ -584,8 +584,53 @@ public class HomeFragment extends Fragment implements OnClickListener,
 		super.onActivityCreated(savedInstanceState);
 		
 		initLocation();
+		loadProfileData();
 		//doListQuery();
 	}
+
+	private void loadProfileData() {
+		if (isSitter()) { 
+			loadSitterProfileData(); // 如果是爸媽，抓保母資料
+		} else {
+			loadParentsProfileData();// 如果是保母，抓爸媽資料
+		}
+	}
+
+	private void loadSitterProfileData() {
+		ParseQuery<Babysitter> query = Babysitter.getQuery();
+		query.whereEqualTo("user", ParseUser.getCurrentUser());
+		query.getFirstInBackground(new GetCallback<Babysitter>() {
+			
+			@Override
+			public void done(Babysitter sitter, ParseException exception) {
+				if (sitter == null) {
+					Toast.makeText(getActivity(), "唉唷~產生一些錯誤了~", Toast.LENGTH_SHORT).show();
+
+				} else {
+					Config.sitterInfo = sitter;
+				}
+			}
+		});
+	}
+
+	private void loadParentsProfileData() {
+		ParseQuery<UserInfo> query = UserInfo.getQuery();
+		query.whereEqualTo("user", ParseUser.getCurrentUser());
+		query.getFirstInBackground(new GetCallback<UserInfo>() {
+			
+			@Override
+			public void done(UserInfo userInfo, ParseException exception) {
+				if (userInfo == null) {
+					Toast.makeText(getActivity(), "查不到你的資料!", Toast.LENGTH_SHORT).show();
+
+				} else {
+					Config.userInfo = userInfo;
+					//fillDataToUI(userInfo);
+				}
+			}
+		});		
+	}
+
 
 	private void doListQuery() {
 

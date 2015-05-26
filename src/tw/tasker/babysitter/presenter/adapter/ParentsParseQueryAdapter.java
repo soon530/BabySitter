@@ -154,7 +154,7 @@ public class ParentsParseQueryAdapter extends ParseQueryAdapter<UserInfo> {
 //				showBabysitterPhone(phones);
 				
 				//pushTextToSitter(babysitter);
-				//addFavorite(babysitter);
+				addFavorite(userInfo);
 				
 
 			}
@@ -182,19 +182,19 @@ public class ParentsParseQueryAdapter extends ParseQueryAdapter<UserInfo> {
 				
 			}
 			
-			private void addFavorite(Babysitter sitter) {
+			private void addFavorite(UserInfo userInfo) {
 				mRingProgressDialog = ProgressDialog.show(getContext(),
 				"請稍等 ...", "加入收藏中...", true);
 
-				Babysitter babysitter = ParseObject.createWithoutData(Babysitter.class, sitter.getObjectId());
+				Babysitter babysitter = ParseObject.createWithoutData(Babysitter.class, Config.sitterInfo.getObjectId());
 
 				BabysitterFavorite babysitterfavorite = new BabysitterFavorite();
 				mBabysitterFavorite = babysitterfavorite;
 				// favorite.put("baby", mBaby);
 				babysitterfavorite.setBabysitter(babysitter);
-				babysitterfavorite.put("user", ParseUser.getCurrentUser());
-				babysitterfavorite.setIsParentConfirm(true);
-				babysitterfavorite.setIsSitterConfirm(false);
+				babysitterfavorite.put("user", userInfo.getUser()); // 這裡的user，放的是爸媽的 user pointer
+				babysitterfavorite.setIsParentConfirm(false);
+				babysitterfavorite.setIsSitterConfirm(true);
 				babysitterfavorite.saveInBackground(new SaveCallback() {
 					@Override
 					public void done(ParseException e) {
