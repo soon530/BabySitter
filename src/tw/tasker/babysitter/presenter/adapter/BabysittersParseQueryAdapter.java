@@ -2,6 +2,9 @@ package tw.tasker.babysitter.presenter.adapter;
 
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
@@ -155,7 +158,9 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 				// Send push notification to query
 				ParsePush push = new ParsePush();
 				push.setQuery(pushQuery); // Set our Installation query
-				push.setMessage("有爸媽，想找你帶小孩唷~");
+				//push.setMessage("有爸媽，想找你帶小孩唷~");
+				JSONObject data = getJSONDataMessageForIntent();
+				push.setData(data);
 				push.sendInBackground(new SendCallback() {
 					
 					@Override
@@ -165,6 +170,22 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 					}
 				});
 				
+			}
+
+			private JSONObject getJSONDataMessageForIntent() {
+				try
+			    {
+			        JSONObject data = new JSONObject();
+			        data.put("alert", "家長["+ParseUser.getCurrentUser().getUsername()+"]，想找你帶小孩唷~");
+			        //instead action is used
+			        //data.put("customdata", "custom data value");
+			        data.put("user", ParseUser.getCurrentUser().getObjectId());
+			        return data;
+			    }
+			    catch(JSONException x)
+			    {
+			        throw new RuntimeException("Something wrong with JSON", x);
+			    }
 			}
 		});
 
