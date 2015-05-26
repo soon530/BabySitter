@@ -8,8 +8,10 @@ import org.json.JSONObject;
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
+import tw.tasker.babysitter.model.data.BabysitterFavorite;
 import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.view.fragment.ListDialogFragment;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -29,6 +31,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.parse.FindCallback;
@@ -39,6 +42,7 @@ import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.parse.SendCallback;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -53,6 +57,8 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 	private CircleImageView mAvatar;
 	private ImageLoader imageLoader = ImageLoader.getInstance();
 	private TextView mAge;
+	private ProgressDialog mRingProgressDialog;
+	private BabysitterFavorite mBabysitterFavorite;
 
 	public BabysittersParseQueryAdapter(Context context, int position) {
 		super(context, getQueryFactory(context, position));
@@ -134,6 +140,7 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 		Button contact = (Button) rootView.findViewById(R.id.contact);
 		contact.setOnClickListener(new OnClickListener() {
 
+
 			@Override
 			public void onClick(View v) {
 //				String[] phones = babysitter.getTel().replace("(日):", "")
@@ -146,6 +153,8 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 //				showBabysitterPhone(phones);
 				
 				pushTextToSitter(babysitter);
+				addFavorite(babysitter);
+				
 
 			}
 
@@ -170,6 +179,35 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 					}
 				});
 				
+			}
+			
+			private void addFavorite(Babysitter sitter) {
+				mRingProgressDialog = ProgressDialog.show(getContext(),
+				"請稍等 ...", "加入收藏中...", true);
+
+				Babysitter babysitter = ParseObject.createWithoutData(Babysitter.class, sitter.getObjectId());
+
+				BabysitterFavorite babysitterfavorite = new BabysitterFavorite();
+				mBabysitterFavorite = babysitterfavorite;
+				// favorite.put("baby", mBaby);
+				babysitterfavorite.setBabysitter(babysitter);
+				babysitterfavorite.put("user", ParseUser.getCurrentUser());
+				babysitterfavorite.saveInBackground(new SaveCallback() {
+					@Override
+					public void done(ParseException e) {
+						if (e == null) {
+							// Toast.makeText(getActivity().getApplicationContext(),
+							// "saving doen!", Toast.LENGTH_SHORT).show();
+						} else {
+							Toast.makeText(getContext(),
+									"Error saving: " + e.getMessage(),
+									Toast.LENGTH_SHORT).show();
+						}
+						
+						mRingProgressDialog.dismiss();
+					}
+
+				});
 			}
 
 			private JSONObject getJSONDataMessageForIntent() {

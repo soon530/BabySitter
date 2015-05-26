@@ -18,6 +18,7 @@ import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.utils.MyLocation;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.activity.DispatchActivity;
+import tw.tasker.babysitter.view.activity.MessageActivity;
 import tw.tasker.babysitter.view.activity.ProfileActivity;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 import android.animation.Animator;
@@ -665,6 +666,13 @@ public class HomeFragment extends Fragment implements OnClickListener,
 
 		switch (id) {
 
+		case R.id.message:
+			intent = new Intent();
+			intent.setClass(getActivity(), MessageActivity.class);
+			startActivity(intent);
+			
+			break;
+		
 		case R.id.action_profile:
 			intent = new Intent();
 			intent.setClass(getActivity(), ProfileActivity.class);

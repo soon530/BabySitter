@@ -19,6 +19,8 @@ import tw.tasker.babysitter.R.layout;
 import tw.tasker.babysitter.R.menu;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.UserInfo;
+import tw.tasker.babysitter.presenter.adapter.BabysittersParseQueryAdapter;
+import tw.tasker.babysitter.presenter.adapter.SitterMessageParseQueryAdapter;
 import tw.tasker.babysitter.utils.LogUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
@@ -28,6 +30,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,27 +39,36 @@ public class MessageActivity extends ActionBarActivity {
 	private TextView mInfo;
 	private Button mOk;
 	private UserInfo mUserInfo;
+	private ListView mListView;
+	private SitterMessageParseQueryAdapter mAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_message);
 		
-        JSONObject data = getDataFromIntent(getIntent());
-        LogUtils.LOGD("Push", "Clicked data:" + data);
+		mAdapter = new SitterMessageParseQueryAdapter(this);
+		mAdapter.setObjectsPerPage(Config.OBJECTS_PER_PAGE);
+		
+		mListView = (ListView) findViewById(R.id.list);
+		mListView.setAdapter(mAdapter);
+
+		
+//        JSONObject data = getDataFromIntent(getIntent());
+//        LogUtils.LOGD("Push", "Clicked data:" + data);
         
-        mInfo = (TextView) findViewById(R.id.info);
-        mOk = (Button) findViewById(R.id.yes);
-        mOk.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				pushTextToParent();
-			}
-		});
+//        mInfo = (TextView) findViewById(R.id.info);
+//        mOk = (Button) findViewById(R.id.yes);
+//        mOk.setOnClickListener(new OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View v) {
+//				pushTextToParent();
+//			}
+//		});
         
-        String user = data.optString("user");
-        loadProfileData(user);
+//        String user = data.optString("user");
+//        loadProfileData(user);
         //info.setText("user" + user);
 
 	}
@@ -103,6 +115,7 @@ public class MessageActivity extends ActionBarActivity {
 	private JSONObject getDataFromIntent(Intent intent) {
 		JSONObject data = null;
 		try {
+			
 			data = new JSONObject(intent.getExtras().getString(PARSE_DATA_KEY));
 		} catch (JSONException e) {
 			// Json was not readable...

@@ -2,9 +2,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="tw.tasker.babysitter.view.activity.MessageActivity" >
+    tools:context="tw.tasker.babysitter.view.activity.MessageActivity" 
+    android:background="@android:color/white"
+    >
 
-    <TextView
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@android:color/white" />
+
+<!--     <TextView
         android:id="@+id/info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,5 +26,5 @@
         android:layout_below="@+id/info"
         android:layout_marginTop="26dp"
         android:text="接受" />
-
+ -->
 </RelativeLayout>
