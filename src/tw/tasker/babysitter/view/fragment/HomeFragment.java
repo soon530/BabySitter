@@ -12,6 +12,7 @@ import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.UserInfo;
 import tw.tasker.babysitter.presenter.adapter.BabysittersParseQueryAdapter;
+import tw.tasker.babysitter.presenter.adapter.ParentsParseQueryAdapter;
 import tw.tasker.babysitter.utils.DisplayUtils;
 import tw.tasker.babysitter.utils.GetLocation;
 import tw.tasker.babysitter.utils.LogUtils;
@@ -80,6 +81,7 @@ public class HomeFragment extends Fragment implements OnClickListener,
 	private TextView mFilter;
 	private Button mSave;
 	private BabysittersParseQueryAdapter mAdapter;
+	private ParentsParseQueryAdapter mParentAdapter;
 
 	protected ListView mListView;
 	private LinearLayout mFilterExpand;
@@ -587,7 +589,18 @@ public class HomeFragment extends Fragment implements OnClickListener,
 
 	private void doListQuery() {
 
+		if (isSitter()) { 
+			doParentsQuery();// 如果是保母，抓爸媽資料
+		} else {
+			doSittersQuery(); // 如果是爸媽，抓保母資料
+		}
+
+	}
+	
+	private void doSittersQuery() {
 		mAdapter = new BabysittersParseQueryAdapter(getActivity(), 3);
+		
+		
 		mAdapter.setObjectsPerPage(Config.OBJECTS_PER_PAGE);
 		//mAdapter.setPaginationEnabled(false);
 		mAdapter.addOnQueryLoadListener(this);
@@ -617,9 +630,56 @@ public class HomeFragment extends Fragment implements OnClickListener,
 			}
 		});
 		
-		mListView.setAdapter(slideAdapter);		
-
+		mListView.setAdapter(slideAdapter);	
 	}
+	
+	private void doParentsQuery() {
+		mParentAdapter = new ParentsParseQueryAdapter(getActivity(), 3);
+		
+		
+		mParentAdapter.setObjectsPerPage(Config.OBJECTS_PER_PAGE);
+		//mAdapter.setPaginationEnabled(false);
+		//mParentAdapter.addOnQueryLoadListener(this);
+		
+		SlideExpandableListAdapter slideAdapter = new SlideExpandableListAdapter(
+				mParentAdapter,
+                R.id.expandable_toggle_button,
+                R.id.expandable);
+		slideAdapter.setItemExpandCollapseListener(new OnItemExpandCollapseListener() {
+			
+			@Override
+			public void onExpand(View itemView, int position) {
+				
+				View view = getViewByPosition(position, mListView);
+				
+				ImageView arrow = (ImageView) view.findViewById(R.id.arrow);
+				arrow.animate().rotation(180).start();
+				mParentAdapter.setExpandableObjectID(mParentAdapter.getItem(position).getObjectId());
+			}
+			
+			@Override
+			public void onCollapse(View itemView, int position) {
+				View view = getViewByPosition(position, mListView);
+				ImageView arrow = (ImageView) view.findViewById(R.id.arrow);
+				arrow.animate().rotation(0).start();				
+				mParentAdapter.setExpandableObjectID("");
+			}
+		});
+		
+		mListView.setAdapter(slideAdapter);	
+	}
+	
+	
+	private boolean isSitter() {
+		String userType = ParseUser.getCurrentUser().getString("userType"); 
+		LogUtils.LOGD("userType", userType);
+		if (userType.equals("sitter")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 		
 	public View getViewByPosition(int pos, ListView listView) {
 	    final int firstListItemPosition = listView.getFirstVisiblePosition();
