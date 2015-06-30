@@ -51,22 +51,22 @@ public class SitterMessageParseQueryAdapter extends
 		TextView name = (TextView) rootView.findViewById(R.id.name);
 		name.setText(babysitter.getName() + " " + status);
 
-		TextView address = (TextView) rootView.findViewById(R.id.address);
-		address.setText(babysitter.getAddress());
+//		TextView address = (TextView) rootView.findViewById(R.id.address);
+//		address.setText(babysitter.getAddress());
 
 		TextView babycareTime = (TextView) rootView.findViewById(R.id.babycare_time);
 		String changeText = getChangeText(babysitter.getBabycareTime());
 		babycareTime.setText(changeText);
 
-		TextView babysitterNumber = (TextView) rootView
-				.findViewById(R.id.babysitterNumber);
+//		TextView babysitterNumber = (TextView) rootView
+//				.findViewById(R.id.babysitterNumber);
 
 		mAge = (TextView) rootView.findViewById(R.id.age);
 		mAge.setText("("+babysitter.getAge()+")");
 
-		mBabyCount = (RatingBar) rootView.findViewById(R.id.babycareCount);
-		int babyCount = getBabyCount(babysitter.getBabycareCount());
-		mBabyCount.setRating(babyCount);
+//		mBabyCount = (RatingBar) rootView.findViewById(R.id.babycareCount);
+//		int babyCount = getBabyCount(babysitter.getBabycareCount());
+//		mBabyCount.setRating(babyCount);
 
 		// 加入距離計算公式
 //        float distance = (float) babysitter.getLocation().distanceInKilometersTo(Config.MY_LOCATION);
