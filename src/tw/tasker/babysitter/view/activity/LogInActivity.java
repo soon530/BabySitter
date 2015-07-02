@@ -1,6 +1,9 @@
 package tw.tasker.babysitter.view.activity;
 
 import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.layer.LayerCallbacks;
+import tw.tasker.babysitter.layer.LayerImpl;
+import tw.tasker.babysitter.parse.ParseImpl;
 import tw.tasker.babysitter.utils.AccountChecker;
 import tw.tasker.babysitter.utils.DisplayUtils;
 import android.app.ProgressDialog;
@@ -15,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+import com.layer.sdk.exceptions.LayerException;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -24,7 +28,7 @@ import com.parse.SignUpCallback;
  * Activity which displays a registration screen to the user.
  */
 public class LogInActivity extends BaseActivity implements OnTouchListener,
-		OnClickListener {
+		OnClickListener, LayerCallbacks {
 
 	private ScrollView mAllScreen;
 
@@ -163,10 +167,12 @@ public class LogInActivity extends BaseActivity implements OnTouchListener,
 	private void logInSuccess() {
 		// Start an intent for the dispatch
 		// activity
-		Intent intent = new Intent(LogInActivity.this, DispatchActivity.class);
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
-				| Intent.FLAG_ACTIVITY_NEW_TASK);
-		startActivity(intent);
+        if (LayerImpl.isAuthenticated()){
+            onUserAuthenticated(ParseImpl.getRegisteredUser().getObjectId());
+        } else {
+            //User is logged into Parse, so start the Layer Authentication process
+            LayerImpl.authenticateUser();
+        }
 	}
 	
 	private void logInFail() {
@@ -218,6 +224,45 @@ public class LogInActivity extends BaseActivity implements OnTouchListener,
 	public boolean onTouch(View v, MotionEvent event) {
 		DisplayUtils.hideKeypad(this);
 		return false;
+	}
+
+	// Layer callback
+	@Override
+	public void onLayerConnected() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onLayerDisconnected() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onLayerConnectionError(LayerException e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onUserAuthenticated(String id) {
+		Intent intent = new Intent(LogInActivity.this, DispatchActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+				| Intent.FLAG_ACTIVITY_NEW_TASK);
+		startActivity(intent);
+	}
+
+	@Override
+	public void onUserAuthenticatedError(LayerException e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onUserDeauthenticated() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
