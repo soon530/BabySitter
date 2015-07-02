@@ -9,6 +9,7 @@ import java.util.List;
 
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.layer.LayerImpl;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.UserInfo;
 import tw.tasker.babysitter.presenter.adapter.BabysittersParseQueryAdapter;
@@ -800,6 +801,7 @@ public class HomeFragment extends Fragment implements OnClickListener,
 			} else { // 有登入
 				// Call the Parse log out method
 				ParseUser.logOut();
+		        LayerImpl.getLayerClient().deauthenticate();
 			}
 
 			intent = new Intent();

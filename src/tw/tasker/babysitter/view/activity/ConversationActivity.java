@@ -164,8 +164,7 @@ public class ConversationActivity extends ActionBarActivity implements LayerCall
         //Execute the Query
         mConversationsAdapter.refresh();
     }
-
-	
+    
 	private void pushTextToParent() {
 		ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
 		LogUtils.LOGD("vic", "push obj:" + mUserInfo.getUser().getObjectId());
@@ -282,7 +281,12 @@ public class ConversationActivity extends ActionBarActivity implements LayerCall
 	// Conversation
 	@Override
 	public void onConversationClick(Conversation conversation) {
-		// TODO Auto-generated method stub
+        //If the Conversation is valid, start the MessageActivity and pass in the Conversation ID
+        if (conversation != null && conversation.getId() != null && !conversation.isDeleted()) {
+            Intent intent = new Intent(ConversationActivity.this, MessageActivity.class);
+            intent.putExtra("conversation-id", conversation.getId());
+            startActivity(intent);
+        }
 		
 	}
 

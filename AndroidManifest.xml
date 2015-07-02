@@ -101,8 +101,10 @@
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
-            android:name="tw.tasker.babysitter.view.activity.ConversationActivity"
+            android:name=".view.activity.ConversationActivity"
             android:label="訊息欄" >
+        </activity>
+		<activity android:name=".view.activity.MessageActivity" android:windowSoftInputMode="stateHidden|adjustResize">
         </activity>
         
 
