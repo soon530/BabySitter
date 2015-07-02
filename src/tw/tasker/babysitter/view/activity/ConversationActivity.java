@@ -45,7 +45,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MessageActivity extends ActionBarActivity implements LayerCallbacks, ConversationQueryAdapter.ConversationClickHandler {
+public class ConversationActivity extends ActionBarActivity implements LayerCallbacks, ConversationQueryAdapter.ConversationClickHandler {
 	public static final String PARSE_DATA_KEY = "com.parse.Data";
 	private TextView mInfo;
 	private Button mOk;
@@ -120,7 +120,7 @@ public class MessageActivity extends ActionBarActivity implements LayerCallbacks
             if (ParseImpl.getRegisteredUser() == null) {
 
                 LogUtils.LOGD("Activity", "User is not authenticated or logged in - returning to login screen");
-                Intent intent = new Intent(MessageActivity.this, LogInActivity.class);
+                Intent intent = new Intent(ConversationActivity.this, LogInActivity.class);
                 startActivity(intent);
 
             } else {
@@ -230,7 +230,7 @@ public class MessageActivity extends ActionBarActivity implements LayerCallbacks
 			@Override
 			public void done(UserInfo userInfo, ParseException exception) {
 				if (userInfo == null) {
-					Toast.makeText(MessageActivity.this, "查不到你的資料!", Toast.LENGTH_SHORT).show();
+					Toast.makeText(ConversationActivity.this, "查不到你的資料!", Toast.LENGTH_SHORT).show();
 
 				} else {
 					//Config.userInfo = userInfo;

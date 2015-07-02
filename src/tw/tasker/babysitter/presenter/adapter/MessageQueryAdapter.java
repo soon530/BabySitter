@@ -22,7 +22,7 @@ import com.layer.sdk.query.SortDescriptor;
 
 /*
  * MessageQueryAdapter.java
- * Drives the RecyclerView in the MessageActivity class. Shows a list of all messages sorted
+ * Drives the RecyclerView in the ConversationActivity class. Shows a list of all messages sorted
  *  by the message Position. For each Message, it shows the contents (assuming it is plain text),
  *  the sender, and the date received (downloaded from the server).
  *
@@ -38,11 +38,11 @@ public class MessageQueryAdapter extends QueryAdapter<Message, MessageQueryAdapt
 
     //The parent view is required to ensure proper formatting of the messages (messages sent from
     // the authenticated user are right aligned, and messages from other users are left aligned). In
-    // this case, the parent view is the RecyclerView in the MessageActivity class.
+    // this case, the parent view is the RecyclerView in the ConversationActivity class.
     private final ViewGroup mParentView;
 
     //Handle the callbacks when the Message item is actually clicked. In this case, the
-    // MessageActivity class implements the MessageClickHandler
+    // ConversationActivity class implements the MessageClickHandler
     private final MessageClickHandler mMessageClickHandler;
     public static interface MessageClickHandler {
         public void onMessageClick(Message message);

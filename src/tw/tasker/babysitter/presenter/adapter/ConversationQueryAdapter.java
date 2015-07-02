@@ -54,7 +54,7 @@ public class ConversationQueryAdapter extends QueryAdapter<Conversation, Convers
 
         //For each Conversation item in the RecyclerView list, we show the participants, time,
         // contents of the last message, and have a reference to the conversation so when it is
-        // clicked we can start the MessageActivity
+        // clicked we can start the ConversationActivity
         public TextView participants;
         public TextView time;
         public TextView lastMsgContent;
@@ -117,7 +117,7 @@ public class ConversationQueryAdapter extends QueryAdapter<Conversation, Convers
 
         Log.d("Activity", "binding conversation: " + conversation.getId() + " with participants: " + conversation.getParticipants().toString());
 
-        //Set the Conversation (so when this item is clicked, we can start a MessageActivity and
+        //Set the Conversation (so when this item is clicked, we can start a ConversationActivity and
         // show all the messages associated with it)
         viewHolder.conversation = conversation;
 
