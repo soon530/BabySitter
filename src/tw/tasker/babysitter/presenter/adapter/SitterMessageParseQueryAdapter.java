@@ -6,10 +6,14 @@ import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.BabysitterFavorite;
 import android.content.Context;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.parse.GetCallback;
+import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
@@ -19,6 +23,7 @@ public class SitterMessageParseQueryAdapter extends
 
 	private TextView mAge;
 	private RatingBar mBabyCount;
+	private Button mMatch;
 
 
 
@@ -27,7 +32,7 @@ public class SitterMessageParseQueryAdapter extends
 	}
 
 	@Override
-	public View getItemView(BabysitterFavorite favorite, View view,
+	public View getItemView(final BabysitterFavorite favorite, View view,
 			ViewGroup parent) {
 
 
@@ -63,6 +68,15 @@ public class SitterMessageParseQueryAdapter extends
 
 		mAge = (TextView) rootView.findViewById(R.id.age);
 		mAge.setText("("+babysitter.getAge()+")");
+		
+		mMatch = (Button) rootView.findViewById(R.id.match);
+		mMatch.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				//doParentConfirm(favorite.getObjectId());
+			}
+		});
 
 //		mBabyCount = (RatingBar) rootView.findViewById(R.id.babycareCount);
 //		int babyCount = getBabyCount(babysitter.getBabycareCount());
@@ -75,6 +89,21 @@ public class SitterMessageParseQueryAdapter extends
 
 
 		return rootView;
+	}
+	
+	private void doParentConfirm(final String objectId) {
+		ParseQuery<BabysitterFavorite> query = BabysitterFavorite.getQuery();
+		query.whereEqualTo("BabyDiary", objectId);
+		
+		query.getInBackground(objectId, new GetCallback<BabysitterFavorite>() {
+
+			@Override
+			public void done(BabysitterFavorite favorite, ParseException e) {
+				//babyFavorite.setBabyRecord(babyRecord);
+				//babyFavorite.saveInBackground();
+			}
+		});
+
 	}
 
 	private String getChangeText(String babycareTime) {
