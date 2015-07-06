@@ -1,5 +1,6 @@
 package tw.tasker.babysitter.presenter.adapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONException;
@@ -7,6 +8,7 @@ import org.json.JSONObject;
 
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.layer.LayerImpl;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.BabysitterFavorite;
 import tw.tasker.babysitter.model.data.UserInfo;
@@ -34,8 +36,12 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.layer.sdk.messaging.Conversation;
+import com.layer.sdk.messaging.Message;
+import com.layer.sdk.messaging.MessagePart;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.parse.FindCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
@@ -61,8 +67,14 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 	private ProgressDialog mRingProgressDialog;
 	private BabysitterFavorite mBabysitterFavorite;
 
-	public BabysittersParseQueryAdapter(Context context, int position) {
-		super(context, getQueryFactory(context, position));
+	// message
+	private ArrayList<String> mTargetParticipants;
+    //The owning conversation
+    private Conversation mConversation;
+
+
+	public BabysittersParseQueryAdapter(Context context) {
+		super(context, getQueryFactory(context));
 	}
 
 	@Override
@@ -153,10 +165,57 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 
 //				showBabysitterPhone(phones);
 				
-				pushTextToSitter(babysitter);
-				addFavorite(babysitter);
-				
+				//pushTextToSitter(babysitter);
+				//addFavorite(babysitter);
+				newConversationWithSitter(babysitter.getObjectId());
 
+			}
+			
+			protected void newConversationWithSitter(String objectId) {
+			    
+		        if(mTargetParticipants == null)
+		            mTargetParticipants = new ArrayList<>();
+		            
+		        mTargetParticipants.add(objectId);
+		        mTargetParticipants.add(ParseUser.getCurrentUser().getObjectId());
+		           
+	            //First Check to see if we have a valid Conversation object
+	            if(mConversation == null){
+	                //Make sure there are valid participants. Since the Authenticated user will always be
+	                // included in a new Conversation, we check to see if there is more than one target participant
+	                if(mTargetParticipants.size() > 1) {
+
+	                    //Create a new conversation, and tie it to the QueryAdapter
+	                    mConversation = LayerImpl.getLayerClient().newConversation(mTargetParticipants);
+	                    //createMessagesAdapter();
+
+	                    //Once the Conversation object is created, we don't allow changing the Participant List
+	                    // Note: this is an implementation choice. It is always possible to add/remove participants
+	                    // after a Conversation has been created
+	                    //hideAddParticipantsButton();
+
+	                } else {
+	                    //showAlert("Send Message Error","You need to specify at least one participant before sending a message.");
+	                    return;
+	                }
+	            }
+
+	            
+	            String text = "向您提出托育請求";
+
+	            //If the input is valid, create a new Message and send it to the Conversation
+	            if(mConversation != null && text != null && text.length() > 0){
+
+	                MessagePart part = LayerImpl.getLayerClient().newMessagePart(text);
+	                Message msg = LayerImpl.getLayerClient().newMessage(part);
+	                mConversation.send(msg);
+
+
+	            } else {
+	                //showAlert("Send Message Error","You cannot send an empty message.");
+	            }
+
+				
 			}
 
 			private void pushTextToSitter(Babysitter babysitter) {
@@ -442,7 +501,7 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 
 	
 	private static ParseQueryAdapter.QueryFactory<Babysitter> getQueryFactory(
-			final Context context, final int position) {
+			final Context context) {
 		ParseQueryAdapter.QueryFactory<Babysitter> factory = new ParseQueryAdapter.QueryFactory<Babysitter>() {
 			public ParseQuery<Babysitter> create() {
 

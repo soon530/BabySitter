@@ -61,8 +61,8 @@ public class ParentsParseQueryAdapter extends ParseQueryAdapter<UserInfo> {
 	private ProgressDialog mRingProgressDialog;
 	private BabysitterFavorite mBabysitterFavorite;
 
-	public ParentsParseQueryAdapter(Context context, int position) {
-		super(context, getQueryFactory(context, position));
+	public ParentsParseQueryAdapter(Context context) {
+		super(context, getQueryFactory(context));
 	}
 
 	@Override
@@ -439,7 +439,7 @@ public class ParentsParseQueryAdapter extends ParseQueryAdapter<UserInfo> {
 
 	
 	private static ParseQueryAdapter.QueryFactory<UserInfo> getQueryFactory(
-			final Context context, final int position) {
+			final Context context) {
 		ParseQueryAdapter.QueryFactory<UserInfo> factory = new ParseQueryAdapter.QueryFactory<UserInfo>() {
 			public ParseQuery<UserInfo> create() {
 

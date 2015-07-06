@@ -9,6 +9,7 @@ import java.util.List;
 
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.UserType;
 import tw.tasker.babysitter.layer.LayerImpl;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.UserInfo;
@@ -20,8 +21,8 @@ import tw.tasker.babysitter.utils.GetLocation;
 import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.utils.MyLocation;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
-import tw.tasker.babysitter.view.activity.DispatchActivity;
 import tw.tasker.babysitter.view.activity.ConversationActivity;
+import tw.tasker.babysitter.view.activity.DispatchActivity;
 import tw.tasker.babysitter.view.activity.ProfileActivity;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 import android.animation.Animator;
@@ -63,6 +64,7 @@ import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
+import com.parse.ParseQueryAdapter;
 import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -74,18 +76,24 @@ import com.tjerkw.slideexpandable.library.SlideExpandableListAdapter;
  * 
  * @author Gabriele Mariotti (gabri.mariotti@gmail.com)
  */
-public class HomeFragment extends Fragment implements OnClickListener,
-		OnQueryLoadListener<Babysitter>, OnRefreshListener,
-		OnFocusChangeListener, OnEditorActionListener {
+public class HomeFragment extends Fragment implements 
+	OnClickListener,
+	OnQueryLoadListener<Babysitter>, 
+	OnRefreshListener,
+	OnFocusChangeListener, 
+	OnEditorActionListener {
 
 	protected ScrollView mScrollView;
 	private LinearLayout mFilterPanel;
 	private TextView mFilter;
 	private Button mSave;
-	private BabysittersParseQueryAdapter mAdapter;
-	private ParentsParseQueryAdapter mParentAdapter;
+	
+	//private BabysittersParseQueryAdapter mAdapter;
+	//public ParentsParseQueryAdapter mParentAdapter;
 
-	protected ListView mListView;
+	private ParseQueryAdapter<?> mAdapter;
+	
+	public ListView mListView;
 	private LinearLayout mFilterExpand;
 	private LinearLayout mAddressPanel;
 	private TextView mAddressText;
@@ -123,6 +131,8 @@ public class HomeFragment extends Fragment implements OnClickListener,
 		super.onCreate(savedInstanceState);
 
 		setHasOptionsMenu(true);
+		
+		//mParseAdapter = new BabysittersParseQueryAdapter(getActivity(), 3);
 	}
 	
 	@Override
@@ -591,10 +601,14 @@ public class HomeFragment extends Fragment implements OnClickListener,
 	}
 
 	private void loadProfileData() {
-		if (AccountChecker.isSitter()) { 
-			loadSitterProfileData(); // 如果是爸媽，抓保母資料
-		} else {
-			loadParentsProfileData();// 如果是保母，抓爸媽資料
+		UserType userType = AccountChecker.getUserType();
+		if (userType == UserType.PARENT) {
+			loadParentsProfileData();
+			
+		} else if (userType == UserType.SITTER) {
+			loadSitterProfileData();
+			
+		} else if (userType == UserType.LATER) {
 		}
 	}
 
@@ -633,24 +647,27 @@ public class HomeFragment extends Fragment implements OnClickListener,
 		});		
 	}
 
-
-	private void doListQuery() {
-
-		if (AccountChecker.isSitter()) { 
-			doParentsQuery();// 如果是保母，抓爸媽資料
-		} else {
-			doSittersQuery(); // 如果是爸媽，抓保母資料
-		}
-
-	}
 	
-	private void doSittersQuery() {
-		mAdapter = new BabysittersParseQueryAdapter(getActivity(), 3);
-		
+	private void doListQuery() {
+		UserType userType = AccountChecker.getUserType();
+		if (userType == UserType.PARENT) { // 爸媽，抓保母資料
+			//mHomeData = new ParentHomeData(getActivity().getApplicationContext());
+			mAdapter = new BabysittersParseQueryAdapter(getActivity());
+			
+		} else if (userType == UserType.SITTER) { // 保母，抓爸媽資料
+			//mHomeData = new SitterHomeData();
+			mAdapter = new ParentsParseQueryAdapter(getActivity());
+			
+		} else if (userType == UserType.LATER) {
+			mAdapter = new BabysittersParseQueryAdapter(getActivity());
+			//mHomeData = new LaterHomeData();
+			
+		}
 		
 		mAdapter.setObjectsPerPage(Config.OBJECTS_PER_PAGE);
 		//mAdapter.setPaginationEnabled(false);
-		mAdapter.addOnQueryLoadListener(this);
+		//mAdapter.addOnQueryLoadListener(this);
+
 		
 		SlideExpandableListAdapter slideAdapter = new SlideExpandableListAdapter(
 				mAdapter,
@@ -665,7 +682,7 @@ public class HomeFragment extends Fragment implements OnClickListener,
 				
 				ImageView arrow = (ImageView) view.findViewById(R.id.arrow);
 				arrow.animate().rotation(180).start();
-				mAdapter.setExpandableObjectID(mAdapter.getItem(position).getObjectId());
+				//mAdapter.setExpandableObjectID(mAdapter.getItem(position).getObjectId());
 			}
 			
 			@Override
@@ -673,49 +690,14 @@ public class HomeFragment extends Fragment implements OnClickListener,
 				View view = getViewByPosition(position, mListView);
 				ImageView arrow = (ImageView) view.findViewById(R.id.arrow);
 				arrow.animate().rotation(0).start();				
-				mAdapter.setExpandableObjectID("");
+				//mAdapter.setExpandableObjectID("");
 			}
 		});
 		
 		mListView.setAdapter(slideAdapter);	
+
 	}
-	
-	private void doParentsQuery() {
-		mParentAdapter = new ParentsParseQueryAdapter(getActivity(), 3);
-		
-		
-		mParentAdapter.setObjectsPerPage(Config.OBJECTS_PER_PAGE);
-		//mAdapter.setPaginationEnabled(false);
-		//mParentAdapter.addOnQueryLoadListener(this);
-		
-		SlideExpandableListAdapter slideAdapter = new SlideExpandableListAdapter(
-				mParentAdapter,
-                R.id.expandable_toggle_button,
-                R.id.expandable);
-		slideAdapter.setItemExpandCollapseListener(new OnItemExpandCollapseListener() {
-			
-			@Override
-			public void onExpand(View itemView, int position) {
-				
-				View view = getViewByPosition(position, mListView);
-				
-				ImageView arrow = (ImageView) view.findViewById(R.id.arrow);
-				arrow.animate().rotation(180).start();
-				mParentAdapter.setExpandableObjectID(mParentAdapter.getItem(position).getObjectId());
-			}
-			
-			@Override
-			public void onCollapse(View itemView, int position) {
-				View view = getViewByPosition(position, mListView);
-				ImageView arrow = (ImageView) view.findViewById(R.id.arrow);
-				arrow.animate().rotation(0).start();				
-				mParentAdapter.setExpandableObjectID("");
-			}
-		});
-		
-		mListView.setAdapter(slideAdapter);	
-	}
-		
+
 	public View getViewByPosition(int pos, ListView listView) {
 	    final int firstListItemPosition = listView.getFirstVisiblePosition();
 	    final int lastListItemPosition = firstListItemPosition + listView.getChildCount() - 1;
@@ -865,7 +847,7 @@ public class HomeFragment extends Fragment implements OnClickListener,
 		mLocation.setVisibility(View.VISIBLE);
 		DisplayUtils.toggleKeypad(getActivity());
 		doListQuery();
-
+		
 		return true;
 	}
 
