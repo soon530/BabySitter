@@ -4,6 +4,7 @@ import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.BabysitterFavorite;
+import tw.tasker.babysitter.utils.DisplayUtils;
 import android.content.Context;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -60,7 +61,7 @@ public class SitterMessageParseQueryAdapter extends
 //		address.setText(babysitter.getAddress());
 
 		TextView babycareTime = (TextView) rootView.findViewById(R.id.babycare_time);
-		String changeText = getChangeText(babysitter.getBabycareTime());
+		String changeText = DisplayUtils.getChangeText(babysitter.getBabycareTime());
 		babycareTime.setText(changeText);
 
 //		TextView babysitterNumber = (TextView) rootView
@@ -106,29 +107,6 @@ public class SitterMessageParseQueryAdapter extends
 
 	}
 
-	private String getChangeText(String babycareTime) {
-		String changeText = "";
-		changeText = babycareTime
-				.replace("白天", "日托")
-				.replace("夜間", "夜托")
-				.replace("全天(24小時)", "全日")
-				.replace("半天", "半日")
-				.replace("到宅服務", "到府服務");
-		return changeText;
-	}
-
-	private int getBabyCount(String babycareCount) {
-		
-		int count;
-		if (babycareCount.isEmpty()) {
-			count = 0;
-		} else {
-			String[] babies = babycareCount.split(" ");
-			count = babies.length;
-		}
-		
-		return count;
-	}
 
 
 	private static ParseQueryAdapter.QueryFactory<BabysitterFavorite> getQueryFactory(final Context context) {

@@ -137,7 +137,7 @@ public class ProfileSitterEditFragment extends Fragment implements OnClickListen
 		mTel.setText(sitter.getTel());
 		mAddress.setText(sitter.getAddress());
 		
-		int babyCount = getBabyCount(sitter.getBabycareCount());
+		int babyCount = DisplayUtils.getBabyCount(sitter.getBabycareCount());
 		mBabycareCount.setRating(babyCount);
 		
 		//mSkillNumber.setText("保母證號：" + sitter.getSkillNumber());
@@ -200,12 +200,6 @@ public class ProfileSitterEditFragment extends Fragment implements OnClickListen
 			mInHouse.setChecked(true);
 		}
 
-	}
-
-	
-	private int getBabyCount(String babycareCount) {
-		String[] babies = babycareCount.split(" ");
-		return babies.length;
 	}
 
 	@Override

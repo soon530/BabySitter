@@ -12,6 +12,7 @@ import tw.tasker.babysitter.layer.LayerImpl;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.BabysitterFavorite;
 import tw.tasker.babysitter.model.data.UserInfo;
+import tw.tasker.babysitter.utils.DisplayUtils;
 import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.view.fragment.ListDialogFragment;
 import android.app.ProgressDialog;
@@ -294,13 +295,13 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 		});
 
 		mBabyCount = (RatingBar) rootView.findViewById(R.id.babycareCount);
-		int babyCount = getBabyCount(babysitter.getBabycareCount());
+		int babyCount = DisplayUtils.getBabyCount(babysitter.getBabycareCount());
 		mBabyCount.setRating(babyCount);
 
 		name.setText(babysitter.getName());
 		address.setText(babysitter.getAddress());
 		
-		String changeText = getChangeText(babysitter.getBabycareTime());
+		String changeText = DisplayUtils.getChangeText(babysitter.getBabycareTime());
 		
 		babycareTime.setText(changeText);
 
@@ -437,16 +438,6 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 		return rootView;
 	}
 	
-	private String getChangeText(String babycareTime) {
-		String changeText = "";
-		changeText = babycareTime
-				.replace("白天", "日托")
-				.replace("夜間", "夜托")
-				.replace("全天(24小時)", "全日")
-				.replace("半天", "半日")
-				.replace("到宅服務", "到府服務");
-		return changeText;
-	}
 
 	private void getOldAvator(Babysitter sitter) {
 		String websiteUrl = "http://cwisweb.sfaa.gov.tw/";
@@ -459,18 +450,6 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 	}
 
 
-	private int getBabyCount(String babycareCount) {
-		
-		int count;
-		if (babycareCount.isEmpty()) {
-			count = 0;
-		} else {
-			String[] babies = babycareCount.split(" ");
-			count = babies.length;
-		}
-		
-		return count;
-	}
 
 	/*
 	 * @Override public int getViewTypeCount() { return 2; }

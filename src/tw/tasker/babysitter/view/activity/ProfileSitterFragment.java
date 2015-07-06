@@ -4,6 +4,7 @@ import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.Sitter;
+import tw.tasker.babysitter.utils.DisplayUtils;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -127,7 +128,7 @@ public class ProfileSitterFragment extends Fragment implements OnClickListener {
 		mTel.setText("聯絡電話：" + sitter.getTel());
 		mAddress.setText("住家地址：" + sitter.getAddress());
 		
-		int babyCount = getBabyCount(sitter.getBabycareCount());
+		int babyCount = DisplayUtils.getBabyCount(sitter.getBabycareCount());
 		mBabycareCount.setRating(babyCount);
 		
 		mSkillNumber.setText("保母證號：" + sitter.getSkillNumber());
@@ -162,11 +163,6 @@ public class ProfileSitterFragment extends Fragment implements OnClickListener {
 			mAvatar.setImageResource(R.drawable.profile);
 		}
 
-	}
-
-	private int getBabyCount(String babycareCount) {
-		String[] babies = babycareCount.split(" ");
-		return babies.length;
 	}
 
 	@Override

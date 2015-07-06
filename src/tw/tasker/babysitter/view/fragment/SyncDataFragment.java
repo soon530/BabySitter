@@ -343,7 +343,7 @@ public class SyncDataFragment extends Fragment implements OnClickListener {
 		mTel.setText("聯絡電話：" + babysitter.getTel());
 		mAddress.setText("住家地址：" + babysitter.getAddress());
 		
-		int babyCount = getBabyCount(babysitter.getBabycareCount());
+		int babyCount = DisplayUtils.getBabyCount(babysitter.getBabycareCount());
 		mBabycareCount.setRating(babyCount);
 		
 		mSkillNumber.setText("保母證號：" + babysitter.getSkillNumber());
@@ -362,12 +362,6 @@ public class SyncDataFragment extends Fragment implements OnClickListener {
 		//mBabycareTime.setText(babysitter.getBabycareTime());
 	}
 	
-	private int getBabyCount(String babycareCount) {
-		String[] babies = babycareCount.split(" ");
-		return babies.length;
-	}
-
-
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		//inflater.inflate(R.menu.add, menu);
