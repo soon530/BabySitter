@@ -137,7 +137,17 @@
                 <action android:name="com.parse.push.intent.OPEN" />
             </intent-filter>
         </receiver>
-
+        
+        <!-- Layer.com -->
+		<receiver 
+		    android:name="com.layer.sdk.services.LayerReceiver"
+		    android:exported="false">
+            <intent-filter>
+				<action android:name="android.net.conn.CONNECTIVITY_CHANGE" /> 
+                <action android:name="android.intent.action.ANY_DATA_STATE" />
+            </intent-filter>
+		</receiver>
+		    
     </application>
 
 </manifest>

@@ -8,57 +8,13 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
-        <!-- <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:id="@+id/relativeLayout">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="To:"
-                android:id="@+id/ToLabel"
-                android:layout_alignParentTop="true"
-                android:padding="5dp"
-                android:layout_alignTop="@+id/participantList" />
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/ToLabel"
-                android:layout_toLeftOf="@+id/addParticipants"
-                android:layout_toStartOf="@+id/addParticipants"
-                android:layout_alignParentTop="true"
-                android:id="@+id/participantList"
-                android:padding="5dp">
-
-            </LinearLayout>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="+"
-                android:id="@+id/addParticipants"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:enabled="true"
-                android:minHeight="0dp"
-                android:minWidth="0dp" />
-
-        </RelativeLayout> -->
-
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="1dp"
             android:measureWithLargestChild="false"
-            android:background="#ff615fff"
-            android:layout_below="@+id/relativeLayout"
+            android:background="@android:color/white"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:id="@+id/topDivider"></LinearLayout>
@@ -84,7 +40,7 @@
             android:layout_height="wrap_content"
             android:minHeight="1dp"
             android:measureWithLargestChild="false"
-            android:background="#ff615fff"
+            android:background="@android:color/white"
             android:id="@+id/bottomDivider"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="false"
@@ -99,15 +55,14 @@
             android:layout_alignParentStart="true"
             android:layout_toLeftOf="@+id/sendButton"
             android:layout_toStartOf="@+id/sendButton"
-            android:layout_alignBottom="@+id/relativeLayout"
             android:padding="12dp"
-            android:hint="Your Message..." />
+            android:hint="輸入文字..." />
 
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Send"
+            android:text="送出"
             android:id="@+id/sendButton"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
