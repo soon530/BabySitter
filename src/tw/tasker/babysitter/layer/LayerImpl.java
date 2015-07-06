@@ -142,7 +142,7 @@ public class LayerImpl {
                 try {
 
                     if(part.getMimeType().equals("text/plain"))
-                        msgContent += new String(part.getData(), "UTF-8") + "\n";
+                        msgContent += new String(part.getData(), "UTF-8");// + "\n";
 
                 } catch(UnsupportedEncodingException e){
 
@@ -158,7 +158,8 @@ public class LayerImpl {
     public static String getReceivedAtTime(Message msg){
         String dateString = "";
         if(msg != null && msg.getReceivedAt() != null) {
-            SimpleDateFormat format = new SimpleDateFormat("M/dd hh:mm:ss");
+            //SimpleDateFormat format = new SimpleDateFormat("M/dd hh:mm:ss");
+            SimpleDateFormat format = new SimpleDateFormat("hh:mm");
             dateString = format.format(msg.getReceivedAt());
         }
         return dateString;

@@ -75,13 +75,13 @@ public class MessageActivity extends ActivityBase implements MessageQueryAdapter
             sendButton.setOnClickListener(this);
 
         //If this is a new conversation, we will want to allow the user to add his/her friends
-        mAddUserButton = (Button)findViewById(R.id.addParticipants);
-        if(mAddUserButton != null)
-            mAddUserButton.setOnClickListener(this);
+        //mAddUserButton = (Button)findViewById(R.id.addParticipants);
+        //if(mAddUserButton != null)
+        //    mAddUserButton.setOnClickListener(this);
 
         //A view containing a list of all the Participants in the Conversation (not including the
         // locally authenticated user)
-        mParticipantsList = (LinearLayout)findViewById(R.id.participantList);
+        //mParticipantsList = (LinearLayout)findViewById(R.id.participantList);
 
         //If the soft keyboard changes the size of the mMessagesView, we want to force the scroll to
         // the bottom of the view so the latest message is always displayed
@@ -122,6 +122,7 @@ public class MessageActivity extends ActivityBase implements MessageQueryAdapter
                 setupMessagesView();
             else
                 createNewConversationView();
+        
         }
     }
 
@@ -142,10 +143,25 @@ public class MessageActivity extends ActivityBase implements MessageQueryAdapter
         createMessagesAdapter();
 
         //Grab all the Participants and add them at the top of the screen (the "To:" field)
-        populateToField(mConversation.getParticipants());
+        //populateToField(mConversation.getParticipants());
+        setMessageTitle(mConversation.getParticipants());
     }
 
-    //Takes a String Array of user IDs, finds the display name, and adds them to the "To:" field
+    private void setMessageTitle(List<String> participantIds) {
+        //TextView[] participantList = new TextView[participantIds.size()-1];
+        int idx = 0;
+        for(String id : participantIds){
+            if(!id.equals(LayerImpl.getLayerClient().getAuthenticatedUserId())){
+
+                //Create a new stylized text view
+                setTitle(ParseImpl.getUsername(id));
+
+                idx++;
+            }
+        }
+	}
+
+	//Takes a String Array of user IDs, finds the display name, and adds them to the "To:" field
     // at the top of the Messages screen
     private void populateToField(List<String> participantIds){
         //We will not include the Authenticated user in the "To:" field, since they know they are
@@ -228,10 +244,10 @@ public class MessageActivity extends ActivityBase implements MessageQueryAdapter
                 sendMessage();
                 break;
 
-            case R.id.addParticipants:
-                Log.d("Activity", "Add participant button pressed");
-                showParticipantPicker();
-                break;
+//            case R.id.addParticipants:
+//                Log.d("Activity", "Add participant button pressed");
+//                showParticipantPicker();
+//                break;
         }
     }
 

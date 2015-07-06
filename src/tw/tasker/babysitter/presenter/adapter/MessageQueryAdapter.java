@@ -20,6 +20,8 @@ import com.layer.sdk.query.Predicate;
 import com.layer.sdk.query.Query;
 import com.layer.sdk.query.SortDescriptor;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /*
  * MessageQueryAdapter.java
  * Drives the RecyclerView in the ConversationActivity class. Shows a list of all messages sorted
@@ -44,6 +46,10 @@ public class MessageQueryAdapter extends QueryAdapter<Message, MessageQueryAdapt
     //Handle the callbacks when the Message item is actually clicked. In this case, the
     // ConversationActivity class implements the MessageClickHandler
     private final MessageClickHandler mMessageClickHandler;
+
+	private int mLeftColor;
+	private int mRightColor;
+	
     public static interface MessageClickHandler {
         public void onMessageClick(Message message);
 
@@ -58,11 +64,13 @@ public class MessageQueryAdapter extends QueryAdapter<Message, MessageQueryAdapt
             implements View.OnClickListener, View.OnLongClickListener {
 
         public TextView sender;
-        public TextView time;
+        public TextView timeLeft;
+        public TextView timeRight;
         public TextView content;
         public Message message;
         public LinearLayout contentLayout;
         public final MessageClickHandler messageClickHandler;
+		public CircleImageView avatar;
 
         //Registers the click listener callback handler
         public ViewHolder(View itemView, MessageClickHandler messageClickHandler) {
@@ -96,6 +104,9 @@ public class MessageQueryAdapter extends QueryAdapter<Message, MessageQueryAdapt
         mInflater = LayoutInflater.from(context);
         mMessageClickHandler = messageClickHandler;
         mParentView = recyclerView;
+        
+        mLeftColor = context.getResources().getColor(R.color.gray_light);
+        mRightColor = context.getResources().getColor(R.color.primary_dark); 
     }
 
     //When a Message is added to this conversation, a new ViewHolder is created
@@ -106,10 +117,15 @@ public class MessageQueryAdapter extends QueryAdapter<Message, MessageQueryAdapt
 
         //Tie the view elements to the fields in the actual view after it has been created
         ViewHolder holder = new ViewHolder(itemView, mMessageClickHandler);
-        holder.sender = (TextView) itemView.findViewById(R.id.senderID);
+        //holder.sender = (TextView) itemView.findViewById(R.id.senderID);
         holder.content = (TextView) itemView.findViewById(R.id.msgContent);
-        holder.time = (TextView) itemView.findViewById(R.id.sendTime);
+        
+        holder.timeLeft = (TextView) itemView.findViewById(R.id.sendTime_left);
+        holder.timeRight = (TextView) itemView.findViewById(R.id.sendTime_right);
+        
         holder.contentLayout = (LinearLayout) itemView.findViewById(R.id.contentLayout);
+        
+        holder.avatar = (CircleImageView) itemView.findViewById(R.id.avatar);
 
         return holder;
     }
@@ -128,20 +144,34 @@ public class MessageQueryAdapter extends QueryAdapter<Message, MessageQueryAdapt
 
         //Set the content of the message, sender, and received time
         viewHolder.content.setText(LayerImpl.getMessageText(message));
-        viewHolder.sender.setText(ParseImpl.getUsername(senderId));
-        viewHolder.time.setText(LayerImpl.getReceivedAtTime(message));
+        //viewHolder.sender.setText(ParseImpl.getUsername(senderId));
+        viewHolder.timeRight.setText(LayerImpl.getReceivedAtTime(message));
+        viewHolder.timeLeft.setText(LayerImpl.getReceivedAtTime(message));
+        
         viewHolder.message = message;
 
         //Right align if the authenticated user (local user) sent the message, otherwise left align
         // the message box
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        params.weight = 1.0f;
+        //params.weight = 1.0f;
         if(message != null && !senderId.equals(LayerImpl.getLayerClient().getAuthenticatedUserId())) {
             params.gravity = Gravity.LEFT;
-            viewHolder.contentLayout.setBackgroundColor(Color.YELLOW);
+           
+            viewHolder.content.setBackgroundColor(mLeftColor);
+            //viewHolder.contentLayout.setBackgroundColor(mLeftColor);
+            viewHolder.timeLeft.setVisibility(View.GONE);
+            viewHolder.timeRight.setVisibility(View.VISIBLE);
+            
+            viewHolder.avatar.setVisibility(View.VISIBLE);
         } else {
             params.gravity = Gravity.RIGHT;
-            viewHolder.contentLayout.setBackgroundColor(Color.CYAN);
+
+            viewHolder.content.setBackgroundColor(mRightColor);
+            //viewHolder.contentLayout.setBackgroundColor(mRightColor);
+            viewHolder.timeLeft.setVisibility(View.VISIBLE);
+            viewHolder.timeRight.setVisibility(View.GONE);
+
+            viewHolder.avatar.setVisibility(View.GONE);
         }
         viewHolder.contentLayout.setLayoutParams(params);
 
