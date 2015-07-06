@@ -168,7 +168,7 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 				
 				//pushTextToSitter(babysitter);
 				//addFavorite(babysitter);
-				newConversationWithSitter(babysitter.getObjectId());
+				newConversationWithSitter(babysitter.getUser().getObjectId());
 
 			}
 			
@@ -491,6 +491,7 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 				ParseQuery<Babysitter> query = Babysitter.getQuery();
 
 					query.whereEqualTo("skillNumber", "154-056893");
+					
 				boolean mDayTime = sharedPreferences.getBoolean("mDayTime", false);
 				if (mDayTime) {
 					query.whereContains("babycareTime", "白天");
