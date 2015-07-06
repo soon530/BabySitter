@@ -132,12 +132,9 @@ public class LogInActivity extends BaseActivity implements OnTouchListener,
 	}
 
 	private void runLogin() {
-		// Set up a progress dialog
-		final ProgressDialog dlg = new ProgressDialog(LogInActivity.this);
-		dlg.setTitle("登入中");
-		dlg.setMessage("請稍候...");
-		dlg.show();
-
+		
+		showDialog("登入中", "請稍候...");
+		
 		String userName = mAccoutn.getText().toString();
 		String password = mPassword.getText().toString();
 
@@ -146,7 +143,6 @@ public class LogInActivity extends BaseActivity implements OnTouchListener,
 
 			@Override
 			public void done(ParseUser user, ParseException e) {
-				dlg.dismiss();
 				if (isSuccess(e)) {
 					logInSuccess();
 				} else {
@@ -247,6 +243,8 @@ public class LogInActivity extends BaseActivity implements OnTouchListener,
 
 	@Override
 	public void onUserAuthenticated(String id) {
+		hideDialog();
+
 		Intent intent = new Intent(LogInActivity.this, DispatchActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
 				| Intent.FLAG_ACTIVITY_NEW_TASK);
