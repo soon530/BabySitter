@@ -1,6 +1,9 @@
 package tw.tasker.babysitter;
 
+import java.util.List;
+
 import tw.tasker.babysitter.model.data.Babysitter;
+import tw.tasker.babysitter.model.data.BabysitterFavorite;
 import tw.tasker.babysitter.model.data.Sitter;
 import tw.tasker.babysitter.model.data.UserInfo;
 
@@ -38,6 +41,7 @@ public class Config {
 	public static final int MAX_POST_SEARCH_DISTANCE = 50;
 	public static Babysitter sitterInfo;
 	public static UserInfo userInfo;
+	public static List<BabysitterFavorite> favorites;
 	//public static Sitter tmpSiterInfo;
 	
 	// profile pages switch

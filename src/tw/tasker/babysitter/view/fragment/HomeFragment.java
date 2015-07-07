@@ -12,6 +12,7 @@ import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.UserType;
 import tw.tasker.babysitter.layer.LayerImpl;
 import tw.tasker.babysitter.model.data.Babysitter;
+import tw.tasker.babysitter.model.data.BabysitterFavorite;
 import tw.tasker.babysitter.model.data.UserInfo;
 import tw.tasker.babysitter.presenter.adapter.BabysittersParseQueryAdapter;
 import tw.tasker.babysitter.presenter.adapter.ParentsParseQueryAdapter;
@@ -60,6 +61,7 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
@@ -597,8 +599,24 @@ public class HomeFragment extends Fragment implements
 		
 		initLocation();
 		loadProfileData();
+		//loadFavoriteData();
 		//doListQuery();
 	}
+
+//	private void loadFavoriteData() {
+//		UserType userType = AccountChecker.getUserType();
+//		if (userType == UserType.PARENT) {
+//			loadParentsFavoriteData();
+//			
+//		} else if (userType == UserType.SITTER) {
+//			loadSitterFavoriteData();
+//			
+//		} else if (userType == UserType.LATER) {
+//		}
+//	}
+
+
+
 
 	private void loadProfileData() {
 		UserType userType = AccountChecker.getUserType();
@@ -624,6 +642,24 @@ public class HomeFragment extends Fragment implements
 
 				} else {
 					Config.sitterInfo = sitter;
+					loadSitterFavoriteData(sitter);
+				}
+			}
+		});
+	}
+	
+	private void loadSitterFavoriteData(Babysitter sitter) {
+		ParseQuery<BabysitterFavorite> query = BabysitterFavorite.getQuery();
+		query.whereEqualTo("Babysitter", sitter);
+		query.findInBackground(new FindCallback<BabysitterFavorite>() {
+			
+			@Override
+			public void done(List<BabysitterFavorite> favorites, ParseException e) {
+				if (AccountChecker.isNull(favorites)) {
+					Toast.makeText(getActivity(), "查不到你的資料!", Toast.LENGTH_SHORT).show();
+
+				} else {
+					Config.favorites = favorites;
 				}
 			}
 		});
@@ -641,12 +677,30 @@ public class HomeFragment extends Fragment implements
 
 				} else {
 					Config.userInfo = userInfo;
+					
+					loadParentsFavoriteData(userInfo);
 					//fillDataToUI(userInfo);
 				}
 			}
 		});		
 	}
 
+	private void loadParentsFavoriteData(UserInfo userInfo) {
+		ParseQuery<BabysitterFavorite> query = BabysitterFavorite.getQuery();
+		query.whereEqualTo("UserInfo", userInfo);
+		query.findInBackground(new FindCallback<BabysitterFavorite>() {
+			
+			@Override
+			public void done(List<BabysitterFavorite> favorites, ParseException e) {
+				if (AccountChecker.isNull(favorites)) {
+					Toast.makeText(getActivity(), "查不到你的資料!", Toast.LENGTH_SHORT).show();
+
+				} else {
+					Config.favorites = favorites;
+				}
+			}
+		});
+	}
 	
 	private void doListQuery() {
 		UserType userType = AccountChecker.getUserType();
@@ -668,7 +722,6 @@ public class HomeFragment extends Fragment implements
 		//mAdapter.setPaginationEnabled(false);
 		//mAdapter.addOnQueryLoadListener(this);
 
-		
 		SlideExpandableListAdapter slideAdapter = new SlideExpandableListAdapter(
 				mAdapter,
                 R.id.expandable_toggle_button,

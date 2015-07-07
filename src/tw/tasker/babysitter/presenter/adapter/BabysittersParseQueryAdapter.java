@@ -152,8 +152,16 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 		communityName.setText(content);
 
 		Button contact = (Button) rootView.findViewById(R.id.contact);
+		
+		if (isFavoriteSitter(babysitter)) {
+			contact.setEnabled(false);
+			contact.setText("已送請求");
+		} else {
+			contact.setEnabled(true);
+			contact.setText("保母媒合");
+		}
+		
 		contact.setOnClickListener(new OnClickListener() {
-
 
 			@Override
 			public void onClick(View v) {
@@ -166,10 +174,9 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 
 //				showBabysitterPhone(phones);
 				
-				//pushTextToSitter(babysitter);
-				//addFavorite(babysitter);
+				addFavorite(babysitter);
+				pushTextToSitter(babysitter);
 				newConversationWithSitter(babysitter.getUser().getObjectId());
-
 			}
 			
 			protected void newConversationWithSitter(String objectId) {
@@ -438,6 +445,20 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 		return rootView;
 	}
 	
+
+	private boolean isFavoriteSitter(Babysitter babysitter) {
+		
+		for (BabysitterFavorite favorite : Config.favorites) {
+			Babysitter favoriteSitter = favorite.getBabysitter();
+			
+			if (favoriteSitter.getObjectId().equals(babysitter.getObjectId())) {
+				return true;
+			}
+		}
+		
+		return false;
+		
+	}
 
 	private void getOldAvator(Babysitter sitter) {
 		String websiteUrl = "http://cwisweb.sfaa.gov.tw/";
