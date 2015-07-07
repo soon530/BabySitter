@@ -10,10 +10,13 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.layer.sdk.LayerClient;
+import com.layer.sdk.LayerClient.DeletionMode;
 import com.layer.sdk.messaging.Conversation;
 import com.layer.sdk.messaging.Message;
 import com.layer.sdk.query.Query;
@@ -60,6 +63,8 @@ public class ConversationQueryAdapter extends QueryAdapter<Conversation, Convers
         public TextView lastMsgContent;
         public Conversation conversation;
         public final ConversationClickHandler conversationClickHandler;
+		public Button match;
+		public Button cancel;
 
         //Registers the click listener callback handler
         public ViewHolder(View itemView, ConversationClickHandler conversationClickHandler) {
@@ -104,11 +109,14 @@ public class ConversationQueryAdapter extends QueryAdapter<Conversation, Convers
         holder.time = (TextView) itemView.findViewById(R.id.time);
         holder.lastMsgContent = (TextView) itemView.findViewById(R.id.message);
 
+        holder.match = (Button) itemView.findViewById(R.id.match);
+        holder.cancel = (Button) itemView.findViewById(R.id.cancel);
+
         return holder;
     }
 
     //After the ViewHolder is created, we need to populate the fields with information from the Conversation
-    public void onBindViewHolder(ViewHolder viewHolder, Conversation conversation) {
+    public void onBindViewHolder(final ViewHolder viewHolder, Conversation conversation) {
         if (conversation == null) {
             // If the item no longer exists, the ID probably migrated.
             refresh();
@@ -147,6 +155,23 @@ public class ConversationQueryAdapter extends QueryAdapter<Conversation, Convers
 
         //Draw the date the last message was received (downloaded from the server)
         viewHolder.time.setText(LayerImpl.getReceivedAtTime(message));
+        
+        viewHolder.match.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+			}
+		});
+        
+        viewHolder.cancel.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				viewHolder.conversation.delete(DeletionMode.ALL_PARTICIPANTS);
+			}
+		});;
+        
     }
 
     //This example app only has one kind of view type, but you could support different TYPES of
