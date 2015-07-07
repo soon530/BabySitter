@@ -622,11 +622,14 @@ public class HomeFragment extends Fragment implements
 		UserType userType = AccountChecker.getUserType();
 		if (userType == UserType.PARENT) {
 			loadParentsProfileData();
+			getActivity().setTitle("保母列表");
 			
 		} else if (userType == UserType.SITTER) {
 			loadSitterProfileData();
+			getActivity().setTitle("爸媽列表");
 			
 		} else if (userType == UserType.LATER) {
+			
 		}
 	}
 

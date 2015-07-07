@@ -2,9 +2,15 @@ package tw.tasker.babysitter.presenter.adapter;
 
 import java.util.List;
 
+import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
+import tw.tasker.babysitter.UserType;
 import tw.tasker.babysitter.layer.LayerImpl;
+import tw.tasker.babysitter.model.data.Babysitter;
+import tw.tasker.babysitter.model.data.BabysitterFavorite;
+import tw.tasker.babysitter.model.data.UserInfo;
 import tw.tasker.babysitter.parse.ParseImpl;
+import tw.tasker.babysitter.utils.AccountChecker;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -143,7 +149,16 @@ public class ConversationQueryAdapter extends QueryAdapter<Conversation, Convers
                 participants += ParseImpl.getUsername(users.get(i));
             }
         }
-        viewHolder.participants.setText(participants);
+        
+        String participatsTitle = "";
+        UserType userType = AccountChecker.getUserType();
+        if (userType == UserType.PARENT) {
+        	participatsTitle = "保母:";
+        } else if (userType == UserType.SITTER) {
+        	participatsTitle = "爸媽:";
+        }
+        
+        viewHolder.participants.setText(participatsTitle + participants);
 
         //Grab the last message in the conversation and show it in the format "sender: last message content"
         Message message = conversation.getLastMessage();
@@ -170,11 +185,32 @@ public class ConversationQueryAdapter extends QueryAdapter<Conversation, Convers
 			public void onClick(View v) {
 				viewHolder.conversation.delete(DeletionMode.ALL_PARTICIPANTS);
 			}
-		});;
-        
+		});
+		
+		if (isUserSendRequest(viewHolder.conversation.getId().toString())) {
+			viewHolder.match.setVisibility(View.GONE);
+			viewHolder.cancel.setVisibility(View.GONE);
+		} else {
+			viewHolder.match.setVisibility(View.VISIBLE);
+			viewHolder.cancel.setVisibility(View.VISIBLE);
+		}
+		
     }
 
-    //This example app only has one kind of view type, but you could support different TYPES of
+	private boolean isUserSendRequest(String conversationId) {
+		for (BabysitterFavorite favorite : Config.favorites) {
+			String favoriteUserId = favorite.getUser().getObjectId();
+			String favoriteConversationId = favorite.getConversationId();
+			
+			if (favoriteConversationId.equals(conversationId) && 
+					favoriteUserId.equals(ParseUser.getCurrentUser().getObjectId())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	//This example app only has one kind of view type, but you could support different TYPES of
     // Conversations if you were so inclined
     public int getItemViewType(int i) {
         return 1;

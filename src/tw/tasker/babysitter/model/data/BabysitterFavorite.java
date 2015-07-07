@@ -51,4 +51,10 @@ public class BabysitterFavorite extends ParseObject {
 		return (UserInfo) getParseObject("UserInfo");
 	}
 
+	public void setConversationId(String value) {
+		put("conversationId", value);
+	}
+	public String getConversationId() {
+		return getString("conversationId");
+	}
 }

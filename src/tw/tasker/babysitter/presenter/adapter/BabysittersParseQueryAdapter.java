@@ -174,7 +174,6 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 
 //				showBabysitterPhone(phones);
 				
-				addFavorite(babysitter);
 				pushTextToSitter(babysitter);
 				newConversationWithSitter(babysitter.getUser().getObjectId());
 			}
@@ -196,6 +195,7 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 	                    //Create a new conversation, and tie it to the QueryAdapter
 	                    mConversation = LayerImpl.getLayerClient().newConversation(mTargetParticipants);
 	                    //createMessagesAdapter();
+	    				addFavorite(babysitter);
 
 	                    //Once the Conversation object is created, we don't allow changing the Participant List
 	                    // Note: this is an implementation choice. It is always possible to add/remove participants
@@ -264,6 +264,7 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 				babysitterfavorite.put("user", ParseUser.getCurrentUser());
 				babysitterfavorite.setIsParentConfirm(true);
 				babysitterfavorite.setIsSitterConfirm(false);
+				babysitterfavorite.setConversationId(mConversation.getId().toString());
 				
 				babysitterfavorite.saveInBackground(new SaveCallback() {
 					@Override
