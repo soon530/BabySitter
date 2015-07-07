@@ -88,7 +88,8 @@
                     android:background="@drawable/border_button_selector"
                     android:text="媒合"
                     android:textColor="@drawable/border_button_text_selector"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:visibility="gone" />
 
                 <Button
                     android:id="@+id/cancel"
@@ -98,7 +99,8 @@
                     android:background="@drawable/border_button_selector"
                     android:text="取消"
                     android:textColor="@drawable/border_button_text_selector"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:visibility="gone" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

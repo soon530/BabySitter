@@ -8,9 +8,9 @@ import tw.tasker.babysitter.UserType;
 import tw.tasker.babysitter.layer.LayerImpl;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.BabysitterFavorite;
-import tw.tasker.babysitter.model.data.UserInfo;
 import tw.tasker.babysitter.parse.ParseImpl;
 import tw.tasker.babysitter.utils.AccountChecker;
+import tw.tasker.babysitter.utils.LogUtils;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -25,8 +25,13 @@ import com.layer.sdk.LayerClient;
 import com.layer.sdk.LayerClient.DeletionMode;
 import com.layer.sdk.messaging.Conversation;
 import com.layer.sdk.messaging.Message;
+import com.layer.sdk.messaging.MessagePart;
 import com.layer.sdk.query.Query;
 import com.layer.sdk.query.SortDescriptor;
+import com.parse.FindCallback;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 /*
@@ -50,10 +55,13 @@ public class ConversationQueryAdapter extends QueryAdapter<Conversation, Convers
     //Handle the callbacks when the Conversation item is actually clicked. In this case, the
     // ConversationsActivity class implements the ConversationClickHandler
     private final ConversationClickHandler mConversationClickHandler;
+
     public static interface ConversationClickHandler {
         public void onConversationClick(Conversation conversation);
 
         public boolean onConversationLongClick(Conversation conversation);
+        
+        public void onConfirmClick(Conversation conversation);
     }
 
     //The fields in the ViewHolder reflect the conversation_item view
@@ -82,12 +90,16 @@ public class ConversationQueryAdapter extends QueryAdapter<Conversation, Convers
 
         //Execute the callback when the conversation is clicked
         public void onClick(View v) {
-            conversationClickHandler.onConversationClick(conversation);
+        	conversationClickHandler.onConversationClick(conversation);
         }
 
         //Execute the callback when the conversation is long-clicked
         public boolean onLongClick(View v) {
             return conversationClickHandler.onConversationLongClick(conversation);
+        }
+        
+        public void onConfirmClick() {
+        	conversationClickHandler.onConfirmClick(conversation);
         }
     }
 
@@ -175,7 +187,15 @@ public class ConversationQueryAdapter extends QueryAdapter<Conversation, Convers
 			
 			@Override
 			public void onClick(View v) {
-				
+	            MessagePart part = LayerImpl.getLayerClient().newMessagePart("接受托育，開始聊天吧~");
+	            Message msg = LayerImpl.getLayerClient().newMessage(part);
+	            viewHolder.conversation.send(msg);
+	            
+	            updateSitterConfirm(viewHolder.conversation.getId().toString(), viewHolder);
+
+	            viewHolder.onConfirmClick();
+	            //viewHolder.isConfirm = true;
+
 			}
 		});
         
@@ -186,16 +206,93 @@ public class ConversationQueryAdapter extends QueryAdapter<Conversation, Convers
 				viewHolder.conversation.delete(DeletionMode.ALL_PARTICIPANTS);
 			}
 		});
+
+        
+//		if (isUserSendRequest(viewHolder.conversation.getId().toString())) {
+//			LogUtils.LOGD("vic", "1.confirm button hide!");
+//			viewHolder.match.setVisibility(View.GONE);
+//			viewHolder.cancel.setVisibility(View.GONE);
+//		} else {
+//			LogUtils.LOGD("vic", "1.confirm button show!");
+//			viewHolder.match.setVisibility(View.VISIBLE);
+//			viewHolder.cancel.setVisibility(View.VISIBLE);
+//		}
+
+		loadSitterFavoriteData(Config.sitterInfo, viewHolder);
+
+    }
+    
+    private boolean isConfirmBothParentAndSitter(String conversationId) {
+		for (BabysitterFavorite favorite : Config.favorites) {
+//			/String favoriteUserId = favorite.getUser().getObjectId();
+			String favoriteConversationId = favorite.getConversationId();
+			
+			if (favoriteConversationId.equals(conversationId) && 
+					favorite.getIsParentConfirm() && favorite.getIsSitterConfirm()) {
+				return true;
+			}
+		}
+		return false;
 		
-		if (isUserSendRequest(viewHolder.conversation.getId().toString())) {
-			viewHolder.match.setVisibility(View.GONE);
-			viewHolder.cancel.setVisibility(View.GONE);
-		} else {
-			viewHolder.match.setVisibility(View.VISIBLE);
-			viewHolder.cancel.setVisibility(View.VISIBLE);
+	}
+
+	protected void updateSitterConfirm(String conversationId, final ViewHolder viewHolder) {
+		ParseQuery<BabysitterFavorite> query = BabysitterFavorite.getQuery();
+		query.whereEqualTo("conversationId", conversationId);
+		query.getFirstInBackground(new GetCallback<BabysitterFavorite>() {
+			
+			@Override
+			public void done(BabysitterFavorite favorite, ParseException exception) {
+				if (favorite != null) {
+					favorite.setIsSitterConfirm(true);
+					favorite.saveInBackground();
+				}
+			}
+		});
+	}
+	
+	private void loadSitterFavoriteData(Babysitter sitter, final ViewHolder viewHolder) {
+		ParseQuery<BabysitterFavorite> query = BabysitterFavorite.getQuery();
+		
+		if (AccountChecker.getUserType() == UserType.PARENT) {
+			query.whereEqualTo("UserInfo", Config.userInfo);
+		} else if (AccountChecker.getUserType() == UserType.SITTER) {
+			query.whereEqualTo("Babysitter", Config.sitterInfo);
 		}
 		
-    }
+		query.findInBackground(new FindCallback<BabysitterFavorite>() {
+			
+			@Override
+			public void done(List<BabysitterFavorite> favorites, ParseException e) {
+				if (AccountChecker.isNull(favorites)) {
+					//Toast.makeText(getActivity(), "查不到你的資料!", Toast.LENGTH_SHORT).show();
+
+				} else {
+					Config.favorites = favorites;
+					
+					for (BabysitterFavorite favorite : favorites) {
+						LogUtils.LOGD("vic", "sitter favorite isParentConfirm():" + favorite.getIsParentConfirm());
+						LogUtils.LOGD("vic", "sitter favorite isSitterConfirm():" + favorite.getIsSitterConfirm());
+					}
+					
+					//LogUtils.LOGD("vic", "isConfirm()" + viewHolder.isConfirm);
+					
+					String conversationId = viewHolder.conversation.getId().toString();
+					
+					if (isConfirmBothParentAndSitter(conversationId) || isUserSendRequest(conversationId) ) {
+						LogUtils.LOGD("vic", "2.confirm button hide!");
+						viewHolder.match.setVisibility(View.GONE);
+						viewHolder.cancel.setVisibility(View.GONE);
+					} else {
+						LogUtils.LOGD("vic", "2.confirm button show!");
+						viewHolder.match.setVisibility(View.VISIBLE);
+						viewHolder.cancel.setVisibility(View.VISIBLE);
+					}
+					
+				}
+			}
+		});
+	}
 
 	private boolean isUserSendRequest(String conversationId) {
 		for (BabysitterFavorite favorite : Config.favorites) {

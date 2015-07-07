@@ -22,6 +22,7 @@ import tw.tasker.babysitter.R.menu;
 import tw.tasker.babysitter.layer.LayerCallbacks;
 import tw.tasker.babysitter.layer.LayerImpl;
 import tw.tasker.babysitter.model.data.Babysitter;
+import tw.tasker.babysitter.model.data.BabysitterFavorite;
 import tw.tasker.babysitter.model.data.UserInfo;
 import tw.tasker.babysitter.parse.ParseImpl;
 import tw.tasker.babysitter.presenter.adapter.BabysittersParseQueryAdapter;
@@ -282,11 +283,29 @@ public class ConversationActivity extends ActionBarActivity implements LayerCall
 	@Override
 	public void onConversationClick(Conversation conversation) {
         //If the Conversation is valid, start the MessageActivity and pass in the Conversation ID
-        if (conversation != null && conversation.getId() != null && !conversation.isDeleted()) {
+        if (conversation != null && conversation.getId() != null && !conversation.isDeleted()
+        		&& isConfirmBothParentAndSitter(conversation.getId().toString())
+        		) {
             Intent intent = new Intent(ConversationActivity.this, MessageActivity.class);
             intent.putExtra("conversation-id", conversation.getId());
             startActivity(intent);
         }
+		
+	}
+	
+	
+	
+    private boolean isConfirmBothParentAndSitter(String conversationId) {
+		for (BabysitterFavorite favorite : Config.favorites) {
+//			/String favoriteUserId = favorite.getUser().getObjectId();
+			String favoriteConversationId = favorite.getConversationId();
+			
+			if (favoriteConversationId.equals(conversationId) && 
+					favorite.getIsParentConfirm() && favorite.getIsSitterConfirm()) {
+				return true;
+			}
+		}
+		return false;
 		
 	}
 
@@ -294,6 +313,16 @@ public class ConversationActivity extends ActionBarActivity implements LayerCall
 	public boolean onConversationLongClick(Conversation conversation) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public void onConfirmClick(Conversation conversation) {
+	       //If the Conversation is valid, start the MessageActivity and pass in the Conversation ID
+        if (conversation != null && conversation.getId() != null && !conversation.isDeleted()) {
+            Intent intent = new Intent(ConversationActivity.this, MessageActivity.class);
+            intent.putExtra("conversation-id", conversation.getId());
+            startActivity(intent);
+        }
 	}
 
 //	@Override
