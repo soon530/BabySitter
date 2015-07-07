@@ -207,7 +207,6 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 	                    return;
 	                }
 	            }
-
 	            
 	            String text = "向您提出托育請求";
 

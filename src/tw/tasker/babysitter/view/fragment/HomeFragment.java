@@ -722,32 +722,32 @@ public class HomeFragment extends Fragment implements
 		//mAdapter.setPaginationEnabled(false);
 		//mAdapter.addOnQueryLoadListener(this);
 
-		SlideExpandableListAdapter slideAdapter = new SlideExpandableListAdapter(
-				mAdapter,
-                R.id.expandable_toggle_button,
-                R.id.expandable);
-		slideAdapter.setItemExpandCollapseListener(new OnItemExpandCollapseListener() {
-			
-			@Override
-			public void onExpand(View itemView, int position) {
-				
-				View view = getViewByPosition(position, mListView);
-				
-				ImageView arrow = (ImageView) view.findViewById(R.id.arrow);
-				arrow.animate().rotation(180).start();
-				//mAdapter.setExpandableObjectID(mAdapter.getItem(position).getObjectId());
-			}
-			
-			@Override
-			public void onCollapse(View itemView, int position) {
-				View view = getViewByPosition(position, mListView);
-				ImageView arrow = (ImageView) view.findViewById(R.id.arrow);
-				arrow.animate().rotation(0).start();				
-				//mAdapter.setExpandableObjectID("");
-			}
-		});
+//		SlideExpandableListAdapter slideAdapter = new SlideExpandableListAdapter(
+//				mAdapter,
+//                R.id.expandable_toggle_button,
+//                R.id.expandable);
+//		slideAdapter.setItemExpandCollapseListener(new OnItemExpandCollapseListener() {
+//			
+//			@Override
+//			public void onExpand(View itemView, int position) {
+//				
+//				View view = getViewByPosition(position, mListView);
+//				
+//				ImageView arrow = (ImageView) view.findViewById(R.id.arrow);
+//				arrow.animate().rotation(180).start();
+//				//mAdapter.setExpandableObjectID(mAdapter.getItem(position).getObjectId());
+//			}
+//			
+//			@Override
+//			public void onCollapse(View itemView, int position) {
+//				View view = getViewByPosition(position, mListView);
+//				ImageView arrow = (ImageView) view.findViewById(R.id.arrow);
+//				arrow.animate().rotation(0).start();				
+//				//mAdapter.setExpandableObjectID("");
+//			}
+//		});
 		
-		mListView.setAdapter(slideAdapter);	
+		mListView.setAdapter(mAdapter);	
 
 	}
 
