@@ -223,6 +223,8 @@ public class DataCheckParentEditFragment extends Fragment implements OnClickList
 			break;
 
 		case R.id.confirm:
+			getActivity().finish();
+			
 			//saveUserInfo(Config.userInfo);
 			break;
 		default:

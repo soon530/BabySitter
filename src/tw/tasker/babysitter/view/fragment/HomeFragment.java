@@ -150,6 +150,7 @@ public class HomeFragment extends Fragment implements
     private Conversation mConversation;
 
 	private ProgressDialog mRingProgressDialog;
+	private Babysitter mSitter;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -935,17 +936,14 @@ public class HomeFragment extends Fragment implements
 
 	@Override
 	public void onContactClick(View v, Babysitter babysitter) {
+		mSitter = babysitter;
 		
+		Button contact = (Button) v;
+		contact.setText("已送出媒合邀請");
+		contact.setEnabled(false);
+
 		Intent intent = new Intent(getActivity(), DataCheckActivity.class);
 		startActivityForResult(intent, 0);
-		
-		
-		//Button contact = (Button) v;
-		//contact.setText("已送出媒合邀請");
-		//contact.setEnabled(false);
-		
-		//pushTextToSitter(babysitter.getUser());
-		//newConversationWithSitter(babysitter.getUser().getObjectId());
 	}
 	
 	@Override
@@ -954,6 +952,9 @@ public class HomeFragment extends Fragment implements
 		
 		LogUtils.LOGD("vic", "requestCode:" + requestCode + ", resultCode:" + resultCode);
 		
+		pushTextToSitter(mSitter.getUser());
+		newConversationWithSitter(mSitter.getUser().getObjectId());
+
 	}
 
 	private void pushTextToSitter(ParseUser sitterUser) {
