@@ -1,29 +1,14 @@
 package tw.tasker.babysitter.presenter.adapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
-import tw.tasker.babysitter.layer.LayerImpl;
 import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.BabysitterFavorite;
-import tw.tasker.babysitter.model.data.UserInfo;
 import tw.tasker.babysitter.utils.DisplayUtils;
 import tw.tasker.babysitter.utils.LogUtils;
-import tw.tasker.babysitter.view.fragment.ListDialogFragment;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.preference.PreferenceManager;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentActivity;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
@@ -35,27 +20,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.layer.sdk.messaging.Conversation;
-import com.layer.sdk.messaging.Message;
-import com.layer.sdk.messaging.MessagePart;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.parse.FindCallback;
-import com.parse.Parse;
-import com.parse.ParseException;
-import com.parse.ParseInstallation;
-import com.parse.ParseObject;
-import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
-import com.parse.ParseUser;
-import com.parse.SaveCallback;
-import com.parse.SendCallback;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> {
+public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
+	 {
 	private int defaultDistance = 2;
 	private int count = 2;
 	private boolean isColor = true;
@@ -65,17 +38,16 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 	private CircleImageView mAvatar;
 	private ImageLoader imageLoader = ImageLoader.getInstance();
 	private TextView mAge;
-	private ProgressDialog mRingProgressDialog;
-	private BabysitterFavorite mBabysitterFavorite;
 
-	// message
-	private ArrayList<String> mTargetParticipants;
-    //The owning conversation
-    private Conversation mConversation;
+    public SitterListClickHandler mSitterListClickHandler;
+    public static interface SitterListClickHandler {
+    	public void onContactClick(View v, Babysitter babysitter);
+    	public void onDetailClick();
+    }
 
-
-	public BabysittersParseQueryAdapter(Context context) {
+	public BabysittersParseQueryAdapter(Context context, SitterListClickHandler sitterListClickHandler) {
 		super(context, getQueryFactory(context));
+		mSitterListClickHandler = sitterListClickHandler;
 	}
 
 	@Override
@@ -151,155 +123,38 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 		content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
 		communityName.setText(content);
 
-		Button contact = (Button) rootView.findViewById(R.id.contact);
+		final Button contact = (Button) rootView.findViewById(R.id.contact);
 		
 		if (isFavoriteSitter(babysitter)) {
 			contact.setEnabled(false);
-			contact.setText("已送請求");
+			contact.setText(R.string.contact_sent);
 		} else {
 			contact.setEnabled(true);
-			contact.setText("保母媒合");
+			contact.setText(R.string.contact);
 		}
 		
 		contact.setOnClickListener(new OnClickListener() {
-
+			
 			@Override
 			public void onClick(View v) {
-//				String[] phones = babysitter.getTel().replace("(日):", "")
-//						.replace("手機: ", "").split(" ");
-//				LogUtils.LOGD("vic", "phones" + babysitter.getTel());
-//				for (String phone : phones) {
-//					LogUtils.LOGD("vic", "phone" + phone);
-//				}
-
-//				showBabysitterPhone(phones);
-				
-				pushTextToSitter(babysitter);
-				newConversationWithSitter(babysitter.getUser().getObjectId());
-			}
-			
-			protected void newConversationWithSitter(String objectId) {
-			    
-		        if(mTargetParticipants == null)
-		            mTargetParticipants = new ArrayList<>();
-		            
-		        mTargetParticipants.add(objectId);
-		        mTargetParticipants.add(ParseUser.getCurrentUser().getObjectId());
-		           
-	            //First Check to see if we have a valid Conversation object
-	            if(mConversation == null){
-	                //Make sure there are valid participants. Since the Authenticated user will always be
-	                // included in a new Conversation, we check to see if there is more than one target participant
-	                if(mTargetParticipants.size() > 1) {
-
-	                    //Create a new conversation, and tie it to the QueryAdapter
-	                    mConversation = LayerImpl.getLayerClient().newConversation(mTargetParticipants);
-	                    //createMessagesAdapter();
-	    				addFavorite(babysitter);
-
-	                    //Once the Conversation object is created, we don't allow changing the Participant List
-	                    // Note: this is an implementation choice. It is always possible to add/remove participants
-	                    // after a Conversation has been created
-	                    //hideAddParticipantsButton();
-
-	                } else {
-	                    //showAlert("Send Message Error","You need to specify at least one participant before sending a message.");
-	                    return;
-	                }
-	            }
-	            
-	            String text = "向您提出托育請求";
-
-	            //If the input is valid, create a new Message and send it to the Conversation
-	            if(mConversation != null && text != null && text.length() > 0){
-
-	                MessagePart part = LayerImpl.getLayerClient().newMessagePart(text);
-	                Message msg = LayerImpl.getLayerClient().newMessage(part);
-	                mConversation.send(msg);
-
-
-	            } else {
-	                //showAlert("Send Message Error","You cannot send an empty message.");
-	            }
-
-				
-			}
-
-			private void pushTextToSitter(Babysitter babysitter) {
-				ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
-				LogUtils.LOGD("vic", "push obj:" + babysitter.getUser().getObjectId());
-				//ParseObject obj = ParseObject.createWithoutData("user", "KMyQfnc5k3");
-				pushQuery.whereEqualTo("user", babysitter.getUser());
-				
-				// Send push notification to query
-				ParsePush push = new ParsePush();
-				push.setQuery(pushQuery); // Set our Installation query
-				//push.setMessage("有爸媽，想找你帶小孩唷~");
-				JSONObject data = getJSONDataMessageForIntent();
-				push.setData(data);
-				push.sendInBackground(new SendCallback() {
-					
-					@Override
-					public void done(ParseException e) {
-						if (e != null)
-							LogUtils.LOGD("vic", "erroe" + e.getMessage());
-					}
-				});
-				
-			}
-			
-			private void addFavorite(Babysitter sitter) {
-				mRingProgressDialog = ProgressDialog.show(getContext(),
-				"請稍等 ...", "加入收藏中...", true);
-
-				Babysitter babysitter = ParseObject.createWithoutData(Babysitter.class, sitter.getObjectId());
-				UserInfo userInfo = ParseObject.createWithoutData(UserInfo.class, Config.userInfo.getObjectId());
-
-				BabysitterFavorite babysitterfavorite = new BabysitterFavorite();
-				mBabysitterFavorite = babysitterfavorite;
-				// favorite.put("baby", mBaby);
-				babysitterfavorite.setBabysitter(babysitter);
-				babysitterfavorite.setUserInfo(userInfo);
-				
-				babysitterfavorite.put("user", ParseUser.getCurrentUser());
-				babysitterfavorite.setIsParentConfirm(true);
-				babysitterfavorite.setIsSitterConfirm(false);
-				babysitterfavorite.setConversationId(mConversation.getId().toString());
-				
-				babysitterfavorite.saveInBackground(new SaveCallback() {
-					@Override
-					public void done(ParseException e) {
-						if (e == null) {
-							// Toast.makeText(getActivity().getApplicationContext(),
-							// "saving doen!", Toast.LENGTH_SHORT).show();
-						} else {
-							Toast.makeText(getContext(),
-									"Error saving: " + e.getMessage(),
-									Toast.LENGTH_SHORT).show();
-						}
-						
-						mRingProgressDialog.dismiss();
-					}
-
-				});
-			}
-
-			private JSONObject getJSONDataMessageForIntent() {
-				try
-			    {
-			        JSONObject data = new JSONObject();
-			        data.put("alert", "家長["+ParseUser.getCurrentUser().getUsername()+"]，想找你帶小孩唷~");
-			        //instead action is used
-			        //data.put("customdata", "custom data value");
-			        data.put("user", ParseUser.getCurrentUser().getObjectId());
-			        return data;
-			    }
-			    catch(JSONException x)
-			    {
-			        throw new RuntimeException("Something wrong with JSON", x);
-			    }
+				mSitterListClickHandler.onContactClick(v, babysitter);
 			}
 		});
+		
+//		contact.setOnClickListener(new OnClickListener() {
+//
+//			@Override
+//			public void onClick(View v) {
+//				
+//
+////				showBabysitterPhone(phones);
+//				
+//				//pushTextToSitter(babysitter);
+//				//newConversationWithSitter(babysitter.getUser().getObjectId());
+//			}
+//			
+//
+//		});
 
 		mBabyCount = (RatingBar) rootView.findViewById(R.id.babycareCount);
 		int babyCount = DisplayUtils.getBabyCount(babysitter.getBabycareCount());
@@ -445,7 +300,7 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 		return rootView;
 	}
 	
-
+	// TODO the system will be crashed sometimes.
 	private boolean isFavoriteSitter(Babysitter babysitter) {
 		
 		for (BabysitterFavorite favorite : Config.favorites) {
@@ -457,7 +312,6 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 		}
 		
 		return false;
-		
 	}
 
 	private void getOldAvator(Babysitter sitter) {
@@ -475,29 +329,8 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 	/*
 	 * @Override public int getViewTypeCount() { return 2; }
 	 */
-	private void showBabysitterPhone(final String[] phones) {
-		DialogFragment newFragment = new ListDialogFragment(phones,
-				new DialogInterface.OnClickListener() {
 
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
 
-						String phone = phones[which];
-						makePhoneCall(phone);
-
-					}
-				});
-
-		newFragment.show(
-				((FragmentActivity) getContext()).getSupportFragmentManager(),
-				"dialog");
-	}
-
-	private void makePhoneCall(String phoneNumber) {
-		Intent intent = new Intent(Intent.ACTION_DIAL);
-		intent.setData(Uri.parse("tel:" + phoneNumber));
-		getContext().startActivity(intent);
-	}
 
 	
 	private static ParseQueryAdapter.QueryFactory<Babysitter> getQueryFactory(
@@ -610,11 +443,4 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter> 
 		mExpandableObjectID = objectID;
 	}
 
-	/*
-	 * @Override public View getNextPageView(View v, ViewGroup parent) { if (v
-	 * == null) { v = View.inflate(getContext(), R.layout.adapter_next_page,
-	 * null); }
-	 * 
-	 * return v; }
-	 */
 }

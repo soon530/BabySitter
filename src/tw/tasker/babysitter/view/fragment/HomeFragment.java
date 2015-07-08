@@ -7,6 +7,8 @@ import static tw.tasker.babysitter.utils.LogUtils.LOGD;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONObject;
+
 import tw.tasker.babysitter.Config;
 import tw.tasker.babysitter.R;
 import tw.tasker.babysitter.UserType;
@@ -15,6 +17,7 @@ import tw.tasker.babysitter.model.data.Babysitter;
 import tw.tasker.babysitter.model.data.BabysitterFavorite;
 import tw.tasker.babysitter.model.data.UserInfo;
 import tw.tasker.babysitter.presenter.adapter.BabysittersParseQueryAdapter;
+import tw.tasker.babysitter.presenter.adapter.BabysittersParseQueryAdapter.SitterListClickHandler;
 import tw.tasker.babysitter.presenter.adapter.ParentsParseQueryAdapter;
 import tw.tasker.babysitter.utils.AccountChecker;
 import tw.tasker.babysitter.utils.DisplayUtils;
@@ -28,6 +31,8 @@ import tw.tasker.babysitter.view.activity.ProfileActivity;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -35,7 +40,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -61,12 +68,19 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
+import com.layer.sdk.messaging.Conversation;
+import com.layer.sdk.messaging.Message;
+import com.layer.sdk.messaging.MessagePart;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseInstallation;
+import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
+import com.parse.SendCallback;
 import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -83,7 +97,8 @@ public class HomeFragment extends Fragment implements
 	OnQueryLoadListener<Babysitter>, 
 	OnRefreshListener,
 	OnFocusChangeListener, 
-	OnEditorActionListener {
+	OnEditorActionListener,
+	SitterListClickHandler {
 
 	protected ScrollView mScrollView;
 	private LinearLayout mFilterPanel;
@@ -127,6 +142,13 @@ public class HomeFragment extends Fragment implements
 	private ArrayList<CheckBox> mTimeCheckBoxs = new ArrayList<CheckBox>();
 	private ArrayList<CheckBox> mKidsCheckBoxs = new ArrayList<CheckBox>();
 	private ArrayList<CheckBox> mAgeCheckBoxs = new ArrayList<CheckBox>();
+	
+	// message
+	private ArrayList<String> mTargetParticipants;
+    //The owning conversation
+    private Conversation mConversation;
+
+	private ProgressDialog mRingProgressDialog;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -709,14 +731,14 @@ public class HomeFragment extends Fragment implements
 		UserType userType = AccountChecker.getUserType();
 		if (userType == UserType.PARENT) { // 爸媽，抓保母資料
 			//mHomeData = new ParentHomeData(getActivity().getApplicationContext());
-			mAdapter = new BabysittersParseQueryAdapter(getActivity());
+			mAdapter = new BabysittersParseQueryAdapter(getActivity(), this);
 			
 		} else if (userType == UserType.SITTER) { // 保母，抓爸媽資料
 			//mHomeData = new SitterHomeData();
 			mAdapter = new ParentsParseQueryAdapter(getActivity());
 			
 		} else if (userType == UserType.LATER) {
-			mAdapter = new BabysittersParseQueryAdapter(getActivity());
+			mAdapter = new BabysittersParseQueryAdapter(getActivity(), this);
 			//mHomeData = new LaterHomeData();
 			
 		}
@@ -880,6 +902,9 @@ public class HomeFragment extends Fragment implements
 		ProgressBarUtils.hide(getActivity());
 	}
 
+
+	
+	
 	@Override
 	public void onFocusChange(View v, boolean hasFocus) {
 		if (!hasFocus) {
@@ -905,6 +930,128 @@ public class HomeFragment extends Fragment implements
 		doListQuery();
 		
 		return true;
+	}
+
+	@Override
+	public void onContactClick(View v, Babysitter babysitter) {
+		Button contact = (Button) v;
+		contact.setText("已送出媒合邀請");
+		contact.setEnabled(false);
+		
+		pushTextToSitter(babysitter.getUser());
+		newConversationWithSitter(babysitter.getUser().getObjectId());
+	}
+
+	private void pushTextToSitter(ParseUser sitterUser) {
+		ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
+		LogUtils.LOGD("vic", "push obj:" + sitterUser.getObjectId());
+		//ParseObject obj = ParseObject.createWithoutData("user", "KMyQfnc5k3");
+		pushQuery.whereEqualTo("user", sitterUser);
+		
+		// Send push notification to query
+		ParsePush push = new ParsePush();
+		push.setQuery(pushQuery); // Set our Installation query
+		//push.setMessage("有爸媽，想找你帶小孩唷~");
+		JSONObject data = DisplayUtils.getJSONDataMessageForIntent();
+		push.setData(data);
+		push.sendInBackground(new SendCallback() {
+			
+			@Override
+			public void done(ParseException e) {
+				if (e != null)
+					LogUtils.LOGD("vic", "erroe" + e.getMessage());
+			}
+		});
+		
+	}
+	
+	protected void newConversationWithSitter(String sitterObjectId) {
+	    
+        if(mTargetParticipants == null)
+            mTargetParticipants = new ArrayList<>();
+            
+        mTargetParticipants.add(sitterObjectId);
+        mTargetParticipants.add(ParseUser.getCurrentUser().getObjectId());
+           
+        //First Check to see if we have a valid Conversation object
+        if(mConversation == null){
+            //Make sure there are valid participants. Since the Authenticated user will always be
+            // included in a new Conversation, we check to see if there is more than one target participant
+            if(mTargetParticipants.size() > 1) {
+
+                //Create a new conversation, and tie it to the QueryAdapter
+                mConversation = LayerImpl.getLayerClient().newConversation(mTargetParticipants);
+                //createMessagesAdapter();
+				
+                addFavorite(sitterObjectId);
+
+                //Once the Conversation object is created, we don't allow changing the Participant List
+                // Note: this is an implementation choice. It is always possible to add/remove participants
+                // after a Conversation has been created
+                //hideAddParticipantsButton();
+
+            } else {
+                //showAlert("Send Message Error","You need to specify at least one participant before sending a message.");
+                return;
+            }
+        }
+        
+        String text = "向您提出托育請求";
+
+        //If the input is valid, create a new Message and send it to the Conversation
+        if(mConversation != null && text != null && text.length() > 0){
+
+            MessagePart part = LayerImpl.getLayerClient().newMessagePart(text);
+            Message msg = LayerImpl.getLayerClient().newMessage(part);
+            mConversation.send(msg);
+
+
+        } else {
+            //showAlert("Send Message Error","You cannot send an empty message.");
+        }
+		
+	}
+	
+	private void addFavorite(String sitterObjectId) {
+		mRingProgressDialog = ProgressDialog.show(getActivity(), "請稍等 ...", "送出媒合訊息中...", true);
+
+		Babysitter babysitter = ParseObject.createWithoutData(Babysitter.class, sitterObjectId);
+		UserInfo userInfo = ParseObject.createWithoutData(UserInfo.class, Config.userInfo.getObjectId());
+
+		BabysitterFavorite babysitterfavorite = new BabysitterFavorite();
+		
+		//mBabysitterFavorite = babysitterfavorite;
+		
+		// favorite.put("baby", mBaby);
+		babysitterfavorite.setBabysitter(babysitter);
+		babysitterfavorite.setUserInfo(userInfo);
+		
+		babysitterfavorite.put("user", ParseUser.getCurrentUser());
+		babysitterfavorite.setIsParentConfirm(true);
+		babysitterfavorite.setIsSitterConfirm(false);
+		babysitterfavorite.setConversationId(mConversation.getId().toString());
+		
+		babysitterfavorite.saveInBackground(new SaveCallback() {
+			@Override
+			public void done(ParseException e) {
+				if (e == null) {
+					// Toast.makeText(getActivity().getApplicationContext(),
+					// "saving doen!", Toast.LENGTH_SHORT).show();
+				} else {
+					Toast.makeText(getActivity(),
+							"Error saving: " + e.getMessage(),
+							Toast.LENGTH_SHORT).show();
+				}
+				
+				mRingProgressDialog.dismiss();
+			}
+
+		});
+	}
+
+	@Override
+	public void onDetailClick() {
+		
 	}
 
 }
