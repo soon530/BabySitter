@@ -107,7 +107,12 @@
 		<activity android:name=".view.activity.MessageActivity" android:windowSoftInputMode="stateHidden|adjustResize">
         </activity>
         
-
+		<activity 
+		    android:name=".view.activity.DataCheckActivity" 
+		    android:windowSoftInputMode="stateHidden|adjustResize"
+		    android:label="資料確認">
+        </activity>
+		
         <!-- Parse -->
         <service android:name="com.parse.PushService" />
 

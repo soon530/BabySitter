@@ -1,0 +1,247 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/all_screen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white" >
+
+    <!-- Login form -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="16dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="請確認您的資料是否正確，以便讓保母能更了解您"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/normal_text" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/avatar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/profile" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="姓名：　　"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/normal_text" />
+
+            <EditText
+                android:id="@+id/parents_name"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginRight="45dp"
+                android:background="@drawable/full_edittext_selector"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="電話：　　"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/normal_text" />
+
+            <EditText
+                android:id="@+id/parents_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginRight="45dp"
+                android:background="@drawable/full_edittext_selector"
+                android:inputType="phone"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textSize="16sp" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="地址：　　"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/normal_text" />
+
+            <EditText
+                android:id="@+id/parents_address"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginRight="45dp"
+                android:background="@drawable/full_edittext_selector"
+                android:ems="10"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+		<LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="職業：　　"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/normal_text" />
+
+            <EditText
+                android:id="@+id/parents_job"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginRight="45dp"
+                android:background="@drawable/full_edittext_selector"
+                android:ems="10"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="小孩生日：民國"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/normal_text" />
+
+            <Spinner
+                android:id="@+id/kids_age_year"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="年"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <Spinner
+                android:id="@+id/kids_age_month"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="月"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="小孩姓別："
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/normal_text" />
+
+            <CheckBox
+                android:id="@+id/kids_gender_boy"
+                style="@style/FullCheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="男" />
+
+            <CheckBox
+                android:id="@+id/kids_gender_girl"
+                style="@style/FullCheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="女" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="其他備註："
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/normal_text" />
+
+            <EditText
+                android:id="@+id/parents_note"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginRight="45dp"
+                android:background="@drawable/full_edittext_selector"
+                android:ems="10"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textSize="16sp" />
+        </LinearLayout>
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="提醒：媒合的保姆能看到以上您所提供的資訊"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/normal_text" />
+        
+        <Button
+            android:id="@+id/confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/full_button_selector"
+            android:paddingLeft="32dp"
+            android:paddingRight="32dp"
+            android:text="確認"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="不是您的資料?"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/normal_text" />
+        
+    </LinearLayout>
+
+</ScrollView>

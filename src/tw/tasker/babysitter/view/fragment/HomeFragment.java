@@ -26,6 +26,7 @@ import tw.tasker.babysitter.utils.LogUtils;
 import tw.tasker.babysitter.utils.MyLocation;
 import tw.tasker.babysitter.utils.ProgressBarUtils;
 import tw.tasker.babysitter.view.activity.ConversationActivity;
+import tw.tasker.babysitter.view.activity.DataCheckActivity;
 import tw.tasker.babysitter.view.activity.DispatchActivity;
 import tw.tasker.babysitter.view.activity.ProfileActivity;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
@@ -934,12 +935,25 @@ public class HomeFragment extends Fragment implements
 
 	@Override
 	public void onContactClick(View v, Babysitter babysitter) {
-		Button contact = (Button) v;
-		contact.setText("已送出媒合邀請");
-		contact.setEnabled(false);
 		
-		pushTextToSitter(babysitter.getUser());
-		newConversationWithSitter(babysitter.getUser().getObjectId());
+		Intent intent = new Intent(getActivity(), DataCheckActivity.class);
+		startActivityForResult(intent, 0);
+		
+		
+		//Button contact = (Button) v;
+		//contact.setText("已送出媒合邀請");
+		//contact.setEnabled(false);
+		
+		//pushTextToSitter(babysitter.getUser());
+		//newConversationWithSitter(babysitter.getUser().getObjectId());
+	}
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		LogUtils.LOGD("vic", "requestCode:" + requestCode + ", resultCode:" + resultCode);
+		
 	}
 
 	private void pushTextToSitter(ParseUser sitterUser) {
