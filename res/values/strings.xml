@@ -19,5 +19,9 @@
     <string name="error_mismatched_passwords">再輸入一次密碼</string>
     <string name="error_join">", 並 "</string>
     <string name="error_end">.</string>
+    
+    <!-- Sitter list  -->
+    <string name="contact">媒合保母</string>
+    <string name="contact_sent">已傳送媒合邀請</string>
 
 </resources>

@@ -63,7 +63,7 @@
         android:layout_marginBottom="16dp"
         android:background="@drawable/full_button_contact"
         android:textColor="@android:color/white"
-        android:text="聯絡保母"
+        android:text="@string/contact"
         android:textSize="16sp" />
 
 </LinearLayout>
