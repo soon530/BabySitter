@@ -54,6 +54,16 @@
         android:textSize="16sp"
          />
     
+	<TextView
+        android:id="@+id/detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="110dp" 
+        android:text="@string/detail"
+        android:textColor="@color/primary"
+        android:textSize="16sp"
+         />
+    
     <Button
         android:id="@+id/contact"
         android:layout_width="wrap_content"

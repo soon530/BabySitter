@@ -113,6 +113,12 @@
 		    android:label="資料確認">
         </activity>
 		
+		<activity 
+		    android:name=".view.activity.SitterDetailActivity" 
+		    android:windowSoftInputMode="stateHidden|adjustResize"
+		    android:label="詳細資料">
+        </activity>
+				
         <!-- Parse -->
         <service android:name="com.parse.PushService" />
 

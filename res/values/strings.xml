@@ -23,5 +23,6 @@
     <!-- Sitter list  -->
     <string name="contact">媒合保母</string>
     <string name="contact_sent">已傳送媒合邀請</string>
+    <string name="detail"><u>更多資料 </u></string>
 
 </resources>

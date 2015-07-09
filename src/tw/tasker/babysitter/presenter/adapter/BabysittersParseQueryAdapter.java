@@ -142,6 +142,17 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter>
 			}
 		});
 		
+		TextView detail = (TextView) rootView.findViewById(R.id.detail);
+		detail.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				mSitterListClickHandler.onDetailClick();
+				Config.sitterInfo = babysitter;
+			}
+		});
+
+		
 //		contact.setOnClickListener(new OnClickListener() {
 //
 //			@Override

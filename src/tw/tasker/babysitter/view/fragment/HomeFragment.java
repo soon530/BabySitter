@@ -29,6 +29,7 @@ import tw.tasker.babysitter.view.activity.ConversationActivity;
 import tw.tasker.babysitter.view.activity.DataCheckActivity;
 import tw.tasker.babysitter.view.activity.DispatchActivity;
 import tw.tasker.babysitter.view.activity.ProfileActivity;
+import tw.tasker.babysitter.view.activity.SitterDetailActivity;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -952,8 +953,8 @@ public class HomeFragment extends Fragment implements
 		
 		LogUtils.LOGD("vic", "requestCode:" + requestCode + ", resultCode:" + resultCode);
 		
-		pushTextToSitter(mSitter.getUser());
-		newConversationWithSitter(mSitter.getUser().getObjectId());
+		//pushTextToSitter(mSitter.getUser());
+		//newConversationWithSitter(mSitter.getUser().getObjectId());
 
 	}
 
@@ -1067,6 +1068,9 @@ public class HomeFragment extends Fragment implements
 	@Override
 	public void onDetailClick() {
 		
+		Intent intent = new Intent(getActivity(), SitterDetailActivity.class);
+		startActivityForResult(intent, 1);
+
 	}
 
 }
