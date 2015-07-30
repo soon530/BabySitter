@@ -41,6 +41,19 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter>
 	private TextView mAge;
 
     public SitterListClickHandler mSitterListClickHandler;
+	private LinearLayout mExpandable;
+	private LinearLayout mExpandableToggle;
+	private ImageView mArrow;
+	private TextView mName;
+	private TextView mAddress;
+	private TextView mBabycareTime;
+	private TextView mBabysitterNumber;
+	private TextView mEducation;
+	private TextView mCommunityName;
+	private TextView mKm;
+	private ImageView mKmLine;
+	private Button mContact;
+	private TextView mDetail;
     public static interface SitterListClickHandler {
     	public void onContactClick(View v, Babysitter babysitter);
     	public void onDetailClick();
@@ -54,138 +67,91 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter>
 	@Override
 	public View getItemView(final Babysitter babysitter, View view,
 			ViewGroup parent) {
-		// boolean recycle = false;
 		View rootView;
 
 		if (view == null) {
-			// recycle = false;
-			// rootView = View.inflate(getContext(), R.layout.list_item_sitter,
-			// null);
 			LayoutInflater mInflater = (LayoutInflater) getContext()
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			rootView = mInflater.inflate(R.layout.list_item_sitter, parent,
 					false);
 		} else {
 			rootView = view;
-			// recycle = true;
 		}
 		
-		mAge = (TextView) rootView.findViewById(R.id.age);
-		mAge.setText("("+babysitter.getAge()+")");
-
+		initView(rootView);
+		initData(babysitter);
+		initListener(babysitter);
+		
+		return rootView;
+	}
+	
+	private void initView(View rootView) {
 		mAvatar = (CircleImageView) rootView.findViewById(R.id.avatar);
-		getOldAvator(babysitter);
-		
-		final LinearLayout expandable = (LinearLayout) rootView
-				.findViewById(R.id.expandable);
-		final LinearLayout expandableToggle = (LinearLayout) rootView
-				.findViewById(R.id.expandable_toggle_button);
-
-		final ImageView arrow = (ImageView) rootView.findViewById(R.id.arrow);
-
-//		expandableToggle.setOnTouchListener(new OnTouchListener() {
-//			@Override
-//			public boolean onTouch(View v, MotionEvent event) {
-//
-//				
-//				if (clickDuration < MAX_CLICK_DURATION) {
-//					if (expandable.getVisibility() == View.VISIBLE) {
-//						arrow.animate().rotation(0).start();
-//						mIsExpandableSitter = "";
-//					} else {
-//						arrow.animate().rotation(180).start();
-//						mIsExpandableSitter = babysitter.getObjectId();
-//					}
-//				}
-//				return false;
-//			}
-//		});
-
-		
-		if (mExpandableObjectID.equals(babysitter.getObjectId())) {
-			arrow.setRotation(180);
-		} else {
-			arrow.setRotation(0);
-		}
-
-		TextView name = (TextView) rootView.findViewById(R.id.name);
-		TextView address = (TextView) rootView.findViewById(R.id.address);
-		TextView babycareTime = (TextView) rootView
-				.findViewById(R.id.babycare_time);
-
-		TextView babysitterNumber = (TextView) rootView
-				.findViewById(R.id.babysitterNumber);
-		TextView education = (TextView) rootView.findViewById(R.id.education);
-		TextView communityName = (TextView) rootView
-				.findViewById(R.id.communityName);
-
-		SpannableString content = new SpannableString(
-				babysitter.getCommunityName());
-		content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-		communityName.setText(content);
-
-		final Button contact = (Button) rootView.findViewById(R.id.contact);
-		
-		if (isFavoriteSitter(babysitter)) {
-			contact.setEnabled(false);
-			contact.setText(R.string.contact_sent);
-		} else {
-			contact.setEnabled(true);
-			contact.setText(R.string.contact);
-		}
-		
-		contact.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				mSitterListClickHandler.onContactClick(v, babysitter);
-			}
-		});
-		
-		TextView detail = (TextView) rootView.findViewById(R.id.detail);
-		detail.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				mSitterListClickHandler.onDetailClick();
-				Config.sitterInfo = babysitter;
-			}
-		});
-
-		
-//		contact.setOnClickListener(new OnClickListener() {
-//
-//			@Override
-//			public void onClick(View v) {
-//				
-//
-////				showBabysitterPhone(phones);
-//				
-//				//pushTextToSitter(babysitter);
-//				//newConversationWithSitter(babysitter.getUser().getObjectId());
-//			}
-//			
-//
-//		});
-
+		mName = (TextView) rootView.findViewById(R.id.name);
+		mBabysitterNumber = (TextView) rootView.findViewById(R.id.babysitterNumber);
+		mAge = (TextView) rootView.findViewById(R.id.age);
+		mEducation = (TextView) rootView.findViewById(R.id.education);
+		mAddress = (TextView) rootView.findViewById(R.id.address);
+		mBabycareTime = (TextView) rootView.findViewById(R.id.babycare_time);
 		mBabyCount = (RatingBar) rootView.findViewById(R.id.babycareCount);
+		mCommunityName = (TextView) rootView.findViewById(R.id.communityName);
+
+		mExpandable = (LinearLayout) rootView.findViewById(R.id.expandable);
+		mExpandableToggle = (LinearLayout) rootView.findViewById(R.id.expandable_toggle_button);
+		mArrow = (ImageView) rootView.findViewById(R.id.arrow);
+		
+		mKm = (TextView) rootView.findViewById(R.id.km);
+		mKmLine = (ImageView) rootView.findViewById(R.id.km_line);
+		
+		mContact = (Button) rootView.findViewById(R.id.contact);
+		mDetail = (TextView) rootView.findViewById(R.id.detail);
+
+	}
+
+	private void initData(Babysitter babysitter) {
+		loadOldAvator(babysitter);
+		mName.setText(babysitter.getName());
+		mBabysitterNumber.setText("保母證號：" + babysitter.getSkillNumber());
+		mAge.setText("("+babysitter.getAge()+")");
+		mEducation.setText("教育程度：" + babysitter.getEducation());
+		mAddress.setText(babysitter.getAddress());
+
+		String changeText = DisplayUtils.getChangeText(babysitter.getBabycareTime());	
+		mBabycareTime.setText(changeText);
+
 		int babyCount = DisplayUtils.getBabyCount(babysitter.getBabycareCount());
 		mBabyCount.setRating(babyCount);
-
-		name.setText(babysitter.getName());
-		address.setText(babysitter.getAddress());
 		
-		String changeText = DisplayUtils.getChangeText(babysitter.getBabycareTime());
+		SpannableString content = new SpannableString(babysitter.getCommunityName());
+		content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+		mCommunityName.setText(content);
+
+		initArrowRotation(babysitter.getObjectId());
+		initContactStatus(babysitter);
+		getKmPosition(babysitter);
+		initKmPosition(babysitter);
+	}
+
+	private void initArrowRotation(String objectId) {
+		if (mExpandableObjectID.equals(objectId)) {
+			mArrow.setRotation(180);
+		} else {
+			mArrow.setRotation(0);
+		}
+	}
+	
+	private void initContactStatus(Babysitter babysitter) {
+		if (isFavoriteSitter(babysitter)) {
+			mContact.setEnabled(false);
+			mContact.setText(R.string.contact_sent);
+		} else {
+			mContact.setEnabled(true);
+			mContact.setText(R.string.contact);
+		}
 		
-		babycareTime.setText(changeText);
-
-		
-		babysitterNumber.setText("保母證號：" + babysitter.getSkillNumber());
-		education.setText("教育程度：" + babysitter.getEducation());
-
-		TextView km = (TextView) rootView.findViewById(R.id.km);
-		ImageView kmLine = (ImageView) rootView.findViewById(R.id.km_line);
-
+	}
+	
+	private void getKmPosition(Babysitter babysitter) {
 		float distance = (float) babysitter.getLocation()
 				.distanceInKilometersTo(Config.MY_LOCATION);
 
@@ -215,103 +181,68 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter>
 
 			}
 		}
+		
+	}
 
-		// if (mIsFirst) {
-		// kmLine.setVisibility(View.INVISIBLE);
-		// mIsFirst = false;
-		// } else {
-		// kmLine.setVisibility(View.VISIBLE);
-		// }
-
+	private void initKmPosition(Babysitter babysitter) {
 		if (babysitter.mIsShow && Config.keyWord.isEmpty()) {
 			// km.setTextColor(android.graphics.Color.RED);
-			km.setText("  " + babysitter.mGroup + " KM  ");
-			km.setVisibility(View.VISIBLE);
-			kmLine.setBackgroundResource(R.drawable.line);
+			mKm.setText("  " + babysitter.mGroup + " KM  ");
+			mKm.setVisibility(View.VISIBLE);
+			mKmLine.setBackgroundResource(R.drawable.line);
 		} else {
-			km.setVisibility(View.INVISIBLE);
-			kmLine.setBackgroundResource(R.drawable.gray_line);
-			km.setText("  2 KM  ");
+			mKm.setVisibility(View.INVISIBLE);
+			mKmLine.setBackgroundResource(R.drawable.gray_line);
+			mKm.setText("  2 KM  ");
 			// km.setTextColor(android.graphics.Color.RED);
 		}
 
 		LogUtils.LOGD("vic", "babysitter.mGroup:" + babysitter.mGroup
 				+ ", babysitter.mIsShwo:" + babysitter.mIsShow);
-
-		// if (babysitter.getDistance() > 0.0f && babysitter.mIsShowDistance ) {
-		// // 已存
-		// km.setTextColor(android.graphics.Color.RED);
-		// km.setText(" [" + babysitter.getDistance() + "] ");
-		//
-		// } else { //未存
-		// DecimalFormat decimalFormat = new DecimalFormat("0.#");
-		//
-		// String show = "";
-		// int d = (int) distance;
-		// if (d >= defaultDistance ) {
-		// babysitter.setDistance(defaultDistance);
-		// km.setTextColor(android.graphics.Color.RED);
-		// km.setText(" [" + babysitter.getDistance() + "] ");
-		// //count++;
-		// defaultDistance = defaultDistance + count;
-		// } else {
-		// //babysitter.setDistance(-2.0f);
-		// }
-		// }
-
-		// babysitter.setDistance(distance);
-
-		// if ( distance > defaultDistance) {
-		// if (distance > 0.0f && distance < 1.0f) {
-		// show = " [" + decimalFormat.format(distance * 1000) + "公尺]";
-		// } else {
-		// show = " [" + decimalFormat.format(distance) + "公里]";
-		// }
-		// show = " [" + defaultDistance + "km]";
-		// km.setText(show);
-
-		// LogUtils.LOGD("vic",
-		// "defaultDistance:"+defaultDistance+", count:"+count+", total:" +
-		// (defaultDistance ) + ", distance:" +babysitter.getDistance() + "d:" +
-		// d);
-		// if (d >= defaultDistance ) {
-
-		// show = " [" + defaultDistance + "km]";
-		// km.setText(show);
-
-		// km.setTextColor(android.graphics.Color.RED);
-		// count++;
-		// defaultDistance = defaultDistance + count;
-		// isColor = false;
-		// } else {
-		// km.setText("");
-		// }
-
-		// }
-		// } else {
-		// km.setText("");
-		// }
-
-		// babysitter.setDistance(distance);
-
-		// BabysitterGridCard mCard = new BabysitterGridCard(getContext());
-		// mCard.setBabysitter(babysitter);
-		// mCard.init();
-
-		// CardView mCardView;
-		// mCardView = (CardView) view.findViewById(R.id.list_cardId);
-		// if (mCardView != null) {
-		// It is important to set recycle value for inner layout elements
-		// mCardView.setForceReplaceInnerLayout(Card.equalsInnerLayout(
-		// mCardView.getCard(), mCard));
-
-		// It is important to set recycle value for performance issue
-		// mCardView.setRecycle(recycle);
-		// mCardView.setCard(mCard);
-		// }
-		return rootView;
+		
 	}
-	
+
+	private void initListener(final Babysitter babysitter) {
+
+		mContact.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				mSitterListClickHandler.onContactClick(v, babysitter);
+			}
+		});
+		
+		mDetail.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				mSitterListClickHandler.onDetailClick();
+				Config.sitterInfo = babysitter;
+			}
+		});
+
+//		expandableToggle.setOnTouchListener(new OnTouchListener() {
+//		@Override
+//		public boolean onTouch(View v, MotionEvent event) {
+//
+//			
+//			if (clickDuration < MAX_CLICK_DURATION) {
+//				if (expandable.getVisibility() == View.VISIBLE) {
+//					arrow.animate().rotation(0).start();
+//					mIsExpandableSitter = "";
+//				} else {
+//					arrow.animate().rotation(180).start();
+//					mIsExpandableSitter = babysitter.getObjectId();
+//				}
+//			}
+//			return false;
+//		}
+//	});
+
+	}
+
+
+
 	// TODO the system will be crashed sometimes.
 	private boolean isFavoriteSitter(Babysitter babysitter) {
 
@@ -329,7 +260,7 @@ public class BabysittersParseQueryAdapter extends ParseQueryAdapter<Babysitter>
 		return false;
 	}
 
-	private void getOldAvator(Babysitter sitter) {
+	private void loadOldAvator(Babysitter sitter) {
 		String websiteUrl = "http://cwisweb.sfaa.gov.tw/";
 		String parseUrl = sitter.getImageUrl();
 		if (parseUrl.equals("../img/photo_mother_no.jpg")) {
